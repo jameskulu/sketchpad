@@ -1,6 +1,6 @@
 export type Point = { x: number; y: number; p: number };
 
-export type ToolId = "brush" | "rect" | "ellipse" | "triangle" | "line" | "arrow" | "text" | "eraser";
+export type ToolId = "brush" | "pencil" | "rect" | "ellipse" | "triangle" | "line" | "arrow" | "text" | "eraser";
 
 export interface StrokeElement {
   id: string;
@@ -9,6 +9,7 @@ export interface StrokeElement {
   color: string;
   width: number;
   opacity: number;
+  rough?: boolean;
 }
 
 export interface ShapeElement {

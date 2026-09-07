@@ -4,6 +4,7 @@ import Icon from "../components/Icon.astro";
 
 const tools: { id: string; icon: string; label: string; hint: string }[] = [
   { id: "brush", icon: "brush", label: "Brush", hint: "B" },
+  { id: "pencil", icon: "pencil", label: "Pencil", hint: "P" },
   { id: "rect", icon: "rect", label: "Rectangle", hint: "R" },
   { id: "ellipse", icon: "ellipse", label: "Ellipse", hint: "O" },
   { id: "triangle", icon: "triangle", label: "Triangle", hint: "G" },
@@ -71,7 +72,7 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
         <button
           id="fullscreen-btn"
           data-state="off"
-          class="btn-icon hidden sm:grid"
+          class="btn-icon hidden! sm:grid!"
           aria-label="Toggle fullscreen (F)"
           title="Toggle fullscreen (F)"
         >
@@ -79,7 +80,7 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
           <Icon name="minimize" />
         </button>
 
-        <button id="palette-btn" class="btn-icon md:hidden" aria-label="Open tools panel" title="Open tools panel">
+        <button id="palette-btn" class="btn-icon md:hidden!" aria-label="Open tools panel" title="Open tools panel">
           <Icon name="palette" />
         </button>
 
@@ -113,6 +114,17 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
             <Icon name={t.icon} />
           </button>
         ))}
+        <div class="mx-0.5 h-5 w-px bg-hairline max-md:block md:hidden!" role="separator"></div>
+        <button
+          id="fullscreen-btn-mobile"
+          data-state="off"
+          class="btn-icon md:hidden!"
+          aria-label="Toggle fullscreen (F)"
+          title="Toggle fullscreen (F)"
+        >
+          <Icon name="maximize" />
+          <Icon name="minimize" />
+        </button>
       </nav>
 
       <!-- Canvas stage -->
@@ -123,7 +135,7 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
       <!-- Options panel -->
       <aside
         id="options-panel"
-        class="z-20 flex flex-col gap-5 border-hairline bg-white p-4 max-md:absolute max-md:bottom-16 max-md:right-3 max-md:top-14 max-md:w-64 max-md:rounded-xl max-md:border max-md:shadow-xl max-md:shadow-shadow-blue/10 max-md:opacity-0 max-md:pointer-events-none max-md:translate-x-4 max-md:transition-all md:w-[220px] md:shrink-0 md:border-l md:p-5"
+        class="panel-closed z-20 flex flex-col gap-5 border-hairline bg-white p-4 max-md:absolute max-md:bottom-16 max-md:right-3 max-md:top-14 max-md:w-64 max-md:rounded-xl max-md:border max-md:shadow-xl max-md:shadow-shadow-blue/10 md:w-[220px] md:shrink-0 md:border-l md:p-5"
         aria-label="Tool options"
       >
         <div>
@@ -249,17 +261,14 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
   #clear-btn.is-armed {
     @apply bg-[#ea2261] text-white hover:bg-[#d81b55] hover:text-white;
   }
-  #fullscreen-btn[data-state="on"] svg:first-of-type,
-  #fullscreen-btn[data-state="off"] svg:last-of-type {
-    @apply hidden;
-  }
 </style>
 
 <style is:global>
-  #options-panel.open {
-    opacity: 1 !important;
-    pointer-events: auto !important;
-    transform: none !important;
+  #fullscreen-btn[data-state="on"] svg:first-of-type,
+  #fullscreen-btn-mobile[data-state="on"] svg:first-of-type,
+  #fullscreen-btn[data-state="off"] svg:last-of-type,
+  #fullscreen-btn-mobile[data-state="off"] svg:last-of-type {
+    display: none;
   }
 </style>
 
@@ -302,18 +311,17 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
   });
 
   paletteBtn.addEventListener("click", () => {
-    panel.classList.toggle("open");
-    const open = panel.classList.contains("open");
+    const open = panel.classList.toggle("panel-closed") === false;
     paletteBtn.setAttribute("aria-pressed", String(open));
     paletteBtn.classList.toggle("is-active", open);
   });
 
   document.addEventListener("click", (e) => {
-    if (!panel.classList.contains("open")) return;
+    if (panel.classList.contains("panel-closed")) return;
     const target = e.target as Node | null;
     if (!target) return;
     if (panel.contains(target) || paletteBtn.contains(target)) return;
-    panel.classList.remove("open");
+    panel.classList.add("panel-closed");
     paletteBtn.classList.remove("is-active");
     paletteBtn.setAttribute("aria-pressed", "false");
   });
@@ -321,6 +329,7 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
   const ui = {
     toolButtons: {
       brush: q<HTMLButtonElement>("tool-brush"),
+      pencil: q<HTMLButtonElement>("tool-pencil"),
       rect: q<HTMLButtonElement>("tool-rect"),
       ellipse: q<HTMLButtonElement>("tool-ellipse"),
       triangle: q<HTMLButtonElement>("tool-triangle"),
@@ -338,6 +347,7 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
     clearBtn: q<HTMLButtonElement>("clear-btn"),
     gridBtn: q<HTMLButtonElement>("grid-btn"),
     fullscreenBtn: q<HTMLButtonElement>("fullscreen-btn"),
+    fullscreenBtnMobile: q<HTMLButtonElement>("fullscreen-btn-mobile"),
     downloadBtn: q<HTMLButtonElement>("download-btn"),
     swatches,
     colorInput: q<HTMLInputElement>("color-input"),

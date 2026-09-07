@@ -1,4 +1,4 @@
-import type { Element, Erasure, Point } from "./elements";
+import type { Element, Erasure, Point, StrokeElement } from "./elements";
 
 function mid(a: Point, b: Point): Point {
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, p: (a.p + b.p) / 2 };
@@ -58,6 +58,107 @@ function anyPressure(points: Point[]): boolean {
   return false;
 }
 
+function roughJitter(points: Point[], phase: number): Point[] {
+  const n = points.length;
+  const out: Point[] = [];
+  for (let i = 0; i < n; i++) {
+    const prev = points[Math.max(0, i - 1)];
+    const next = points[Math.min(n - 1, i + 1)];
+    const dx = next.x - prev.x;
+    const dy = next.y - prev.y;
+    const len = Math.hypot(dx, dy) || 1;
+    const j =
+      (Math.sin(i * 1.73 + phase + points[i].x * 0.7) * 0.5 +
+        Math.sin(i * 2.97 + phase * 2 + points[i].y * 0.6) * 0.5) *
+      0.75;
+    out.push({ x: points[i].x + (-dy / len) * j, y: points[i].y + (dx / len) * j, p: points[i].p });
+  }
+  return out;
+}
+
+function hash01(x: number, y: number): number {
+  const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+  return s - Math.floor(s);
+}
+
+function drawPencilStroke(ctx: CanvasRenderingContext2D, el: StrokeElement): void {
+  const points = el.points;
+  const n = points.length;
+  if (n === 0) return;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.strokeStyle = el.color;
+  ctx.fillStyle = el.color;
+  const w = Math.max(0.5, el.width);
+  const base = el.opacity;
+  ctx.save();
+
+  if (n === 1) {
+    const p = points[0];
+    for (let i = 0; i < 8; i++) {
+      const ox = (hash01(i * 3.1 + p.x, p.y * 1.7 + i) - 0.5) * w * 1.4;
+      const oy = (hash01(i * 5.3 + p.x, p.y + i * 2.1) - 0.5) * w * 1.4;
+      ctx.globalAlpha = base * (0.18 + hash01(i + p.x, i + p.y) * 0.2);
+      ctx.beginPath();
+      ctx.arc(p.x + ox, p.y + oy, (0.12 + hash01(i * 7.1 + p.y, p.x - i) * 0.3) * w, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+    return;
+  }
+
+  if (n > 2) {
+    // soft graphite body — slightly wider, lifted alpha
+    ctx.globalAlpha = base * 0.38;
+    ctx.lineWidth = w * 1.35;
+    ctx.beginPath();
+    traceSmoothPath(ctx, roughJitter(points, 0.7));
+    ctx.stroke();
+
+    // core deposit — thinner, more opaque
+    ctx.globalAlpha = base * 0.5;
+    ctx.lineWidth = w * 0.82;
+    ctx.beginPath();
+    traceSmoothPath(ctx, roughJitter(points, 2.3));
+    ctx.stroke();
+  } else {
+    ctx.globalAlpha = base * 0.85;
+    ctx.lineWidth = w * 0.9;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    ctx.lineTo(points[n - 1].x, points[n - 1].y);
+    ctx.stroke();
+  }
+
+  // graphite tooth — deterministic speckles along the stroke, offset across the width
+  const spac = Math.max(0.6, w * 0.34);
+  let carry = 0;
+  for (let i = 1; i < n; i++) {
+    const a = points[i - 1];
+    const b = points[i];
+    const seg = Math.hypot(b.x - a.x, b.y - a.y);
+    if (seg === 0) continue;
+    const speedF = Math.min(1, Math.max(0.3, 1.35 - seg / (spac * 3.2)));
+    const steps = Math.floor((seg + carry) / spac);
+    carry = seg + carry - steps * spac;
+    const pxN = (b.y - a.y) / seg;
+    const pyN = -(b.x - a.x) / seg;
+    for (let k = 0; k < steps; k++) {
+      const t = (k + 0.5) / Math.max(1, steps);
+      const px = a.x + (b.x - a.x) * t;
+      const py = a.y + (b.y - a.y) * t;
+      const side = hash01(px, py) - 0.5;
+      const off = side * w;
+      const r = (0.08 + hash01(py + 4.9, px + 1.3) * 0.2) * w * (0.5 + 0.5 * speedF);
+      ctx.globalAlpha = base * (0.1 + hash01(px + 6.2, py + 2.7) * 0.14) * speedF;
+      ctx.beginPath();
+      ctx.arc(px + pxN * off, py + pyN * off, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  ctx.restore();
+}
+
 export function drawElement(ctx: CanvasRenderingContext2D, el: Element): void {
   ctx.save();
   ctx.globalAlpha = el.opacity;
@@ -68,6 +169,10 @@ export function drawElement(ctx: CanvasRenderingContext2D, el: Element): void {
 
   switch (el.kind) {
     case "stroke": {
+      if (el.rough) {
+        drawPencilStroke(ctx, el);
+        break;
+      }
       const pressure = anyPressure(el.points);
       if (pressure && el.points.length > 2) {
         tracePressurePolygon(ctx, el.points, el.width / 2);

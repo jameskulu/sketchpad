@@ -22,6 +22,7 @@ export interface SketchpadUI {
   clearBtn: HTMLButtonElement;
   gridBtn: HTMLButtonElement;
   fullscreenBtn: HTMLButtonElement;
+  fullscreenBtnMobile: HTMLButtonElement;
   downloadBtn: HTMLButtonElement;
   swatches: NodeListOf<HTMLElement>;
   colorInput: HTMLInputElement;
@@ -84,6 +85,8 @@ export class Sketchpad {
   private stage: HTMLElement;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
+  private sceneCanvas: HTMLCanvasElement;
+  private sceneCtx: CanvasRenderingContext2D;
   private ui: SketchpadUI;
   private onState: (s: UIState) => void;
 
@@ -100,11 +103,19 @@ export class Sketchpad {
 
   private tool: ToolId = "brush";
   private color = "#0d253d";
-  private strokeSize = 6;
+  private sizes: Record<ToolId, number> = {
+    brush: 6,
+    pencil: 3,
+    rect: 6,
+    ellipse: 6,
+    triangle: 6,
+    line: 6,
+    arrow: 6,
+    text: 28,
+    eraser: 28,
+  };
   private opacity = 1;
   private filled = false;
-  private textSize = 28;
-  private eraserSize = 28;
   private gridOn = true;
 
   private activePointers = new Map<number, ActivePointer>();
@@ -125,6 +136,7 @@ export class Sketchpad {
   private pendingText: { x: number; y: number; el: TextElement | null } | null = null;
   private clearArmed = false;
   private clearTimer: number | null = null;
+  private hover = { x: -10000, y: -10000, over: false };
 
   constructor(opts: SketchpadOptions) {
     this.stage = opts.stage;
@@ -134,6 +146,10 @@ export class Sketchpad {
     const ctx = this.canvas.getContext("2d", { alpha: true });
     if (!ctx) throw new Error("Canvas 2D not supported");
     this.ctx = ctx;
+    this.sceneCanvas = document.createElement("canvas");
+    const sceneCtx = this.sceneCanvas.getContext("2d", { alpha: true });
+    if (!sceneCtx) throw new Error("Canvas 2D not supported");
+    this.sceneCtx = sceneCtx;
   }
 
   init(): void {
@@ -323,26 +339,85 @@ export class Sketchpad {
     const dpr = window.devicePixelRatio || 1;
     const w = this.canvas.clientWidth;
     const h = this.canvas.clientHeight;
-    if (this.canvas.width !== Math.round(w * dpr) || this.canvas.height !== Math.round(h * dpr)) {
-      this.canvas.width = Math.round(w * dpr);
-      this.canvas.height = Math.round(h * dpr);
+    const pw = Math.round(w * dpr);
+    const ph = Math.round(h * dpr);
+    if (this.canvas.width !== pw || this.canvas.height !== ph) {
+      this.canvas.width = pw;
+      this.canvas.height = ph;
     }
+
+    const scene = this.sceneCtx;
+    if (this.sceneCanvas.width !== pw || this.sceneCanvas.height !== ph) {
+      this.sceneCanvas.width = pw;
+      this.sceneCanvas.height = ph;
+    }
+    scene.setTransform(dpr, 0, 0, dpr, 0, 0);
+    scene.clearRect(0, 0, w, h);
+    scene.save();
+    scene.translate(this.pan.x, this.pan.y);
+    scene.scale(this.scale, this.scale);
+    drawScene(scene, this.elements, this.erasures, this.pendingEl, this.pendingEr);
+    scene.restore();
+
     const ctx = this.ctx;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(this.sceneCanvas, 0, 0, pw, ph);
 
     if (this.gridOn && this.scale >= 0.08) {
       this.renderGrid(ctx, w, h);
     }
 
-    ctx.save();
-    ctx.translate(this.pan.x, this.pan.y);
-    ctx.scale(this.scale, this.scale);
-    drawScene(ctx, this.elements, this.erasures, this.pendingEl, this.pendingEr);
-    ctx.restore();
+    if (this.tool === "eraser" && this.hover.over) {
+      this.renderEraserCursor(ctx, w);
+    }
 
     this.ui.zoomLabel.textContent = `${Math.round(this.scale * 100)}%`;
+  }
+
+  private renderEraserCursor(ctx: CanvasRenderingContext2D, viewW: number): void {
+    const r = (this.sizes.eraser / 2) * this.scale;
+    const x = this.hover.x;
+    const y = this.hover.y;
+    ctx.save();
+    ctx.fillStyle = "rgba(100,116,141,0.10)";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(100,116,141,0.6)";
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    const label = `${this.sizes.eraser}px`;
+    ctx.font = "600 11px Inter Variable, Inter, system-ui, sans-serif";
+    const tw = ctx.measureText(label).width;
+    const pillW = tw + 14;
+    const pillH = 18;
+    let px = x + r + 8;
+    if (px + pillW > viewW) px = x - r - pillW - 8;
+    const py = y - r - pillH - 6;
+    ctx.fillStyle = "rgba(13,37,61,0.85)";
+    ctx.beginPath();
+    ctx.moveTo(px + 5, py);
+    ctx.lineTo(px + pillW - 5, py);
+    ctx.quadraticCurveTo(px + pillW, py, px + pillW, py + 5);
+    ctx.lineTo(px + pillW, py + pillH - 5);
+    ctx.quadraticCurveTo(px + pillW, py + pillH, px + pillW - 5, py + pillH);
+    ctx.lineTo(px + 5, py + pillH);
+    ctx.quadraticCurveTo(px, py + pillH, px, py + pillH - 5);
+    ctx.lineTo(px, py + 5);
+    ctx.quadraticCurveTo(px, py, px + 5, py);
+    ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText(label, px + 7, py + pillH / 2 + 0.5);
+    ctx.restore();
   }
 
   private renderGrid(ctx: CanvasRenderingContext2D, w: number, h: number): void {
@@ -389,6 +464,14 @@ export class Sketchpad {
     c.addEventListener("pointermove", (e) => this.onPointerMove(e));
     c.addEventListener("pointerup", (e) => this.onPointerUp(e));
     c.addEventListener("pointercancel", (e) => this.onPointerUp(e));
+    c.addEventListener("pointerenter", () => {
+      this.hover.over = true;
+      this.rim();
+    });
+    c.addEventListener("pointerleave", () => {
+      this.hover.over = false;
+      this.rim();
+    });
     c.addEventListener("dblclick", (e) => this.onDoubleClick(e));
     c.addEventListener("wheel", (e) => this.onWheel(e), { passive: false });
     this.stage.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -448,19 +531,19 @@ export class Sketchpad {
     this.drawingId = e.pointerId;
     switch (this.tool) {
       case "brush":
+      case "pencil":
         this.pendingEl = {
           id: nextId(),
           kind: "stroke",
-          points: [
-            { x: pt.wx, y: pt.wy, p: pt.pressure },
-          ],
+          points: [{ x: pt.wx, y: pt.wy, p: pt.pressure }],
           color: this.color,
-          width: this.strokeSize,
+          width: this.sizes[this.tool],
           opacity: this.opacity,
+          rough: this.tool === "pencil",
         };
         break;
       case "eraser":
-        this.pendingEr = { id: nextId(), points: [{ x: pt.wx, y: pt.wy, p: 0.5 }], width: this.eraserSize };
+        this.pendingEr = { id: nextId(), points: [{ x: pt.wx, y: pt.wy, p: 0.5 }], width: this.sizes.eraser };
         break;
       case "rect":
       case "ellipse":
@@ -475,7 +558,7 @@ export class Sketchpad {
           x2: pt.wx,
           y2: pt.wy,
           color: this.color,
-          width: this.strokeSize,
+          width: this.sizes[this.tool],
           opacity: this.opacity,
           filled: this.filled,
         };
@@ -491,6 +574,10 @@ export class Sketchpad {
     const pt = this.pointerFromEvent(e, e.pointerType !== "mouse");
 
     this.ui.coordsLabel.textContent = `${Math.round(pt.wx)}, ${Math.round(pt.wy)}`;
+    this.hover.over = true;
+    this.hover.x = pt.sx;
+    this.hover.y = pt.sy;
+    if (this.tool === "eraser") this.rim();
 
     if (this.panningId === e.pointerId && prev) {
       this.pan.x += pt.sx - prev.sx;
@@ -540,7 +627,8 @@ export class Sketchpad {
   }
 
   private minPointDist(): number {
-    return Math.max(0.4, 1 / this.scale);
+    const base = this.tool === "pencil" ? 0.8 : 1;
+    return Math.max(0.3, base / this.scale);
   }
 
   private onPointerUp(e: PointerEvent): void {
@@ -655,7 +743,7 @@ export class Sketchpad {
     d.spellcheck = false;
     d.setAttribute("role", "textbox");
     d.dataset.autofocus = "1";
-    const fontPx = Math.max(12, (existing ? existing.size : this.textSize) * this.scale);
+    const fontPx = Math.max(12, (existing ? existing.size : this.sizes.text) * this.scale);
     d.className = "skpd-text-input";
     d.style.left = `${sp.x}px`;
     d.style.top = `${sp.y}px`;
@@ -700,7 +788,7 @@ export class Sketchpad {
           x,
           y,
           text: raw,
-          size: this.textSize,
+          size: this.sizes.text,
           color: this.color,
           opacity: this.opacity,
         });
@@ -742,13 +830,14 @@ export class Sketchpad {
       this.emit();
     });
     ui.fullscreenBtn.addEventListener("click", () => this.toggleFullscreen());
+    ui.fullscreenBtnMobile.addEventListener("click", () => this.toggleFullscreen());
     ui.downloadBtn.addEventListener("click", () => this.exportPNG());
 
     ui.swatches.forEach((sw) => {
       sw.addEventListener("click", () => this.setColor(sw.dataset.color ?? "#0d253d"));
     });
     ui.colorInput.addEventListener("input", () => this.setColor(ui.colorInput.value));
-    ui.sizeSlider.addEventListener("input", () => this.sizeFromSlider(false));
+    ui.sizeSlider.addEventListener("input", () => this.sizeFromSlider());
     ui.opacitySlider.addEventListener("input", () => {
       this.opacity = Number(ui.opacitySlider.value) / 100;
       this.emit();
@@ -760,14 +849,16 @@ export class Sketchpad {
     });
 
     document.addEventListener("fullscreenchange", () => {
-      ui.fullscreenBtn.dataset.state = document.fullscreenElement ? "on" : "off";
+      const on = document.fullscreenElement ? "on" : "off";
+      ui.fullscreenBtn.dataset.state = on;
+      ui.fullscreenBtnMobile.dataset.state = on;
     });
   }
 
   setTool(tool: ToolId): void {
     this.commitText();
     this.tool = tool;
-    this.sizeFromSlider(true);
+    this.syncSizeUI();
     this.emit();
   }
 
@@ -781,31 +872,31 @@ export class Sketchpad {
     this.emit();
   }
 
-  private sizeFromSlider(sync: boolean): void {
+  private sizeFromSlider(): void {
     const ui = this.ui;
-    const v = Number(ui.sizeSlider.value);
-    const min = this.tool === "text" ? 12 : this.tool === "eraser" ? 4 : 1;
-    const max = this.tool === "text" ? 144 : this.tool === "eraser" ? 128 : 96;
-    if (this.tool === "text") {
-      this.textSize = v;
-      ui.sizeLabel.textContent = `${v} px`;
-    } else if (this.tool === "eraser") {
-      this.eraserSize = v;
-      ui.sizeLabel.textContent = `${v} px`;
-    } else {
-      this.strokeSize = v;
-      ui.sizeLabel.textContent = `${v} px`;
-    }
-    ui.sizeSlider.min = String(min);
-    ui.sizeSlider.max = String(max);
-    if (sync) {
-      ui.sizeSlider.value = String(this.tool === "text" ? this.textSize : this.tool === "eraser" ? this.eraserSize : this.strokeSize);
-    }
+    const isText = this.tool === "text";
+    const isEraser = this.tool === "eraser";
+    const min = isText ? 12 : isEraser ? 4 : 1;
+    const max = isText ? 144 : isEraser ? 128 : 96;
+    this.sizes[this.tool] = clamp(Number(ui.sizeSlider.value), min, max);
+    ui.sizeLabel.textContent = `${this.sizes[this.tool]} px`;
     this.emit();
   }
 
+  private syncSizeUI(): void {
+    const ui = this.ui;
+    const isText = this.tool === "text";
+    const isEraser = this.tool === "eraser";
+    const min = isText ? 12 : isEraser ? 4 : 1;
+    const max = isText ? 144 : isEraser ? 128 : 96;
+    ui.sizeSlider.min = String(min);
+    ui.sizeSlider.max = String(max);
+    ui.sizeSlider.value = String(this.getStrokeWidth());
+    ui.sizeLabel.textContent = `${this.getStrokeWidth()} px`;
+  }
+
   getStrokeWidth(): number {
-    return this.tool === "text" ? this.textSize : this.tool === "eraser" ? this.eraserSize : this.strokeSize;
+    return this.sizes[this.tool] ?? this.sizes.brush;
   }
 
   private toggleFullscreen(): void {
@@ -914,7 +1005,7 @@ export class Sketchpad {
         this.disarmClear();
         return;
       }
-      const toolFor = { b: "brush", r: "rect", o: "ellipse", t: "text", l: "line", a: "arrow", e: "eraser" } as const;
+      const toolFor = { b: "brush", p: "pencil", r: "rect", o: "ellipse", t: "text", l: "line", a: "arrow", e: "eraser" } as const;
       const id = toolFor[e.key.toLowerCase() as keyof typeof toolFor];
       if (id && !e.metaKey && !e.ctrlKey && !e.altKey) this.setTool(id);
     });
@@ -933,16 +1024,12 @@ export class Sketchpad {
   }
 
   private nudgeSize(delta: number): void {
-    if (this.tool === "text") {
-      this.textSize = clamp(this.textSize + delta, 12, 144);
-    } else if (this.tool === "eraser") {
-      this.eraserSize = clamp(this.eraserSize + delta, 4, 128);
-    } else {
-      this.strokeSize = clamp(this.strokeSize + delta, 1, 96);
-    }
-    const ui = this.ui;
-    ui.sizeSlider.value = String(this.getStrokeWidth());
-    ui.sizeLabel.textContent = `${this.getStrokeWidth()} px`;
+    const isText = this.tool === "text";
+    const isEraser = this.tool === "eraser";
+    const min = isText ? 12 : isEraser ? 4 : 1;
+    const max = isText ? 144 : isEraser ? 128 : 96;
+    this.sizes[this.tool] = clamp((this.sizes[this.tool] ?? this.sizes.brush) + delta, min, max);
+    this.syncSizeUI();
     this.emit();
   }
 
@@ -979,6 +1066,7 @@ export class Sketchpad {
     ui.gridBtn.classList.toggle("is-active", s.gridOn);
     ui.fillToggle.classList.toggle("is-active", s.filled);
     ui.fullscreenBtn.dataset.state = document.fullscreenElement ? "on" : "off";
+    ui.fullscreenBtnMobile.dataset.state = document.fullscreenElement ? "on" : "off";
     if (s.saved === "saved") {
       ui.autosaveLabel.textContent = "Saved";
       ui.autosaveLabel.dataset.state = "saved";

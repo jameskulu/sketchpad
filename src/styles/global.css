@@ -67,3 +67,21 @@ body {
 .skpd-text-input:focus {
   border-bottom-color: var(--color-primary);
 }
+
+#options-panel {
+  transition: opacity 0.15s ease, translate 0.15s ease;
+}
+
+#options-panel.panel-closed {
+  opacity: 0;
+  pointer-events: none;
+  translate: 1rem 0;
+}
+
+@media (min-width: 768px) {
+  #options-panel.panel-closed {
+    opacity: 1;
+    pointer-events: auto;
+    translate: none;
+  }
+}
