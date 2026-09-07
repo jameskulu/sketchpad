@@ -375,17 +375,79 @@ export class Sketchpad {
       this.renderGrid(ctx, w, h);
     }
 
-    if (this.tool === "eraser" && this.hover.over) {
-      this.renderEraserCursor(ctx, w);
+    if (this.hover.over && !this.editingText && !this.pinching && !this.spaceKeyDown && this.panningId === null) {
+      if (this.tool === "eraser") {
+        this.renderEraserCursor(ctx);
+      } else {
+        this.renderPointer(ctx);
+      }
     }
 
+    this.updateCursor();
     this.ui.zoomLabel.textContent = `${Math.round(this.scale * 100)}%`;
   }
 
-  private renderEraserCursor(ctx: CanvasRenderingContext2D, viewW: number): void {
+  private renderPointer(ctx: CanvasRenderingContext2D): void {
+    const x = this.hover.x;
+    const y = this.hover.y;
+    const outline = "rgba(13,37,61,0.65)";
+    const core = "rgba(255,255,255,0.95)";
+    ctx.save();
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    if (this.tool === "brush" || this.tool === "pencil") {
+      const r = Math.max(7, (this.sizes[this.tool] / 2) * this.scale);
+      ctx.beginPath();
+      ctx.arc(x, y, r + 4, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.4)";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.strokeStyle = outline;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.strokeStyle = core;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    } else {
+      const s = 12;
+      const arms: Array<[number, number]> = [
+        [0, -1],
+        [0, 1],
+        [-1, 0],
+        [1, 0],
+      ];
+      for (const [dx, dy] of arms) {
+        ctx.beginPath();
+        ctx.moveTo(x + dx * s, y + dy * s);
+        ctx.lineTo(x + dx * (s - 5), y + dy * (s - 5));
+        ctx.strokeStyle = core;
+        ctx.lineWidth = 3.5;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x + dx * s, y + dy * s);
+        ctx.lineTo(x + dx * (s - 5), y + dy * (s - 5));
+        ctx.strokeStyle = outline;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+    }
+
+    ctx.beginPath();
+    ctx.arc(x, y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = outline;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  private renderEraserCursor(ctx: CanvasRenderingContext2D): void {
     const r = (this.sizes.eraser / 2) * this.scale;
     const x = this.hover.x;
     const y = this.hover.y;
+    const viewW = this.canvas.clientWidth;
     ctx.save();
     ctx.fillStyle = "rgba(100,116,141,0.10)";
     ctx.beginPath();
@@ -501,6 +563,13 @@ export class Sketchpad {
     return { x: e.clientX - r.left, y: e.clientY - r.top };
   }
 
+  private updateCursor(): void {
+    if (this.panningId !== null) this.canvas.style.cursor = "grabbing";
+    else if (this.spaceKeyDown) this.canvas.style.cursor = "grab";
+    else if (this.hover.over && !this.editingText && !this.pinching) this.canvas.style.cursor = "none";
+    else this.canvas.style.cursor = "crosshair";
+  }
+
   private onPointerDown(e: PointerEvent): void {
     this.disarmClear();
     const pt = this.pointerFromEvent(e, e.pointerType !== "mouse");
@@ -519,7 +588,7 @@ export class Sketchpad {
     // Pan when holding space or using the middle / back mouse buttons
     if (this.spaceKeyDown || e.button === 1) {
       this.panningId = e.pointerId;
-      this.canvas.style.cursor = "grabbing";
+      this.updateCursor();
       return;
     }
     if (e.button !== 0) return;
@@ -583,7 +652,7 @@ export class Sketchpad {
     this.hover.over = true;
     this.hover.x = pt.sx;
     this.hover.y = pt.sy;
-    if (this.tool === "eraser") this.rim();
+    this.rim();
 
     if (this.panningId === e.pointerId && prev) {
       this.pan.x += pt.sx - prev.sx;
@@ -646,7 +715,7 @@ export class Sketchpad {
 
     if (this.panningId === e.pointerId) {
       this.panningId = null;
-      this.canvas.style.cursor = this.spaceKeyDown ? "grab" : "crosshair";
+      this.updateCursor();
     }
 
     if (this.drawingId === e.pointerId) {
@@ -970,7 +1039,7 @@ export class Sketchpad {
       }
       if (e.key === " ") {
         this.spaceKeyDown = true;
-        this.canvas.style.cursor = "grab";
+        this.updateCursor();
         e.preventDefault();
         return;
       }
@@ -1019,13 +1088,13 @@ export class Sketchpad {
     window.addEventListener("keyup", (e) => {
       if (e.key === " ") {
         this.spaceKeyDown = false;
-        if (this.panningId === null) this.canvas.style.cursor = "crosshair";
+        this.updateCursor();
       }
     });
 
     window.addEventListener("blur", () => {
       this.spaceKeyDown = false;
-      this.canvas.style.cursor = "crosshair";
+      this.updateCursor();
     });
   }
 
