@@ -363,7 +363,7 @@ export class Sketchpad {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, w, h);
-    ctx.drawImage(this.sceneCanvas, 0, 0, pw, ph);
+    ctx.drawImage(this.sceneCanvas, 0, 0, w, h);
 
     if (this.gridOn && this.scale >= 0.08) {
       this.renderGrid(ctx, w, h);

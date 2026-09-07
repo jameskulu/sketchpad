@@ -21,11 +21,11 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
   <div id="app">
     <!-- Top bar -->
     <header class="flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4">
-      <a href="/" class="flex items-center gap-2 rounded-md px-1.5 py-1" aria-label="Simple Sketchpad home">
+      <a href="/" class="flex items-center gap-1.5 rounded-md px-1.5 py-1 max-md:gap-1 max-md:px-1" aria-label="Simple Sketchpad home">
         <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
           <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
         </svg>
-        <span class="text-sm font-semibold tracking-tight text-ink">Simple Sketchpad</span>
+        <span class="text-sm font-semibold tracking-tight text-ink max-[420px]:hidden">Simple Sketchpad</span>
       </a>
 
       <div class="ml-1 hidden items-center gap-1.5 rounded-full border border-hairline px-2.5 py-0.5 sm:flex">
@@ -36,22 +36,22 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
       <div class="flex flex-1 items-center justify-end gap-0.5 sm:gap-1">
         <button
           id="undo-btn"
-          class="btn-icon"
+          class="btn-icon max-md:size-8!"
           aria-label="Undo (Ctrl+Z)"
           title="Undo (Ctrl+Z)"
           disabled
         >
           <Icon name="undo" />
         </button>
-        <button id="redo-btn" class="btn-icon" aria-label="Redo (Ctrl+Shift+Z)" title="Redo (Ctrl+Shift+Z)" disabled>
+        <button id="redo-btn" class="btn-icon max-md:size-8!" aria-label="Redo (Ctrl+Shift+Z)" title="Redo (Ctrl+Shift+Z)" disabled>
           <Icon name="redo" />
         </button>
 
-        <div class="mx-1.5 h-5 w-px bg-hairline" role="separator"></div>
+        <div class="mx-1.5 h-5 w-px bg-hairline max-md:mx-1" role="separator"></div>
 
         <button
           id="grid-btn"
-          class="btn-icon"
+          class="btn-icon max-md:size-8!"
           aria-label="Toggle grid (G)"
           title="Toggle grid (G)"
           aria-pressed="true"
@@ -60,7 +60,7 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
         </button>
         <button
           id="clear-btn"
-          class="btn-icon"
+          class="btn-icon max-md:size-8!"
           aria-label="Clear canvas"
           title="Clear canvas"
         >
@@ -80,13 +80,13 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
           <Icon name="minimize" />
         </button>
 
-        <button id="palette-btn" class="btn-icon md:hidden!" aria-label="Open tools panel" title="Open tools panel">
+        <button id="palette-btn" class="btn-icon max-md:size-8! md:hidden!" aria-label="Open tools panel" title="Open tools panel">
           <Icon name="palette" />
         </button>
 
         <button
           id="download-btn"
-          class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press"
+          class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press max-md:ml-0 max-md:h-7 max-md:px-3 max-md:text-[11px]"
           aria-label="Download PNG (Ctrl+D)"
           title="Download PNG (Ctrl+D)"
         >
@@ -100,13 +100,13 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
     <main class="relative flex min-h-0 flex-1">
       <!-- Tool rail -->
       <nav
-        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-3 max-md:left-1/2 max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2.5 max-md:py-2 max-md:shadow-xl max-md:shadow-shadow-blue/10 md:w-[54px] md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
+        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-12 max-md:left-1/2 max-md:max-w-[calc(100vw-24px)] max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:overflow-x-auto max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2 max-md:py-2 max-md:shadow-xl max-md:shadow-shadow-blue/10 max-[344px]:left-3 max-[344px]:translate-x-0 md:w-[54px] md:max-w-none md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
         aria-label="Drawing tools"
       >
         {tools.map((t) => (
           <button
             id={`tool-${t.id}`}
-            class="btn-icon relative"
+            class="btn-icon relative max-md:size-[30px]!"
             aria-label={t.label + " (" + t.hint + ")"}
             title={`${t.label} (${t.hint})`}
             aria-pressed="false"
@@ -114,11 +114,11 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
             <Icon name={t.icon} />
           </button>
         ))}
-        <div class="mx-0.5 h-5 w-px bg-hairline max-md:block md:hidden!" role="separator"></div>
+        <div class="mx-0.5 h-5 w-px bg-hairline max-md:hidden md:hidden md:block" role="separator"></div>
         <button
           id="fullscreen-btn-mobile"
           data-state="off"
-          class="btn-icon md:hidden!"
+          class="btn-icon max-md:size-[30px]! md:hidden!"
           aria-label="Toggle fullscreen (F)"
           title="Toggle fullscreen (F)"
         >
