@@ -1,0 +1,470 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "./Icon.astro";
+import SeoContent from "./SeoContent.astro";
+import LangSwitcher from "./LangSwitcher.astro";
+import { SITE } from "../lib/site";
+import { uiFor } from "../i18n/ui";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
+import type { PageContent } from "../i18n/content-types";
+
+interface Props {
+  locale: Locale;
+  page: PageContent;
+}
+
+const { locale, page } = Astro.props;
+const ui = uiFor(locale);
+
+const seoData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Sketchpad",
+  url: new URL(deriveLocaleHref(locale, "/"), SITE.url).href,
+  description: page.seoDescription,
+  applicationCategory: "DesignApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript. Works on desktop, tablet, and mobile browsers.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  featureList: [
+    "Free — no account or sign-up required",
+    "PNG export of drawings",
+    "Autosave in the browser",
+    "Touch, mouse, and stylus support",
+    "Works on desktop, tablet, and mobile",
+  ],
+  isAccessibleForFree: true,
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: page.home.faq.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const tools: { id: string; icon: string; label: string; hint: string }[] = [
+  { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
+  { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
+  { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
+  { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
+  { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+  { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
+  { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
+  { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
+  { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
+];
+
+const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b6829", "#0e9f6e", "#0ea5e9", "#e05a00", "#000000"];
+
+const homeHref = deriveLocaleHref(locale, "/");
+const aboutHref = deriveLocaleHref(locale, "/about");
+const privacyHref = deriveLocaleHref(locale, "/privacy");
+const termsHref = deriveLocaleHref(locale, "/terms");
+const contactHref = deriveLocaleHref(locale, "/contact");
+---
+
+<Layout
+  title={page.seoTitle}
+  description={page.seoDescription}
+  structuredData={[seoData, faqData]}
+  locale={locale}
+  route="/"
+>
+  <div id="app" class="flex h-dvh flex-col" data-lang={locale}>
+    <!-- Top bar -->
+    <header class="z-40 flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4">
+      <a href={homeHref} class="flex items-center gap-1.5 rounded-md px-1.5 py-1 max-md:gap-1 max-md:px-1" aria-label="Simple Sketchpad home">
+        <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <span class="text-sm font-semibold tracking-tight text-ink max-[420px]:hidden">{ui.siteName}</span>
+      </a>
+
+      <div class="ml-1 hidden items-center gap-1.5 rounded-full border border-hairline px-2.5 py-0.5 sm:flex">
+        <span id="autosave-dot" class="size-1.5 rounded-full bg-emerald-500"></span>
+        <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
+      </div>
+
+      <div class="flex flex-1 items-center justify-end gap-0.5 sm:gap-1">
+        <LangSwitcher locale={locale} route="/" compact={true} />
+
+        <button
+          id="undo-btn"
+          class="btn-icon max-md:size-8!"
+          aria-label={ui.canvas.undo}
+          title={ui.canvas.undo}
+          disabled
+        >
+          <Icon name="undo" />
+        </button>
+        <button id="redo-btn" class="btn-icon max-md:size-8!" aria-label={ui.canvas.redo} title={ui.canvas.redo} disabled>
+          <Icon name="redo" />
+        </button>
+
+        <div class="mx-1.5 h-5 w-px bg-hairline max-md:mx-1" role="separator"></div>
+
+        <button
+          id="grid-btn"
+          class="btn-icon max-md:size-8!"
+          aria-label={ui.canvas.toggleGrid}
+          title={ui.canvas.toggleGrid}
+          aria-pressed="true"
+        >
+          <Icon name="grid" />
+        </button>
+        <button
+          id="clear-btn"
+          class="btn-icon max-md:size-8!"
+          aria-label={ui.canvas.clearCanvas}
+          title={ui.canvas.clearCanvas}
+        >
+          <Icon name="trash" />
+        </button>
+
+        <div class="mx-1.5 hidden h-5 w-px bg-hairline sm:block" role="separator"></div>
+
+        <button
+          id="fullscreen-btn"
+          data-state="off"
+          class="btn-icon hidden! sm:grid!"
+          aria-label={ui.canvas.toggleFullscreen}
+          title={ui.canvas.toggleFullscreen}
+        >
+          <Icon name="maximize" />
+          <Icon name="minimize" />
+        </button>
+
+        <button id="palette-btn" class="btn-icon max-md:size-8! md:hidden!" aria-label={ui.canvas.palette} title={ui.canvas.palette}>
+          <Icon name="palette" />
+        </button>
+
+        <button
+          id="download-btn"
+          class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press max-md:ml-0 max-md:h-7 max-md:px-3 max-md:text-[11px]"
+          aria-label={ui.canvas.downloadPng}
+          title={ui.canvas.downloadPng}
+        >
+          <Icon name="download" class="size-4" />
+          <span class="hidden sm:inline">{ui.canvas.downloadPngShort}</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Workspace -->
+    <main class="relative flex min-h-0 flex-1">
+      <!-- Tool rail -->
+      <nav
+        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-12 max-md:left-1/2 max-md:max-w-[calc(100vw-24px)] max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:overflow-x-auto max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2 max-md:py-2 max-md:shadow-xl max-md:shadow-shadow-blue/10 max-[344px]:left-3 max-[344px]:translate-x-0 md:w-[54px] md:max-w-none md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
+        aria-label={ui.canvas.drawingTools}
+      >
+        {tools.map((t) => (
+          <button
+            id={`tool-${t.id}`}
+            class="btn-icon relative max-md:size-[30px]!"
+            aria-label={`${t.label} (${t.hint})`}
+            title={`${t.label} (${t.hint})`}
+            aria-pressed="false"
+          >
+            <Icon name={t.icon} />
+          </button>
+        ))}
+        <div class="mx-0.5 h-5 w-px bg-hairline max-md:hidden md:hidden md:block" role="separator"></div>
+        <button
+          id="fullscreen-btn-mobile"
+          data-state="off"
+          class="btn-icon max-md:size-[30px]! md:hidden!"
+          aria-label={ui.canvas.toggleFullscreen}
+          title={ui.canvas.toggleFullscreen}
+        >
+          <Icon name="maximize" />
+          <Icon name="minimize" />
+        </button>
+      </nav>
+
+      <!-- Canvas stage -->
+      <section id="stage" class="relative min-w-0 flex-1 touch-none select-none overflow-hidden bg-canvas-soft">
+        <canvas id="sketchpad-canvas" class="block h-full w-full cursor-crosshair" aria-label={ui.canvas.drawingTools}></canvas>
+      </section>
+
+      <!-- Options panel -->
+      <aside
+        id="options-panel"
+        class="panel-closed z-20 flex flex-col gap-5 border-hairline bg-white p-4 max-md:absolute max-md:bottom-16 max-md:right-3 max-md:top-14 max-md:w-64 max-md:rounded-xl max-md:border max-md:shadow-xl max-md:shadow-shadow-blue/10 md:w-[220px] md:shrink-0 md:border-l md:p-5"
+        aria-label={ui.canvas.toolOptions}
+      >
+        <div>
+          <p class="eyebrow">{ui.canvas.color}</p>
+          <div class="mt-2 grid grid-cols-5 gap-1.5" id="swatches">
+            {swatches.map((c) => (
+              <button
+                type="button"
+                class="swatch size-8 rounded-full ring-1 ring-inset ring-black/10 transition-transform hover:scale-105 max-md:size-9"
+                style={`background:${c}`}
+                data-color={c}
+                aria-label={`${ui.canvas.color} ${c}`}
+              ></button>
+            ))}
+            <label class="relative size-8 cursor-pointer rounded-full border border-hairline bg-[conic-gradient(from_0deg,#0d253d,#533afd,#ea2261,#f96bee,#9b6829,#0e9f6e,#0ea5e9,#0d253d)] max-md:size-9" title={ui.canvas.pickCustomColor}>
+              <input id="color-input" type="color" value="#0d253d" class="absolute inset-0 size-full cursor-pointer opacity-0" aria-label={ui.canvas.pickCustomColor} />
+              <span class="pointer-events-none absolute inset-0 grid place-items-center text-white">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M5 12h14M12 5v14" />
+                </svg>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-baseline justify-between">
+            <p class="eyebrow" id="size-title">{ui.canvas.stroke}</p>
+            <span class="text-[11px] font-semibold tabular-nums text-ink-secondary" id="size-label">6 {ui.canvas.px}</span>
+          </div>
+          <input
+            id="size-slider"
+            type="range"
+            min="1"
+            max="96"
+            value="6"
+            step="1"
+            class="mt-2 w-full accent-primary"
+            aria-label={ui.canvas.strokeSizeAria}
+          />
+        </div>
+
+        <div id="opacity-row">
+          <div class="flex items-baseline justify-between">
+            <p class="eyebrow">{ui.canvas.opacity}</p>
+            <span class="text-[11px] font-semibold tabular-nums text-ink-secondary" id="opacity-label">100%</span>
+          </div>
+          <input
+            id="opacity-slider"
+            type="range"
+            min="10"
+            max="100"
+            value="100"
+            step="5"
+            class="mt-2 w-full accent-primary"
+            aria-label={ui.canvas.opacityAria}
+          />
+        </div>
+
+        <div id="fill-row" class="hidden">
+          <p class="eyebrow">{ui.canvas.fillShapes}</p>
+          <button id="fill-toggle" type="button" class="mt-2 flex h-8 w-full items-center justify-between rounded-lg border border-hairline px-3 text-[13px] font-medium text-ink-secondary transition-colors hover:bg-canvas-soft" aria-pressed="false">
+            <span>{ui.canvas.fillShapes}</span>
+            <span aria-hidden="true" class="text-ink-mute">{ui.canvas.fillOff}</span>
+          </button>
+        </div>
+
+        <div class="mt-auto rounded-lg bg-canvas-soft p-3">
+          <p class="text-[11px] leading-relaxed text-ink-mute">
+            {ui.canvas.hints}
+          </p>
+        </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-hairline pt-3 text-[11px] font-medium text-ink-mute">
+          <a href={aboutHref} class="transition-colors hover:text-ink">{ui.nav.about}</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
+          <a href={privacyHref} class="transition-colors hover:text-ink">{ui.nav.privacyPolicy}</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
+          <a href={termsHref} class="transition-colors hover:text-ink">{ui.nav.terms}</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
+          <a href={contactHref} class="transition-colors hover:text-ink">{ui.nav.contact}</a>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Status bar -->
+    <footer class="flex h-9 shrink-0 items-center justify-between gap-3 border-t border-hairline bg-white/95 px-3 backdrop-blur sm:px-4">
+      <div class="flex items-center gap-1.5">
+        <button id="zoom-out-btn" class="btn-icon size-7" aria-label={ui.canvas.zoomOut} title={ui.canvas.zoomOut}>
+          <Icon name="minus" class="size-4" />
+        </button>
+        <button
+          id="zoom-100-btn"
+          class="h-7 min-w-[44px] rounded-md px-1 font-medium text-ink-secondary tabular-nums transition-colors hover:bg-canvas-soft"
+          aria-label={ui.canvas.zoom100}
+          title={ui.canvas.zoom100}
+        >
+          <span id="zoom-label">100%</span>
+        </button>
+        <button id="zoom-in-btn" class="btn-icon size-7" aria-label={ui.canvas.zoomIn} title={ui.canvas.zoomIn}>
+          <Icon name="plus" class="size-4" />
+        </button>
+        <button id="zoom-fit-btn" class="btn-icon ml-0.5 size-7" aria-label={ui.canvas.zoomFit} title={ui.canvas.zoomFit}>
+          <Icon name="fit" class="size-4" />
+        </button>
+      </div>
+      <p class="min-w-0 flex-1 truncate px-2 text-center text-[11px] text-ink-mute max-sm:hidden">
+        {ui.canvas.statusHint}
+      </p>
+      <span id="coords-label" class="max-sm:hidden text-[11px] tabular-nums text-ink-mute">0, 0</span>
+    </footer>
+  </div>
+
+  <SeoContent home={page.home} />
+</Layout>
+
+<style>
+  @reference "../styles/global.css";
+
+  .eyebrow {
+    @apply text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-mute;
+  }
+  .btn-icon {
+    @apply grid size-9 place-items-center rounded-lg text-ink-mute transition-colors hover:bg-canvas-soft hover:text-ink md:size-8;
+  }
+  .btn-icon:disabled {
+    @apply pointer-events-none opacity-35;
+  }
+  .btn-icon.is-active {
+    @apply bg-canvas-soft text-primary;
+  }
+  .kbd {
+    @apply rounded border border-hairline bg-white px-1 py-px font-sans text-[10px] font-medium text-ink-mute shadow-sm;
+  }
+  #clear-btn.is-armed {
+    @apply bg-[#ea2261] text-white hover:bg-[#d81b55] hover:text-white;
+  }
+</style>
+
+<style is:global>
+  #fullscreen-btn[data-state="on"] svg:first-of-type,
+  #fullscreen-btn-mobile[data-state="on"] svg:first-of-type,
+  #fullscreen-btn[data-state="off"] svg:last-of-type,
+  #fullscreen-btn-mobile[data-state="off"] svg:last-of-type {
+    display: none;
+  }
+</style>
+
+<script>
+  import { Sketchpad } from "../lib/sketchpad";
+  import { uiFor } from "../i18n/ui";
+  import type { Locale } from "../i18n/locales";
+
+  const rootEl = document.querySelector<HTMLElement>('[id="app"]');
+  const stage = document.getElementById("stage");
+  const canvas = document.getElementById("sketchpad-canvas");
+  if (!(stage instanceof HTMLElement) || !(canvas instanceof HTMLCanvasElement)) {
+    throw new Error("sketchpad shell elements missing");
+  }
+
+  const q = <T extends HTMLElement = HTMLElement>(id: string): T => {
+    const el = document.getElementById(id);
+    if (!el) throw new Error(`missing element: ${id}`);
+    return el as T;
+  };
+
+  const ui = uiFor((rootEl?.dataset.lang as Locale) ?? "en");
+
+  const swatches = document.querySelectorAll<HTMLElement>(".swatch");
+  if (!swatches.length) throw new Error("missing swatches");
+
+  const autosaveDot = q("autosave-dot");
+
+  const opacityLabel = q("opacity-label");
+  const sizeTitle = q("size-title");
+  const opacityRow = q("opacity-row");
+  const fillRow = q("fill-row");
+  const fillToggle = q<HTMLButtonElement>("fill-toggle");
+  const paletteBtn = q<HTMLButtonElement>("palette-btn");
+  const panel = q<HTMLElement>("options-panel");
+  const opacitySlider = q<HTMLInputElement>("opacity-slider");
+
+  opacitySlider.addEventListener("input", () => {
+    opacityLabel.textContent = `${opacitySlider.value}%`;
+  });
+
+  const sizeTitles = {
+    stroke: ui.canvas.stroke,
+    text: ui.canvas.textSize,
+    eraser: ui.canvas.eraserSize,
+  };
+
+  fillToggle.addEventListener("click", () => {
+    const on = fillToggle.getAttribute("aria-pressed") === "true";
+    fillToggle.setAttribute("aria-pressed", String(!on));
+    const span = fillToggle.querySelector("span:last-of-type");
+    if (span) span.textContent = on ? ui.canvas.fillOff : ui.canvas.fillOn;
+  });
+
+  paletteBtn.addEventListener("click", () => {
+    const open = panel.classList.toggle("panel-closed") === false;
+    paletteBtn.setAttribute("aria-pressed", String(open));
+    paletteBtn.classList.toggle("is-active", open);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (panel.classList.contains("panel-closed")) return;
+    const target = e.target as Node | null;
+    if (!target) return;
+    if (panel.contains(target) || paletteBtn.contains(target)) return;
+    panel.classList.add("panel-closed");
+    paletteBtn.classList.remove("is-active");
+    paletteBtn.setAttribute("aria-pressed", "false");
+  });
+
+  const pad = new Sketchpad({
+    stage,
+    canvas,
+    ui: {
+      toolButtons: {
+        brush: q<HTMLButtonElement>("tool-brush"),
+        pencil: q<HTMLButtonElement>("tool-pencil"),
+        rect: q<HTMLButtonElement>("tool-rect"),
+        ellipse: q<HTMLButtonElement>("tool-ellipse"),
+        triangle: q<HTMLButtonElement>("tool-triangle"),
+        line: q<HTMLButtonElement>("tool-line"),
+        arrow: q<HTMLButtonElement>("tool-arrow"),
+        text: q<HTMLButtonElement>("tool-text"),
+        eraser: q<HTMLButtonElement>("tool-eraser"),
+      },
+      undoBtn: q<HTMLButtonElement>("undo-btn"),
+      redoBtn: q<HTMLButtonElement>("redo-btn"),
+      zoomOutBtn: q<HTMLButtonElement>("zoom-out-btn"),
+      zoomInBtn: q<HTMLButtonElement>("zoom-in-btn"),
+      zoomFitBtn: q<HTMLButtonElement>("zoom-fit-btn"),
+      zoom100Btn: q<HTMLButtonElement>("zoom-100-btn"),
+      clearBtn: q<HTMLButtonElement>("clear-btn"),
+      gridBtn: q<HTMLButtonElement>("grid-btn"),
+      fullscreenBtn: q<HTMLButtonElement>("fullscreen-btn"),
+      fullscreenBtnMobile: q<HTMLButtonElement>("fullscreen-btn-mobile"),
+      downloadBtn: q<HTMLButtonElement>("download-btn"),
+      swatches,
+      colorInput: q<HTMLInputElement>("color-input"),
+      sizeSlider: q<HTMLInputElement>("size-slider"),
+      sizeLabel: q<HTMLElement>("size-label"),
+      opacitySlider,
+      opacityLabel,
+      fillToggle,
+      zoomLabel: q<HTMLElement>("zoom-label"),
+      coordsLabel: q<HTMLElement>("coords-label"),
+      autosaveLabel: q<HTMLElement>("autosave-label"),
+      strings: {
+        autosaveSaved: ui.canvas.autosaveSaved,
+        autosaveSaving: ui.canvas.autosaveSaving,
+        autosaveNotSaved: ui.canvas.autosaveNotSaved,
+        px: ui.canvas.px,
+      },
+    },
+    onState: (s) => {
+      const shapeTools = new Set(["rect", "ellipse", "triangle"]);
+      fillRow.classList.toggle("hidden", !shapeTools.has(s.tool));
+      opacityRow.classList.toggle("hidden", s.tool === "eraser");
+      sizeTitle.textContent = s.tool === "text" ? sizeTitles.text : s.tool === "eraser" ? sizeTitles.eraser : sizeTitles.stroke;
+      const renderFill = fillToggle.querySelector("span:last-of-type");
+      if (renderFill) renderFill.textContent = s.filled ? ui.canvas.fillOn : ui.canvas.fillOff;
+      fillToggle.setAttribute("aria-pressed", String(s.filled));
+      autosaveDot.classList.toggle("bg-emerald-500", s.saved === "saved");
+      autosaveDot.classList.toggle("bg-amber-400", s.saved === "saving");
+      autosaveDot.classList.toggle("bg-[#ea2261]", s.saved === "dirty");
+    },
+  });
+
+  pad.init();
+</script>

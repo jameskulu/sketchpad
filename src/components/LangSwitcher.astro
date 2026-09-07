@@ -1,0 +1,84 @@
+---
+import { LOCALES, deriveLocaleHref, type Locale } from "../i18n/locales";
+
+interface Props {
+  locale: Locale;
+  /** current route path (e.g. "/about") to build the localized link */
+  route: string;
+  compact?: boolean;
+}
+
+const { locale, route, compact } = Astro.props;
+
+const items = LOCALES.map((l) => ({
+  code: l.code,
+  native: l.native,
+  href: deriveLocaleHref(l.code, route),
+  current: l.code === locale,
+}));
+
+const currentNative = LOCALES.find((l) => l.code === locale)?.native ?? "English";
+---
+
+<div class="lang-switcher relative" data-locale={locale}>
+  <button
+    type="button"
+    class="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[13px] font-medium text-ink-mute transition-colors hover:bg-canvas-soft hover:text-ink"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label={compact ? currentNative : "Language"}
+    data-lang-toggle
+  >
+    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9s-1.4 6.4-3.9 9c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3Z" />
+    </svg>
+    <span class="lang-current max-[420px]:hidden">{currentNative}</span>
+    <svg class="size-3 text-ink-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <ul
+    class="lang-menu absolute right-0 z-50 mt-1 hidden min-w-[170px] rounded-lg border border-hairline bg-white p-1 shadow-lg shadow-shadow-blue/10"
+    role="listbox"
+    data-lang-menu
+    aria-label="Choose language"
+  >
+    {items.map((it) => (
+      <li role="option" aria-selected={it.current}>
+        <a
+          href={it.href}
+          class={"flex items-center justify-between gap-3 rounded-md px-2.5 py-1.5 text-[13px] font-medium " + (it.current ? "text-primary" : "text-ink-secondary hover:bg-canvas-soft hover:text-ink")}
+        >
+          <span class="flex items-center gap-2">
+            <span class="text-ink-mute" aria-hidden="true">•</span>
+            {it.native}
+          </span>
+          {it.current && (
+            <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 13l4 4L19 7" /></svg>
+          )}
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  @reference "../styles/global.css";
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>(".lang-switcher");
+  const toggle = root?.querySelector<HTMLButtonElement>("[data-lang-toggle]");
+  const menu = root?.querySelector<HTMLElement>("[data-lang-menu]");
+  if (root && toggle && menu) {
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = menu.classList.toggle("hidden") === false;
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+    document.addEventListener("click", (e) => {
+      if (root.contains(e.target as Node)) return;
+      menu.classList.add("hidden");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+  }
+</script>

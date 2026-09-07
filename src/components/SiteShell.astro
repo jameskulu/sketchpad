@@ -1,26 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import LangSwitcher from "./LangSwitcher.astro";
 import { SITE } from "../lib/site";
+import { uiFor } from "../i18n/ui";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
 
 interface Props {
   title: string;
   description?: string;
+  locale: Locale;
+  /** current route path (e.g. "/about") for localized links + hreflang */
+  route: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, locale, route } = Astro.props;
+const ui = uiFor(locale);
 
 const links = [
-  { href: "/about", label: "About" },
-  { href: "/privacy", label: "Privacy Policy" },
-  { href: "/terms", label: "Terms & Conditions" },
-  { href: "/contact", label: "Contact Us" },
-];
+  { href: "/about", label: ui.nav.about },
+  { href: "/privacy", label: ui.nav.privacyPolicy },
+  { href: "/terms", label: ui.nav.terms },
+  { href: "/contact", label: ui.nav.contact },
+].map((l) => ({ ...l, href: deriveLocaleHref(locale, l.href) }));
+
+const homeHref = deriveLocaleHref(locale, "/");
+const openHref = deriveLocaleHref(locale, "/");
 ---
 
-<Layout title={`${title} — Simple Sketchpad`} description={description}>
+<Layout title={`${title} — Simple Sketchpad`} description={description} locale={locale} route={route}>
   <div class="flex min-h-full flex-col">
-    <header class="flex h-14 shrink-0 items-center justify-between border-b border-hairline bg-white/95 px-4 sm:px-6">
-      <a href="/" class="flex items-center gap-2 rounded-md px-1.5 py-1" aria-label="Back to the sketchpad">
+    <header class="z-40 flex h-14 shrink-0 items-center justify-between border-b border-hairline bg-white/95 px-4 sm:px-6">
+      <a href={homeHref} class="flex items-center gap-2 rounded-md px-1.5 py-1" aria-label="Back to the sketchpad">
         <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
           <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
         </svg>
@@ -32,7 +42,8 @@ const links = [
             {l.label}
           </a>
         ))}
-        <a href="/" class="ml-1 hidden rounded-full bg-primary px-3.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep sm:inline-block">Open sketchpad</a>
+        <LangSwitcher locale={locale} route={route} compact={true} />
+        <a href={openHref} class="ml-1 hidden rounded-full bg-primary px-3.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep sm:inline-block">{ui.footer.openSketchpad}</a>
       </nav>
     </header>
 
@@ -47,7 +58,7 @@ const links = [
             <a href={l.href} class="text-[13px] font-medium text-ink-mute transition-colors hover:text-ink">{l.label}</a>
           ))}
         </nav>
-        <p class="text-[13px] text-ink-mute">© 2026 {SITE.name}</p>
+        <p class="text-[13px] text-ink-mute">{ui.footer.copyright(String(new Date().getFullYear()))}</p>
       </div>
     </footer>
   </div>

@@ -34,6 +34,12 @@ export interface SketchpadUI {
   zoomLabel: HTMLElement;
   coordsLabel: HTMLElement;
   autosaveLabel: HTMLElement;
+  strings?: {
+    autosaveSaved: string;
+    autosaveSaving: string;
+    autosaveNotSaved: string;
+    px: string;
+  };
 }
 
 export interface UIState {
@@ -879,7 +885,7 @@ export class Sketchpad {
     const min = isText ? 12 : isEraser ? 4 : 1;
     const max = isText ? 144 : isEraser ? 128 : 96;
     this.sizes[this.tool] = clamp(Number(ui.sizeSlider.value), min, max);
-    ui.sizeLabel.textContent = `${this.sizes[this.tool]} px`;
+    ui.sizeLabel.textContent = `${this.sizes[this.tool]} ${ui.strings?.px ?? "px"}`;
     this.emit();
   }
 
@@ -892,7 +898,7 @@ export class Sketchpad {
     ui.sizeSlider.min = String(min);
     ui.sizeSlider.max = String(max);
     ui.sizeSlider.value = String(this.getStrokeWidth());
-    ui.sizeLabel.textContent = `${this.getStrokeWidth()} px`;
+    ui.sizeLabel.textContent = `${this.getStrokeWidth()} ${ui.strings?.px ?? "px"}`;
   }
 
   getStrokeWidth(): number {
@@ -1068,17 +1074,17 @@ export class Sketchpad {
     ui.fullscreenBtn.dataset.state = document.fullscreenElement ? "on" : "off";
     ui.fullscreenBtnMobile.dataset.state = document.fullscreenElement ? "on" : "off";
     if (s.saved === "saved") {
-      ui.autosaveLabel.textContent = "Saved";
+      ui.autosaveLabel.textContent = ui.strings?.autosaveSaved ?? "Saved";
       ui.autosaveLabel.dataset.state = "saved";
     } else if (s.saved === "saving") {
-      ui.autosaveLabel.textContent = "Saving…";
+      ui.autosaveLabel.textContent = ui.strings?.autosaveSaving ?? "Saving…";
       ui.autosaveLabel.dataset.state = "saving";
     } else {
-      ui.autosaveLabel.textContent = "Not saved";
+      ui.autosaveLabel.textContent = ui.strings?.autosaveNotSaved ?? "Not saved";
       ui.autosaveLabel.dataset.state = "dirty";
     }
     this.ui.sizeSlider.value = String(this.getStrokeWidth());
-    this.ui.sizeLabel.textContent = `${this.getStrokeWidth()} px`;
+    this.ui.sizeLabel.textContent = `${this.getStrokeWidth()} ${ui.strings?.px ?? "px"}`;
     this.ui.opacitySlider.value = String(Math.round(this.opacity * 100));
     this.ui.opacityLabel.textContent = `${Math.round(this.opacity * 100)}%`;
     this.onState(s);

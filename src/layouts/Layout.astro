@@ -2,6 +2,7 @@
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 import { SITE } from "../lib/site";
+import { localeAlternates, DEFAULT_LOCALE, type Locale } from "../i18n/locales";
 
 interface Props {
   title?: string;
@@ -10,6 +11,8 @@ interface Props {
   ogImage?: string;
   structuredData?: object | object[];
   robots?: string;
+  locale?: Locale;
+  route?: string;
 }
 
 const {
@@ -19,6 +22,8 @@ const {
   ogImage = "/og-image.png",
   structuredData,
   robots = "index, follow",
+  locale = DEFAULT_LOCALE,
+  route = "/",
 } = Astro.props;
 
 const ogTitle = title;
@@ -27,6 +32,8 @@ const pathname = Astro.url.pathname;
 const canonical = new URL(pathname, SITE.url).href;
 const ogUrl = canonical;
 const ogImageUrl = new URL(ogImage, SITE.url).href;
+const ogLocale = locale === "ja" ? "ja_JP" : locale === "ko" ? "ko_KR" : locale === "pt" ? "pt_BR" : `${locale}_${locale.toUpperCase()}`;
+const alternates = localeAlternates(route).map((a) => ({ ...a, href: new URL(a.href, SITE.url).href }));
 const scripts = structuredData
   ? Array.isArray(structuredData)
     ? structuredData
@@ -35,7 +42,7 @@ const scripts = structuredData
 ---
 
 <!doctype html>
-<html lang="en" class="h-full">
+<html lang={locale} class="h-full">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -48,6 +55,9 @@ const scripts = structuredData
 		<meta name="robots" content={robots} />
 		<link rel="canonical" href={canonical} />
 		<meta name="theme-color" content="#f6f9fc" />
+		{alternates.map((a) => (
+			<link rel="alternate" hreflang={a.code === DEFAULT_LOCALE ? "x-default" : a.code} href={a.href} />
+		))}
 
 		<!-- Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-9BXK92CYK9" is:inline></script>
@@ -61,7 +71,7 @@ const scripts = structuredData
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content={SITE.name} />
-		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale" content={ogLocale} />
 		<meta property="og:title" content={ogTitle} />
 		<meta property="og:description" content={ogDescription} />
 		<meta property="og:url" content={ogUrl} />
