@@ -1,6 +1,84 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "../components/Icon.astro";
+import SeoContent from "../components/SeoContent.astro";
+import { SITE } from "../lib/site";
+
+const seoData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Sketchpad",
+  url: SITE.url,
+  description:
+    "A fast, free online sketchpad and digital drawing board for drawing, sketching, shapes, and text. No sign-up, works on any device.",
+  applicationCategory: "DesignApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript. Works on desktop, tablet, and mobile browsers.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  featureList: [
+    "Free — no account or sign-up required",
+    "PNG export of drawings",
+    "Autosave in the browser",
+    "Touch, mouse, and stylus support",
+    "Works on desktop, tablet, and mobile",
+  ],
+  isAccessibleForFree: true,
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What are the best online sketchpad tools?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "The best online sketchpad tools are browser-based and free to use without signing up. Our Sketchpad offers a smooth brush, a lifelike graphite pencil, shapes, lines, arrows, text, autosave, and one-click PNG export on every device. It combines simplicity, privacy, and a zero cost — no account, no watermarks, no ads.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is a sketchpad?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A sketchpad is a surface used for drawing and sketching quickly. Traditionally it is a small pad of blank paper; digitally, it is an app or website where you draw on a screen with a mouse, touch, or stylus. Our free online sketchpad gives you a blank digital canvas with drawing tools, colors, and shapes right in your browser.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How to use the sketchpad app?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Open the sketchpad, pick a tool (brush, pencil, rectangle, ellipse, triangle, line, arrow, or text), choose a color and stroke size, then start drawing. Use undo and redo to fix mistakes, add text labels to annotate, toggle the grid for alignment, and press Download PNG to save your drawing as an image file.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is a drawing pad?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A drawing pad is a surface used for making drawings. It can be physical, like a paper sketchpad or a graphics tablet, or digital, like a browser-based drawing pad. Online drawing pads let you sketch directly on your screen with a finger, stylus, or mouse — no extra hardware needed.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What does a drawing pad do?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "A drawing pad turns your drawing movements into digital artwork. You draw with a finger, stylus, or mouse; the pad captures your strokes and lets you change colors, fix mistakes, reposition elements, and export the finished drawing. It replaces physical paper for people who create digitally.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I use the sketchpad on mobile phones?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. The sketchpad is fully touch-optimized: draw with your finger, pinch to zoom, and use the compact mobile toolbar to switch tools, colors, and sizes. Everything works on phones, tablets, desktops, and laptops, and there is a fullscreen mode for distraction-free drawing.",
+      },
+    },
+  ],
+};
 
 const tools: { id: string; icon: string; label: string; hint: string }[] = [
   { id: "brush", icon: "brush", label: "Brush", hint: "B" },
@@ -17,7 +95,11 @@ const tools: { id: string; icon: string; label: string; hint: string }[] = [
 const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b6829", "#0e9f6e", "#0ea5e9", "#e05a00", "#000000"];
 ---
 
-<Layout>
+<Layout
+  title="Sketchpad — Free Online Sketchpad & Digital Drawing Board"
+  description="Draw online for free with this fast sketchpad — a digital drawing board for sketching, shapes, text, and more. No sign-up, works on any device, with PNG export."
+  structuredData={[seoData, faqData]}
+>
   <div id="app">
     <!-- Top bar -->
     <header class="flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4">
@@ -208,6 +290,16 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
             <kbd class="kbd">Space</kbd> pan · <kbd class="kbd">Ctrl</kbd>+<kbd class="kbd">scroll</kbd> zoom · <kbd class="kbd">[</kbd> <kbd class="kbd">]</kbd> size
           </p>
         </div>
+
+        <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-hairline pt-3 text-[11px] font-medium text-ink-mute">
+          <a href="/about" class="transition-colors hover:text-ink">About</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
+          <a href="/privacy" class="transition-colors hover:text-ink">Privacy</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
+          <a href="/terms" class="transition-colors hover:text-ink">Terms</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
+          <a href="/contact" class="transition-colors hover:text-ink">Contact</a>
+        </div>
       </aside>
     </main>
 
@@ -238,6 +330,8 @@ const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b682
       <span id="coords-label" class="max-sm:hidden text-[11px] tabular-nums text-ink-mute">0, 0</span>
     </footer>
   </div>
+
+  <SeoContent />
 </Layout>
 
 <style>

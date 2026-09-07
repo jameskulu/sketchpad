@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Keep search engines out of the SPA error helpers (already noindexed, this is a safety net).
+Disallow: /404
+Disallow: /500
+
+Sitemap: https://simplesketchpad.com/sitemap-index.xml

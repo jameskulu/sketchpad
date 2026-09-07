@@ -1,6 +1,37 @@
 ---
 import "@fontsource-variable/inter";
 import "../styles/global.css";
+import { SITE } from "../lib/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  structuredData?: object | object[];
+  robots?: string;
+}
+
+const {
+  title = "Sketchpad — Free Online Drawing Board",
+  description = "A fast, free online sketchpad for drawing, sketching, shapes, and text. Draw online on a clean digital drawing board — no sign-up, works on any device.",
+  keywords = "sketchpad, online sketchpad, free online sketchpad, online sketchpad free, drawing online sketchpad, best online sketchpad tools, draw online sketchpad, best online sketchpad, sketchpad app, digital sketchpad, drawing board, drawing board online, online drawing board, drawing board for kids, drawpad, online drawing sketchpad, drawing pad, digital drawing pad, drawing pad for kids, drawing pad online, drawing pad for laptop, simple drawing pad, simple sketchpad",
+  ogImage = "/og-image.png",
+  structuredData,
+  robots = "index, follow",
+} = Astro.props;
+
+const ogTitle = title;
+const ogDescription = description;
+const pathname = Astro.url.pathname;
+const canonical = new URL(pathname, SITE.url).href;
+const ogUrl = canonical;
+const ogImageUrl = new URL(ogImage, SITE.url).href;
+const scripts = structuredData
+  ? Array.isArray(structuredData)
+    ? structuredData
+    : [structuredData]
+  : [];
 ---
 
 <!doctype html>
@@ -11,14 +42,49 @@ import "../styles/global.css";
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Simple Sketchpad — a fast, minimal online drawing board. Draw, sketch, add shapes, text, and arrows. No account, no clutter." />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<meta name="robots" content={robots} />
+		<link rel="canonical" href={canonical} />
 		<meta name="theme-color" content="#f6f9fc" />
-		<meta property="og:title" content="Simple Sketchpad" />
-		<meta property="og:description" content="A fast, minimal online sketchpad for drawing, shapes, text, and arrows." />
+
+		<!-- Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-9BXK92CYK9" is:inline></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-9BXK92CYK9');
+		</script>
+
+		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
-		<title>Simple Sketchpad — Draw, sketch, and share ideas</title>
+		<meta property="og:site_name" content={SITE.name} />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:title" content={ogTitle} />
+		<meta property="og:description" content={ogDescription} />
+		<meta property="og:url" content={ogUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="Sketchpad — a free online sketchpad and drawing board" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={ogTitle} />
+		<meta name="twitter:description" content={ogDescription} />
+		<meta name="twitter:image" content={ogImageUrl} />
+
+		{scripts.map((s) => (
+			<script
+				type="application/ld+json"
+				set:html={JSON.stringify(s)}
+				is:inline
+			></script>
+		))}
 	</head>
-	<body class="h-full bg-canvas-soft text-ink font-sans antialiased">
+	<body class="min-h-full bg-canvas-soft text-ink font-sans antialiased">
 		<slot />
 	</body>
 </html>

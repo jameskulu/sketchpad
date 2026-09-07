@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { SITE } from "../lib/site";
+
+interface Props {
+  error?: unknown;
+}
+
+const { error } = Astro.props;
+---
+
+<Layout
+  title="500 — Something Went Wrong | Simple Sketchpad"
+  description="An unexpected error occurred. Please try again in a moment."
+  robots="noindex, nofollow"
+>
+  <div class="flex min-h-full flex-col bg-canvas-soft">
+    <header class="flex h-14 shrink-0 items-center border-b border-hairline bg-white/95 px-4 sm:px-6">
+      <a href="/" class="flex items-center gap-2 rounded-md px-1.5 py-1" aria-label="Back to the sketchpad">
+        <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <span class="text-sm font-semibold tracking-tight text-ink">{SITE.name}</span>
+      </a>
+    </header>
+
+    <main class="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center px-4 py-16 text-center">
+      <p class="eyebrow text-primary">Error 500</p>
+      <h1 class="mt-4 text-5xl font-bold tracking-tight text-ink sm:text-6xl">Something went wrong</h1>
+      <p class="mt-4 text-[16px] leading-7 text-ink-secondary">
+        An unexpected error occurred while loading this page. Try refreshing, or head back to the
+        sketchpad and keep going.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-primary-deep">Back to the sketchpad</a>
+        <a href="/contact" class="text-sm font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:decoration-primary">Report the issue</a>
+      </div>
+      {error && (
+        <p class="mt-6 max-w-md truncate text-xs text-ink-mute" aria-hidden="true">
+          {error instanceof Error ? error.message : "Unknown error"}
+        </p>
+      )}
+    </main>
+  </div>
+</Layout>
+
+<style>
+  @reference "../styles/global.css";
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em];
+  }
+</style>
