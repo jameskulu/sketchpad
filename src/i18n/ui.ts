@@ -20,6 +20,7 @@ export interface UIStrings {
     palette: string;
     undo: string;
     redo: string;
+    deleteSelection: string;
     toggleGrid: string;
     clearCanvas: string;
     toggleFullscreen: string;
@@ -48,6 +49,7 @@ export interface UIStrings {
     statusHint: string;
   };
   tools: {
+    select: string;
     brush: string;
     pencil: string;
     rect: string;
@@ -72,6 +74,7 @@ const en: UIStrings = {
     palette: "Open tools panel",
     undo: "Undo (Ctrl+Z)",
     redo: "Redo (Ctrl+Shift+Z)",
+    deleteSelection: "Delete selection (Delete)",
     toggleGrid: "Toggle grid (G)",
     clearCanvas: "Clear canvas",
     toggleFullscreen: "Toggle fullscreen (F)",
@@ -100,6 +103,7 @@ const en: UIStrings = {
     statusHint: "Click to draw · two fingers to zoom · Ctrl+scroll to zoom · double-click text to edit",
   },
   tools: {
+    select: "Select",
     brush: "Brush",
     pencil: "Pencil",
     rect: "Rectangle",
@@ -124,6 +128,7 @@ export const UI: UI = {
       palette: "Abrir panel de herramientas",
       undo: "Deshacer (Ctrl+Z)",
       redo: "Rehacer (Ctrl+Shift+Z)",
+      deleteSelection: "Eliminar selección (Supr)",
       toggleGrid: "Activar cuadrícula (G)",
       clearCanvas: "Borrar lienzo",
       toggleFullscreen: "Pantalla completa (F)",
@@ -152,6 +157,7 @@ export const UI: UI = {
       statusHint: "Haz clic para dibujar · dos dedos para zoom · Ctrl+scroll para zoom · doble clic para editar texto",
     },
     tools: {
+      select: "Seleccionar",
       brush: "Pincel",
       pencil: "Lápiz",
       rect: "Rectángulo",
@@ -173,6 +179,7 @@ export const UI: UI = {
       palette: "ツールパネルを開く",
       undo: "元に戻す (Ctrl+Z)",
       redo: "やり直す (Ctrl+Shift+Z)",
+      deleteSelection: "選択を削除 (Delete)",
       toggleGrid: "グリッド切り替え (G)",
       clearCanvas: "キャンバスを消去",
       toggleFullscreen: "全画面切り替え (F)",
@@ -201,6 +208,7 @@ export const UI: UI = {
       statusHint: "クリックで描画 · 2本指でズーム · Ctrl+スクロールでズーム · テキストをダブルクリックで編集",
     },
     tools: {
+      select: "選択",
       brush: "ブラシ",
       pencil: "鉛筆",
       rect: "長方形",
@@ -222,6 +230,7 @@ export const UI: UI = {
       palette: "Ouvrir le panneau d'outils",
       undo: "Annuler (Ctrl+Z)",
       redo: "Rétablir (Ctrl+Shift+Z)",
+      deleteSelection: "Supprimer la sélection (Suppr)",
       toggleGrid: "Activer la grille (G)",
       clearCanvas: "Effacer le canevas",
       toggleFullscreen: "Plein écran (F)",
@@ -250,6 +259,7 @@ export const UI: UI = {
       statusHint: "Cliquez pour dessiner · deux doigts pour zoomer · Ctrl+molette pour zoomer · double-clic sur un texte pour éditer",
     },
     tools: {
+      select: "Sélectionner",
       brush: "Pinceau",
       pencil: "Crayon",
       rect: "Rectangle",
@@ -271,6 +281,7 @@ export const UI: UI = {
       palette: "Werkzeugpanel öffnen",
       undo: "Rückgängig (Ctrl+Z)",
       redo: "Wiederholen (Ctrl+Shift+Z)",
+      deleteSelection: "Auswahl löschen (Entf)",
       toggleGrid: "Raster umschalten (G)",
       clearCanvas: "Zeichenfläche leeren",
       toggleFullscreen: "Vollbild umschalten (F)",
@@ -299,6 +310,7 @@ export const UI: UI = {
       statusHint: "Zum Zeichnen klicken · mit zwei Fingern zoomen · Strg+Mausrad zoomen · Text doppelklicken zum Bearbeiten",
     },
     tools: {
+      select: "Auswählen",
       brush: "Pinsel",
       pencil: "Bleistift",
       rect: "Rechteck",
@@ -320,6 +332,7 @@ export const UI: UI = {
       palette: "Abrir painel de ferramentas",
       undo: "Desfazer (Ctrl+Z)",
       redo: "Refazer (Ctrl+Shift+Z)",
+      deleteSelection: "Excluir seleção (Delete)",
       toggleGrid: "Ativar grade (G)",
       clearCanvas: "Limpar tela",
       toggleFullscreen: "Tela cheia (F)",
@@ -348,6 +361,7 @@ export const UI: UI = {
       statusHint: "Clique para desenhar · dois dedos para zoom · Ctrl+scroll para zoom · duplo clique para editar o texto",
     },
     tools: {
+      select: "Selecionar",
       brush: "Pincel",
       pencil: "Lápis",
       rect: "Retângulo",
@@ -369,6 +383,7 @@ export const UI: UI = {
       palette: "도구 패널 열기",
       undo: "실행 취소 (Ctrl+Z)",
       redo: "다시 실행 (Ctrl+Shift+Z)",
+      deleteSelection: "선택 삭제 (Delete)",
       toggleGrid: "격자 전환 (G)",
       clearCanvas: "캔버스 지우기",
       toggleFullscreen: "전체 화면 (F)",
@@ -397,6 +412,7 @@ export const UI: UI = {
       statusHint: "클릭하여 그리기 · 두 손가락으로 줌 · Ctrl+스크롤 줌 · 텍스트를 더블클릭하여 편집",
     },
     tools: {
+      select: "선택",
       brush: "브러시",
       pencil: "연필",
       rect: "사각형",
@@ -418,6 +434,7 @@ export const UI: UI = {
       palette: "Apri pannello strumenti",
       undo: "Annulla (Ctrl+Z)",
       redo: "Ripeti (Ctrl+Shift+Z)",
+      deleteSelection: "Elimina selezione (Canc)",
       toggleGrid: "Attiva griglia (G)",
       clearCanvas: "Cancella tela",
       toggleFullscreen: "Schermo intero (F)",
@@ -446,6 +463,7 @@ export const UI: UI = {
       statusHint: "Clicca per disegnare · due dita per lo zoom · Ctrl+scroll per zoomare · doppio clic per modificare il testo",
     },
     tools: {
+      select: "Seleziona",
       brush: "Pennello",
       pencil: "Matita",
       rect: "Rettangolo",

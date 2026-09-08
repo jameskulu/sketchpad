@@ -1,10 +1,13 @@
 import {
   cloneSnapshot,
   contentBounds,
+  elementBounds,
+  elementCenter,
   nextId,
   pointInElement,
   type Element,
   type Erasure,
+  type ShapeElement,
   type Snapshot,
   type TextElement,
   type ToolId,
@@ -15,6 +18,7 @@ export interface SketchpadUI {
   toolButtons: Record<ToolId, HTMLButtonElement>;
   undoBtn: HTMLButtonElement;
   redoBtn: HTMLButtonElement;
+  deleteBtn: HTMLButtonElement;
   zoomOutBtn: HTMLButtonElement;
   zoomInBtn: HTMLButtonElement;
   zoomFitBtn: HTMLButtonElement;
@@ -44,6 +48,7 @@ export interface SketchpadUI {
 
 export interface UIState {
   tool: ToolId;
+  hasSelection: boolean;
   canUndo: boolean;
   canRedo: boolean;
   zoom: number;
@@ -87,6 +92,24 @@ interface ActivePointer {
   pressure: number;
 }
 
+type SelCorner = "nw" | "ne" | "se" | "sw";
+
+interface SelGesture {
+  mode: "move" | "resize" | "rotate";
+  prev: Snapshot;
+  moved: boolean;
+  sx0: number;
+  sy0: number;
+  wx0: number;
+  wy0: number;
+  corner: SelCorner | null;
+  base: Element;
+  center: { x: number; y: number };
+  rot0: number;
+  centerS: { x: number; y: number };
+  startA: number;
+}
+
 export class Sketchpad {
   private stage: HTMLElement;
   private canvas: HTMLCanvasElement;
@@ -110,6 +133,7 @@ export class Sketchpad {
   private tool: ToolId = "brush";
   private color = "#0d253d";
   private sizes: Record<ToolId, number> = {
+    select: 1,
     brush: 6,
     pencil: 3,
     rect: 6,
@@ -143,6 +167,9 @@ export class Sketchpad {
   private clearArmed = false;
   private clearTimer: number | null = null;
   private hover = { x: -10000, y: -10000, over: false };
+  private selEl: Element | null = null;
+  private selMode: "idle" | "move" | "resize" | "rotate" = "idle";
+  private selGe: SelGesture | null = null;
 
   constructor(opts: SketchpadOptions) {
     this.stage = opts.stage;
@@ -234,8 +261,8 @@ export class Sketchpad {
     return { elements: this.elements, erasures: this.erasures };
   }
 
-  private pushHistory(): void {
-    const snap = cloneSnapshot(this.snapshotData());
+  private pushHistory(prev?: Snapshot): void {
+    const snap = prev ?? cloneSnapshot(this.snapshotData());
     this.undoStack.push(snap);
     if (this.undoStack.length > HISTORY_LIMIT) this.undoStack.shift();
     this.redoStack = [];
@@ -250,6 +277,7 @@ export class Sketchpad {
     const snap = this.undoStack.pop()!;
     this.elements = snap.elements;
     this.erasures = snap.erasures;
+    this.deselect();
     this.markDirty();
     this.rim();
     this.emit();
@@ -262,6 +290,7 @@ export class Sketchpad {
     const snap = this.redoStack.pop()!;
     this.elements = snap.elements;
     this.erasures = snap.erasures;
+    this.deselect();
     this.markDirty();
     this.rim();
     this.emit();
@@ -279,6 +308,7 @@ export class Sketchpad {
     this.pushHistory();
     this.elements = [];
     this.erasures = [];
+    this.deselect();
     this.rim();
     this.emit();
   }
@@ -378,11 +408,16 @@ export class Sketchpad {
     if (this.hover.over && !this.editingText && !this.pinching && !this.spaceKeyDown && this.panningId === null) {
       if (this.tool === "eraser") {
         this.renderEraserCursor(ctx);
+      } else if (this.tool === "select") {
+        if (this.selMode === "idle" && !(this.selEl && this.selHandleAt(this.hover.x, this.hover.y))) {
+          this.renderSelectPointer(ctx);
+        }
       } else {
         this.renderPointer(ctx);
       }
     }
 
+    this.renderSelection(ctx);
     this.updateCursor();
     this.ui.zoomLabel.textContent = `${Math.round(this.scale * 100)}%`;
   }
@@ -440,6 +475,28 @@ export class Sketchpad {
     ctx.arc(x, y, 2, 0, Math.PI * 2);
     ctx.fillStyle = outline;
     ctx.fill();
+    ctx.restore();
+  }
+
+  private renderSelectPointer(ctx: CanvasRenderingContext2D): void {
+    const x = this.hover.x;
+    const y = this.hover.y;
+    ctx.save();
+    ctx.lineJoin = "round";
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 9, y + 2.5);
+    ctx.lineTo(x + 6, y + 6);
+    ctx.lineTo(x + 11, y + 11);
+    ctx.lineTo(x + 8, y + 13);
+    ctx.lineTo(x + 3, y + 8);
+    ctx.lineTo(x, y + 10);
+    ctx.closePath();
+    ctx.fillStyle = "rgba(255,255,255,0.95)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(13,37,61,0.65)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -566,8 +623,298 @@ export class Sketchpad {
   private updateCursor(): void {
     if (this.panningId !== null) this.canvas.style.cursor = "grabbing";
     else if (this.spaceKeyDown) this.canvas.style.cursor = "grab";
+    else if (this.tool === "select") this.canvas.style.cursor = this.selectCursor();
     else if (this.hover.over && !this.editingText && !this.pinching) this.canvas.style.cursor = "none";
     else this.canvas.style.cursor = "crosshair";
+  }
+
+  private selectCursor(): string {
+    if (this.selMode !== "idle" && this.selGe) {
+      if (this.selMode === "move") return "move";
+      if (this.selMode === "rotate") return "grab";
+      const c = this.selGe.corner ?? "se";
+      return c === "nw" || c === "se" ? "nwse-resize" : "nesw-resize";
+    }
+    const h = this.selEl ? this.selHandleAt(this.hover.x, this.hover.y) : null;
+    if (h) {
+      if (h.kind === "rotate") return "grab";
+      return h.id === "nw" || h.id === "se" ? "nwse-resize" : "nesw-resize";
+    }
+    if (!this.hover.over) return "default";
+    return "none";
+  }
+
+  // ---------- selection & transform ----------
+
+  private deselect(): void {
+    if (this.selEl || this.selGe) {
+      this.selEl = null;
+      this.selMode = "idle";
+      this.selGe = null;
+      this.rim();
+    }
+    this.updateCursor();
+    this.emit();
+  }
+
+  private pointInRotatedElement(p: { x: number; y: number }, el: Element): boolean {
+    const rot = el.rotation ?? 0;
+    if (!rot) return pointInElement(p, el);
+    const c = elementCenter(el);
+    const a = (-rot * Math.PI) / 180;
+    const dx = p.x - c.x;
+    const dy = p.y - c.y;
+    const qx = c.x + dx * Math.cos(a) - dy * Math.sin(a);
+    const qy = c.y + dx * Math.sin(a) + dy * Math.cos(a);
+    return pointInElement({ x: qx, y: qy }, el);
+  }
+
+  private distanceToStroke(p: { x: number; y: number }, points: Array<{ x: number; y: number }>): number {
+    if (points.length === 0) return Infinity;
+    if (points.length === 1) return Math.hypot(p.x - points[0].x, p.y - points[0].y);
+    let min = Infinity;
+    for (let i = 0; i < points.length - 1; i++) {
+      const a = points[i];
+      const b = points[i + 1];
+      const abx = b.x - a.x;
+      const aby = b.y - a.y;
+      const len2 = abx * abx + aby * aby;
+      let t = len2 === 0 ? 0 : ((p.x - a.x) * abx + (p.y - a.y) * aby) / len2;
+      t = Math.max(0, Math.min(1, t));
+      const px = a.x + abx * t;
+      const py = a.y + aby * t;
+      const d = Math.hypot(p.x - px, p.y - py);
+      if (d < min) min = d;
+    }
+    return min;
+  }
+
+  private hitTest(wx: number, wy: number): Element | null {
+    for (let i = this.elements.length - 1; i >= 0; i--) {
+      const el = this.elements[i];
+      if (el.kind === "stroke") {
+        const rot = el.rotation ?? 0;
+        let qx = wx;
+        let qy = wy;
+        if (rot) {
+          const c = elementCenter(el);
+          const a = (-rot * Math.PI) / 180;
+          const dx = wx - c.x;
+          const dy = wy - c.y;
+          qx = c.x + dx * Math.cos(a) - dy * Math.sin(a);
+          qy = c.y + dx * Math.sin(a) + dy * Math.cos(a);
+        }
+        const tol = Math.max(5, (el.width / 2 + 6) / this.scale);
+        if (this.distanceToStroke({ x: qx, y: qy }, el.points) <= tol) return el;
+      } else if (this.pointInRotatedElement({ x: wx, y: wy }, el)) {
+        return el;
+      }
+    }
+    return null;
+  }
+
+  private selScreen(el: Element): {
+    center: { x: number; y: number };
+    top: { x: number; y: number };
+    rotate: { x: number; y: number };
+    corners: Array<{ id: SelCorner; x: number; y: number }>;
+  } {
+    const b = elementBounds(el);
+    const rot = ((el.rotation ?? 0) * Math.PI) / 180;
+    const cs = this.screenTransform(elementCenter(el).x, elementCenter(el).y);
+    const cos = Math.cos(rot);
+    const sin = Math.sin(rot);
+    const off = 28;
+    const hx = Math.max(b.w / 2, 0.5);
+    const hy = Math.max(b.h / 2, 0.5);
+    const map = (lx: number, ly: number): { x: number; y: number } => ({
+      x: cs.x + (lx * cos - ly * sin) * this.scale,
+      y: cs.y + (lx * sin + ly * cos) * this.scale,
+    });
+    return {
+      center: cs,
+      top: map(0, -hy),
+      rotate: map(0, -hy - off / this.scale),
+      corners: [
+        { id: "nw", ...map(-hx, -hy) },
+        { id: "ne", ...map(hx, -hy) },
+        { id: "se", ...map(hx, hy) },
+        { id: "sw", ...map(-hx, hy) },
+      ],
+    };
+  }
+
+  private selHandleAt(sx: number, sy: number):
+    | { kind: "corner"; id: SelCorner }
+    | { kind: "rotate" }
+    | null {
+    if (!this.selEl) return null;
+    const s = this.selScreen(this.selEl);
+    for (const c of s.corners) {
+      if (Math.hypot(sx - c.x, sy - c.y) <= 12) return { kind: "corner", id: c.id };
+    }
+    if (Math.hypot(sx - s.rotate.x, sy - s.rotate.y) <= 18) return { kind: "rotate" };
+    return null;
+  }
+
+  private beginSelGesture(
+    mode: "move" | "resize" | "rotate",
+    pt: { sx: number; sy: number; wx: number; wy: number },
+    corner: SelCorner | null = null,
+  ): void {
+    if (!this.selEl) return;
+    const el = this.selEl;
+    const sc = this.selScreen(el);
+    const full = cloneSnapshot(this.snapshotData());
+    const elIdx = this.elements.indexOf(el);
+    this.selMode = mode;
+    this.selGe = {
+      mode,
+      prev: full,
+      moved: false,
+      sx0: pt.sx,
+      sy0: pt.sy,
+      wx0: pt.wx,
+      wy0: pt.wy,
+      corner,
+      base:
+        elIdx >= 0
+          ? full.elements[elIdx]
+          : cloneSnapshot({ elements: [el], erasures: [] as Erasure[] }).elements[0],
+      center: elementCenter(el),
+      rot0: el.rotation ?? 0,
+      centerS: sc.center,
+      startA: Math.atan2(pt.sy - sc.center.y, pt.sx - sc.center.x),
+    };
+  }
+
+  private updateSelectGesture(pt: { sx: number; sy: number; wx: number; wy: number }): void {
+    const g = this.selGe;
+    if (!g || !this.selEl) return;
+    const el = this.selEl;
+    if (!g.moved && Math.hypot(pt.sx - g.sx0, pt.sy - g.sy0) > 1) g.moved = true;
+    if (g.mode === "move") {
+      this.offsetElement(g.base, el, pt.wx - g.wx0, pt.wy - g.wy0);
+    } else if (g.mode === "resize") {
+      const a = (-g.rot0 * Math.PI) / 180;
+      const dx = pt.wx - g.center.x;
+      const dy = pt.wy - g.center.y;
+      const lx = dx * Math.cos(a) - dy * Math.sin(a);
+      const ly = dx * Math.sin(a) + dy * Math.cos(a);
+      const b = elementBounds(g.base);
+      const hx = Math.max(b.w / 2, 0.5);
+      const hy = Math.max(b.h / 2, 0.5);
+      const sgnx = g.corner === "ne" || g.corner === "se" ? 1 : -1;
+      const sgny = g.corner === "se" || g.corner === "sw" ? 1 : -1;
+      const sfx = clamp(lx / (sgnx * hx), 0.05, 100);
+      const sfy = clamp(ly / (sgny * hy), 0.05, 100);
+      this.scaleElement(g.base, el, sfx, sfy, g.center);
+    } else if (g.mode === "rotate") {
+      const ang = Math.atan2(pt.sy - g.centerS.y, pt.sx - g.centerS.x);
+      const delta = ((ang - g.startA) * 180) / Math.PI;
+      el.rotation = (((g.rot0 + delta) % 360) + 360) % 360;
+    }
+    this.rim();
+  }
+
+  private endSelectGesture(): void {
+    const g = this.selGe;
+    if (!g) return;
+    this.selGe = null;
+    this.selMode = "idle";
+    if (g.moved) this.pushHistory(g.prev);
+    this.updateCursor();
+    this.rim();
+  }
+
+  deleteSelection(): void {
+    const el = this.selEl;
+    if (!el) return;
+    const idx = this.elements.indexOf(el);
+    if (idx < 0) {
+      this.deselect();
+      return;
+    }
+    const prev = cloneSnapshot(this.snapshotData());
+    this.elements.splice(idx, 1);
+    this.pushHistory(prev);
+    this.deselect();
+    this.rim();
+    this.emit();
+  }
+
+  private offsetElement(base: Element, el: Element, dx: number, dy: number): void {
+    if (el.kind === "stroke" && base.kind === "stroke") {
+      for (let i = 0; i < el.points.length; i++) {
+        const p = base.points[i];
+        if (p) {
+          el.points[i].x = p.x + dx;
+          el.points[i].y = p.y + dy;
+        }
+      }
+    } else if (el.kind === "text" && base.kind === "text") {
+      el.x = base.x + dx;
+      el.y = base.y + dy;
+    } else {
+      const bb = base as ShapeElement;
+      const ee = el as ShapeElement;
+      ee.x1 = bb.x1 + dx;
+      ee.y1 = bb.y1 + dy;
+      ee.x2 = bb.x2 + dx;
+      ee.y2 = bb.y2 + dy;
+    }
+  }
+
+  private scaleElement(base: Element, el: Element, sx: number, sy: number, c: { x: number; y: number }): void {
+    if (el.kind === "stroke" && base.kind === "stroke") {
+      el.points = base.points.map((p) => ({ x: c.x + (p.x - c.x) * sx, y: c.y + (p.y - c.y) * sy, p: p.p }));
+    } else if (el.kind === "text" && base.kind === "text") {
+      const s = Math.min(sx, sy);
+      el.size = Math.max(6, Math.round(base.size * s));
+      el.x = c.x + (base.x - c.x) * s;
+      el.y = c.y + (base.y - c.y) * s;
+    } else {
+      const sb = base as ShapeElement;
+      const se = el as ShapeElement;
+      se.x1 = c.x + (sb.x1 - c.x) * sx;
+      se.y1 = c.y + (sb.y1 - c.y) * sy;
+      se.x2 = c.x + (sb.x2 - c.x) * sx;
+      se.y2 = c.y + (sb.y2 - c.y) * sy;
+    }
+  }
+
+  private renderSelection(ctx: CanvasRenderingContext2D): void {
+    if (this.tool !== "select" || !this.selEl) return;
+    const s = this.selScreen(this.selEl);
+    const color = "rgba(83,58,253,0.9)";
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.moveTo(s.corners[0].x, s.corners[0].y);
+    for (let i = 1; i < s.corners.length; i++) ctx.lineTo(s.corners[i].x, s.corners[i].y);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(s.rotate.x, s.rotate.y);
+    ctx.lineTo(s.top.x, s.top.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(s.rotate.x, s.rotate.y, 5, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.strokeStyle = "#ffffff";
+    ctx.stroke();
+    ctx.strokeStyle = color;
+    for (const c of s.corners) {
+      ctx.beginPath();
+      ctx.rect(c.x - 4.5, c.y - 4.5, 9, 9);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
   }
 
   private onPointerDown(e: PointerEvent): void {
@@ -592,6 +939,24 @@ export class Sketchpad {
       return;
     }
     if (e.button !== 0) return;
+
+    if (this.tool === "select") {
+      const h = this.selEl ? this.selHandleAt(pt.sx, pt.sy) : null;
+      if (h) {
+        this.beginSelGesture(h.kind === "rotate" ? "rotate" : "resize", pt, h.kind === "corner" ? h.id : null);
+      } else {
+        const el = this.hitTest(pt.wx, pt.wy);
+        if (el) {
+          this.selEl = el;
+          this.beginSelGesture("move", pt);
+          this.emit();
+        } else {
+          this.deselect();
+        }
+      }
+      this.rim();
+      return;
+    }
 
     if (this.activePointers.size >= 2) {
       this.startPinch();
@@ -676,6 +1041,11 @@ export class Sketchpad {
       return;
     }
 
+    if (this.tool === "select" && this.selMode !== "idle" && this.selGe) {
+      this.updateSelectGesture(pt);
+      return;
+    }
+
     if (this.drawingId !== e.pointerId || !prev) return;
 
     const dist = Math.hypot(pt.wx - prev.wx, pt.wy - prev.wy);
@@ -721,6 +1091,10 @@ export class Sketchpad {
     if (this.drawingId === e.pointerId) {
       this.drawingId = null;
       this.commitDrawing();
+    }
+
+    if (this.tool === "select" && this.selMode !== "idle" && this.selGe) {
+      this.endSelectGesture();
     }
 
     this.activePointers.delete(e.pointerId);
@@ -801,7 +1175,7 @@ export class Sketchpad {
     const world = this.worldTransform(xy.x, xy.y);
     for (let i = this.elements.length - 1; i >= 0; i--) {
       const el = this.elements[i];
-      if (el.kind === "text" && pointInElement(world, el)) {
+      if (el.kind === "text" && this.pointInRotatedElement(world, el)) {
         this.startTextEdit(el.x, el.y, el);
         return;
       }
@@ -825,7 +1199,13 @@ export class Sketchpad {
     d.style.fontSize = `${fontPx}px`;
     d.style.color = existing ? existing.color : this.color;
     d.style.opacity = existing ? String(existing.opacity) : String(this.opacity);
-    if (existing) d.textContent = existing.text;
+    if (existing) {
+      d.textContent = existing.text;
+      if (existing.rotation) {
+        d.style.transform = `rotate(${existing.rotation}deg)`;
+        d.style.transformOrigin = "50% 50%";
+      }
+    }
     this.stage.appendChild(d);
     this.textEl = d;
     this.editingText = true;
@@ -894,6 +1274,7 @@ export class Sketchpad {
 
     ui.undoBtn.addEventListener("click", () => this.undo());
     ui.redoBtn.addEventListener("click", () => this.redo());
+    ui.deleteBtn.addEventListener("click", () => this.deleteSelection());
     ui.zoomOutBtn.addEventListener("click", () => this.zoomBy(1 / 1.25));
     ui.zoomInBtn.addEventListener("click", () => this.zoomBy(1.25));
     ui.zoomFitBtn.addEventListener("click", () => this.fitToView());
@@ -932,8 +1313,10 @@ export class Sketchpad {
 
   setTool(tool: ToolId): void {
     this.commitText();
+    if (tool !== "select") this.deselect();
     this.tool = tool;
     this.syncSizeUI();
+    this.updateCursor();
     this.emit();
   }
 
@@ -1077,10 +1460,18 @@ export class Sketchpad {
         return;
       }
       if (e.key === "Escape") {
-        this.disarmClear();
+        if (this.tool === "select" && this.selEl) this.deselect();
+        else this.disarmClear();
         return;
       }
-      const toolFor = { b: "brush", p: "pencil", r: "rect", o: "ellipse", t: "text", l: "line", a: "arrow", e: "eraser" } as const;
+      if ((e.key === "Delete" || e.key === "Backspace") && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        if (this.selEl) {
+          e.preventDefault();
+          this.deleteSelection();
+        }
+        return;
+      }
+      const toolFor = { v: "select", b: "brush", p: "pencil", r: "rect", o: "ellipse", t: "text", l: "line", a: "arrow", e: "eraser" } as const;
       const id = toolFor[e.key.toLowerCase() as keyof typeof toolFor];
       if (id && !e.metaKey && !e.ctrlKey && !e.altKey) this.setTool(id);
     });
@@ -1118,6 +1509,7 @@ export class Sketchpad {
   private buildState(): UIState {
     return {
       tool: this.tool,
+      hasSelection: this.selEl !== null,
       canUndo: this.undoStack.length > 0,
       canRedo: this.redoStack.length > 0,
       zoom: this.scale,

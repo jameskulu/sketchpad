@@ -1,4 +1,4 @@
-import type { Element, Erasure, Point, StrokeElement } from "./elements";
+import { elementCenter, type Element, type Erasure, type Point, type StrokeElement } from "./elements";
 
 function mid(a: Point, b: Point): Point {
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2, p: (a.p + b.p) / 2 };
@@ -161,6 +161,14 @@ function drawPencilStroke(ctx: CanvasRenderingContext2D, el: StrokeElement): voi
 
 export function drawElement(ctx: CanvasRenderingContext2D, el: Element): void {
   ctx.save();
+  const rot = el.rotation ?? 0;
+  if (rot) {
+    const c = elementCenter(el);
+    const a = (rot * Math.PI) / 180;
+    ctx.translate(c.x, c.y);
+    ctx.rotate(a);
+    ctx.translate(-c.x, -c.y);
+  }
   ctx.globalAlpha = el.opacity;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";

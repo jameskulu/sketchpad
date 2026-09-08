@@ -1,6 +1,6 @@
 export type Point = { x: number; y: number; p: number };
 
-export type ToolId = "brush" | "pencil" | "rect" | "ellipse" | "triangle" | "line" | "arrow" | "text" | "eraser";
+export type ToolId = "brush" | "pencil" | "rect" | "ellipse" | "triangle" | "line" | "arrow" | "text" | "eraser" | "select";
 
 export interface StrokeElement {
   id: string;
@@ -10,6 +10,7 @@ export interface StrokeElement {
   width: number;
   opacity: number;
   rough?: boolean;
+  rotation?: number;
 }
 
 export interface ShapeElement {
@@ -23,6 +24,7 @@ export interface ShapeElement {
   width: number;
   opacity: number;
   filled: boolean;
+  rotation?: number;
 }
 
 export interface TextElement {
@@ -34,6 +36,7 @@ export interface TextElement {
   size: number;
   color: string;
   opacity: number;
+  rotation?: number;
 }
 
 export type Element = StrokeElement | ShapeElement | TextElement;
@@ -98,11 +101,41 @@ export function elementBounds(el: Element): { x: number; y: number; w: number; h
   }
 }
 
+export function elementCenter(el: Element): { x: number; y: number } {
+  const b = elementBounds(el);
+  return { x: b.x + b.w / 2, y: b.y + b.h / 2 };
+}
+
+export function elementBoundsRotated(el: Element): { x: number; y: number; w: number; h: number } {
+  const b = elementBounds(el);
+  const rot = el.rotation ?? 0;
+  if (!rot) return b;
+  const a = (rot * Math.PI) / 180;
+  const cos = Math.cos(a);
+  const sin = Math.sin(a);
+  const cx = b.x + b.w / 2;
+  const cy = b.y + b.h / 2;
+  const hx = b.w / 2;
+  const hy = b.h / 2;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const lx of [-hx, hx]) {
+    for (const ly of [-hy, hy]) {
+      const rx = cx + lx * cos - ly * sin;
+      const ry = cy + lx * sin + ly * cos;
+      if (rx < minX) minX = rx;
+      if (ry < minY) minY = ry;
+      if (rx > maxX) maxX = rx;
+      if (ry > maxY) maxY = ry;
+    }
+  }
+  return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+}
+
 export function contentBounds(elements: Element[]): { x: number; y: number; w: number; h: number } | null {
   if (elements.length === 0) return null;
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   for (const el of elements) {
-    const b = elementBounds(el);
+    const b = elementBoundsRotated(el);
     if (b.x < minX) minX = b.x;
     if (b.y < minY) minY = b.y;
     if (b.x + b.w > maxX) maxX = b.x + b.w;

@@ -47,6 +47,7 @@ const faqData = {
 };
 
 const tools: { id: string; icon: string; label: string; hint: string }[] = [
+  { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
   { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
   { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
   { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
@@ -103,6 +104,15 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         </button>
         <button id="redo-btn" class="btn-icon max-md:size-8!" aria-label={ui.canvas.redo} title={ui.canvas.redo} disabled>
           <Icon name="redo" />
+        </button>
+        <button
+          id="delete-btn"
+          class="btn-icon max-md:size-8!"
+          aria-label={ui.canvas.deleteSelection}
+          title={ui.canvas.deleteSelection}
+          disabled
+        >
+          <Icon name="delete" />
         </button>
 
         <div class="mx-1.5 h-5 w-px bg-hairline max-md:mx-1" role="separator"></div>
@@ -373,6 +383,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   const fillRow = q("fill-row");
   const fillToggle = q<HTMLButtonElement>("fill-toggle");
   const paletteBtn = q<HTMLButtonElement>("palette-btn");
+  const deleteBtn = q<HTMLButtonElement>("delete-btn");
   const panel = q<HTMLElement>("options-panel");
   const opacitySlider = q<HTMLInputElement>("opacity-slider");
 
@@ -414,6 +425,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
     canvas,
     ui: {
       toolButtons: {
+        select: q<HTMLButtonElement>("tool-select"),
         brush: q<HTMLButtonElement>("tool-brush"),
         pencil: q<HTMLButtonElement>("tool-pencil"),
         rect: q<HTMLButtonElement>("tool-rect"),
@@ -426,6 +438,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       },
       undoBtn: q<HTMLButtonElement>("undo-btn"),
       redoBtn: q<HTMLButtonElement>("redo-btn"),
+      deleteBtn: q<HTMLButtonElement>("delete-btn"),
       zoomOutBtn: q<HTMLButtonElement>("zoom-out-btn"),
       zoomInBtn: q<HTMLButtonElement>("zoom-in-btn"),
       zoomFitBtn: q<HTMLButtonElement>("zoom-fit-btn"),
@@ -456,6 +469,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       const shapeTools = new Set(["rect", "ellipse", "triangle"]);
       fillRow.classList.toggle("hidden", !shapeTools.has(s.tool));
       opacityRow.classList.toggle("hidden", s.tool === "eraser");
+      deleteBtn.disabled = !s.hasSelection;
       sizeTitle.textContent = s.tool === "text" ? sizeTitles.text : s.tool === "eraser" ? sizeTitles.eraser : sizeTitles.stroke;
       const renderFill = fillToggle.querySelector("span:last-of-type");
       if (renderFill) renderFill.textContent = s.filled ? ui.canvas.fillOn : ui.canvas.fillOff;
