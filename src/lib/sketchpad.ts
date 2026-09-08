@@ -124,6 +124,8 @@ export class Sketchpad {
   private pendingEl: Element | null = null;
   private pendingEr: Erasure | null = null;
 
+  private zSeq = 0;
+
   private undoStack: Snapshot[] = [];
   private redoStack: Snapshot[] = [];
 
@@ -257,6 +259,36 @@ export class Sketchpad {
 
   // ---------- history ----------
 
+  private syncZSeq(): void {
+    let max = 0;
+    for (const el of this.elements) {
+      if ((el.z ?? 0) > max) max = el.z ?? 0;
+    }
+    for (const er of this.erasures) {
+      if ((er.z ?? 0) > max) max = er.z ?? 0;
+    }
+    this.zSeq = max;
+  }
+
+  private normalizeZ(): void {
+    const elsNeed = this.elements.some((el) => el.z === undefined);
+    const ersNeed = this.erasures.some((er) => er.z === undefined);
+    if (elsNeed || ersNeed) {
+      let base = 1;
+      if (!elsNeed) {
+        for (const el of this.elements) base = Math.max(base, (el.z ?? 0) + 1);
+      } else {
+        this.elements.forEach((el, i) => {
+          el.z = i + 1;
+        });
+        base += this.elements.length;
+      }
+      this.erasures.forEach((er, i) => {
+        er.z = base + i;
+      });
+    }
+  }
+
   private snapshotData(): Snapshot {
     return { elements: this.elements, erasures: this.erasures };
   }
@@ -266,6 +298,7 @@ export class Sketchpad {
     this.undoStack.push(snap);
     if (this.undoStack.length > HISTORY_LIMIT) this.undoStack.shift();
     this.redoStack = [];
+    this.syncZSeq();
     this.markDirty();
     this.emit();
   }
@@ -277,6 +310,7 @@ export class Sketchpad {
     const snap = this.undoStack.pop()!;
     this.elements = snap.elements;
     this.erasures = snap.erasures;
+    this.syncZSeq();
     this.deselect();
     this.markDirty();
     this.rim();
@@ -290,6 +324,7 @@ export class Sketchpad {
     const snap = this.redoStack.pop()!;
     this.elements = snap.elements;
     this.erasures = snap.erasures;
+    this.syncZSeq();
     this.deselect();
     this.markDirty();
     this.rim();
@@ -308,6 +343,7 @@ export class Sketchpad {
     this.pushHistory();
     this.elements = [];
     this.erasures = [];
+    this.syncZSeq();
     this.deselect();
     this.rim();
     this.emit();
@@ -354,6 +390,8 @@ export class Sketchpad {
       if (parsed && Array.isArray(parsed.elements) && Array.isArray(parsed.erasures)) {
         this.elements = parsed.elements;
         this.erasures = parsed.erasures;
+        this.normalizeZ();
+        this.syncZSeq();
       }
     } catch {
       /* ignore corrupt draft */
@@ -409,7 +447,10 @@ export class Sketchpad {
       if (this.tool === "eraser") {
         this.renderEraserCursor(ctx);
       } else if (this.tool === "select") {
-        if (this.selMode === "idle" && !(this.selEl && this.selHandleAt(this.hover.x, this.hover.y))) {
+        const h = this.selEl ? this.selHandleAt(this.hover.x, this.hover.y) : null;
+        if (this.selMode === "rotate" || h?.kind === "rotate") {
+          this.renderRotatePointer(ctx);
+        } else if (this.selMode === "idle" && !h) {
           this.renderSelectPointer(ctx);
         }
       } else {
@@ -475,6 +516,39 @@ export class Sketchpad {
     ctx.arc(x, y, 2, 0, Math.PI * 2);
     ctx.fillStyle = outline;
     ctx.fill();
+    ctx.restore();
+  }
+
+  private renderRotatePointer(ctx: CanvasRenderingContext2D): void {
+    const x = this.hover.x;
+    const y = this.hover.y;
+    const r = 7;
+    const a = -Math.PI / 4;
+    const ex = x + r * Math.cos(a);
+    const ey = y + r * Math.sin(a);
+    const pa = a + Math.PI / 2;
+    ctx.save();
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(255,255,255,0.95)";
+    ctx.lineWidth = 4.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(13,37,61,0.75)";
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(ex + 5 * Math.cos(a), ey + 5 * Math.sin(a));
+    ctx.lineTo(ex + 2.5 * Math.cos(pa), ey + 2.5 * Math.sin(pa));
+    ctx.lineTo(ex - 2.5 * Math.cos(pa), ey - 2.5 * Math.sin(pa));
+    ctx.closePath();
+    ctx.fillStyle = "rgba(255,255,255,0.95)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(13,37,61,0.75)";
+    ctx.lineWidth = 1;
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -631,13 +705,14 @@ export class Sketchpad {
   private selectCursor(): string {
     if (this.selMode !== "idle" && this.selGe) {
       if (this.selMode === "move") return "move";
-      if (this.selMode === "rotate") return "grab";
+      if (this.selMode === "rotate") return "none";
       const c = this.selGe.corner ?? "se";
       return c === "nw" || c === "se" ? "nwse-resize" : "nesw-resize";
     }
     const h = this.selEl ? this.selHandleAt(this.hover.x, this.hover.y) : null;
     if (h) {
-      if (h.kind === "rotate") return "grab";
+      if (h.kind === "rotate") return "none";
+      if (h.kind === "edge") return "move";
       return h.id === "nw" || h.id === "se" ? "nwse-resize" : "nesw-resize";
     }
     if (!this.hover.over) return "default";
@@ -718,6 +793,7 @@ export class Sketchpad {
     top: { x: number; y: number };
     rotate: { x: number; y: number };
     corners: Array<{ id: SelCorner; x: number; y: number }>;
+    edges: Array<{ id: "n" | "e" | "s" | "w"; x: number; y: number }>;
   } {
     const b = elementBounds(el);
     const rot = ((el.rotation ?? 0) * Math.PI) / 180;
@@ -741,17 +817,27 @@ export class Sketchpad {
         { id: "se", ...map(hx, hy) },
         { id: "sw", ...map(-hx, hy) },
       ],
+      edges: [
+        { id: "n", ...map(0, -hy) },
+        { id: "e", ...map(hx, 0) },
+        { id: "s", ...map(0, hy) },
+        { id: "w", ...map(-hx, 0) },
+      ],
     };
   }
 
   private selHandleAt(sx: number, sy: number):
     | { kind: "corner"; id: SelCorner }
+    | { kind: "edge"; id: "n" | "e" | "s" | "w" }
     | { kind: "rotate" }
     | null {
     if (!this.selEl) return null;
     const s = this.selScreen(this.selEl);
     for (const c of s.corners) {
       if (Math.hypot(sx - c.x, sy - c.y) <= 12) return { kind: "corner", id: c.id };
+    }
+    for (const e of s.edges) {
+      if (Math.hypot(sx - e.x, sy - e.y) <= 12) return { kind: "edge", id: e.id };
     }
     if (Math.hypot(sx - s.rotate.x, sy - s.rotate.y) <= 18) return { kind: "rotate" };
     return null;
@@ -914,6 +1000,13 @@ export class Sketchpad {
       ctx.fill();
       ctx.stroke();
     }
+    for (const e of s.edges) {
+      ctx.beginPath();
+      ctx.rect(e.x - 2.5, e.y - 2.5, 5, 5);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.stroke();
+    }
     ctx.restore();
   }
 
@@ -943,7 +1036,9 @@ export class Sketchpad {
     if (this.tool === "select") {
       const h = this.selEl ? this.selHandleAt(pt.sx, pt.sy) : null;
       if (h) {
-        this.beginSelGesture(h.kind === "rotate" ? "rotate" : "resize", pt, h.kind === "corner" ? h.id : null);
+        if (h.kind === "rotate") this.beginSelGesture("rotate", pt);
+        else if (h.kind === "edge") this.beginSelGesture("move", pt);
+        else this.beginSelGesture("resize", pt, h.id);
       } else {
         const el = this.hitTest(pt.wx, pt.wy);
         if (el) {
@@ -1107,6 +1202,7 @@ export class Sketchpad {
 
   private commitDrawing(): void {
     if (this.tool === "eraser" && this.pendingEr) {
+      this.pendingEr.z = ++this.zSeq;
       this.erasures.push(this.pendingEr);
       this.pendingEr = null;
       this.pushHistory();
@@ -1117,6 +1213,7 @@ export class Sketchpad {
         this.pendingEl = null;
         return;
       }
+      this.pendingEl.z = ++this.zSeq;
       this.elements.push(this.pendingEl);
       this.pendingEl = null;
       this.pushHistory();
@@ -1246,6 +1343,7 @@ export class Sketchpad {
           size: this.sizes.text,
           color: this.color,
           opacity: this.opacity,
+          z: ++this.zSeq,
         });
         this.pushHistory();
       }

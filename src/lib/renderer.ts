@@ -320,8 +320,17 @@ export function drawScene(
   inProgress: Element | null,
   inProgressErasure: Erasure | null,
 ): void {
-  for (const el of elements) drawElement(ctx, el);
-  for (const er of erasures) drawErasure(ctx, er);
+  type Frame = { z: number; el?: Element; er?: Erasure };
+  const frames: Frame[] = [];
+  if (elements.length || erasures.length) {
+    elements.forEach((el, i) => frames.push({ z: el.z ?? i, el }));
+    erasures.forEach((er, i) => frames.push({ z: er.z ?? elements.length + i, er }));
+    frames.sort((a, b) => a.z - b.z);
+    for (const f of frames) {
+      if (f.el) drawElement(ctx, f.el);
+      else if (f.er) drawErasure(ctx, f.er);
+    }
+  }
   if (inProgress) drawElement(ctx, inProgress);
   if (inProgressErasure) drawErasure(ctx, inProgressErasure);
 }

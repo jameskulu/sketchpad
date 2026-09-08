@@ -11,6 +11,7 @@ export interface StrokeElement {
   opacity: number;
   rough?: boolean;
   rotation?: number;
+  z?: number;
 }
 
 export interface ShapeElement {
@@ -25,6 +26,7 @@ export interface ShapeElement {
   opacity: number;
   filled: boolean;
   rotation?: number;
+  z?: number;
 }
 
 export interface TextElement {
@@ -37,6 +39,7 @@ export interface TextElement {
   color: string;
   opacity: number;
   rotation?: number;
+  z?: number;
 }
 
 export type Element = StrokeElement | ShapeElement | TextElement;
@@ -45,6 +48,7 @@ export interface Erasure {
   id: string;
   points: Point[];
   width: number;
+  z?: number;
 }
 
 export interface Snapshot {
