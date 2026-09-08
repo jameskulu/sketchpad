@@ -105,15 +105,6 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         <button id="redo-btn" class="btn-icon max-md:size-8!" aria-label={ui.canvas.redo} title={ui.canvas.redo} disabled>
           <Icon name="redo" />
         </button>
-        <button
-          id="delete-btn"
-          class="btn-icon max-md:size-8!"
-          aria-label={ui.canvas.deleteSelection}
-          title={ui.canvas.deleteSelection}
-          disabled
-        >
-          <Icon name="delete" />
-        </button>
 
         <div class="mx-1.5 h-5 w-px bg-hairline max-md:mx-1" role="separator"></div>
 
@@ -198,6 +189,15 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       <!-- Canvas stage -->
       <section id="stage" class="relative min-w-0 flex-1 touch-none select-none overflow-hidden bg-canvas-soft">
         <canvas id="sketchpad-canvas" class="block h-full w-full cursor-crosshair" aria-label={ui.canvas.drawingTools}></canvas>
+        <button
+          id="delete-btn"
+          class="float-del absolute z-10 grid size-8 place-items-center rounded-lg border border-hairline bg-white text-ink-mute shadow-lg transition-colors hover:border-[#ea2261]/70 hover:text-[#ea2261] active:scale-95"
+          aria-label={ui.canvas.deleteSelection}
+          title={ui.canvas.deleteSelection}
+          hidden
+        >
+          <Icon name="trash" class="size-4" />
+        </button>
       </section>
 
       <!-- Options panel -->

@@ -2,6 +2,7 @@ import {
   cloneSnapshot,
   contentBounds,
   elementBounds,
+  elementBoundsRotated,
   elementCenter,
   nextId,
   pointInElement,
@@ -104,6 +105,7 @@ interface SelGesture {
   wy0: number;
   corner: SelCorner | null;
   base: Element;
+  bases: Array<{ el: Element; base: Element }> | null;
   center: { x: number; y: number };
   rot0: number;
   centerS: { x: number; y: number };
@@ -170,8 +172,11 @@ export class Sketchpad {
   private clearTimer: number | null = null;
   private hover = { x: -10000, y: -10000, over: false };
   private selEl: Element | null = null;
-  private selMode: "idle" | "move" | "resize" | "rotate" = "idle";
+  private selSet: Set<Element> = new Set();
+  private selMode: "idle" | "move" | "resize" | "rotate" | "marquee" = "idle";
   private selGe: SelGesture | null = null;
+  private marquee: { x0: number; y0: number; x1: number; y1: number } | null = null;
+  private marqueeId: number | null = null;
 
   constructor(opts: SketchpadOptions) {
     this.stage = opts.stage;
@@ -447,9 +452,11 @@ export class Sketchpad {
       if (this.tool === "eraser") {
         this.renderEraserCursor(ctx);
       } else if (this.tool === "select") {
-        const h = this.selEl ? this.selHandleAt(this.hover.x, this.hover.y) : null;
+        const h = this.selEl && this.selSet.size === 1 ? this.selHandleAt(this.hover.x, this.hover.y) : null;
         if (this.selMode === "rotate" || h?.kind === "rotate") {
           this.renderRotatePointer(ctx);
+        } else if (this.groupHover() || this.groupEdgeHover()) {
+          // native move cursor shows; nothing drawn
         } else if (this.selMode === "idle" && !h) {
           this.renderSelectPointer(ctx);
         }
@@ -458,9 +465,26 @@ export class Sketchpad {
       }
     }
 
+    this.renderMarquee(ctx);
     this.renderSelection(ctx);
+    this.updateFloatingDelete();
     this.updateCursor();
     this.ui.zoomLabel.textContent = `${Math.round(this.scale * 100)}%`;
+  }
+
+  private renderMarquee(ctx: CanvasRenderingContext2D): void {
+    if (this.selMode !== "marquee" || !this.marquee) return;
+    const x0 = Math.min(this.marquee.x0, this.marquee.x1);
+    const y0 = Math.min(this.marquee.y0, this.marquee.y1);
+    const w = Math.abs(this.marquee.x1 - this.marquee.x0);
+    const h = Math.abs(this.marquee.y1 - this.marquee.y0);
+    ctx.save();
+    ctx.fillStyle = "rgba(83,58,253,0.12)";
+    ctx.fillRect(x0, y0, w, h);
+    ctx.strokeStyle = "rgba(83,58,253,0.9)";
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(x0, y0, w, h);
+    ctx.restore();
   }
 
   private renderPointer(ctx: CanvasRenderingContext2D): void {
@@ -703,18 +727,21 @@ export class Sketchpad {
   }
 
   private selectCursor(): string {
+    if (this.selMode === "marquee") return "crosshair";
     if (this.selMode !== "idle" && this.selGe) {
       if (this.selMode === "move") return "move";
       if (this.selMode === "rotate") return "none";
       const c = this.selGe.corner ?? "se";
       return c === "nw" || c === "se" ? "nwse-resize" : "nesw-resize";
     }
-    const h = this.selEl ? this.selHandleAt(this.hover.x, this.hover.y) : null;
+    const h = this.selEl && this.selSet.size === 1 ? this.selHandleAt(this.hover.x, this.hover.y) : null;
     if (h) {
       if (h.kind === "rotate") return "none";
       if (h.kind === "edge") return "move";
       return h.id === "nw" || h.id === "se" ? "nwse-resize" : "nesw-resize";
     }
+    if (this.selSet.size > 1 && this.groupEdgeHover()) return "move";
+    if (this.groupHover()) return "move";
     if (!this.hover.over) return "default";
     return "none";
   }
@@ -722,14 +749,88 @@ export class Sketchpad {
   // ---------- selection & transform ----------
 
   private deselect(): void {
-    if (this.selEl || this.selGe) {
+    if (this.selEl || this.selGe || this.selSet.size > 0) {
       this.selEl = null;
+      this.selSet.clear();
       this.selMode = "idle";
       this.selGe = null;
       this.rim();
     }
     this.updateCursor();
     this.emit();
+  }
+
+  private setSel(el: Element): void {
+    this.selSet.clear();
+    this.selSet.add(el);
+    this.selEl = el;
+  }
+
+  private elementInRegion(el: Element, x0: number, y0: number, x1: number, y1: number): boolean {
+    const b = elementBoundsRotated(el);
+    return !(b.x + b.w < x0 || b.x > x1 || b.y + b.h < y0 || b.y > y1);
+  }
+
+  private finishMarquee(id: number): void {
+    this.selMode = "idle";
+    const m = this.marquee;
+    const mid = this.marqueeId;
+    this.marquee = null;
+    this.marqueeId = null;
+    if (mid !== null && mid !== id) return;
+    if (!m) return;
+    const dx = Math.abs(m.x1 - m.x0);
+    const dy = Math.abs(m.y1 - m.y0);
+    if (dx < 3 && dy < 3) {
+      this.rim();
+      this.emit();
+      return;
+    }
+    const a = this.worldTransform(Math.min(m.x0, m.x1), Math.min(m.y0, m.y1));
+    const b = this.worldTransform(Math.max(m.x0, m.x1), Math.max(m.y0, m.y1));
+    this.selSet.clear();
+    for (const el of this.elements) {
+      if (this.elementInRegion(el, a.x, a.y, b.x, b.y)) this.selSet.add(el);
+    }
+    this.selEl = null;
+    for (const el of this.selSet) this.selEl = el;
+    this.updateCursor();
+    this.rim();
+    this.emit();
+  }
+
+  private groupHover(): boolean {
+    if (this.selSet.size < 2 || !this.hover.over) return false;
+    const w = this.worldTransform(this.hover.x, this.hover.y);
+    const el = this.hitTest(w.x, w.y);
+    return !!el && this.selSet.has(el);
+  }
+
+  private groupEdgeHover(): boolean {
+    if (this.selSet.size < 2 || !this.hover.over) return false;
+    const b = this.groupBounds();
+    if (!b) return false;
+    const a = this.screenTransform(b.x, b.y);
+    const c = this.screenTransform(b.x + b.w, b.y + b.h);
+    const x = this.hover.x;
+    const y = this.hover.y;
+    const band = 6;
+    const onV = (Math.abs(x - a.x) <= band || Math.abs(x - c.x) <= band) && y >= a.y - band && y <= c.y + band;
+    const onH = (Math.abs(y - a.y) <= band || Math.abs(y - c.y) <= band) && x >= a.x - band && x <= c.x + band;
+    return onV || onH;
+  }
+
+  private groupBounds(): { x: number; y: number; w: number; h: number } | null {
+    if (this.selSet.size === 0) return null;
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const el of this.selSet) {
+      const b = elementBoundsRotated(el);
+      if (b.x < minX) minX = b.x;
+      if (b.y < minY) minY = b.y;
+      if (b.x + b.w > maxX) maxX = b.x + b.w;
+      if (b.y + b.h > maxY) maxY = b.y + b.h;
+    }
+    return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
   }
 
   private pointInRotatedElement(p: { x: number; y: number }, el: Element): boolean {
@@ -853,6 +954,14 @@ export class Sketchpad {
     const sc = this.selScreen(el);
     const full = cloneSnapshot(this.snapshotData());
     const elIdx = this.elements.indexOf(el);
+    const bases: Array<{ el: Element; base: Element }> | null = this.selSet.size > 1 ? [] : null;
+    if (bases) {
+      this.elements.forEach((e, i) => {
+        if (this.selSet.has(e) && full.elements[i]) {
+          bases.push({ el: e, base: full.elements[i] });
+        }
+      });
+    }
     this.selMode = mode;
     this.selGe = {
       mode,
@@ -867,6 +976,7 @@ export class Sketchpad {
         elIdx >= 0
           ? full.elements[elIdx]
           : cloneSnapshot({ elements: [el], erasures: [] as Erasure[] }).elements[0],
+      bases,
       center: elementCenter(el),
       rot0: el.rotation ?? 0,
       centerS: sc.center,
@@ -880,7 +990,13 @@ export class Sketchpad {
     const el = this.selEl;
     if (!g.moved && Math.hypot(pt.sx - g.sx0, pt.sy - g.sy0) > 1) g.moved = true;
     if (g.mode === "move") {
-      this.offsetElement(g.base, el, pt.wx - g.wx0, pt.wy - g.wy0);
+      const dx = pt.wx - g.wx0;
+      const dy = pt.wy - g.wy0;
+      if (g.bases) {
+        for (const { el: e, base } of g.bases) this.offsetElement(base, e, dx, dy);
+      } else {
+        this.offsetElement(g.base, el, dx, dy);
+      }
     } else if (g.mode === "resize") {
       const a = (-g.rot0 * Math.PI) / 180;
       const dx = pt.wx - g.center.x;
@@ -916,13 +1032,14 @@ export class Sketchpad {
   deleteSelection(): void {
     const el = this.selEl;
     if (!el) return;
-    const idx = this.elements.indexOf(el);
-    if (idx < 0) {
-      this.deselect();
-      return;
+    let ids: Set<string>;
+    if (this.selSet.size > 1) {
+      ids = new Set([...this.selSet].map((e) => e.id));
+    } else {
+      ids = new Set([el.id]);
     }
     const prev = cloneSnapshot(this.snapshotData());
-    this.elements.splice(idx, 1);
+    this.elements = this.elements.filter((e) => !ids.has(e.id));
     this.pushHistory(prev);
     this.deselect();
     this.rim();
@@ -971,6 +1088,10 @@ export class Sketchpad {
 
   private renderSelection(ctx: CanvasRenderingContext2D): void {
     if (this.tool !== "select" || !this.selEl) return;
+    if (this.selSet.size > 1) {
+      this.renderGroupSelection(ctx);
+      return;
+    }
     const s = this.selScreen(this.selEl);
     const color = "rgba(83,58,253,0.9)";
     ctx.save();
@@ -1010,6 +1131,89 @@ export class Sketchpad {
     ctx.restore();
   }
 
+  private renderGroupSelection(ctx: CanvasRenderingContext2D): void {
+    const b = this.groupBounds();
+    if (!b) return;
+    const a = this.screenTransform(b.x, b.y);
+    const c = this.screenTransform(b.x + b.w, b.y + b.h);
+    ctx.save();
+    ctx.strokeStyle = "rgba(83,58,253,0.9)";
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 4]);
+    ctx.strokeRect(a.x, a.y, c.x - a.x, c.y - a.y);
+    ctx.setLineDash([]);
+    ctx.fillStyle = "rgba(83,58,253,0.12)";
+    ctx.fillRect(a.x, a.y, c.x - a.x, c.y - a.y);
+    const label = `${this.selSet.size}`;
+    ctx.font = `600 11px ui-sans-serif, system-ui, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const tw = ctx.measureText(label).width + 8;
+    ctx.fillStyle = "#533afd";
+    ctx.beginPath();
+    ctx.roundRect(a.x - tw / 2, a.y - 9, tw, 16, 8);
+    ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(label, a.x, a.y);
+    const gEdges = [
+      { x: (a.x + c.x) / 2, y: a.y },
+      { x: c.x, y: (a.y + c.y) / 2 },
+      { x: (a.x + c.x) / 2, y: c.y },
+      { x: a.x, y: (a.y + c.y) / 2 },
+    ];
+    ctx.strokeStyle = "rgba(83,58,253,0.9)";
+    for (const e of gEdges) {
+      ctx.beginPath();
+      ctx.rect(e.x - 3.5, e.y - 3.5, 7, 7);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  private updateFloatingDelete(): void {
+    const btn = this.ui.deleteBtn;
+    if (!btn) return;
+    if (this.tool !== "select" || !this.selEl || this.editingText || this.selMode === "marquee") {
+      this.setFloatDeleteHidden(btn, true);
+      return;
+    }
+    let minY: number, maxX: number, maxY: number;
+    if (this.selSet.size > 1) {
+      const b = this.groupBounds();
+      if (!b || b.w * this.scale < 1) {
+        this.setFloatDeleteHidden(btn, true);
+        return;
+      }
+      const a = this.screenTransform(b.x, b.y);
+      const c = this.screenTransform(b.x + b.w, b.y + b.h);
+      minY = Math.min(a.y, c.y);
+      maxX = Math.max(a.x, c.x);
+      maxY = Math.max(a.y, c.y);
+    } else {
+      const s = this.selScreen(this.selEl);
+      const ys = s.corners.map((p) => p.y);
+      const xs = s.corners.map((p) => p.x);
+      minY = Math.min(...ys);
+      maxX = Math.max(...xs);
+      maxY = Math.max(...ys);
+    }
+    const bw = btn.offsetWidth || 32;
+    const viewW = this.canvas.clientWidth;
+    let left = Math.min(Math.max(4, maxX + 8), viewW - bw - 4);
+    let top = minY - 8;
+    if (top < 4) top = maxY + 8;
+    btn.style.left = `${Math.round(left)}px`;
+    btn.style.top = `${Math.round(top)}px`;
+    this.setFloatDeleteHidden(btn, false);
+  }
+
+  private setFloatDeleteHidden(btn: HTMLButtonElement, hidden: boolean): void {
+    btn.hidden = hidden;
+    btn.style.display = hidden ? "none" : "grid";
+  }
+
   private onPointerDown(e: PointerEvent): void {
     this.disarmClear();
     const pt = this.pointerFromEvent(e, e.pointerType !== "mouse");
@@ -1034,7 +1238,7 @@ export class Sketchpad {
     if (e.button !== 0) return;
 
     if (this.tool === "select") {
-      const h = this.selEl ? this.selHandleAt(pt.sx, pt.sy) : null;
+      const h = this.selEl && this.selSet.size === 1 ? this.selHandleAt(pt.sx, pt.sy) : null;
       if (h) {
         if (h.kind === "rotate") this.beginSelGesture("rotate", pt);
         else if (h.kind === "edge") this.beginSelGesture("move", pt);
@@ -1042,11 +1246,16 @@ export class Sketchpad {
       } else {
         const el = this.hitTest(pt.wx, pt.wy);
         if (el) {
-          this.selEl = el;
+          if (!this.selSet.has(el)) this.setSel(el);
           this.beginSelGesture("move", pt);
           this.emit();
+        } else if (this.selSet.size > 1 && this.groupEdgeHover()) {
+          this.beginSelGesture("move", pt);
         } else {
           this.deselect();
+          this.selMode = "marquee";
+          this.marquee = { x0: pt.sx, y0: pt.sy, x1: pt.sx, y1: pt.sy };
+          this.marqueeId = e.pointerId;
         }
       }
       this.rim();
@@ -1136,6 +1345,15 @@ export class Sketchpad {
       return;
     }
 
+    if (this.selMode === "marquee") {
+      if (e.pointerId === this.marqueeId && this.marquee) {
+        this.marquee.x1 = pt.sx;
+        this.marquee.y1 = pt.sy;
+        this.rim();
+      }
+      return;
+    }
+
     if (this.tool === "select" && this.selMode !== "idle" && this.selGe) {
       this.updateSelectGesture(pt);
       return;
@@ -1186,6 +1404,10 @@ export class Sketchpad {
     if (this.drawingId === e.pointerId) {
       this.drawingId = null;
       this.commitDrawing();
+    }
+
+    if (this.selMode === "marquee") {
+      this.finishMarquee(e.pointerId);
     }
 
     if (this.tool === "select" && this.selMode !== "idle" && this.selGe) {
@@ -1259,6 +1481,10 @@ export class Sketchpad {
     const xy = this.stageXY(e as unknown as PointerEvent);
     if (e.ctrlKey || e.metaKey) {
       this.zoomAt(Math.exp(-e.deltaY * 0.01), xy.x, xy.y);
+    } else if (e.shiftKey) {
+      this.pan.x -= e.deltaY;
+      this.pan.y -= e.deltaX;
+      this.rim();
     } else {
       this.pan.x -= e.deltaX;
       this.pan.y -= e.deltaY;
