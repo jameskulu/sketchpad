@@ -77,7 +77,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
 >
   <div id="app" class="flex h-dvh flex-col" data-lang={locale}>
     <!-- Top bar -->
-    <header class="z-40 flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4">
+    <header class="z-40 flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4 max-[360px]:px-2">
       <a href={homeHref} class="flex items-center gap-1.5 rounded-md px-1.5 py-1 max-md:gap-1 max-md:px-1" aria-label="Simple Sketchpad home">
         <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
           <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
@@ -90,8 +90,10 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
       </div>
 
-      <div class="flex flex-1 items-center justify-end gap-0.5 sm:gap-1">
-        <LangSwitcher locale={locale} route="/" compact={true} />
+      <div class="hdr-actions flex min-w-0 flex-1 items-center justify-end gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
+        <div class="max-[360px]:hidden">
+          <LangSwitcher locale={locale} route="/" compact={true} />
+        </div>
 
         <button
           id="undo-btn"
@@ -159,13 +161,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
     <main class="relative flex min-h-0 flex-1">
       <!-- Tool rail -->
       <nav
-        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-12 max-md:left-1/2 max-md:max-w-[calc(100vw-24px)] max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:overflow-x-auto max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2 max-md:py-2 max-md:shadow-xl max-md:shadow-shadow-blue/10 max-[344px]:left-3 max-[344px]:translate-x-0 md:w-[54px] md:max-w-none md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
+        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-12 max-md:left-1/2 max-md:max-w-[calc(100vw-24px)] max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2 max-md:py-2 max-md:shadow-xl max-md:shadow-shadow-blue/10 max-[344px]:left-3 max-[344px]:translate-x-0 md:w-[54px] md:max-w-none md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
         aria-label={ui.canvas.drawingTools}
       >
         {tools.map((t) => (
           <button
             id={`tool-${t.id}`}
-            class="btn-icon relative max-md:size-[30px]!"
+            class="btn-icon relative shrink-0 max-md:size-[30px]!"
             aria-label={`${t.label} (${t.hint})`}
             title={`${t.label} (${t.hint})`}
             aria-pressed="false"
@@ -177,7 +179,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         <button
           id="fullscreen-btn-mobile"
           data-state="off"
-          class="btn-icon max-md:size-[30px]! md:hidden!"
+          class="btn-icon shrink-0 max-md:size-[30px]! md:hidden!"
           aria-label={ui.canvas.toggleFullscreen}
           title={ui.canvas.toggleFullscreen}
         >
@@ -326,6 +328,9 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   .eyebrow {
     @apply text-[10px] font-semibold uppercase tracking-[0.08em] text-ink-mute;
   }
+  .hdr-actions > * {
+    flex: none;
+  }
   .btn-icon {
     @apply grid size-9 place-items-center rounded-lg text-ink-mute transition-colors hover:bg-canvas-soft hover:text-ink md:size-8;
   }
@@ -344,6 +349,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
 </style>
 
 <style is:global>
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   #fullscreen-btn[data-state="on"] svg:first-of-type,
   #fullscreen-btn-mobile[data-state="on"] svg:first-of-type,
   #fullscreen-btn[data-state="off"] svg:last-of-type,
