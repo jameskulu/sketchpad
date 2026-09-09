@@ -75,6 +75,20 @@ function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
 }
 
+function pointInTriangle(
+  p: { x: number; y: number },
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+  c: { x: number; y: number },
+): boolean {
+  const s = (a.y * b.x - a.x * b.y + (b.y - a.y) * p.x + (a.x - b.x) * p.y);
+  const t = (a.x * c.y - a.y * c.x + (a.y - c.y) * p.x + (c.x - a.x) * p.y);
+  const u = (b.x * c.y - b.y * c.x + (c.y - b.y) * p.x + (b.x - c.x) * p.y);
+  let neg = s < 0 || t < 0 || u < 0;
+  let pos = s > 0 || t > 0 || u > 0;
+  return !(neg && pos);
+}
+
 function niceStep(scale: number): { step: number; major: number } {
   const raw = 32 / scale;
   const mag = Math.pow(10, Math.floor(Math.log10(raw)));
@@ -161,6 +175,7 @@ export class Sketchpad {
   } | null = null;
   private panningId: number | null = null;
   private drawingId: number | null = null;
+  private touchPinching = false;
   private spaceKeyDown = false;
   private rafPending = false;
   private saved: UIState["saved"] = "saved";
@@ -683,6 +698,11 @@ export class Sketchpad {
   private bindCanvas(): void {
     const c = this.canvas;
     c.style.touchAction = "none";
+    c.style.setProperty("-webkit-touch-callout", "none");
+    c.addEventListener("touchstart", (e) => this.onTouchStart(e), { passive: false });
+    c.addEventListener("touchmove", (e) => this.onTouchMove(e), { passive: false });
+    c.addEventListener("touchend", (e) => this.onTouchEnd(e), { passive: false });
+    c.addEventListener("touchcancel", (e) => this.onTouchEnd(e), { passive: false });
     c.addEventListener("pointerdown", (e) => this.onPointerDown(e));
     c.addEventListener("pointermove", (e) => this.onPointerMove(e));
     c.addEventListener("pointerup", (e) => this.onPointerUp(e));
@@ -790,6 +810,7 @@ export class Sketchpad {
     const b = this.worldTransform(Math.max(m.x0, m.x1), Math.max(m.y0, m.y1));
     this.selSet.clear();
     for (const el of this.elements) {
+      if (this.elementIsFullyErased(el)) continue;
       if (this.elementInRegion(el, a.x, a.y, b.x, b.y)) this.selSet.add(el);
     }
     this.selEl = null;
@@ -868,6 +889,7 @@ export class Sketchpad {
   private hitTest(wx: number, wy: number): Element | null {
     for (let i = this.elements.length - 1; i >= 0; i--) {
       const el = this.elements[i];
+      if (this.elementIsFullyErased(el)) continue;
       if (el.kind === "stroke") {
         const rot = el.rotation ?? 0;
         let qx = wx;
@@ -887,6 +909,109 @@ export class Sketchpad {
       }
     }
     return null;
+  }
+
+  private elementIsFullyErased(el: Element): boolean {
+    const elz = el.z ?? 0;
+    const ers = this.erasures.filter((er) => (er.z ?? 0) > elz);
+    if (ers.length === 0) return false;
+    const samples = this.sampleElementPoints(el);
+    if (samples.length === 0) return false;
+    let covered = 0;
+    for (const p of samples) {
+      if (this.pointCoveredByErasures(p, ers)) covered++;
+    }
+    return covered / samples.length >= 0.99;
+  }
+
+  private pointCoveredByErasures(p: { x: number; y: number }, ers: Erasure[]): boolean {
+    for (const er of ers) {
+      const r = er.width / 2;
+      if (er.points.length === 0) continue;
+      if (er.points.length === 1) {
+        if (Math.hypot(p.x - er.points[0].x, p.y - er.points[0].y) <= r) return true;
+        continue;
+      }
+      for (let i = 0; i < er.points.length - 1; i++) {
+        const a = er.points[i];
+        const b = er.points[i + 1];
+        const abx = b.x - a.x;
+        const aby = b.y - a.y;
+        const len2 = abx * abx + aby * aby;
+        let t = len2 === 0 ? 0 : ((p.x - a.x) * abx + (p.y - a.y) * aby) / len2;
+        t = Math.max(0, Math.min(1, t));
+        const qx = a.x + abx * t;
+        const qy = a.y + aby * t;
+        if (Math.hypot(p.x - qx, p.y - qy) <= r) return true;
+      }
+    }
+    return false;
+  }
+
+  private sampleElementPoints(el: Element): Array<{ x: number; y: number }> {
+    const raw: Array<{ x: number; y: number }> = [];
+    if (el.kind === "stroke") {
+      if (el.points.length === 0) return [];
+      for (const p of el.points) raw.push({ x: p.x, y: p.y });
+    } else if (el.kind === "text") {
+      const b = elementBounds(el);
+      const cols = Math.max(2, Math.round(b.w / 12));
+      const rows = Math.max(2, Math.round(b.h / 12));
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          raw.push({ x: b.x + (c + 0.5) * (b.w / cols), y: b.y + (r + 0.5) * (b.h / rows) });
+        }
+      }
+    } else {
+      const x1 = el.x1;
+      const y1 = el.y1;
+      const x2 = el.x2;
+      const y2 = el.y2;
+      if (el.kind === "line" || el.kind === "arrow") {
+        const n = 64;
+        for (let i = 0; i <= n; i++) {
+          const t = i / n;
+          raw.push({ x: x1 + (x2 - x1) * t, y: y1 + (y2 - y1) * t });
+        }
+      } else {
+        const b = elementBounds(el);
+        const cols = Math.max(3, Math.round(b.w / 10));
+        const rows = Math.max(3, Math.round(b.h / 10));
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const px = b.x + (c + 0.5) * (b.w / cols);
+            const py = b.y + (r + 0.5) * (b.h / rows);
+            if (el.kind === "ellipse") {
+              const rx = Math.max(b.w / 2, 0.001);
+              const ry = Math.max(b.h / 2, 0.001);
+              const cx = b.x + rx;
+              const cy = b.y + ry;
+              const dx = (px - cx) / rx;
+              const dy = (py - cy) / ry;
+              if (dx * dx + dy * dy <= 1) raw.push({ x: px, y: py });
+            } else if (el.kind === "triangle") {
+              const top = { x: (Math.min(x1, x2) + Math.max(x1, x2)) / 2, y: Math.min(y1, y2) };
+              const bl = { x: Math.min(x1, x2), y: Math.max(y1, y2) };
+              const br = { x: Math.max(x1, x2), y: Math.max(y1, y2) };
+              if (pointInTriangle({ x: px, y: py }, top, bl, br)) raw.push({ x: px, y: py });
+            } else {
+              raw.push({ x: px, y: py });
+            }
+          }
+        }
+      }
+    }
+    return raw.map((p) => this.elementToWorld(p, el));
+  }
+
+  private elementToWorld(p: { x: number; y: number }, el: Element): { x: number; y: number } {
+    const rot = el.rotation ?? 0;
+    if (!rot) return { x: p.x, y: p.y };
+    const c = elementCenter(el);
+    const a = (rot * Math.PI) / 180;
+    const dx = p.x - c.x;
+    const dy = p.y - c.y;
+    return { x: c.x + dx * Math.cos(a) - dy * Math.sin(a), y: c.y + dx * Math.sin(a) + dy * Math.cos(a) };
   }
 
   private selScreen(el: Element): {
@@ -1226,6 +1351,10 @@ export class Sketchpad {
         /* ignore */
       }
     }
+    if (this.touchPinching) {
+      e.preventDefault();
+      return;
+    }
 
     if (this.editingText) this.commitText();
 
@@ -1262,7 +1391,7 @@ export class Sketchpad {
       return;
     }
 
-    if (this.activePointers.size >= 2) {
+    if (this.activePointers.size >= 2 && !this.touchPinching) {
       this.startPinch();
       return;
     }
@@ -1332,7 +1461,7 @@ export class Sketchpad {
       return;
     }
 
-    if (this.pinching && this.activePointers.size >= 2) {
+    if (this.pinching && !this.touchPinching && this.activePointers.size >= 2) {
       if (prev) {
         prev.sx = pt.sx;
         prev.sy = pt.sy;
@@ -1442,6 +1571,83 @@ export class Sketchpad {
     }
   }
 
+  private onTouchStart(e: TouchEvent): void {
+    if (e.touches.length >= 2) {
+      e.preventDefault();
+      if (!this.touchPinching) {
+        this.touchPinching = true;
+        this.cancelActiveGesture();
+        this.pinching = null;
+        const r = this.stage.getBoundingClientRect();
+        const a0 = e.touches[0];
+        const b0 = e.touches[1];
+        const ax = a0.clientX - r.left;
+        const ay = a0.clientY - r.top;
+        const bx = b0.clientX - r.left;
+        const by = b0.clientY - r.top;
+        const dist0 = Math.hypot(bx - ax, by - ay) || 1;
+        this.pinching = {
+          scale0: this.scale,
+          pan0: { ...this.pan },
+          dist0,
+          worldMid: this.worldTransform((ax + bx) / 2, (ay + by) / 2),
+        };
+      }
+    }
+  }
+
+  private onTouchMove(e: TouchEvent): void {
+    if (!this.pinching) return;
+    if (e.touches.length >= 2) {
+      e.preventDefault();
+      if (!this.touchPinching) {
+        this.touchPinching = true;
+        this.pinching = null;
+        return;
+      }
+      const r = this.stage.getBoundingClientRect();
+      const a = e.touches[0];
+      const b = e.touches[1];
+      const ax = a.clientX - r.left;
+      const ay = a.clientY - r.top;
+      const bx = b.clientX - r.left;
+      const by = b.clientY - r.top;
+      const dist = Math.hypot(bx - ax, by - ay) || 1;
+      const s = clamp(this.pinching.scale0 * (dist / this.pinching.dist0), MIN_SCALE, MAX_SCALE);
+      const sm = { x: (ax + bx) / 2, y: (ay + by) / 2 };
+      this.scale = s;
+      this.pan.x = sm.x - this.pinching.worldMid.x * s;
+      this.pan.y = sm.y - this.pinching.worldMid.y * s;
+      this.rim();
+      this.emit();
+    }
+  }
+
+  private onTouchEnd(e: TouchEvent): void {
+    if (this.touchPinching) {
+      e.preventDefault();
+      if (e.touches.length < 2) {
+        this.touchPinching = false;
+        this.pinching = null;
+        this.rim();
+      }
+    }
+  }
+
+  private cancelActiveGesture(): void {
+    this.drawingId = null;
+    this.panningId = null;
+    this.pendingEl = null;
+    this.pendingEr = null;
+    this.activePointers.clear();
+    if (this.selMode === "marquee") {
+      this.marquee = null;
+      this.marqueeId = null;
+      this.selMode = "idle";
+    }
+    if (this.selGe) this.endSelectGesture();
+  }
+
   private startPinch(): void {
     this.drawingId = null;
     this.panningId = null;
@@ -1498,7 +1704,7 @@ export class Sketchpad {
     const world = this.worldTransform(xy.x, xy.y);
     for (let i = this.elements.length - 1; i >= 0; i--) {
       const el = this.elements[i];
-      if (el.kind === "text" && this.pointInRotatedElement(world, el)) {
+      if (el.kind === "text" && !this.elementIsFullyErased(el) && this.pointInRotatedElement(world, el)) {
         this.startTextEdit(el.x, el.y, el);
         return;
       }

@@ -90,10 +90,12 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
       </div>
 
-      <div class="hdr-actions flex min-w-0 flex-1 items-center justify-end gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
-        <div class="max-[360px]:hidden">
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-0.5 sm:gap-1">
+        <div class="max-[360px]:hidden shrink-0">
           <LangSwitcher locale={locale} route="/" compact={true} />
         </div>
+
+        <div class="hdr-actions flex min-w-0 items-center gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
 
         <button
           id="undo-btn"
@@ -154,6 +156,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
           <Icon name="download" class="size-4" />
           <span class="hidden sm:inline">{ui.canvas.downloadPngShort}</span>
         </button>
+        </div>
       </div>
     </header>
 
