@@ -65,9 +65,9 @@ export interface UIStrings {
 export type UI = Record<Locale, UIStrings>;
 
 const en: UIStrings = {
-  siteName: "Simple Sketchpad",
+  siteName: "Sketchpad",
   nav: { about: "About", privacyPolicy: "Privacy Policy", terms: "Terms & Conditions", contact: "Contact Us" },
-  footer: { openSketchpad: "Open sketchpad", copyright: (y) => `© ${y} Simple Sketchpad` },
+  footer: { openSketchpad: "Open sketchpad", copyright: (y) => `© ${y} Sketchpad` },
   canvas: {
     downloadPng: "Download PNG (Ctrl+D)",
     downloadPngShort: "Download PNG",
@@ -119,9 +119,9 @@ const en: UIStrings = {
 export const UI: UI = {
   en,
   es: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "Acerca de", privacyPolicy: "Política de Privacidad", terms: "Términos y Condiciones", contact: "Contacto" },
-    footer: { openSketchpad: "Abrir el sketchpad", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "Abrir el sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Descargar PNG (Ctrl+D)",
       downloadPngShort: "Descargar PNG",
@@ -170,9 +170,9 @@ export const UI: UI = {
     },
   },
   ja: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "概要", privacyPolicy: "プライバシーポリシー", terms: "利用規約", contact: "お問い合わせ" },
-    footer: { openSketchpad: "スケッチパッドを開く", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "スケッチパッドを開く", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "PNGをダウンロード (Ctrl+D)",
       downloadPngShort: "PNGをダウンロード",
@@ -221,9 +221,9 @@ export const UI: UI = {
     },
   },
   fr: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "À propos", privacyPolicy: "Politique de confidentialité", terms: "Conditions d'utilisation", contact: "Contact" },
-    footer: { openSketchpad: "Ouvrir le sketchpad", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "Ouvrir le sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Télécharger PNG (Ctrl+D)",
       downloadPngShort: "Télécharger PNG",
@@ -272,9 +272,9 @@ export const UI: UI = {
     },
   },
   de: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "Über uns", privacyPolicy: "Datenschutz", terms: "AGB", contact: "Kontakt" },
-    footer: { openSketchpad: "Sketchpad öffnen", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "Sketchpad öffnen", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "PNG herunterladen (Ctrl+D)",
       downloadPngShort: "PNG herunterladen",
@@ -323,9 +323,9 @@ export const UI: UI = {
     },
   },
   pt: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "Sobre", privacyPolicy: "Política de Privacidade", terms: "Termos e Condições", contact: "Contato" },
-    footer: { openSketchpad: "Abrir o sketchpad", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "Abrir o sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Baixar PNG (Ctrl+D)",
       downloadPngShort: "Baixar PNG",
@@ -374,9 +374,9 @@ export const UI: UI = {
     },
   },
   ko: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "소개", privacyPolicy: "개인정보 처리방침", terms: "이용약관", contact: "문의하기" },
-    footer: { openSketchpad: "스케치패드 열기", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "스케치패드 열기", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "PNG 다운로드 (Ctrl+D)",
       downloadPngShort: "PNG 다운로드",
@@ -425,9 +425,9 @@ export const UI: UI = {
     },
   },
   it: {
-    siteName: "Simple Sketchpad",
+    siteName: "Sketchpad",
     nav: { about: "Chi siamo", privacyPolicy: "Informativa sulla privacy", terms: "Termini e condizioni", contact: "Contatti" },
-    footer: { openSketchpad: "Apri lo sketchpad", copyright: (y) => `© ${y} Simple Sketchpad` },
+    footer: { openSketchpad: "Apri lo sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Scarica PNG (Ctrl+D)",
       downloadPngShort: "Scarica PNG",
