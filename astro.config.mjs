@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://simplesketchpad.com',
   i18n: {
-    locales: ['en', 'es', 'ja', 'fr', 'de', 'pt', 'ko', 'it'],
+    locales: ['en', 'es', 'ja', 'fr', 'de', 'pt', 'ko', 'it', 'zh'],
     defaultLocale: 'en',
     routing: {
       prefixDefaultLocale: false,
