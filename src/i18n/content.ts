@@ -5,11 +5,11 @@ export const CONTENT: Content = {
     htmlLang: "en",
     seoTitle: "Sketchpad — Free Online Sketchpad & Digital Drawing Board",
     seoDescription:
-      "Draw online for free with this fast sketchpad — a digital drawing board for sketching, shapes, text, and more. No sign-up, works on any device, with PNG export.",
+      "Draw online for free with this fast digital sketchpad — a drawing pad online for sketching, shapes, text, and more. This free sketchpad needs no sign-up, works on any device, and exports to PNG.",
     home: {
       h1: "Sketchpad — Your Free Online Sketchpad & Digital Drawing Board",
       intro: [
-        "Meet Sketchpad, a free online sketchpad built for anyone who wants to draw online without signing up, installing software, or dealing with cluttered interfaces. Whether you are sketching ideas, mapping out a diagram, teaching a child to draw, or prototyping your next project, this online drawing board gives you a crisp white canvas and the essentials — nothing more, nothing less. No account. No watermarks. No ads interrupting your flow. Think of it as a simple drawing pad that is always open in your browser, ready the moment inspiration strikes.",
+        "Meet Sketchpad, a free online sketchpad built for anyone who wants to draw online without signing up, installing software, or dealing with cluttered interfaces. Whether you are sketching ideas, mapping out a diagram, teaching a child to draw, or prototyping your next project, this online drawing board gives you a crisp white canvas and the essentials — nothing more, nothing less. No account. No watermarks. No ads interrupting your flow. Think of it as a simple sketch pad online that is always open in your browser, ready the moment inspiration strikes.",
       ],
       toolsHeading: "Draw Online Sketchpad — Everything You Need, Nothing You Don't",
       tools: [
@@ -17,11 +17,11 @@ export const CONTENT: Content = {
       ],
       rankingHeading: "Best Online Sketchpad Tools 2025 & 2026",
       ranking: [
-        "Roundups of the best online sketchpad tools 2025 and the best online sketchpad tools 2026 keep pointing at the same expectation: fast, private, and free. Our online sketchpad free of charge story hits all three. While heavyweight suites pile on accounts, subscriptions, and cloud sync, this drawpad keeps drawing front and center. It is lightweight enough to open instantly on a slow connection and private enough that your sketches never leave your browser. No plugins to install, no tutorials to sit through — you land on the online drawing board and your first stroke is seconds away.",
+        "Roundups of the best online sketchpad tools 2025 and the best online sketchpad tools 2026 keep pointing to the same winners for quick sketchpad drawing: fast, private, and free. Our online sketchpad free of charge story hits all three. While heavyweight suites pile on accounts, subscriptions, and cloud sync, this drawpad keeps drawing front and center. It is lightweight enough to open instantly on a slow connection and private enough that your sketches never leave your browser. No plugins to install, no tutorials to sit through — you land on the online drawing board and your first stroke is seconds away.",
       ],
       kidsHeading: "The Perfect Online Drawing Board for Kids",
       kids: [
-        "Looking for a drawing board for kids? This digital sketchpad is a wonderful pick. There are no ads or prompts to buy things, a clean undo button encourages experimentation, and bright swatches make color fun. A parent-approved online drawing board means safe, distraction-free creativity — the ideal drawing board online for classroom brainstorms, rainy-afternoon doodles, or a quick drawing board for learning shapes and letters. Young artists can draw online sketchpad sessions for hours with nothing but their imagination. And because there is no login or email required, a child can go from idea to doodle in seconds — safely and without friction. Parents often keep this bookmarked as their go-to drawing pad for kids: calm, colorful, and endlessly forgiving.",
+        "Looking for a drawing board for kids? This digital sketchpad is a wonderful pick. There are no ads or prompts to buy things, a clean undo button encourages experimentation, and bright swatches make color fun. A parent-approved online drawing board means safe, distraction-free creativity — a sketching pad online that doubles as the ideal doodle pad online for classroom brainstorms, rainy-afternoon doodles, or a quick drawing board for learning shapes and letters. Young artists can draw online sketchpad sessions for hours with nothing but their imagination. And because there is no login or email required, a child can go from idea to doodle in seconds — safely and without friction. Parents often keep this bookmarked as their go-to drawing pad for kids: calm, colorful, and endlessly forgiving.",
       ],
       faqHeading: "Frequently Asked Questions",
       faq: [
