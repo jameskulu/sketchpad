@@ -1,0 +1,6 @@
+---
+import ToolApp from "../components/ToolApp.astro";
+import { TOOL_CONTENT } from "../i18n/tool-content";
+import { DEFAULT_LOCALE } from "../i18n/locales";
+---
+<ToolApp mode="whiteboard" locale={DEFAULT_LOCALE} pageKey="whiteboard" content={TOOL_CONTENT[DEFAULT_LOCALE]["whiteboard"]} />

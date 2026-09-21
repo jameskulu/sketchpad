@@ -1,6 +1,6 @@
 export type Point = { x: number; y: number; p: number };
 
-export type ToolId = "brush" | "pencil" | "rect" | "ellipse" | "triangle" | "line" | "arrow" | "text" | "eraser" | "select";
+export type ToolId = "brush" | "pencil" | "highlighter" | "rect" | "ellipse" | "triangle" | "line" | "arrow" | "text" | "sticky" | "stamp" | "eraser" | "select";
 
 export interface StrokeElement {
   id: string;
@@ -10,6 +10,25 @@ export interface StrokeElement {
   width: number;
   opacity: number;
   rough?: boolean;
+  rotation?: number;
+  z?: number;
+}
+
+export interface StickyElement {
+  id: string;
+  kind: "sticky";
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  /** note background */
+  color: string;
+  /** note text */
+  text: string;
+  /** font size for the note text */
+  size: number;
+  textColor: string;
+  opacity: number;
   rotation?: number;
   z?: number;
 }
@@ -42,7 +61,7 @@ export interface TextElement {
   z?: number;
 }
 
-export type Element = StrokeElement | ShapeElement | TextElement;
+export type Element = StrokeElement | ShapeElement | TextElement | StickyElement;
 
 export interface Erasure {
   id: string;
@@ -101,6 +120,9 @@ export function elementBounds(el: Element): { x: number; y: number; w: number; h
     case "text": {
       const w = estimateTextWidth(el.text, el.size);
       return { x: el.x, y: el.y, w, h: el.size * 1.25 };
+    }
+    case "sticky": {
+      return { x: Math.min(el.x1, el.x2), y: Math.min(el.y1, el.y2), w: Math.abs(el.x2 - el.x1), h: Math.abs(el.y2 - el.y1) };
     }
   }
 }

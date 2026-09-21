@@ -1,0 +1,360 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "./Icon.astro";
+import ToolSeo from "./ToolSeo.astro";
+import { SITE } from "../lib/site";
+import { uiFor } from "../i18n/ui";
+import { toolUiFor } from "../i18n/tool-ui";
+import type { ToolPageContent, ToolPageKey } from "../i18n/tool-content-types";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
+
+interface Props {
+  locale: Locale;
+  pageKey: ToolPageKey;
+  content: ToolPageContent;
+}
+
+const { locale, pageKey, content } = Astro.props;
+const ui = uiFor(locale);
+const toolUi = toolUiFor(locale);
+
+const route = "/kids-drawing";
+
+const colors = ["#ea2261", "#ff9d00", "#ffd400", "#0e9f6e", "#0ea5e9", "#533afd", "#8b5cf6", "#000000", "#ffffff"];
+const stamps = ["⭐", "❤️", "🌈", "🦄", "🚀", "🐱", "🌸", "☀️", "🔥", "🎉"];
+
+const seoData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: content.h1,
+  url: new URL(deriveLocaleHref(locale, route), SITE.url).href,
+  description: content.seoDescription,
+  applicationCategory: "GameApplication",
+  operatingSystem: "Any",
+  browserRequirements: "Requires JavaScript. Works on desktop, tablet, and mobile browsers.",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  featureList: [
+    "Free — no account or sign-up required",
+    "Big buttons that are easy to tap",
+    "Emoji stamps",
+    "Autosave in the browser",
+    "Safe for kids — no ads, no chat",
+  ],
+  isAccessibleForFree: true,
+  audience: { "@type": "Audience", audienceType: "Children" },
+};
+
+const faqData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: content.faq.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+const homeHref = deriveLocaleHref(locale, "/");
+---
+
+<Layout
+  title={content.seoTitle}
+  description={content.seoDescription}
+  structuredData={[seoData, faqData]}
+  locale={locale}
+  route={route}
+>
+  <div id="app" class="flex h-dvh flex-col" data-lang={locale}>
+    <!-- Top bar -->
+    <header class="z-40 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-5">
+      <a href={homeHref} class="flex items-center gap-1.5 rounded-md px-1.5 py-1" aria-label="Simple Sketchpad home">
+        <svg width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <span class="text-sm font-semibold tracking-tight text-ink max-[420px]:hidden">{ui.siteName}</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <div class="hidden items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 sm:flex">
+          <span id="autosave-dot" class="size-2 rounded-full bg-emerald-500"></span>
+          <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
+        </div>
+        <button
+          id="download-btn"
+          class="flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-[13px] font-semibold text-white transition-colors hover:bg-primary-deep active:bg-primary-press"
+          aria-label={toolUi.kids.download}
+        >
+          <Icon name="download" class="size-4" />
+          <span>{toolUi.kids.download}</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas -->
+    <main id="stage" class="relative min-h-0 flex-1 touch-none select-none overflow-hidden bg-white">
+      <canvas id="sketchpad-canvas" class="block h-full w-full cursor-crosshair" aria-label={ui.canvas.drawingTools}></canvas>
+      <button
+        id="delete-btn"
+        class="float-del absolute z-10 grid size-10 place-items-center rounded-xl border border-hairline bg-white text-ink-mute shadow-lg"
+        aria-label={ui.canvas.deleteSelection}
+        title={ui.canvas.deleteSelection}
+        hidden
+      >
+        <Icon name="trash" class="size-5" />
+      </button>
+    </main>
+
+    <!-- Control shelf -->
+    <section class="z-20 shrink-0 border-t border-hairline bg-white/95 px-3 py-3 backdrop-blur sm:px-5">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0 flex-1">
+          <p class="kids-label">{toolUi.kids.paletteHeading}</p>
+          <div class="mt-1.5 flex flex-wrap gap-2" id="swatches">
+            {colors.map((c) => (
+              <button
+                type="button"
+                class="swatch size-9 rounded-full ring-1 ring-inset ring-black/10 transition-transform hover:scale-110"
+                style={`background:${c}`}
+                data-color={c}
+                aria-label={`${ui.canvas.color} ${c}`}
+              ></button>
+            ))}
+          </div>
+        </div>
+
+        <div class="hidden min-w-0 flex-1 sm:block">
+          <p class="kids-label">{toolUi.kids.stampsHeading}</p>
+          <div class="mt-1.5 flex flex-wrap gap-1.5" id="stamps">
+            {stamps.map((s, i) => (
+              <button
+                type="button"
+                class="stamp-btn grid size-9 place-items-center rounded-xl text-xl leading-none transition-transform hover:scale-110"
+                data-char={s}
+                aria-pressed="false"
+                aria-label={`${toolUi.kids.stampsHeading} ${i + 1}`}
+              >
+                <span aria-hidden="true">{s}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="sm:hidden">
+        <p class="kids-label mt-2">{toolUi.kids.stampsHeading}</p>
+        <div class="mt-1.5 flex gap-1.5 overflow-x-auto no-scrollbar" id="stamps">
+          {stamps.map((s) => (
+            <button
+              type="button"
+              class="stamp-btn grid size-9 shrink-0 place-items-center rounded-xl text-xl leading-none transition-transform hover:scale-110"
+              data-char={s}
+              aria-pressed="false"
+              aria-label={`${toolUi.kids.stampsHeading} ${s}`}
+            >
+              <span aria-hidden="true">{s}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <p class="mt-2 hidden text-[11px] leading-5 text-ink-mute sm:block">{toolUi.kids.stampHint}</p>
+    </section>
+
+    <!-- Dock -->
+    <footer class="z-20 shrink-0 border-t border-hairline bg-white/95 px-3 py-3 backdrop-blur sm:px-5">
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        <button
+          id="tool-brush"
+          class="kids-action is-active flex items-center gap-2 rounded-2xl bg-primary text-white hover:bg-primary-deep active:bg-primary-press"
+          aria-label={toolUi.kids.draw}
+          aria-pressed="true"
+        >
+          <Icon name="brush" class="size-5" />
+          <span>{toolUi.kids.draw}</span>
+        </button>
+        <button
+          id="tool-eraser"
+          class="kids-action flex items-center gap-2 rounded-2xl border border-hairline bg-white text-ink hover:bg-canvas-soft"
+          aria-label={toolUi.kids.erase}
+          aria-pressed="false"
+        >
+          <Icon name="eraser" class="size-5" />
+          <span>{toolUi.kids.erase}</span>
+        </button>
+
+        <div class="h-8 w-px bg-hairline max-sm:hidden" role="separator"></div>
+
+        <button id="undo-btn" class="kids-action square" aria-label={toolUi.kids.undo} disabled>
+          <Icon name="undo" class="size-5" />
+        </button>
+        <button id="redo-btn" class="kids-action square" aria-label={toolUi.kids.redo} disabled>
+          <Icon name="redo" class="size-5" />
+        </button>
+
+        <div class="ml-auto flex items-center gap-2 sm:gap-3">
+          <button id="clear-btn" class="kids-action border border-hairline bg-white text-ink hover:bg-canvas-soft">
+            <Icon name="trash" class="size-5" />
+            <span class="hidden sm:inline">{toolUi.kids.clear}</span>
+          </button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Hidden controls required by the engine bindings -->
+  <button id="tool-stamp" hidden></button>
+  <button id="grid-btn" hidden></button>
+  <button id="zoom-out-btn" hidden></button>
+  <button id="zoom-in-btn" hidden></button>
+  <button id="zoom-fit-btn" hidden></button>
+  <button id="zoom-100-btn" hidden></button>
+  <button id="fullscreen-btn" hidden></button>
+  <button id="fullscreen-btn-mobile" hidden></button>
+  <input id="color-input" type="color" value="#ea2261" hidden />
+  <div id="size-slider" hidden></div>
+  <div id="size-label" hidden></div>
+  <div id="opacity-slider" hidden></div>
+  <div id="opacity-label" hidden></div>
+  <div id="fill-toggle" hidden></div>
+  <div id="zoom-label" hidden></div>
+  <div id="coords-label" hidden></div>
+
+  <ToolSeo locale={locale} pageKey={pageKey} content={content} />
+</Layout>
+
+<style>
+  @reference "../styles/global.css";
+
+  .kids-label {
+    @apply text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-mute;
+  }
+  .kids-action {
+    @apply flex h-11 items-center gap-2 rounded-2xl px-4 text-[14px] font-semibold transition-colors active:scale-95;
+  }
+  .kids-action.square {
+    @apply size-11 justify-center rounded-2xl border border-hairline bg-white px-0 text-ink hover:bg-canvas-soft;
+  }
+  .kids-action:disabled {
+    @apply pointer-events-none opacity-35;
+  }
+  .kids-action.is-active {
+    @apply ring-2 ring-primary/40;
+  }
+  .stamp-btn.is-active {
+    background: #7983ff;
+  }
+  #clear-btn.is-armed {
+    @apply bg-[#ea2261] text-white hover:bg-[#d81b55];
+  }
+</style>
+
+<style is:global>
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  import { Sketchpad } from "../lib/sketchpad";
+  import { uiFor } from "../i18n/ui";
+  import type { ToolId } from "../lib/elements";
+  import type { Locale } from "../i18n/locales";
+
+  const rootEl = document.querySelector<HTMLElement>('[id="app"]');
+  const canvas = document.getElementById("sketchpad-canvas");
+  if (!(canvas instanceof HTMLCanvasElement)) {
+    throw new Error("sketchpad canvas missing");
+  }
+
+  const appEl = rootEl as HTMLElement;
+  const stage = document.getElementById("stage");
+  if (!(stage instanceof HTMLElement)) {
+    throw new Error("sketchpad stage missing");
+  }
+
+  const ui = uiFor((appEl?.dataset.lang as Locale) ?? "en");
+
+  const q = <T extends HTMLElement = HTMLElement>(id: string): T => {
+    const el = document.getElementById(id);
+    if (!el) throw new Error(`missing element: ${id}`);
+    return el as T;
+  };
+
+  const toolButtons: Partial<Record<ToolId, HTMLButtonElement>> = {};
+  document.querySelectorAll<HTMLButtonElement>("[id^='tool-']").forEach((btn) => {
+    const id = btn.id.replace("tool-", "") as ToolId;
+    toolButtons[id] = btn;
+  });
+
+  const swatches = document.querySelectorAll<HTMLElement>(".swatch");
+  if (!swatches.length) throw new Error("missing swatches");
+
+  const autosaveDot = q("autosave-dot");
+
+  const pad = new Sketchpad({
+    stage,
+    canvas,
+    ui: {
+      toolButtons,
+      undoBtn: q<HTMLButtonElement>("undo-btn"),
+      redoBtn: q<HTMLButtonElement>("redo-btn"),
+      deleteBtn: q<HTMLButtonElement>("delete-btn"),
+      zoomOutBtn: q<HTMLButtonElement>("zoom-out-btn"),
+      zoomInBtn: q<HTMLButtonElement>("zoom-in-btn"),
+      zoomFitBtn: q<HTMLButtonElement>("zoom-fit-btn"),
+      zoom100Btn: q<HTMLButtonElement>("zoom-100-btn"),
+      clearBtn: q<HTMLButtonElement>("clear-btn"),
+      gridBtn: q<HTMLButtonElement>("grid-btn"),
+      fullscreenBtn: q<HTMLButtonElement>("fullscreen-btn"),
+      fullscreenBtnMobile: q<HTMLButtonElement>("fullscreen-btn-mobile"),
+      downloadBtn: q<HTMLButtonElement>("download-btn"),
+      swatches,
+      colorInput: q<HTMLInputElement>("color-input"),
+      sizeSlider: q<HTMLInputElement>("size-slider"),
+      sizeLabel: q<HTMLElement>("size-label"),
+      opacitySlider: q<HTMLInputElement>("opacity-slider"),
+      opacityLabel: q<HTMLElement>("opacity-label"),
+      fillToggle: q<HTMLButtonElement>("fill-toggle"),
+      zoomLabel: q<HTMLElement>("zoom-label"),
+      coordsLabel: q<HTMLElement>("coords-label"),
+      autosaveLabel: q<HTMLElement>("autosave-label"),
+      strings: {
+        autosaveSaved: ui.canvas.autosaveSaved,
+        autosaveSaving: ui.canvas.autosaveSaving,
+        autosaveNotSaved: ui.canvas.autosaveNotSaved,
+        px: ui.canvas.px,
+      },
+    },
+    defaultTool: "brush",
+    defaultColor: "#ea2261",
+    defaultGridOn: false,
+    defaultSizes: { brush: 18, pencil: 10, stamp: 84 },
+    autosaveKey: "simplesketchpad.kids-drawing.v1",
+    onState: (s) => {
+      q<HTMLButtonElement>("delete-btn").disabled = !s.hasSelection;
+      autosaveDot.classList.toggle("bg-emerald-500", s.saved === "saved");
+      autosaveDot.classList.toggle("bg-amber-400", s.saved === "saving");
+      autosaveDot.classList.toggle("bg-[#ea2261]", s.saved === "dirty");
+    },
+  });
+
+  pad.init();
+
+  const stamps = document.querySelectorAll<HTMLButtonElement>("#stamps .stamp-btn");
+  if (stamps.length) {
+    stamps.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const char = btn.dataset.char ?? "⭐";
+        pad.setStamp(char);
+        const stampBtn = toolButtons.stamp;
+        if (stampBtn) stampBtn.click();
+        stamps.forEach((b) => b.classList.toggle("is-active", b === btn));
+        btn.setAttribute("aria-pressed", "true");
+      });
+    });
+  }
+</script>

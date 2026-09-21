@@ -1,34 +1,113 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
-import SeoContent from "./SeoContent.astro";
 import LangSwitcher from "./LangSwitcher.astro";
 import { SITE } from "../lib/site";
+import ToolSeo from "./ToolSeo.astro";
 import { uiFor } from "../i18n/ui";
+import { toolUiFor } from "../i18n/tool-ui";
+import type { ToolPageContent, ToolPageKey } from "../i18n/tool-content-types";
 import { deriveLocaleHref, type Locale } from "../i18n/locales";
-import type { PageContent } from "../i18n/content-types";
+
+export type ToolAppMode = "draw" | "board" | "whiteboard" | "graph";
 
 interface Props {
+  mode: ToolAppMode;
   locale: Locale;
-  page: PageContent;
+  pageKey: ToolPageKey;
+  content: ToolPageContent;
 }
 
-const { locale, page } = Astro.props;
+const { mode, locale, pageKey, content } = Astro.props;
 const ui = uiFor(locale);
+const toolUi = toolUiFor(locale);
+
+const ROUTES: Record<ToolPageKey, string> = {
+  "online-drawing": "/online-drawing",
+  "drawing-board": "/drawing-board",
+  whiteboard: "/whiteboard",
+  "graph-paper": "/graph-paper",
+  "kids-drawing": "/kids-drawing",
+};
+
+const route = ROUTES[pageKey];
+
+const TOOLS: Record<ToolAppMode, { id: string; icon: string; label: string; hint?: string }[]> = {
+  draw: [
+    { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
+    { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
+    { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
+    { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
+    { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
+    { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+    { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
+    { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
+    { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
+    { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
+  ],
+  board: [
+    { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
+    { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
+    { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
+    { id: "highlighter", icon: "highlighter", label: toolUi.tools.highlighter },
+    { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
+    { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
+    { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+    { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
+    { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
+    { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
+    { id: "sticky", icon: "sticky", label: toolUi.tools.sticky },
+    { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
+  ],
+  whiteboard: [
+    { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
+    { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
+    { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
+    { id: "highlighter", icon: "highlighter", label: toolUi.tools.highlighter },
+    { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
+    { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
+    { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
+    { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
+    { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
+    { id: "sticky", icon: "sticky", label: toolUi.tools.sticky },
+    { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
+  ],
+  graph: [
+    { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
+    { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
+    { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
+    { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
+    { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+    { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
+    { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
+    { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
+    { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
+  ],
+};
+
+const tools = TOOLS[mode];
+
+const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b6829", "#0e9f6e", "#0ea5e9", "#e05a00", "#000000"];
+const gridSizing = [
+  { value: "10", label: "10 px" },
+  { value: "20", label: "20 px" },
+  { value: "25", label: "25 px" },
+  { value: "40", label: "40 px" },
+];
 
 const seoData = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "Sketchpad",
-  url: new URL(deriveLocaleHref(locale, "/"), SITE.url).href,
-  description: page.seoDescription,
+  name: content.h1,
+  url: new URL(deriveLocaleHref(locale, route), SITE.url).href,
+  description: content.seoDescription,
   applicationCategory: "DesignApplication",
   operatingSystem: "Any",
   browserRequirements: "Requires JavaScript. Works on desktop, tablet, and mobile browsers.",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   featureList: [
     "Free — no account or sign-up required",
-    "PNG export of drawings",
+    "PNG and SVG export",
     "Autosave in the browser",
     "Touch, mouse, and stylus support",
     "Works on desktop, tablet, and mobile",
@@ -39,27 +118,12 @@ const seoData = {
 const faqData = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: page.home.faq.map((f) => ({
+  mainEntity: content.faq.map((f) => ({
     "@type": "Question",
     name: f.q,
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),
 };
-
-const tools: { id: string; icon: string; label: string; hint: string }[] = [
-  { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
-  { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
-  { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
-  { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
-  { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
-  { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
-  { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
-  { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
-  { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
-  { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
-];
-
-const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b6829", "#0e9f6e", "#0ea5e9", "#e05a00", "#000000"];
 
 const homeHref = deriveLocaleHref(locale, "/");
 const aboutHref = deriveLocaleHref(locale, "/about");
@@ -69,13 +133,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
 ---
 
 <Layout
-  title={page.seoTitle}
-  description={page.seoDescription}
+  title={content.seoTitle}
+  description={content.seoDescription}
   structuredData={[seoData, faqData]}
   locale={locale}
-  route="/"
+  route={route}
 >
-  <div id="app" class="flex h-dvh flex-col" data-lang={locale}>
+  <div id="app" class="flex h-dvh flex-col" data-lang={locale} data-mode={mode}>
     <!-- Top bar -->
     <header class="z-40 flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4 max-[360px]:px-2">
       <a href={homeHref} class="flex items-center gap-1.5 rounded-md px-1.5 py-1 max-md:gap-1 max-md:px-1" aria-label="Simple Sketchpad home">
@@ -92,70 +156,78 @@ const contactHref = deriveLocaleHref(locale, "/contact");
 
       <div class="flex min-w-0 flex-1 items-center justify-end gap-0.5 sm:gap-1">
         <div class="max-[360px]:hidden shrink-0">
-          <LangSwitcher locale={locale} route="/" compact={true} />
+          <LangSwitcher locale={locale} route={route} compact={true} />
         </div>
 
         <div class="hdr-actions flex min-w-0 items-center gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
+          <button
+            id="undo-btn"
+            class="btn-icon max-md:size-8!"
+            aria-label={ui.canvas.undo}
+            title={ui.canvas.undo}
+            disabled
+          >
+            <Icon name="undo" />
+          </button>
+          <button id="redo-btn" class="btn-icon max-md:size-8!" aria-label={ui.canvas.redo} title={ui.canvas.redo} disabled>
+            <Icon name="redo" />
+          </button>
 
-        <button
-          id="undo-btn"
-          class="btn-icon max-md:size-8!"
-          aria-label={ui.canvas.undo}
-          title={ui.canvas.undo}
-          disabled
-        >
-          <Icon name="undo" />
-        </button>
-        <button id="redo-btn" class="btn-icon max-md:size-8!" aria-label={ui.canvas.redo} title={ui.canvas.redo} disabled>
-          <Icon name="redo" />
-        </button>
+          <div class="mx-1.5 h-5 w-px bg-hairline max-md:mx-1" role="separator"></div>
 
-        <div class="mx-1.5 h-5 w-px bg-hairline max-md:mx-1" role="separator"></div>
+          <button
+            id="grid-btn"
+            class="btn-icon max-md:size-8!"
+            aria-label={ui.canvas.toggleGrid}
+            title={ui.canvas.toggleGrid}
+            aria-pressed="true"
+          >
+            <Icon name="grid" />
+          </button>
+          <button
+            id="clear-btn"
+            class="btn-icon max-md:size-8!"
+            aria-label={ui.canvas.clearCanvas}
+            title={ui.canvas.clearCanvas}
+          >
+            <Icon name="trash" />
+          </button>
 
-        <button
-          id="grid-btn"
-          class="btn-icon max-md:size-8!"
-          aria-label={ui.canvas.toggleGrid}
-          title={ui.canvas.toggleGrid}
-          aria-pressed="true"
-        >
-          <Icon name="grid" />
-        </button>
-        <button
-          id="clear-btn"
-          class="btn-icon max-md:size-8!"
-          aria-label={ui.canvas.clearCanvas}
-          title={ui.canvas.clearCanvas}
-        >
-          <Icon name="trash" />
-        </button>
+          <div class="mx-1.5 hidden h-5 w-px bg-hairline sm:block" role="separator"></div>
 
-        <div class="mx-1.5 hidden h-5 w-px bg-hairline sm:block" role="separator"></div>
+          <button
+            id="fullscreen-btn"
+            data-state="off"
+            class="btn-icon hidden! sm:grid!"
+            aria-label={ui.canvas.toggleFullscreen}
+            title={ui.canvas.toggleFullscreen}
+          >
+            <Icon name="maximize" />
+            <Icon name="minimize" />
+          </button>
 
-        <button
-          id="fullscreen-btn"
-          data-state="off"
-          class="btn-icon hidden! sm:grid!"
-          aria-label={ui.canvas.toggleFullscreen}
-          title={ui.canvas.toggleFullscreen}
-        >
-          <Icon name="maximize" />
-          <Icon name="minimize" />
-        </button>
+          <button id="palette-btn" class="btn-icon max-md:size-8! md:hidden!" aria-label={ui.canvas.palette} title={ui.canvas.palette}>
+            <Icon name="palette" />
+          </button>
 
-        <button id="palette-btn" class="btn-icon max-md:size-8! md:hidden!" aria-label={ui.canvas.palette} title={ui.canvas.palette}>
-          <Icon name="palette" />
-        </button>
-
-        <button
-          id="download-btn"
-          class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press max-md:ml-0 max-md:h-7 max-md:px-3 max-md:text-[11px]"
-          aria-label={ui.canvas.downloadPng}
-          title={ui.canvas.downloadPng}
-        >
-          <Icon name="download" class="size-4" />
-          <span class="hidden sm:inline">{ui.canvas.downloadPngShort}</span>
-        </button>
+          <button
+            id="download-svg-btn"
+            class="ml-1 flex h-8 items-center gap-1.5 rounded-full border border-hairline px-3 text-[13px] font-medium text-ink-secondary transition-colors hover:bg-canvas-soft max-md:ml-0 max-md:h-7 max-md:px-2.5 max-md:text-[11px]"
+            aria-label={toolUi.exportSvg}
+            title={toolUi.exportSvg}
+          >
+            <Icon name="download" class="size-4" />
+            <span class="hidden sm:inline">{toolUi.exportSvg}</span>
+          </button>
+          <button
+            id="download-btn"
+            class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press max-md:ml-0 max-md:h-7 max-md:px-3 max-md:text-[11px]"
+            aria-label={ui.canvas.downloadPng}
+            title={ui.canvas.downloadPng}
+          >
+            <Icon name="download" class="size-4" />
+            <span class="hidden sm:inline">{ui.canvas.downloadPngShort}</span>
+          </button>
         </div>
       </div>
     </header>
@@ -171,8 +243,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
           <button
             id={`tool-${t.id}`}
             class="btn-icon relative shrink-0 max-md:size-[30px]!"
-            aria-label={`${t.label} (${t.hint})`}
-            title={`${t.label} (${t.hint})`}
+            aria-label={t.hint ? `${t.label} (${t.hint})` : t.label}
+            title={t.hint ? `${t.label} (${t.hint})` : t.label}
             aria-pressed="false"
           >
             <Icon name={t.icon} />
@@ -276,6 +348,45 @@ const contactHref = deriveLocaleHref(locale, "/contact");
           </button>
         </div>
 
+        {mode === "graph" && (
+          <div id="grid-controls">
+            <div class="flex items-baseline justify-between">
+              <p class="eyebrow">{toolUi.graph.gridSize}</p>
+              <select
+                id="grid-size"
+                class="h-7 rounded-md border border-hairline bg-white px-1.5 text-[12px] font-medium text-ink-secondary outline-none transition-colors hover:bg-canvas-soft"
+                aria-label={toolUi.graph.gridSizeAria}
+              >
+                {gridSizing.map((o) => (
+                  <option value={o.value} selected={o.value === "20"}>{o.label}</option>
+                ))}
+              </select>
+            </div>
+            <div class="mt-3 flex items-baseline justify-between">
+              <p class="eyebrow">{toolUi.graph.styleHeading}</p>
+              <select
+                id="grid-style"
+                class="h-7 rounded-md border border-hairline bg-white px-1.5 text-[12px] font-medium text-ink-secondary outline-none transition-colors hover:bg-canvas-soft"
+                aria-label={toolUi.graph.styleHeading}
+              >
+                <option value="line" selected>{toolUi.graph.lines}</option>
+                <option value="dot">{toolUi.graph.dots}</option>
+                <option value="square">{toolUi.graph.square}</option>
+              </select>
+            </div>
+            <button
+              id="grid-snap"
+              type="button"
+              class="mt-2 flex h-8 w-full items-center justify-between rounded-lg border border-hairline px-3 text-[13px] font-medium text-ink-secondary transition-colors hover:bg-canvas-soft"
+              aria-pressed="true"
+              aria-label={toolUi.graph.snapToGridAria}
+            >
+              <span>{toolUi.graph.snapToGrid}</span>
+              <span aria-hidden="true" class="text-ink-mute">{ui.canvas.fillOn}</span>
+            </button>
+          </div>
+        )}
+
         <div class="mt-auto rounded-lg bg-canvas-soft p-3">
           <p class="text-[11px] leading-relaxed text-ink-mute">
             {ui.canvas.hints}
@@ -322,7 +433,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
     </footer>
   </div>
 
-  <SeoContent locale={locale} home={page.home} />
+  <ToolSeo locale={locale} pageKey={pageKey} content={content} />
 </Layout>
 
 <style>
@@ -342,9 +453,6 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   }
   .btn-icon.is-active {
     @apply bg-canvas-soft text-primary;
-  }
-  .kbd {
-    @apply rounded border border-hairline bg-white px-1 py-px font-sans text-[10px] font-medium text-ink-mute shadow-sm;
   }
   #clear-btn.is-armed {
     @apply bg-[#ea2261] text-white hover:bg-[#d81b55] hover:text-white;
@@ -370,6 +478,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
 <script>
   import { Sketchpad } from "../lib/sketchpad";
   import { uiFor } from "../i18n/ui";
+  import type { GridConfig, GridStyle } from "../lib/sketchpad";
+  import type { ToolId } from "../lib/elements";
   import type { Locale } from "../i18n/locales";
 
   const rootEl = document.querySelector<HTMLElement>('[id="app"]');
@@ -386,6 +496,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   };
 
   const ui = uiFor((rootEl?.dataset.lang as Locale) ?? "en");
+  const mode = (rootEl?.dataset.mode ?? "draw") as "draw" | "board" | "whiteboard" | "graph";
+
+  const toolButtons: Partial<Record<ToolId, HTMLButtonElement>> = {};
+  document.querySelectorAll<HTMLButtonElement>("[id^='tool-']").forEach((btn) => {
+    const id = btn.id.replace("tool-", "") as ToolId;
+    toolButtons[id] = btn;
+  });
 
   const swatches = document.querySelectorAll<HTMLElement>(".swatch");
   if (!swatches.length) throw new Error("missing swatches");
@@ -435,22 +552,19 @@ const contactHref = deriveLocaleHref(locale, "/contact");
     paletteBtn.setAttribute("aria-pressed", "false");
   });
 
+  const defaults: Record<string, { defaultTool: string; defaultGridOn: boolean; grid: GridConfig | undefined; autosaveKey: string }> = {
+    draw: { defaultTool: "brush", defaultGridOn: true, grid: undefined, autosaveKey: "simplesketchpad.online-drawing.v1" },
+    board: { defaultTool: "brush", defaultGridOn: true, grid: undefined, autosaveKey: "simplesketchpad.drawing-board.v1" },
+    whiteboard: { defaultTool: "brush", defaultGridOn: false, grid: undefined, autosaveKey: "simplesketchpad.whiteboard.v1" },
+    graph: { defaultTool: "pencil", defaultGridOn: true, grid: { spacing: 20, majorEvery: 5, style: "line", snap: true }, autosaveKey: "simplesketchpad.graph-paper.v1" },
+  };
+  const cfg = defaults[mode];
+
   const pad = new Sketchpad({
     stage,
     canvas,
     ui: {
-      toolButtons: {
-        select: q<HTMLButtonElement>("tool-select"),
-        brush: q<HTMLButtonElement>("tool-brush"),
-        pencil: q<HTMLButtonElement>("tool-pencil"),
-        rect: q<HTMLButtonElement>("tool-rect"),
-        ellipse: q<HTMLButtonElement>("tool-ellipse"),
-        triangle: q<HTMLButtonElement>("tool-triangle"),
-        line: q<HTMLButtonElement>("tool-line"),
-        arrow: q<HTMLButtonElement>("tool-arrow"),
-        text: q<HTMLButtonElement>("tool-text"),
-        eraser: q<HTMLButtonElement>("tool-eraser"),
-      },
+      toolButtons,
       undoBtn: q<HTMLButtonElement>("undo-btn"),
       redoBtn: q<HTMLButtonElement>("redo-btn"),
       deleteBtn: q<HTMLButtonElement>("delete-btn"),
@@ -463,6 +577,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       fullscreenBtn: q<HTMLButtonElement>("fullscreen-btn"),
       fullscreenBtnMobile: q<HTMLButtonElement>("fullscreen-btn-mobile"),
       downloadBtn: q<HTMLButtonElement>("download-btn"),
+      downloadSvgBtn: q<HTMLButtonElement>("download-svg-btn"),
       swatches,
       colorInput: q<HTMLInputElement>("color-input"),
       sizeSlider: q<HTMLInputElement>("size-slider"),
@@ -480,12 +595,16 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         px: ui.canvas.px,
       },
     },
+    defaultTool: cfg.defaultTool as ToolId,
+    defaultGridOn: cfg.defaultGridOn,
+    grid: cfg.grid,
+    autosaveKey: cfg.autosaveKey,
     onState: (s) => {
       const shapeTools = new Set(["rect", "ellipse", "triangle"]);
       fillRow.classList.toggle("hidden", !shapeTools.has(s.tool));
       opacityRow.classList.toggle("hidden", s.tool === "eraser");
       deleteBtn.disabled = !s.hasSelection;
-      sizeTitle.textContent = s.tool === "text" ? sizeTitles.text : s.tool === "eraser" ? sizeTitles.eraser : sizeTitles.stroke;
+      sizeTitle.textContent = s.tool === "text" || s.tool === "sticky" ? sizeTitles.text : s.tool === "eraser" ? sizeTitles.eraser : sizeTitles.stroke;
       const renderFill = fillToggle.querySelector("span:last-of-type");
       if (renderFill) renderFill.textContent = s.filled ? ui.canvas.fillOn : ui.canvas.fillOff;
       fillToggle.setAttribute("aria-pressed", String(s.filled));
@@ -496,4 +615,42 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   });
 
   pad.init();
+
+  if (mode === "graph") {
+    const sizeEl = q<HTMLSelectElement>("grid-size");
+    const styleEl = q<HTMLSelectElement>("grid-style");
+    const snapBtn = q<HTMLButtonElement>("grid-snap");
+    const snapValue = () => (snapBtn.getAttribute("aria-pressed") === "true" ? "On" : "Off");
+
+    const updateGrid = () => {
+      pad.setGridConfig({
+        spacing: Number(sizeEl.value),
+        majorEvery: Number(sizeEl.value) === 40 ? 2 : 5,
+        style: styleEl.value as GridStyle,
+        snap: snapBtn.getAttribute("aria-pressed") === "true",
+      });
+    };
+
+    sizeEl.addEventListener("change", updateGrid);
+    styleEl.addEventListener("change", updateGrid);
+    snapBtn.addEventListener("click", () => {
+      const on = snapBtn.getAttribute("aria-pressed") === "true";
+      snapBtn.setAttribute("aria-pressed", String(!on));
+      const span = snapBtn.querySelector("span:last-of-type");
+      if (span) span.textContent = on ? ui.canvas.fillOff : ui.canvas.fillOn;
+      updateGrid();
+    });
+
+    const syncFromEngine = () => {
+      const gc = pad.getGridConfig();
+      if (!gc) return;
+      sizeEl.value = String(gc.spacing);
+      styleEl.value = gc.style;
+      snapBtn.setAttribute("aria-pressed", String(gc.snap));
+      const span = snapBtn.querySelector("span:last-of-type");
+      if (span) span.textContent = gc.snap ? ui.canvas.fillOn : ui.canvas.fillOff;
+    };
+    syncFromEngine();
+    void snapValue;
+  }
 </script>

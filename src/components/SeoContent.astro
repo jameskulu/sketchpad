@@ -1,11 +1,14 @@
 ---
+import ToolLinks from "./ToolLinks.astro";
 import type { PageContent } from "../i18n/content-types";
+import type { Locale } from "../i18n/locales";
 
 interface Props {
+  locale: Locale;
   home: PageContent["home"];
 }
 
-const { home } = Astro.props;
+const { locale, home } = Astro.props;
 
 const h2 = "mt-12 text-xl font-semibold tracking-tight text-ink";
 const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
@@ -43,5 +46,7 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
     {home.closing.map((para) => (
       <p class="mt-10 text-[16px] leading-8 text-ink-secondary">{para}</p>
     ))}
+
+    <ToolLinks locale={locale} heading={home.toolLinksHeading} />
   </div>
 </section>

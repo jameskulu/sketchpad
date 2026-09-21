@@ -7,7 +7,7 @@ export const CONTENT: Content = {
     seoDescription:
       "Draw online for free with this fast digital sketchpad — a drawing pad online for sketching, shapes, text, and more. This free sketchpad needs no sign-up, works on any device, and exports to PNG.",
     home: {
-      h1: "Sketchpad — Your Free Online Sketchpad & Digital Drawing Board",
+      h1: "Free Online Sketchpad",
       intro: [
         "Meet Sketchpad, a free online sketchpad built for anyone who wants to draw online without signing up, installing software, or dealing with cluttered interfaces. Whether you are sketching ideas, mapping out a diagram, teaching a child to draw, or prototyping your next project, this online drawing board gives you a crisp white canvas and the essentials — nothing more, nothing less. No account. No watermarks. No ads interrupting your flow. Think of it as a simple sketch pad online that is always open in your browser, ready the moment inspiration strikes.",
       ],
@@ -53,6 +53,7 @@ export const CONTENT: Content = {
       closing: [
         "That is the whole idea: a fast, private, genuinely free digital sketchpad — a simple sketchpad that does one thing beautifully. Whether you call it a sketchpad, a drawpad, or a drawing pad online, it is here for every idea. Give it a try — scroll up, pick a tool, and start creating.",
       ],
+      toolLinksHeading: "More Free Drawing Tools",
     },
     about: {
       h1: "About Simple Sketchpad",
@@ -165,6 +166,7 @@ export const CONTENT: Content = {
       closing: [
         "Esa es la idea: un sketchpad digital rápido, privado y realmente gratis — un simple sketchpad que hace una cosa a la perfección. Pruébalo: sube, elige una herramienta y empieza a crear.",
       ],
+      toolLinksHeading: "Más herramientas de dibujo gratis",
     },
     about: {
       h1: "Acerca de Simple Sketchpad",
@@ -261,6 +263,7 @@ export const CONTENT: Content = {
       closing: [
         "これが全体のアイデアです。速く、プライベートで、真に無料のデジタルスケッチパッド、一つのことを美しく行うシンプルなスケッチパッド。スケッチパッドと呼んでも、ドローパッドと呼んでも、オンライン描画パッドと呼んでも、あらゆるアイデアのためにここにあります。ぜひ試してください。上にスクロールしてツールを選び、描き始めましょう。",
       ],
+      toolLinksHeading: "もっと無料のお絵かきツール",
     },
     about: {
       h1: "Simple Sketchpadについて",
@@ -357,6 +360,7 @@ export const CONTENT: Content = {
       closing: [
         "Voilà toute l'idée : un sketchpad numérique rapide, privé et réellement gratuit — un simple sketchpad qui fait une chose à la perfection. Essayez-le : remontez, choisissez un outil et commencez à créer.",
       ],
+      toolLinksHeading: "Plus d'outils de dessin gratuits",
     },
     about: {
       h1: "À propos de Simple Sketchpad",
@@ -453,6 +457,7 @@ export const CONTENT: Content = {
       closing: [
         "Das ist die ganze Idee: ein schnelles, privates, wirklich kostenloses digitales Sketchpad – ein einfaches Sketchpad, das eine Sache wunderbar macht. Ob du es Sketchpad, Zeichenpad oder Online-Zeichenbrett nennst, es ist für jede Idee da. Probier es aus: scroll nach oben, wähl ein Werkzeug und leg los.",
       ],
+      toolLinksHeading: "Weitere kostenlose Zeichenwerkzeuge",
     },
     about: {
       h1: "Über Simple Sketchpad",
@@ -549,6 +554,7 @@ export const CONTENT: Content = {
       closing: [
         "Essa é a ideia: um sketchpad digital rápido, privado e realmente grátis — um simple sketchpad que faz uma coisa lindamente. Seja sketchpad, prancheta ou quadro de desenho online, ele está aqui para cada ideia. Experimente: role para cima, escolha uma ferramenta e comece a criar.",
       ],
+      toolLinksHeading: "Mais Ferramentas de Desenho Grátis",
     },
     about: {
       h1: "Sobre o Simple Sketchpad",
@@ -645,6 +651,7 @@ export const CONTENT: Content = {
       closing: [
         "이것이 전체 아이디어입니다. 빠르고, 사적이며, 진정으로 무료인 디지털 스케치패드. 한 가지 일을 아름답게 해내는 단순한 스케치패드입니다. 스케치패드라고 부르든, 그림판이라고 부르든, 온라인 드로잉 보드라고 부르든 모든 아이디어를 위해 여기에 있습니다. 한번 사용해 보세요. 위로 올려 도구를 고르고 그림을 시작하세요.",
       ],
+      toolLinksHeading: "더 많은 무료 그리기 도구",
     },
     about: {
       h1: "Simple Sketchpad 소개",
@@ -741,6 +748,7 @@ export const CONTENT: Content = {
       closing: [
         "Questa è tutta l'idea: uno sketchpad digitale veloce, privato e davvero gratuito — un semplice sketchpad che fa una cosa in modo bellissimo. Che lo chiami sketchpad, bloc di disegno o lavagna di disegno online, è qui per ogni idea. Provalo: scorri in alto, scegli uno strumento e inizia a creare.",
       ],
+      toolLinksHeading: "Altri strumenti di disegno gratuiti",
     },
     about: {
       h1: "Chi è Simple Sketchpad",
@@ -855,6 +863,7 @@ export const CONTENT: Content = {
       closing: [
         "这就是全部理念：一款快速、私密、真正免费的数字画板 — 一款简单而精美的画板。无论您称它为画板、绘图板还是在线绘图板，它都在这里等待您的每一个想法。试试看 — 向上滚动，选择一个工具，开始创作吧。",
       ],
+      toolLinksHeading: "更多免费绘图工具",
     },
     about: {
       h1: "关于 Sketchpad",

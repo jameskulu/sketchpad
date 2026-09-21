@@ -10,13 +10,15 @@ import {
   type Erasure,
   type ShapeElement,
   type Snapshot,
+  type StickyElement,
   type TextElement,
   type ToolId,
 } from "./elements";
 import { drawScene } from "./renderer";
+import { downloadSvg } from "./svg-export";
 
 export interface SketchpadUI {
-  toolButtons: Record<ToolId, HTMLButtonElement>;
+  toolButtons: Partial<Record<ToolId, HTMLButtonElement>>;
   undoBtn: HTMLButtonElement;
   redoBtn: HTMLButtonElement;
   deleteBtn: HTMLButtonElement;
@@ -29,6 +31,7 @@ export interface SketchpadUI {
   fullscreenBtn: HTMLButtonElement;
   fullscreenBtnMobile: HTMLButtonElement;
   downloadBtn: HTMLButtonElement;
+  downloadSvgBtn?: HTMLButtonElement;
   swatches: NodeListOf<HTMLElement>;
   colorInput: HTMLInputElement;
   sizeSlider: HTMLInputElement;
@@ -45,6 +48,17 @@ export interface SketchpadUI {
     autosaveNotSaved: string;
     px: string;
   };
+}
+
+export type GridStyle = "line" | "dot" | "square";
+
+export interface GridConfig {
+  /** cell spacing in world units */
+  spacing: number;
+  /** draw a heavier line every N cells */
+  majorEvery: number;
+  style: GridStyle;
+  snap: boolean;
 }
 
 export interface UIState {
@@ -64,15 +78,39 @@ export interface SketchpadOptions {
   canvas: HTMLCanvasElement;
   ui: SketchpadUI;
   onState: (state: UIState) => void;
+  /** starting tool (defaults to "brush") */
+  defaultTool?: ToolId;
+  defaultColor?: string;
+  /** initial stroke opacity (0..1), defaults to 1 */
+  defaultOpacity?: number;
+  /** whether the grid starts visible (defaults to true) */
+  defaultGridOn?: boolean;
+  /** override starting sizes (e.g. a thicker brush for kids) */
+  defaultSizes?: Partial<Record<ToolId, number>>;
+  /** horizontal grid lock, pan, and snap behavior on initial load */
+  grid?: GridConfig;
+  /** localStorage key for the draft (so each page keeps its own drawing) */
+  autosaveKey?: string;
 }
 
 const HISTORY_LIMIT = 120;
-const AUTOSAVE_KEY = "simplesketchpad.draft.v1";
+const DEFAULT_AUTOSAVE_KEY = "simplesketchpad.draft.v1";
 const MIN_SCALE = 0.1;
 const MAX_SCALE = 16;
 
 function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
+}
+
+function noteTextColor(bg: string): string {
+  const m = /^#([0-9a-fA-F]{6})/.exec(bg);
+  if (!m) return "#0d253d";
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+  return lum > 150 ? "#0d253d" : "#ffffff";
 }
 
 function pointInTriangle(
@@ -148,23 +186,30 @@ export class Sketchpad {
   private scale = 1;
   private pan = { x: 0, y: 0 };
 
+  private gridConfig: GridConfig | null = null;
+  private autosaveKey = DEFAULT_AUTOSAVE_KEY;
+
   private tool: ToolId = "brush";
   private color = "#0d253d";
   private sizes: Record<ToolId, number> = {
     select: 1,
     brush: 6,
     pencil: 3,
+    highlighter: 28,
     rect: 6,
     ellipse: 6,
     triangle: 6,
     line: 6,
     arrow: 6,
     text: 28,
+    sticky: 18,
+    stamp: 64,
     eraser: 28,
   };
   private opacity = 1;
   private filled = false;
   private gridOn = true;
+  private stampChar = "⭐";
 
   private activePointers = new Map<number, ActivePointer>();
   private pinching: {
@@ -182,7 +227,7 @@ export class Sketchpad {
   private saveTimer: number | null = null;
   private editingText = false;
   private textEl: HTMLDivElement | null = null;
-  private pendingText: { x: number; y: number; el: TextElement | null } | null = null;
+  private pendingText: { x: number; y: number; el: TextElement | StickyElement | null } | null = null;
   private clearArmed = false;
   private clearTimer: number | null = null;
   private hover = { x: -10000, y: -10000, over: false };
@@ -198,6 +243,18 @@ export class Sketchpad {
     this.canvas = opts.canvas;
     this.ui = opts.ui;
     this.onState = opts.onState;
+    if (opts.defaultTool) this.tool = opts.defaultTool;
+    if (opts.defaultColor) this.color = opts.defaultColor;
+    if (typeof opts.defaultOpacity === "number") this.opacity = opts.defaultOpacity;
+    if (typeof opts.defaultGridOn === "boolean") this.gridOn = opts.defaultGridOn;
+    if (opts.defaultSizes) {
+      for (const k of Object.keys(opts.defaultSizes) as ToolId[]) {
+        const v = opts.defaultSizes[k];
+        if (typeof v === "number") this.sizes[k] = v;
+      }
+    }
+    this.gridConfig = opts.grid ?? null;
+    if (opts.autosaveKey) this.autosaveKey = opts.autosaveKey;
     const ctx = this.canvas.getContext("2d", { alpha: true });
     if (!ctx) throw new Error("Canvas 2D not supported");
     this.ctx = ctx;
@@ -217,6 +274,23 @@ export class Sketchpad {
     this.fitToView();
     this.emit();
     this.rim();
+  }
+
+  /** Configure the fixed grid (used by the graph paper page). */
+  setGridConfig(config: GridConfig | null): void {
+    this.gridConfig = config;
+    this.gridOn = true;
+    this.rim();
+    this.emit();
+  }
+
+  getGridConfig(): GridConfig | null {
+    return this.gridConfig;
+  }
+
+  /** Change which emoji the stamp tool places. */
+  setStamp(char: string): void {
+    this.stampChar = char;
   }
 
   // ---------- viewport ----------
@@ -389,7 +463,7 @@ export class Sketchpad {
     this.setSaved("saving");
     this.saveTimer = window.setTimeout(() => {
       try {
-        localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(this.snapshotData()));
+        localStorage.setItem(this.autosaveKey, JSON.stringify(this.snapshotData()));
         this.setSaved("saved");
       } catch {
         this.setSaved("saved");
@@ -404,7 +478,7 @@ export class Sketchpad {
 
   private load(): void {
     try {
-      const raw = localStorage.getItem(AUTOSAVE_KEY);
+      const raw = localStorage.getItem(this.autosaveKey);
       if (!raw) return;
       const parsed = JSON.parse(raw) as Snapshot;
       if (parsed && Array.isArray(parsed.elements) && Array.isArray(parsed.erasures)) {
@@ -460,7 +534,8 @@ export class Sketchpad {
     ctx.drawImage(this.sceneCanvas, 0, 0, w, h);
 
     if (this.gridOn && this.scale >= 0.08) {
-      this.renderGrid(ctx, w, h);
+      if (this.gridConfig) this.renderFixedGrid(ctx, w, h);
+      else this.renderGrid(ctx, w, h);
     }
 
     if (this.hover.over && !this.editingText && !this.pinching && !this.spaceKeyDown && this.panningId === null) {
@@ -511,7 +586,7 @@ export class Sketchpad {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
-    if (this.tool === "brush" || this.tool === "pencil") {
+    if (this.tool === "brush" || this.tool === "pencil" || this.tool === "highlighter") {
       const r = Math.max(7, (this.sizes[this.tool] / 2) * this.scale);
       ctx.beginPath();
       ctx.arc(x, y, r + 4, 0, Math.PI * 2);
@@ -693,6 +768,66 @@ export class Sketchpad {
     ctx.restore();
   }
 
+  private renderFixedGrid(ctx: CanvasRenderingContext2D, w: number, h: number): void {
+    const gc = this.gridConfig;
+    if (!gc) return;
+    const spacing = Math.max(gc.spacing, 1);
+    const majorEvery = Math.max(gc.majorEvery, 1);
+    const minWX = (0 - this.pan.x) / this.scale;
+    const minWY = (0 - this.pan.y) / this.scale;
+    const maxWX = minWX + w / this.scale;
+    const maxWY = minWY + h / this.scale;
+    const startX = Math.floor(minWX / spacing) * spacing;
+    const startY = Math.floor(minWY / spacing) * spacing;
+
+    ctx.save();
+
+    if (gc.style === "dot") {
+      ctx.fillStyle = "rgba(100,116,141,0.5)";
+      const r = Math.max(1, 1.1 * this.scale);
+      for (let wx = startX; wx <= maxWX + spacing; wx += spacing) {
+        const sx = wx * this.scale + this.pan.x;
+        for (let wy = startY; wy <= maxWY + spacing; wy += spacing) {
+          const sy = wy * this.scale + this.pan.y;
+          ctx.beginPath();
+          ctx.arc(sx, sy, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+      return;
+    }
+
+    const minorAlpha = gc.style === "square" ? 0.7 : 0.5;
+    ctx.lineWidth = gc.style === "square" ? 0.7 : 1;
+    for (let wx = startX; wx <= maxWX + spacing; wx += spacing) {
+      const sx = wx * this.scale + this.pan.x;
+      const isMajor = Math.round(wx / spacing) % majorEvery === 0;
+      ctx.strokeStyle = isMajor ? "rgba(100,116,141,0.85)" : `rgba(100,116,141,${minorAlpha * 0.45})`;
+      ctx.beginPath();
+      ctx.moveTo(sx, 0);
+      ctx.lineTo(sx, h);
+      ctx.stroke();
+    }
+    for (let wy = startY; wy <= maxWY + spacing; wy += spacing) {
+      const sy = wy * this.scale + this.pan.y;
+      const isMajor = Math.round(wy / spacing) % majorEvery === 0;
+      ctx.strokeStyle = isMajor ? "rgba(100,116,141,0.85)" : `rgba(100,116,141,${minorAlpha * 0.45})`;
+      ctx.beginPath();
+      ctx.moveTo(0, sy);
+      ctx.lineTo(w, sy);
+      ctx.stroke();
+    }
+    if (gc.style === "square") {
+      ctx.strokeStyle = "rgba(100,116,141,0.22)";
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.rect(0, 0, w, h);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
   // ---------- canvas interaction ----------
 
   private bindCanvas(): void {
@@ -722,12 +857,20 @@ export class Sketchpad {
 
   private pointerFromEvent(e: PointerEvent, includePressure: boolean): ActivePointer {
     const pos = this.worldTransform(e.clientX - this.stage.getBoundingClientRect().left, e.clientY - this.stage.getBoundingClientRect().top);
+    let wx = pos.x;
+    let wy = pos.y;
+    const gc = this.gridConfig;
+    if (gc && gc.snap) {
+      const s = Math.max(gc.spacing, 1);
+      wx = Math.round(wx / s) * s;
+      wy = Math.round(wy / s) * s;
+    }
     return {
       id: e.pointerId,
       sx: e.clientX - this.stage.getBoundingClientRect().left,
       sy: e.clientY - this.stage.getBoundingClientRect().top,
-      wx: pos.x,
-      wy: pos.y,
+      wx,
+      wy,
       kind: e.pointerType === "pen" ? "pen" : e.pointerType === "touch" ? "touch" : "mouse",
       pressure: includePressure ? e.pressure : 0.5,
     };
@@ -1396,6 +1539,23 @@ export class Sketchpad {
       return;
     }
 
+    if (this.tool === "stamp") {
+      this.elements.push({
+        id: nextId(),
+        kind: "text",
+        x: pt.wx,
+        y: pt.wy,
+        text: this.stampChar,
+        size: this.sizes.stamp,
+        color: this.color,
+        opacity: this.opacity,
+        z: ++this.zSeq,
+      });
+      this.pushHistory();
+      this.rim();
+      return;
+    }
+
     if (this.tool === "text") {
       this.startTextEdit(pt.wx, pt.wy);
       return;
@@ -1405,6 +1565,7 @@ export class Sketchpad {
     switch (this.tool) {
       case "brush":
       case "pencil":
+      case "highlighter":
         this.pendingEl = {
           id: nextId(),
           kind: "stroke",
@@ -1417,6 +1578,21 @@ export class Sketchpad {
         break;
       case "eraser":
         this.pendingEr = { id: nextId(), points: [{ x: pt.wx, y: pt.wy, p: 0.5 }], width: this.sizes.eraser };
+        break;
+      case "sticky":
+        this.pendingEl = {
+          id: nextId(),
+          kind: "sticky",
+          x1: pt.wx,
+          y1: pt.wy,
+          x2: pt.wx,
+          y2: pt.wy,
+          color: this.color,
+          text: "",
+          size: this.sizes.sticky,
+          textColor: noteTextColor(this.color),
+          opacity: 1,
+        };
         break;
       case "rect":
       case "ellipse":
@@ -1564,10 +1740,14 @@ export class Sketchpad {
         this.pendingEl = null;
         return;
       }
+      const created: Element | null = this.pendingEl;
       this.pendingEl.z = ++this.zSeq;
       this.elements.push(this.pendingEl);
       this.pendingEl = null;
       this.pushHistory();
+      if (created.kind === "sticky") {
+        this.startTextEdit(Math.min(created.x1, created.x2) + 4, Math.min(created.y1, created.y2) + 4, created);
+      }
     }
   }
 
@@ -1704,8 +1884,9 @@ export class Sketchpad {
     const world = this.worldTransform(xy.x, xy.y);
     for (let i = this.elements.length - 1; i >= 0; i--) {
       const el = this.elements[i];
-      if (el.kind === "text" && !this.elementIsFullyErased(el) && this.pointInRotatedElement(world, el)) {
-        this.startTextEdit(el.x, el.y, el);
+      if ((el.kind === "text" || el.kind === "sticky") && !this.elementIsFullyErased(el) && this.pointInRotatedElement(world, el)) {
+        if (el.kind === "sticky") this.startTextEdit(el.x1, el.y1, el);
+        else this.startTextEdit(el.x, el.y, el);
         return;
       }
     }
@@ -1713,7 +1894,7 @@ export class Sketchpad {
 
   // ---------- text editing ----------
 
-  private startTextEdit(wx: number, wy: number, existing?: TextElement): void {
+  private startTextEdit(wx: number, wy: number, existing?: TextElement | StickyElement): void {
     this.commitText();
     const sp = this.screenTransform(wx, wy);
     const d = document.createElement("div");
@@ -1726,10 +1907,11 @@ export class Sketchpad {
     d.style.left = `${sp.x}px`;
     d.style.top = `${sp.y}px`;
     d.style.fontSize = `${fontPx}px`;
-    d.style.color = existing ? existing.color : this.color;
+    d.style.color = existing ? (existing.kind === "sticky" ? existing.textColor : existing.color) : this.color;
     d.style.opacity = existing ? String(existing.opacity) : String(this.opacity);
     if (existing) {
       d.textContent = existing.text;
+      d.style.width = existing.kind === "sticky" ? `${Math.max(80, Math.abs(existing.x2 - existing.x1) - 16) * this.scale}px` : "auto";
       if (existing.rotation) {
         d.style.transform = `rotate(${existing.rotation}deg)`;
         d.style.transformOrigin = "50% 50%";
@@ -1761,24 +1943,22 @@ export class Sketchpad {
     this.textEl = null;
     this.editingText = false;
     this.pendingText = null;
-    if (raw.trim().length > 0) {
-      if (el) {
-        el.text = raw;
-        this.pushHistory();
-      } else {
-        this.elements.push({
-          id: nextId(),
-          kind: "text",
-          x,
-          y,
-          text: raw,
-          size: this.sizes.text,
-          color: this.color,
-          opacity: this.opacity,
-          z: ++this.zSeq,
-        });
-        this.pushHistory();
-      }
+    if (el) {
+      el.text = raw;
+      this.pushHistory();
+    } else if (raw.trim().length > 0) {
+      this.elements.push({
+        id: nextId(),
+        kind: "text",
+        x,
+        y,
+        text: raw,
+        size: this.sizes.text,
+        color: this.color,
+        opacity: this.opacity,
+        z: ++this.zSeq,
+      });
+      this.pushHistory();
     }
     this.rim();
     this.emit();
@@ -1799,7 +1979,7 @@ export class Sketchpad {
   private bindUI(): void {
     const ui = this.ui;
     (Object.keys(ui.toolButtons) as ToolId[]).forEach((id) => {
-      ui.toolButtons[id].addEventListener("click", () => this.setTool(id));
+      ui.toolButtons[id]!.addEventListener("click", () => this.setTool(id));
     });
 
     ui.undoBtn.addEventListener("click", () => this.undo());
@@ -1818,6 +1998,7 @@ export class Sketchpad {
     ui.fullscreenBtn.addEventListener("click", () => this.toggleFullscreen());
     ui.fullscreenBtnMobile.addEventListener("click", () => this.toggleFullscreen());
     ui.downloadBtn.addEventListener("click", () => this.exportPNG());
+    if (ui.downloadSvgBtn) ui.downloadSvgBtn.addEventListener("click", () => this.exportSVG());
 
     ui.swatches.forEach((sw) => {
       sw.addEventListener("click", () => this.setColor(sw.dataset.color ?? "#0d253d"));
@@ -1862,7 +2043,7 @@ export class Sketchpad {
 
   private sizeFromSlider(): void {
     const ui = this.ui;
-    const isText = this.tool === "text";
+    const isText = this.tool === "text" || this.tool === "sticky";
     const isEraser = this.tool === "eraser";
     const min = isText ? 12 : isEraser ? 4 : 1;
     const max = isText ? 144 : isEraser ? 128 : 96;
@@ -1873,7 +2054,7 @@ export class Sketchpad {
 
   private syncSizeUI(): void {
     const ui = this.ui;
-    const isText = this.tool === "text";
+    const isText = this.tool === "text" || this.tool === "sticky";
     const isEraser = this.tool === "eraser";
     const min = isText ? 12 : isEraser ? 4 : 1;
     const max = isText ? 144 : isEraser ? 128 : 96;
@@ -1919,6 +2100,10 @@ export class Sketchpad {
     a.download = name;
     a.href = c.toDataURL("image/png");
     a.click();
+  }
+
+  exportSVG(): void {
+    downloadSvg(this.elements, this.erasures);
   }
 
   private bindKeys(): void {
@@ -2020,7 +2205,7 @@ export class Sketchpad {
   }
 
   private nudgeSize(delta: number): void {
-    const isText = this.tool === "text";
+    const isText = this.tool === "text" || this.tool === "sticky";
     const isEraser = this.tool === "eraser";
     const min = isText ? 12 : isEraser ? 4 : 1;
     const max = isText ? 144 : isEraser ? 128 : 96;
@@ -2055,8 +2240,8 @@ export class Sketchpad {
     const ui = this.ui;
     (Object.keys(ui.toolButtons) as ToolId[]).forEach((id) => {
       const active = id === s.tool;
-      ui.toolButtons[id].classList.toggle("is-active", active);
-      ui.toolButtons[id].setAttribute("aria-pressed", String(active));
+      ui.toolButtons[id]!.classList.toggle("is-active", active);
+      ui.toolButtons[id]!.setAttribute("aria-pressed", String(active));
     });
     ui.undoBtn.disabled = !s.canUndo;
     ui.redoBtn.disabled = !s.canRedo;

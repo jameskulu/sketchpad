@@ -291,6 +291,36 @@ export function drawElement(ctx: CanvasRenderingContext2D, el: Element): void {
       }
       break;
     }
+    case "sticky": {
+      const x = Math.min(el.x1, el.x2);
+      const y = Math.min(el.y1, el.y2);
+      const w = Math.max(Math.abs(el.x2 - el.x1), 24);
+      const h = Math.max(Math.abs(el.y2 - el.y1), 24);
+      const pad = 10;
+      ctx.fillStyle = el.color;
+      ctx.strokeStyle = "rgba(13,37,61,0.08)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, 3);
+      ctx.fill();
+      ctx.stroke();
+      if (el.text.trim().length > 0) {
+        ctx.fillStyle = el.textColor;
+        ctx.globalAlpha = el.opacity;
+        ctx.font = `500 ${el.size}px "Inter Variable", "Inter", system-ui, sans-serif`;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        const lines = el.text.split("\n");
+        const wrap = w - pad * 2;
+        let ly = y + pad;
+        for (const line of lines) {
+          ctx.fillText(line, x + pad, ly);
+          ly += el.size * 1.3;
+          void wrap;
+        }
+      }
+      break;
+    }
   }
   ctx.restore();
 }

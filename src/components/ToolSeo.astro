@@ -1,0 +1,106 @@
+---
+import { TOOL_PAGE_KEYS, type ToolPageContent, type ToolPageKey } from "../i18n/tool-content-types";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
+import { uiFor } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+  pageKey: ToolPageKey;
+  content: ToolPageContent;
+}
+
+const { locale, pageKey, content } = Astro.props;
+const ui = uiFor(locale);
+
+const ROUTES: Record<ToolPageKey, string> = {
+  "online-drawing": "/online-drawing",
+  "drawing-board": "/drawing-board",
+  whiteboard: "/whiteboard",
+  "graph-paper": "/graph-paper",
+  "kids-drawing": "/kids-drawing",
+};
+
+const related = TOOL_PAGE_KEYS.map((key) => {
+  const info = content.related[key];
+  return {
+    key,
+    href: deriveLocaleHref(locale, ROUTES[key]),
+    label: info.label,
+    blurb: info.blurb,
+    current: key === pageKey,
+  };
+});
+
+const homeHref = deriveLocaleHref(locale, "/");
+
+const h2 = "mt-12 text-xl font-semibold tracking-tight text-ink";
+const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
+const faqQ = "text-[16px] font-semibold text-ink";
+const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
+---
+
+<section class="border-t border-hairline bg-white" aria-label={content.h1}>
+  <div class="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
+    <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{content.h1}</h1>
+
+    {content.intro.map((para) => (
+      <p class="mt-6 text-[17px] leading-8 text-ink-secondary">{para}</p>
+    ))}
+
+    {content.sections.map((sec) => (
+      <>
+        <h2 class={h2}>{sec.heading}</h2>
+        {sec.paragraphs.map((par) => (
+          <p class:list={[p, "p"]}>{par}</p>
+        ))}
+        {sec.list && (
+          <ul class="mt-4 list-disc space-y-1.5 pl-5 text-[15px] leading-7 text-ink-secondary">
+            {sec.list.map((li) => <li>{li}</li>)}
+          </ul>
+        )}
+      </>
+    ))}
+
+    <h2 class={h2}>{content.relatedHeading}</h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2">
+      {related.map((r) => (
+        <a
+          href={r.href}
+          class:list={[
+            "group block rounded-xl border bg-white p-4 transition-colors hover:shadow-md",
+            r.current ? "border-primary/40 hover:border-primary/60" : "border-hairline hover:border-primary/40",
+          ]}
+        >
+          <span class="block font-semibold text-ink">{r.label}</span>
+          <span class="mt-1 block text-[13px] leading-6 text-ink-mute">{r.blurb}</span>
+          <span class="mt-2 block text-[13px] font-medium text-primary">
+            {ui.siteName} →
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <h2 class={h2}>{content.faqHeading}</h2>
+    <div class="mt-4 divide-y divide-hairline">
+      {content.faq.map((item) => (
+        <div class="py-4">
+          <h3 class={faqQ}>{item.q}</h3>
+          <p class={faqA}>{item.a}</p>
+        </div>
+      ))}
+    </div>
+
+    {content.closing.map((para) => (
+      <p class="mt-10 text-[16px] leading-8 text-ink-secondary">{para}</p>
+    ))}
+
+    <p class="mt-10 text-[13px] text-ink-mute">
+      <a
+        href={homeHref}
+        class="font-medium text-primary underline decoration-primary/30 underline-offset-2 hover:decoration-primary"
+      >
+        {ui.siteName}
+      </a>
+    </p>
+  </div>
+</section>

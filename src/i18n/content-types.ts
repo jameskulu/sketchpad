@@ -20,6 +20,7 @@ export interface PageContent {
     faqHeading: string;
     faq: Array<{ q: string; a: string }>;
     closing: string[];
+    toolLinksHeading: string;
   };
 
   // About

@@ -1,0 +1,45 @@
+---
+import { TOOL_DISPLAY_ORDER } from "../i18n/tool-content-types";
+import { TOOL_CONTENT } from "../i18n/tool-content";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
+
+interface Props {
+  locale: Locale;
+  heading: string;
+}
+
+const { locale, heading } = Astro.props;
+
+const ROUTES: Record<string, string> = {
+  "online-drawing": "/online-drawing",
+  "drawing-board": "/drawing-board",
+  whiteboard: "/whiteboard",
+  "graph-paper": "/graph-paper",
+  "kids-drawing": "/kids-drawing",
+};
+
+const items = TOOL_DISPLAY_ORDER.map((key) => {
+  const page = TOOL_CONTENT[locale][key];
+  return {
+    href: deriveLocaleHref(locale, ROUTES[key]),
+    label: page.related[key].label,
+    blurb: page.related[key].blurb,
+  };
+});
+---
+
+<div class="mt-12 border-t border-hairline pt-10">
+  <h2 class="text-xl font-semibold tracking-tight text-ink">{heading}</h2>
+  <div class="mt-4 grid gap-3 sm:grid-cols-2">
+    {items.map((item) => (
+      <a
+        href={item.href}
+        class="group block rounded-xl border border-hairline bg-white p-4 transition-colors hover:border-primary/40 hover:shadow-md"
+      >
+        <span class="block font-semibold text-ink">{item.label}</span>
+        <span class="mt-1 block text-[13px] leading-6 text-ink-mute">{item.blurb}</span>
+        <span class="mt-2 block text-[13px] font-medium text-primary">{item.href}</span>
+      </a>
+    ))}
+  </div>
+</div>

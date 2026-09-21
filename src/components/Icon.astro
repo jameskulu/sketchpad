@@ -55,6 +55,23 @@ const { name, class: className } = Astro.props;
     )
   }
   {
+    name === "highlighter" && (
+      <>
+        <path d="M9 3.5 20.5 15a1.8 1.8 0 0 1 0 2.5l-2 2a1.8 1.8 0 0 1-2.5 0L4.5 8a1.8 1.8 0 0 1 0-2.5l2-2A1.8 1.8 0 0 1 9 3.5Z" />
+        <path d="M8 4l6 5.5 5.5 6M4 20l5-1.5" />
+      </>
+    )
+  }
+  {
+    name === "sticky" && (
+      <>
+        <path d="M5 3.5h10l5 5v12h-15Z" />
+        <path d="M15 3.5v5h5" />
+        <path d="M8 12h8M8 15.5h8" />
+      </>
+    )
+  }
+  {
     name === "undo" && (
       <>
         <path d="M4 9h10a6 6 0 0 1 0 12h-3" />
