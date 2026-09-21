@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
 import ToolSeo from "./ToolSeo.astro";
+import ToolBoardNav from "./ToolBoardNav.astro";
 import { SITE } from "../lib/site";
 import { uiFor } from "../i18n/ui";
 import { toolUiFor } from "../i18n/tool-ui";
@@ -79,6 +80,7 @@ const homeHref = deriveLocaleHref(locale, "/");
           <span id="autosave-dot" class="size-2 rounded-full bg-emerald-500"></span>
           <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
         </div>
+        <ToolBoardNav locale={locale} route="/kids-drawing" />
         <button
           id="download-btn"
           class="flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-[13px] font-semibold text-white transition-colors hover:bg-primary-deep active:bg-primary-press"

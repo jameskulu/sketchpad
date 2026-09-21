@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
 import SeoContent from "./SeoContent.astro";
 import LangSwitcher from "./LangSwitcher.astro";
+import ToolBoardNav from "./ToolBoardNav.astro";
 import { SITE } from "../lib/site";
 import { uiFor } from "../i18n/ui";
 import { deriveLocaleHref, type Locale } from "../i18n/locales";
@@ -91,6 +92,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       </div>
 
       <div class="flex min-w-0 flex-1 items-center justify-end gap-0.5 sm:gap-1">
+        <ToolBoardNav locale={locale} route="/" />
         <div class="max-[360px]:hidden shrink-0">
           <LangSwitcher locale={locale} route="/" compact={true} />
         </div>

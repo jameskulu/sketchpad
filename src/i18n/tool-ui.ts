@@ -1,4 +1,5 @@
 import type { Locale } from "./locales";
+import type { ToolPageKey } from "./tool-content-types";
 
 export interface ToolUIStrings {
   exportSvg: string;
@@ -17,6 +18,11 @@ export interface ToolUIStrings {
     lines: string;
     snapToGrid: string;
     snapToGridAria: string;
+  };
+  boardNav: {
+    boards: string;
+    menuAria: string;
+    short: Record<ToolPageKey, string>;
   };
   kids: {
     stampsHeading: string;
@@ -47,6 +53,17 @@ const en: ToolUIStrings = {
     snapToGrid: "Snap to grid",
     snapToGridAria: "Snap drawing to the grid",
   },
+  boardNav: {
+    boards: "Boards",
+    menuAria: "Drawing tools and boards",
+    short: {
+      "online-drawing": "Drawing Tool",
+      "drawing-board": "Drawing Board",
+      whiteboard: "Whiteboard",
+      "graph-paper": "Graph Paper",
+      "kids-drawing": "Drawing for Kids",
+    },
+  },
   kids: {
     stampsHeading: "Stamps",
     stampHint: "Pick a stamp, then tap the canvas to place it.",
@@ -76,6 +93,17 @@ export const TOOL_UI: ToolUI = {
       snapToGrid: "Ajustar a la cuadrícula",
       snapToGridAria: "Ajustar el dibujo a la cuadrícula",
     },
+    boardNav: {
+      boards: "Pizarras",
+      menuAria: "Herramientas de dibujo y pizarras",
+      short: {
+        "online-drawing": "Herramienta de Dibujo",
+        "drawing-board": "Pizarra de Dibujo",
+        whiteboard: "Pizarra Blanca",
+        "graph-paper": "Papel Cuadriculado",
+        "kids-drawing": "Dibujo para Niños",
+      },
+    },
     kids: {
       stampsHeading: "Sellos",
       stampHint: "Elige un sello y toca el lienzo para colocarlo.",
@@ -101,6 +129,17 @@ export const TOOL_UI: ToolUI = {
       lines: "罫線",
       snapToGrid: "グリッドにスナップ",
       snapToGridAria: "描画をグリッドにスナップ",
+    },
+    boardNav: {
+      boards: "ボード",
+      menuAria: "お絵かきツールとボード",
+      short: {
+        "online-drawing": "お絵かきツール",
+        "drawing-board": "製図ボード",
+        whiteboard: "ホワイトボード",
+        "graph-paper": "方眼紙",
+        "kids-drawing": "子ども向けお絵かき",
+      },
     },
     kids: {
       stampsHeading: "スタンプ",
@@ -128,6 +167,17 @@ export const TOOL_UI: ToolUI = {
       snapToGrid: "Aligner sur la grille",
       snapToGridAria: "Aligner le dessin sur la grille",
     },
+    boardNav: {
+      boards: "Tableaux",
+      menuAria: "Outils de dessin et tableaux",
+      short: {
+        "online-drawing": "Outil de Dessin",
+        "drawing-board": "Planche de Dessin",
+        whiteboard: "Tableau Blanc",
+        "graph-paper": "Papier Quadrillé",
+        "kids-drawing": "Dessin pour Enfants",
+      },
+    },
     kids: {
       stampsHeading: "Tampons",
       stampHint: "Choisis un tampon, puis touche la toile pour le poser.",
@@ -153,6 +203,17 @@ export const TOOL_UI: ToolUI = {
       lines: "Linien",
       snapToGrid: "Am Raster einrasten",
       snapToGridAria: "Zeichnung am Raster einrasten",
+    },
+    boardNav: {
+      boards: "Boards",
+      menuAria: "Zeichenwerkzeuge und Boards",
+      short: {
+        "online-drawing": "Zeichenwerkzeug",
+        "drawing-board": "Zeichenbrett",
+        whiteboard: "Whiteboard",
+        "graph-paper": "Millimeterpapier",
+        "kids-drawing": "Zeichnen für Kinder",
+      },
     },
     kids: {
       stampsHeading: "Stempel",
@@ -180,6 +241,17 @@ export const TOOL_UI: ToolUI = {
       snapToGrid: "Ajustar à grade",
       snapToGridAria: "Ajustar o desenho à grade",
     },
+    boardNav: {
+      boards: "Quadros",
+      menuAria: "Ferramentas de desenho e quadros",
+      short: {
+        "online-drawing": "Ferramenta de Desenho",
+        "drawing-board": "Quadro de Desenho",
+        whiteboard: "Quadro Branco",
+        "graph-paper": "Papel Quadriculado",
+        "kids-drawing": "Desenho para Crianças",
+      },
+    },
     kids: {
       stampsHeading: "Carimbos",
       stampHint: "Escolha um carimbo e toque na tela para colocá-lo.",
@@ -205,6 +277,17 @@ export const TOOL_UI: ToolUI = {
       lines: "선",
       snapToGrid: "격자에 맞추기",
       snapToGridAria: "그림을 격자에 맞추기",
+    },
+    boardNav: {
+      boards: "보드",
+      menuAria: "그리기 도구와 보드",
+      short: {
+        "online-drawing": "드로잉 도구",
+        "drawing-board": "드로잉 보드",
+        whiteboard: "화이트보드",
+        "graph-paper": "모눈종이",
+        "kids-drawing": "어린이용 그리기",
+      },
     },
     kids: {
       stampsHeading: "스탬프",
@@ -232,6 +315,17 @@ export const TOOL_UI: ToolUI = {
       snapToGrid: "Allinea alla griglia",
       snapToGridAria: "Allinea il disegno alla griglia",
     },
+    boardNav: {
+      boards: "Lavagne",
+      menuAria: "Strumenti di disegno e lavagne",
+      short: {
+        "online-drawing": "Strumento di Disegno",
+        "drawing-board": "Tavoletta di Disegno",
+        whiteboard: "Lavagna",
+        "graph-paper": "Carta a Quadretti",
+        "kids-drawing": "Disegno per Bambini",
+      },
+    },
     kids: {
       stampsHeading: "Timbri",
       stampHint: "Scegli un timbro e tocca la tela per piazzarlo.",
@@ -257,6 +351,17 @@ export const TOOL_UI: ToolUI = {
       lines: "线条",
       snapToGrid: "对齐网格",
       snapToGridAria: "将绘图对齐到网格",
+    },
+    boardNav: {
+      boards: "画板",
+      menuAria: "绘图工具和画板",
+      short: {
+        "online-drawing": "绘图工具",
+        "drawing-board": "绘图板",
+        whiteboard: "白板",
+        "graph-paper": "方格纸",
+        "kids-drawing": "儿童画画",
+      },
     },
     kids: {
       stampsHeading: "图章",

@@ -25,6 +25,14 @@ export type ToolRelatedInfo = Record<ToolPageKey, { label: string; blurb: string
 
 export const TOOL_DISPLAY_ORDER: ToolPageKey[] = ["online-drawing", "drawing-board", "whiteboard", "graph-paper", "kids-drawing"];
 
+export const TOOL_ROUTES: Record<ToolPageKey, string> = {
+  "online-drawing": "/online-drawing",
+  "drawing-board": "/drawing-board",
+  whiteboard: "/whiteboard",
+  "graph-paper": "/graph-paper",
+  "kids-drawing": "/kids-drawing",
+};
+
 export interface ToolPageContent {
   seoTitle: string;
   seoDescription: string;

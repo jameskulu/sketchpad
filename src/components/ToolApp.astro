@@ -4,6 +4,7 @@ import Icon from "./Icon.astro";
 import LangSwitcher from "./LangSwitcher.astro";
 import { SITE } from "../lib/site";
 import ToolSeo from "./ToolSeo.astro";
+import ToolBoardNav from "./ToolBoardNav.astro";
 import { uiFor } from "../i18n/ui";
 import { toolUiFor } from "../i18n/tool-ui";
 import type { ToolPageContent, ToolPageKey } from "../i18n/tool-content-types";
@@ -155,6 +156,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       </div>
 
       <div class="flex min-w-0 flex-1 items-center justify-end gap-0.5 sm:gap-1">
+        <ToolBoardNav locale={locale} route={route} />
         <div class="max-[360px]:hidden shrink-0">
           <LangSwitcher locale={locale} route={route} compact={true} />
         </div>
