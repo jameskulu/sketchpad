@@ -2,7 +2,7 @@
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 import { SITE } from "../lib/site";
-import { localeAlternates, DEFAULT_LOCALE, type Locale } from "../i18n/locales";
+import { localeAlternates, LOCALES, DEFAULT_LOCALE, type Locale } from "../i18n/locales";
 
 interface Props {
   title?: string;
@@ -32,8 +32,24 @@ const pathname = Astro.url.pathname;
 const canonical = new URL(pathname, SITE.url).href;
 const ogUrl = canonical;
 const ogImageUrl = new URL(ogImage, SITE.url).href;
-const ogLocale = locale === "ja" ? "ja_JP" : locale === "ko" ? "ko_KR" : locale === "pt" ? "pt_BR" : `${locale}_${locale.toUpperCase()}`;
-const alternates = localeAlternates(route).map((a) => ({ ...a, href: new URL(a.href, SITE.url).href }));
+const ogLocales: Record<Locale, string> = {
+  en: "en_US",
+  es: "es_ES",
+  ja: "ja_JP",
+  fr: "fr_FR",
+  de: "de_DE",
+  pt: "pt_BR",
+  ko: "ko_KR",
+  it: "it_IT",
+  zh: "zh_CN",
+};
+const ogLocale = ogLocales[locale];
+const lang = LOCALES.find((l) => l.code === locale)?.lang ?? locale;
+const alternates = localeAlternates(route).map((a) => ({
+  ...a,
+  lang: LOCALES.find((l) => l.code === a.code)?.lang ?? a.code,
+  href: new URL(a.href, SITE.url).href,
+}));
 const scripts = structuredData
   ? Array.isArray(structuredData)
     ? structuredData
@@ -42,12 +58,13 @@ const scripts = structuredData
 ---
 
 <!doctype html>
-<html lang={locale} class="h-full">
+<html lang={lang} class="h-full">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
@@ -56,7 +73,7 @@ const scripts = structuredData
 		<link rel="canonical" href={canonical} />
 		<meta name="theme-color" content="#f6f9fc" />
 		{alternates.map((a) => (
-			<link rel="alternate" hreflang={a.code === DEFAULT_LOCALE ? "x-default" : a.code} href={a.href} />
+			<link rel="alternate" hreflang={a.code === DEFAULT_LOCALE ? "x-default" : a.lang} href={a.href} />
 		))}
 
 		<!-- Google Analytics -->
