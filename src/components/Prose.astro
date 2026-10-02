@@ -1,0 +1,24 @@
+---
+import { parseInlineText } from "../lib/inline-text";
+
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const segments = parseInlineText(text);
+const linkCls =
+  "font-medium text-ink underline decoration-ink-mute/40 underline-offset-2 hover:decoration-ink";
+---
+
+{
+  segments.map((seg) =>
+    seg.href ? (
+      <a href={seg.href} class={linkCls}>
+        {seg.text}
+      </a>
+    ) : (
+      seg.text
+    ),
+  )
+}

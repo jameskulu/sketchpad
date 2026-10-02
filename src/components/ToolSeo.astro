@@ -1,4 +1,5 @@
 ---
+import Prose from "./Prose.astro";
 import { TOOL_PAGE_KEYS, type ToolPageContent, type ToolPageKey } from "../i18n/tool-content-types";
 import { deriveLocaleHref, type Locale } from "../i18n/locales";
 import { uiFor } from "../i18n/ui";
@@ -44,14 +45,14 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
     <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{content.h1}</h1>
 
     {content.intro.map((para) => (
-      <p class="mt-6 text-[17px] leading-8 text-ink-secondary">{para}</p>
+      <p class="mt-6 text-[17px] leading-8 text-ink-secondary"><Prose text={para} /></p>
     ))}
 
     {content.sections.map((sec) => (
       <>
         <h2 class={h2}>{sec.heading}</h2>
         {sec.paragraphs.map((par) => (
-          <p class:list={[p, "p"]}>{par}</p>
+          <p class:list={[p, "p"]}><Prose text={par} /></p>
         ))}
         {sec.list && (
           <ul class="mt-4 list-disc space-y-1.5 pl-5 text-[15px] leading-7 text-ink-secondary">
@@ -85,13 +86,13 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
       {content.faq.map((item) => (
         <div class="py-4">
           <h3 class={faqQ}>{item.q}</h3>
-          <p class={faqA}>{item.a}</p>
+          <p class={faqA}><Prose text={item.a} /></p>
         </div>
       ))}
     </div>
 
     {content.closing.map((para) => (
-      <p class="mt-10 text-[16px] leading-8 text-ink-secondary">{para}</p>
+      <p class="mt-10 text-[16px] leading-8 text-ink-secondary"><Prose text={para} /></p>
     ))}
 
     <p class="mt-10 text-[13px] text-ink-mute">

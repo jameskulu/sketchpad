@@ -1,4 +1,5 @@
 ---
+import Prose from "./Prose.astro";
 import ToolLinks from "./ToolLinks.astro";
 import type { PageContent } from "../i18n/content-types";
 import type { Locale } from "../i18n/locales";
@@ -21,30 +22,30 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
     <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{home.h1}</h1>
 
     {home.intro.map((para) => (
-      <p class="mt-6 text-[17px] leading-8 text-ink-secondary">{para}</p>
+      <p class="mt-6 text-[17px] leading-8 text-ink-secondary"><Prose text={para} /></p>
     ))}
 
     <h2 class={h2}>{home.toolsHeading}</h2>
-    {home.tools.map((para) => <p class={p}>{para}</p>)}
+    {home.tools.map((para) => <p class={p}><Prose text={para} /></p>)}
 
     <h2 class={h2}>{home.rankingHeading}</h2>
-    {home.ranking.map((para) => <p class={p}>{para}</p>)}
+    {home.ranking.map((para) => <p class={p}><Prose text={para} /></p>)}
 
     <h2 class={h2}>{home.kidsHeading}</h2>
-    {home.kids.map((para) => <p class={p}>{para}</p>)}
+    {home.kids.map((para) => <p class={p}><Prose text={para} /></p>)}
 
     <h2 class={h2}>{home.faqHeading}</h2>
     <div class="mt-4 divide-y divide-hairline">
       {home.faq.map((item) => (
         <div class="py-4">
           <h3 class={faqQ}>{item.q}</h3>
-          <p class={faqA}>{item.a}</p>
+          <p class={faqA}><Prose text={item.a} /></p>
         </div>
       ))}
     </div>
 
     {home.closing.map((para) => (
-      <p class="mt-10 text-[16px] leading-8 text-ink-secondary">{para}</p>
+      <p class="mt-10 text-[16px] leading-8 text-ink-secondary"><Prose text={para} /></p>
     ))}
 
     <ToolLinks locale={locale} heading={home.toolLinksHeading} />

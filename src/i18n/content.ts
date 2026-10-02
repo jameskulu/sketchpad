@@ -14,6 +14,7 @@ export const CONTENT: Content = {
       toolsHeading: "Draw Online Sketchpad — Everything You Need, Nothing You Don't",
       tools: [
         "This digital sketchpad ships with a smooth brush and a lifelike graphite pencil for natural strokes, plus rectangles, circles, triangles, lines, and arrows for crisp diagrams. Add text labels, pick any color from the palette or a custom picker, and dial in stroke size and opacity to get the exact look you want. Undo and redo make mistakes painless, and a toggleable grid keeps aligned sketches easy. Everything runs on your device, so you can sketchpad app-style anywhere — on a laptop, tablet, or phone, with a mouse, touch, or stylus. Rendering is instant and local, which means you get a smooth drawing online sketchpad experience even on older devices and slower connections. On a desktop it becomes a capable drawing pad for laptop work, and on a tablet it feels like a dedicated digital drawing pad that follows you everywhere.",
+      "And when a sketch needs a sense of direction — a trail map, a site plan, a route you plotted by hand — [Online Compass](https://trueonlinecompass.com/) adds a live true-north heading, a bearing calculator, and the sun's position right in the browser. Nothing to install, nothing to sign up for.",
       ],
       rankingHeading: "Best Online Sketchpad Tools 2025 & 2026",
       ranking: [
@@ -145,6 +146,7 @@ export const CONTENT: Content = {
       toolsHeading: "Dibuja en Línea con el Sketchpad: Todo lo que Necesitas",
       tools: [
         "Este sketchpad digital incluye un pincel suave y un lápiz de grafito realista para trazos naturales, además de rectángulos, círculos, triángulos, líneas y flechas para diagramas nítidos. Añade etiquetas de texto, elige cualquier color de la paleta o de un selector personalizado y ajusta el grosor y la opacidad del trazo para conseguir el aspecto exacto que quieres. Deshacer y rehacer hacen que los errores no duelan y una cuadrícula activable mantiene alineados tus bocetos. Todo funciona en tu dispositivo, así puedes usarlo a tu manera — en portátil, tableta o teléfono, con ratón, táctil o lápiz óptico. El renderizado es instantáneo y local, lo que da una experiencia fluida de dibujo online incluso en dispositivos antiguos o conexiones lentas.",
+      "Y cuando un boceto necesita orientación — un mapa de senderos, un plano de una parcela, una ruta trazada a mano — [Online Compass](https://trueonlinecompass.com/) añade en el navegador un rumbo real en vivo, un calculador de rumbos y la posición del sol. No hay que instalar nada ni crear una cuenta.",
       ],
       rankingHeading: "Los Mejores Sketchpads en Línea 2025 y 2026",
       ranking: [
@@ -242,6 +244,7 @@ export const CONTENT: Content = {
       toolsHeading: "オンラインお絵かきスケッチパッド：必要なものだけ、シンプルに",
       tools: [
         "このデジタルスケッチパッドには、なめらかなブラシとリアルなグラファイト鉛筆が付属し、自然な筆致で描けます。さらに長方形、円、三角形、直線、矢印でクリアな図が作れます。テキストラベルを追加し、パレットやカスタムピッカーで好きな色を選び、線の太さと不透明度を調整して思い通りの仕上がりに。元に戻す・やり直すで失敗も気軽に、切り替え式グリッドで整った構図を保てます。すべて端末上で動作するので、ノートPC、タブレット、スマホで、マウス・タッチ・スタイラスのどれでも、あなたの流儀でスケッチパッドアプリのように使えます。レンダリングは瞬時でローカル処理のため、古い端末や遅い接続でもなめらかなオンラインお絵かき体験が得られます。",
+      "スケッチに方位がほしいとき — 歩道の地図、敷地の配置図、手でなぞったルートなど — [Online Compass](https://trueonlinecompass.com/) なら、ブラウザのままで真北の現在方位、方位角の計算、太陽の位置まで確認できます。インストールも登録も不要です。",
       ],
       rankingHeading: "2025年＆2026年おすすめオンラインスケッチパッド",
       ranking: [
@@ -339,6 +342,7 @@ export const CONTENT: Content = {
       toolsHeading: "Dessinez en ligne avec le sketchpad : tout ce qu'il faut, rien de superflu",
       tools: [
         "Ce sketchpad numérique embarque un pinceau lisse et un crayon graphite réaliste pour des traits naturels, plus des rectangles, des cercles, des triangles, des lignes et des flèches pour des schémas nets. Ajoutez des étiquettes de texte, choisissez n'importe quelle couleur dans la palette ou un sélecteur personnalisé, et réglez l'épaisseur et l'opacité du trait pour obtenir exactement le rendu voulu. Annuler et rétablir rendent les erreurs sans douleur, et une grille activable garde vos croquis alignés. Tout fonctionne sur votre appareil, à votre façon — portable, tablette ou téléphone, à la souris, au doigt ou au stylet. Le rendu est instantané et local, pour une expérience de dessin en ligne fluide même sur un vieil appareil ou une connexion lente.",
+      "Et quand un croquis a besoin d'un repère — carte de sentier, plan de parcelle, itinéraire tracé à la main — [Online Compass](https://trueonlinecompass.com/) ajoute un cap réel en direct, un calculateur de relèvement et la position du soleil, directement dans le navigateur. Rien à installer, aucun compte à créer.",
       ],
       rankingHeading: "Les meilleurs sketchpads en ligne 2025 et 2026",
       ranking: [
@@ -436,6 +440,7 @@ export const CONTENT: Content = {
       toolsHeading: "Online zeichnen im Sketchpad: Alles was du brauchst, nichts was du nicht brauchst",
       tools: [
         "Dieses digitale Sketchpad ist mit einem weichen Pinsel und einem realistischen Graphitstift für natürliche Striche ausgestattet, dazu Rechtecke, Kreise, Dreiecke, Linien und Pfeile für saubere Diagramme. Füge Textbeschriftungen hinzu, wähle jede Farbe aus der Palette oder einem eigenen Farbwähler und stelle Strichstärke und Deckkraft ein, um genau den Look zu bekommen, den du willst. Rückgängig und Wiederholen machen Fehler schmerzfrei, und ein zuschaltbares Raster hält Skizzen ausgerichtet. Alles läuft auf deinem Gerät, ganz wie du willst – auf Laptop, Tablet oder Handy, mit Maus, Touch oder Stift. Das Rendering ist sofort und lokal, für ein flüssiges Online-Zeichnen auch auf älteren Geräten oder langsamen Verbindungen.",
+      "Und wenn eine Skizze einen Kompass braucht – eine Wanderkarte, einen Lageplan, eine von Hand nachgezeichnete Route – liefert [Online Compass](https://trueonlinecompass.com/) direkt im Browser die echte Nordrichtung, einen Peilungsrechner und die Sonnenposition. Nichts installieren, kein Konto nötig.",
       ],
       rankingHeading: "Beste Online-Sketchpad-Tools 2025 & 2026",
       ranking: [
@@ -533,6 +538,7 @@ export const CONTENT: Content = {
       toolsHeading: "Desenhe Online no Sketchpad: Tudo o que Você Precisa, Nada Além",
       tools: [
         "Este sketchpad digital traz um pincel suave e um lápis grafite realista para traços naturais, além de retângulos, círculos, triângulos, linhas e setas para diagramas nítidos. Adicione rótulos de texto, escolha qualquer cor na paleta ou em um seletor personalizado e ajuste a espessura e a opacidade do traço para obter exatamente o visual que deseja. Desfazer e refazer tornam os erros indolores, e uma grade ativável mantém os esboços alinhados. Tudo roda no seu dispositivo, do seu jeito — no notebook, tablet ou celular, com mouse, toque ou caneta. O render é instantâneo e local, garantindo uma experiência fluida de desenho online mesmo em dispositivos antigos ou conexões lentas.",
+      "E quando um esboço precisa de orientação — um mapa de trilhas, uma planta do terreno, uma rota traçada à mão — [Online Compass](https://trueonlinecompass.com/) adiciona no navegador um rumo real ao vivo, um calculador de azimute e a posição do sol. Nada para instalar, nenhuma conta para criar.",
       ],
       rankingHeading: "Melhores Ferramentas de Sketchpad Online 2025 e 2026",
       ranking: [
@@ -630,6 +636,7 @@ export const CONTENT: Content = {
       toolsHeading: "온라인 드로잉 스케치패드: 필요한 것만, 군더더기 없이",
       tools: [
         "이 디지털 스케치패드는 자연스러운 선을 위한 부드러운 브러시와 사실적인 흑연 연필은 물론, 깔끔한 다이어그램을 위한 사각형, 원, 삼각형, 선, 화살표를 갖추고 있습니다. 텍스트 라벨을 추가하고, 팔레트나 커스텀 피커에서 원하는 색을 고르고, 선 두께와 투명도를 조절해 원하는 모양을 완성하세요. 실행 취소·다시 실행으로 실수도 가볍게, 전환 가능한 격자로 정돈된 구도를 유지할 수 있습니다. 모든 것이 기기에서 실행되므로 노트북, 태블릿, 휴대폰에서 마우스·터치·스타일러스 중 원하는 방식으로 스케치패드 앱처럼 사용할 수 있습니다. 렌더링은 즉시 이루어지고 로컬에서 처리되어, 오래된 기기나 느린 연결에서도 부드러운 온라인 그림판 경험을 제공합니다.",
+      "그리고 스케치에 방위관이 필요한 순간 — 산책로 지도, 대지 배치도, 손으로 그려 넣은 경로처럼 — [Online Compass](https://trueonlinecompass.com/)로 브라우저에서 바로 진북 현재 방위각, 방위 계산, 태양 위치를 확인할 수 있습니다. 설치도 가입도 필요 없습니다.",
       ],
       rankingHeading: "2025년·2026년 최고의 온라인 스케치패드 도구",
       ranking: [
@@ -727,6 +734,7 @@ export const CONTENT: Content = {
       toolsHeading: "Disegna Online con lo Sketchpad: Tutto Quello che Serve, Niente di Più",
       tools: [
         "Questo sketchpad digitale è dotato di un pennello morbido e di una matita a grafite realistica per tratti naturali, oltre a rettangoli, cerchi, triangoli, linee e frecce per diagrammi nitidi. Aggiungi etichette di testo, scegli qualsiasi colore dalla tavolozza o da un selettore personalizzato e regola spessore e opacità del tratto per ottenere esattamente l'aspetto che vuoi. Annulla e Ripeti rendono gli errori indolori, e una griglia attivabile mantiene gli schizzi allineati. Tutto funziona sul tuo dispositivo, a modo tuo — su laptop, tablet o telefono, con mouse, tocco o stilo. Il rendering è istantaneo e locale, per un'esperienza di disegno online fluida anche su dispositivi vecchi o connessioni lente.",
+      "E quando uno schizzo ha bisogno di un orientamento — una mappa di sentiero, una planimetria, un percorso tracciato a mano — [Online Compass](https://trueonlinecompass.com/) aggiunge nel browser una rotta vera in tempo reale, un calcolatore di azimut e la posizione del sole. Niente da installare, nessun account da creare.",
       ],
       rankingHeading: "Migliori Strumenti Sketchpad Online 2025 e 2026",
       ranking: [
@@ -824,6 +832,7 @@ export const CONTENT: Content = {
       toolsHeading: "在线绘图 — 所需功能，恰到好处",
       tools: [
         "这款数字画板配备流畅的画笔和逼真的石墨铅笔，可绘制自然笔触，还提供矩形、圆形、三角形、直线和箭头，用于绘制清晰的图表。添加文字标签，从调色板或自定义选择器中选取任意颜色，调整描边大小和不透明度，以获得您想要的精确效果。撤销和重做让错误不再痛苦，可切换的网格保持绘图对齐。所有功能都在您的设备上运行，因此您可以在任何地方使用 — 在笔记本电脑、平板电脑或手机上，使用鼠标、触摸或手写笔。渲染即时且本地化，即使在较旧的设备和较慢的连接上，您也能获得流畅的在线绘图体验。",
+      "当草图需要方位时 —— 步道地图、场地平面图、手工标出的路线 —— [Online Compass](https://trueonlinecompass.com/) 可直接在浏览器中给出真北方位角、方位角计算和太阳位置。无需安装，也无需注册账号。",
       ],
       rankingHeading: "2025 和 2026 年最佳在线画板工具",
       ranking: [
