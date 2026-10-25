@@ -1,0 +1,160 @@
+---
+import SiteShell from "./SiteShell.astro";
+import Prose from "./Prose.astro";
+import { formatPostDate, relatedPosts, type BlogPost } from "../i18n/blog";
+import { DEFAULT_LOCALE } from "../i18n/locales";
+import { SITE } from "../lib/site";
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+const related = relatedPosts(post);
+const postUrl = new URL(`/blog/${post.slug}/`, SITE.url).href;
+const blogUrl = new URL("/blog/", SITE.url).href;
+
+const articleData = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date,
+  dateModified: post.date,
+  articleSection: post.category,
+  inLanguage: "en",
+  author: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+  },
+  publisher: {
+    "@type": "Organization",
+    name: SITE.name,
+    url: SITE.url,
+    logo: {
+      "@type": "ImageObject",
+      url: new URL("/favicon.svg", SITE.url).href,
+    },
+  },
+  image: new URL("/og-image.png", SITE.url).href,
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": postUrl,
+  },
+  url: postUrl,
+};
+
+const breadcrumbData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE.url,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Blog",
+      item: blogUrl,
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: post.title,
+      item: postUrl,
+    },
+  ],
+};
+
+const h2 = "mt-10 text-xl font-semibold tracking-tight text-ink";
+const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
+---
+
+<SiteShell
+  title={post.title}
+  description={post.description}
+  locale={DEFAULT_LOCALE}
+  route={`/blog/${post.slug}`}
+  structuredData={[articleData, breadcrumbData]}
+  localized={false}
+  showLangSwitcher={false}
+  ogType="article"
+>
+  <article>
+    <nav class="flex items-center gap-2 text-[12px] font-medium text-ink-mute" aria-label="Breadcrumb">
+      <a href="/blog/" class="transition-colors hover:text-ink">Blog</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-primary">{post.category}</span>
+    </nav>
+
+    <h1 class="mt-4 text-3xl font-bold tracking-tight text-ink sm:text-4xl">{post.title}</h1>
+
+    <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-medium text-ink-mute">
+      <time datetime={post.date}>{formatPostDate(post.date)}</time>
+      <span aria-hidden="true">·</span>
+      <span>{post.readingTime} min read</span>
+    </div>
+
+    <p class="mt-6 border-l-2 border-primary/30 pl-4 text-[17px] leading-8 text-ink-secondary">
+      {post.excerpt}
+    </p>
+
+    {post.sections.map((section) => (
+      <section>
+        {section.heading && <h2 class={h2}>{section.heading}</h2>}
+        {section.paragraphs?.map((para) => (
+          <p class={p}><Prose text={para} /></p>
+        ))}
+        {section.list && (
+          section.ordered ? (
+            <ol class="mt-4 list-decimal space-y-2 pl-5 text-[16px] leading-8 text-ink-secondary">
+              {section.list.map((item) => <li><Prose text={item} /></li>)}
+            </ol>
+          ) : (
+            <ul class="mt-4 list-disc space-y-2 pl-5 text-[16px] leading-8 text-ink-secondary">
+              {section.list.map((item) => <li><Prose text={item} /></li>)}
+            </ul>
+          )
+        )}
+      </section>
+    ))}
+
+    <aside class="mt-12 rounded-xl border border-hairline bg-canvas-soft p-6">
+      <h2 class="text-lg font-semibold tracking-tight text-ink">Try it in your browser</h2>
+      <p class="mt-2 text-[14px] leading-7 text-ink-secondary">
+        Simple Sketchpad is free, needs no account, and saves your drawing as you work. Open a blank canvas
+        and put these ideas into practice.
+      </p>
+      <a
+        href="/"
+        class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep"
+      >
+        Open the sketchpad
+        <span aria-hidden="true">→</span>
+      </a>
+    </aside>
+
+    <div class="mt-12 border-t border-hairline pt-8">
+      <h2 class="text-lg font-semibold tracking-tight text-ink">Keep reading</h2>
+      <div class="mt-4 space-y-3">
+        {related.map((item) => (
+          <a
+            href={`/blog/${item.slug}/`}
+            class="group block rounded-lg border border-hairline bg-white p-4 transition-colors hover:border-primary/40 hover:shadow-sm"
+          >
+            <span class="text-[11px] font-medium uppercase tracking-wide text-primary">{item.category}</span>
+            <span class="mt-1 block font-semibold text-ink">{item.title}</span>
+            <span class="mt-1 block text-[13px] leading-6 text-ink-mute">{item.excerpt}</span>
+          </a>
+        ))}
+      </div>
+      <a href="/blog/" class="mt-5 inline-block text-[13px] font-medium text-primary hover:underline">
+        All articles →
+      </a>
+    </div>
+  </article>
+</SiteShell>

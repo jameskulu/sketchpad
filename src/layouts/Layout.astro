@@ -13,6 +13,9 @@ interface Props {
   robots?: string;
   locale?: Locale;
   route?: string;
+  /** Emit hreflang alternate links for every locale. Set false for pages that only exist in the default locale. */
+  alternates?: boolean;
+  ogType?: string;
 }
 
 const {
@@ -24,6 +27,8 @@ const {
   robots = "index, follow",
   locale = DEFAULT_LOCALE,
   route = "/",
+  alternates: emitAlternates = true,
+  ogType = "website",
 } = Astro.props;
 
 const ogTitle = title;
@@ -72,7 +77,7 @@ const scripts = structuredData
 		<meta name="robots" content={robots} />
 		<link rel="canonical" href={canonical} />
 		<meta name="theme-color" content="#f6f9fc" />
-		{alternates.map((a) => (
+		{emitAlternates && alternates.map((a) => (
 			<link rel="alternate" hreflang={a.code === DEFAULT_LOCALE ? "x-default" : a.lang} href={a.href} />
 		))}
 
@@ -94,7 +99,7 @@ const scripts = structuredData
 		></script>
 
 		<!-- Open Graph -->
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:site_name" content={SITE.name} />
 		<meta property="og:locale" content={ogLocale} />
 		<meta property="og:title" content={ogTitle} />

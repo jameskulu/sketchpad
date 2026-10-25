@@ -5,6 +5,7 @@ import type { Locale } from "./locales";
 export interface UIStrings {
   siteName: string;
   nav: {
+    blog: string;
     about: string;
     privacyPolicy: string;
     terms: string;
@@ -66,7 +67,7 @@ export type UI = Record<Locale, UIStrings>;
 
 const en: UIStrings = {
   siteName: "Sketchpad",
-  nav: { about: "About", privacyPolicy: "Privacy Policy", terms: "Terms & Conditions", contact: "Contact Us" },
+  nav: { blog: "Blog", about: "About", privacyPolicy: "Privacy Policy", terms: "Terms & Conditions", contact: "Contact Us" },
   footer: { openSketchpad: "Open sketchpad", copyright: (y) => `© ${y} Sketchpad` },
   canvas: {
     downloadPng: "Download PNG (Ctrl+D)",
@@ -120,7 +121,7 @@ export const UI: UI = {
   en,
   es: {
     siteName: "Sketchpad",
-    nav: { about: "Acerca de", privacyPolicy: "Política de Privacidad", terms: "Términos y Condiciones", contact: "Contacto" },
+    nav: { blog: "Blog", about: "Acerca de", privacyPolicy: "Política de Privacidad", terms: "Términos y Condiciones", contact: "Contacto" },
     footer: { openSketchpad: "Abrir el sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Descargar PNG (Ctrl+D)",
@@ -171,7 +172,7 @@ export const UI: UI = {
   },
   ja: {
     siteName: "Sketchpad",
-    nav: { about: "概要", privacyPolicy: "プライバシーポリシー", terms: "利用規約", contact: "お問い合わせ" },
+    nav: { blog: "ブログ", about: "概要", privacyPolicy: "プライバシーポリシー", terms: "利用規約", contact: "お問い合わせ" },
     footer: { openSketchpad: "スケッチパッドを開く", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "PNGをダウンロード (Ctrl+D)",
@@ -222,7 +223,7 @@ export const UI: UI = {
   },
   fr: {
     siteName: "Sketchpad",
-    nav: { about: "À propos", privacyPolicy: "Politique de confidentialité", terms: "Conditions d'utilisation", contact: "Contact" },
+    nav: { blog: "Blog", about: "À propos", privacyPolicy: "Politique de confidentialité", terms: "Conditions d'utilisation", contact: "Contact" },
     footer: { openSketchpad: "Ouvrir le sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Télécharger PNG (Ctrl+D)",
@@ -273,7 +274,7 @@ export const UI: UI = {
   },
   de: {
     siteName: "Sketchpad",
-    nav: { about: "Über uns", privacyPolicy: "Datenschutz", terms: "AGB", contact: "Kontakt" },
+    nav: { blog: "Blog", about: "Über uns", privacyPolicy: "Datenschutz", terms: "AGB", contact: "Kontakt" },
     footer: { openSketchpad: "Sketchpad öffnen", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "PNG herunterladen (Ctrl+D)",
@@ -324,7 +325,7 @@ export const UI: UI = {
   },
   pt: {
     siteName: "Sketchpad",
-    nav: { about: "Sobre", privacyPolicy: "Política de Privacidade", terms: "Termos e Condições", contact: "Contato" },
+    nav: { blog: "Blog", about: "Sobre", privacyPolicy: "Política de Privacidade", terms: "Termos e Condições", contact: "Contato" },
     footer: { openSketchpad: "Abrir o sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Baixar PNG (Ctrl+D)",
@@ -375,7 +376,7 @@ export const UI: UI = {
   },
   ko: {
     siteName: "Sketchpad",
-    nav: { about: "소개", privacyPolicy: "개인정보 처리방침", terms: "이용약관", contact: "문의하기" },
+    nav: { blog: "블로그", about: "소개", privacyPolicy: "개인정보 처리방침", terms: "이용약관", contact: "문의하기" },
     footer: { openSketchpad: "스케치패드 열기", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "PNG 다운로드 (Ctrl+D)",
@@ -426,7 +427,7 @@ export const UI: UI = {
   },
   it: {
     siteName: "Sketchpad",
-    nav: { about: "Chi siamo", privacyPolicy: "Informativa sulla privacy", terms: "Termini e condizioni", contact: "Contatti" },
+    nav: { blog: "Blog", about: "Chi siamo", privacyPolicy: "Informativa sulla privacy", terms: "Termini e condizioni", contact: "Contatti" },
     footer: { openSketchpad: "Apri lo sketchpad", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "Scarica PNG (Ctrl+D)",
@@ -477,7 +478,7 @@ export const UI: UI = {
   },
   zh: {
     siteName: "Sketchpad",
-    nav: { about: "关于", privacyPolicy: "隐私政策", terms: "条款和条件", contact: "联系我们" },
+    nav: { blog: "博客", about: "关于", privacyPolicy: "隐私政策", terms: "条款和条件", contact: "联系我们" },
     footer: { openSketchpad: "打开画板", copyright: (y) => `© ${y} Sketchpad` },
     canvas: {
       downloadPng: "下载 PNG (Ctrl+D)",

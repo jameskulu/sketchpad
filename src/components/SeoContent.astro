@@ -2,7 +2,8 @@
 import Prose from "./Prose.astro";
 import ToolLinks from "./ToolLinks.astro";
 import type { PageContent } from "../i18n/content-types";
-import type { Locale } from "../i18n/locales";
+import { DEFAULT_LOCALE, type Locale } from "../i18n/locales";
+import { sortedPosts } from "../i18n/blog";
 
 interface Props {
   locale: Locale;
@@ -49,5 +50,29 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
     ))}
 
     <ToolLinks locale={locale} heading={home.toolLinksHeading} />
+
+    {locale === DEFAULT_LOCALE && (
+      <div class="mt-12 border-t border-hairline pt-10">
+        <h2 class="text-xl font-semibold tracking-tight text-ink">Drawing guides on the blog</h2>
+        <p class={p}>
+          Practical tips, tutorials, and product notes for getting more from your sketchpad.
+        </p>
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          {sortedPosts().slice(0, 4).map((post) => (
+            <a
+              href={`/blog/${post.slug}/`}
+              class="group block rounded-xl border border-hairline bg-white p-4 transition-colors hover:border-primary/40 hover:shadow-md"
+            >
+              <span class="text-[11px] font-medium uppercase tracking-wide text-primary">{post.category}</span>
+              <span class="mt-1 block font-semibold text-ink">{post.title}</span>
+              <span class="mt-1 block text-[13px] leading-6 text-ink-mute">{post.excerpt}</span>
+            </a>
+          ))}
+        </div>
+        <a href="/blog/" class="mt-5 inline-block text-[13px] font-medium text-primary hover:underline">
+          Read the blog →
+        </a>
+      </div>
+    )}
   </div>
 </section>

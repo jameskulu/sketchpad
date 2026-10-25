@@ -11,23 +11,49 @@ interface Props {
   locale: Locale;
   /** current route path (e.g. "/about") for localized links + hreflang */
   route: string;
+  structuredData?: object | object[];
+  /** Set false for pages that only exist in the default locale. */
+  localized?: boolean;
+  showLangSwitcher?: boolean;
+  ogType?: string;
 }
 
-const { title, description, locale, route } = Astro.props;
+const {
+  title,
+  description,
+  locale,
+  route,
+  structuredData,
+  localized = true,
+  showLangSwitcher = true,
+  ogType,
+} = Astro.props;
 const ui = uiFor(locale);
 
 const links = [
-  { href: "/about", label: ui.nav.about },
-  { href: "/privacy", label: ui.nav.privacyPolicy },
-  { href: "/terms", label: ui.nav.terms },
-  { href: "/contact", label: ui.nav.contact },
-].map((l) => ({ ...l, href: deriveLocaleHref(locale, l.href) }));
+  { href: "/blog", label: ui.nav.blog, localized: false, hideOnMobile: true },
+  { href: "/about", label: ui.nav.about, localized: true, hideOnMobile: false },
+  { href: "/privacy", label: ui.nav.privacyPolicy, localized: true, hideOnMobile: false },
+  { href: "/terms", label: ui.nav.terms, localized: true, hideOnMobile: false },
+  { href: "/contact", label: ui.nav.contact, localized: true, hideOnMobile: false },
+].map((l) => ({
+  ...l,
+  href: l.localized ? deriveLocaleHref(locale, l.href) : `${l.href}/`,
+}));
 
 const homeHref = deriveLocaleHref(locale, "/");
 const openHref = deriveLocaleHref(locale, "/");
 ---
 
-<Layout title={`${title} — Simple Sketchpad`} description={description} locale={locale} route={route}>
+<Layout
+  title={`${title} — Simple Sketchpad`}
+  description={description}
+  locale={locale}
+  route={route}
+  structuredData={structuredData}
+  alternates={localized}
+  ogType={ogType}
+>
   <div class="flex min-h-full flex-col">
     <header class="z-40 flex h-14 shrink-0 items-center justify-between border-b border-hairline bg-white/95 px-4 sm:px-6">
       <a href={homeHref} class="flex items-center gap-2 rounded-md px-1.5 py-1" aria-label="Back to the sketchpad">
@@ -38,11 +64,17 @@ const openHref = deriveLocaleHref(locale, "/");
       </a>
       <nav class="flex items-center gap-1 sm:gap-2" aria-label="Site pages">
         {links.map((l) => (
-          <a href={l.href} class="rounded-md px-2.5 py-1.5 text-[13px] font-medium text-ink-mute transition-colors hover:bg-canvas-soft hover:text-ink">
+          <a
+            href={l.href}
+            class:list={[
+              "rounded-md px-2.5 py-1.5 text-[13px] font-medium text-ink-mute transition-colors hover:bg-canvas-soft hover:text-ink",
+              l.hideOnMobile && "max-[520px]:hidden",
+            ]}
+          >
             {l.label}
           </a>
         ))}
-        <LangSwitcher locale={locale} route={route} compact={true} />
+        {showLangSwitcher && <LangSwitcher locale={locale} route={route} compact={true} />}
         <a href={openHref} class="ml-1 hidden rounded-full bg-primary px-3.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep sm:inline-block">{ui.footer.openSketchpad}</a>
       </nav>
     </header>
@@ -53,7 +85,7 @@ const openHref = deriveLocaleHref(locale, "/");
 
     <footer class="border-t border-hairline bg-white/95">
       <div class="mx-auto flex w-full max-w-2xl flex-col items-center justify-between gap-3 px-4 py-6 sm:flex-row sm:px-6">
-        <nav class="flex items-center gap-4" aria-label="Footer">
+        <nav class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1" aria-label="Footer">
           {links.map((l) => (
             <a href={l.href} class="text-[13px] font-medium text-ink-mute transition-colors hover:text-ink">{l.label}</a>
           ))}

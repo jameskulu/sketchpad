@@ -63,6 +63,7 @@ const tools: { id: string; icon: string; label: string; hint: string }[] = [
 const swatches = ["#0d253d", "#533afd", "#665efd", "#ea2261", "#f96bee", "#9b6829", "#0e9f6e", "#0ea5e9", "#e05a00", "#000000"];
 
 const homeHref = deriveLocaleHref(locale, "/");
+const blogHref = "/blog/";
 const aboutHref = deriveLocaleHref(locale, "/about");
 const privacyHref = deriveLocaleHref(locale, "/privacy");
 const termsHref = deriveLocaleHref(locale, "/terms");
@@ -285,6 +286,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         </div>
 
         <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-hairline pt-3 text-[11px] font-medium text-ink-mute">
+          <a href={blogHref} class="transition-colors hover:text-ink">{ui.nav.blog}</a>
+          <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
           <a href={aboutHref} class="transition-colors hover:text-ink">{ui.nav.about}</a>
           <span aria-hidden="true" class="h-3 w-px bg-hairline"></span>
           <a href={privacyHref} class="transition-colors hover:text-ink">{ui.nav.privacyPolicy}</a>

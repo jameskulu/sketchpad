@@ -3,7 +3,7 @@ export interface InlineSegment {
   href?: string;
 }
 
-const INLINE_LINK = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+const INLINE_LINK = /\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s)]*)\)/g;
 
 /**
  * Splits a content string into plain-text and link segments.

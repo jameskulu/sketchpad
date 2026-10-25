@@ -1,5 +1,5 @@
 export const SITE = {
-  name: "Simple Sketchpad",
+  name: "Sketchpad",
   // TODO: replace with the real domain, contact address and repository before shipping.
   url: "https://simplesketchpad.com",
   email: "hello@simplesketchpad.com",
