@@ -39,7 +39,7 @@ const seoData = {
     "Big buttons that are easy to tap",
     "Emoji stamps",
     "Autosave in the browser",
-    "Safe for kids — no ads, no chat",
+    "Safe for kids — no chat, comments, or sign-up",
   ],
   isAccessibleForFree: true,
   audience: { "@type": "Audience", audienceType: "Children" },
@@ -245,9 +245,6 @@ const homeHref = deriveLocaleHref(locale, "/");
   .stamp-btn.is-active {
     background: #7983ff;
   }
-  #clear-btn.is-armed {
-    @apply bg-[#ea2261] text-white hover:bg-[#d81b55];
-  }
 </style>
 
 <style is:global>
@@ -329,6 +326,10 @@ const homeHref = deriveLocaleHref(locale, "/");
         autosaveSaving: ui.canvas.autosaveSaving,
         autosaveNotSaved: ui.canvas.autosaveNotSaved,
         px: ui.canvas.px,
+        clearConfirmTitle: ui.canvas.clearConfirmTitle,
+        clearConfirmBody: ui.canvas.clearConfirmBody,
+        clearConfirmDelete: ui.canvas.clearConfirmDelete,
+        clearConfirmCancel: ui.canvas.clearConfirmCancel,
       },
     },
     defaultTool: "brush",

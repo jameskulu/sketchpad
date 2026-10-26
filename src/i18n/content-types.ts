@@ -1,5 +1,12 @@
 import type { Locale } from "./locales";
 
+export interface HomeSection {
+  heading: string;
+  paragraphs: string[];
+  list?: string[];
+  ordered?: boolean;
+}
+
 export interface PageContent {
   htmlLang: string;
 
@@ -17,6 +24,8 @@ export interface PageContent {
     ranking: string[];
     kidsHeading: string;
     kids: string[];
+    /** Optional long-form sections rendered between the overview blocks and the FAQ. */
+    sections?: HomeSection[];
     faqHeading: string;
     faq: Array<{ q: string; a: string }>;
     closing: string[];

@@ -1,8 +1,8 @@
 import type { Locale } from "./locales";
 
-export type ToolPageKey = "online-drawing" | "drawing-board" | "whiteboard" | "graph-paper" | "kids-drawing";
+export type ToolPageKey = "drawing-board" | "whiteboard" | "graph-paper" | "kids-drawing";
 
-export const TOOL_PAGE_KEYS: ToolPageKey[] = ["online-drawing", "drawing-board", "whiteboard", "graph-paper", "kids-drawing"];
+export const TOOL_PAGE_KEYS: ToolPageKey[] = ["drawing-board", "whiteboard", "graph-paper", "kids-drawing"];
 
 export interface ToolPageFaq {
   q: string;
@@ -13,6 +13,7 @@ export interface ToolPageSection {
   heading: string;
   paragraphs: string[];
   list?: string[];
+  ordered?: boolean;
 }
 
 export interface ToolPageRelated {
@@ -23,10 +24,9 @@ export interface ToolPageRelated {
 
 export type ToolRelatedInfo = Record<ToolPageKey, { label: string; blurb: string }>;
 
-export const TOOL_DISPLAY_ORDER: ToolPageKey[] = ["online-drawing", "drawing-board", "whiteboard", "graph-paper", "kids-drawing"];
+export const TOOL_DISPLAY_ORDER: ToolPageKey[] = ["drawing-board", "whiteboard", "graph-paper", "kids-drawing"];
 
 export const TOOL_ROUTES: Record<ToolPageKey, string> = {
-  "online-drawing": "/online-drawing",
   "drawing-board": "/drawing-board",
   whiteboard: "/whiteboard",
   "graph-paper": "/graph-paper",

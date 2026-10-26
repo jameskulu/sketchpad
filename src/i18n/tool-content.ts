@@ -1,97 +1,45 @@
 import type { ToolContent } from "./tool-content-types";
 
 const en = {
-  "online-drawing": {
-    seoTitle: "Online Drawing Tool - Draw Online Free | SimpleSketchpad",
-    seoDescription:
-      "Draw online for free with this browser-based online drawing tool. Use the pencil, brush, eraser, shapes, arrows, and text, then export to PNG or SVG. No sign-up required.",
-    h1: "Online Drawing Tool",
-    intro: [
-      "This is where you draw online, free and directly in your browser. It brings together everything you expect from an online drawing tool: a smooth pencil and brush for sketching, a soft eraser, a full color palette with a custom color picker, and clean shapes, lines, and arrows for diagrams.",
-      "Because everything runs locally on your device, drawing is instant and private. Nothing you create is uploaded anywhere and you never need an account. Just open the canvas and start.",
-    ],
-    sections: [
-      {
-        heading: "Everything you need to draw online",
-        paragraphs: [
-          "From quick doodles to detailed illustrations, this tool covers the essentials: pencil and brush strokes with adjustable size and opacity, rectangles, circles, triangles, lines, and arrows for structure, plus text labels for annotations. Undo and redo make mistakes painless, and the grid helps keep everything aligned.",
-        ],
-        list: [
-          "Pencil and brush with custom colors",
-          "Eraser with adjustable size",
-          "Shapes: rectangle, circle, triangle, line, arrow",
-          "Text for labels and captions",
-          "Fill options for closed shapes",
-          "Unlimited undo and redo",
-          "Zoom and pan for precision work",
-          "PNG and SVG export",
-          "Works with mouse, touch, and stylus",
-        ],
-      },
-      {
-        heading: "A free drawing online tool that works everywhere",
-        paragraphs: [
-          "Draw on a laptop with a mouse, on a tablet with a stylus, or on a phone with your finger. The toolbar adapts to small screens and two-finger pinch zoom works on any touch device. Your drawing is saved automatically in the browser, so you can close the tab and pick up where you left off.",
-        ],
-      },
-      {
-        heading: "What you can create",
-        paragraphs: [
-          "Use it for character sketches, logos and layouts, storyboards, UI wireframes, geometry homework, or simply to capture an idea before it slips away. When you are done, export the result as a high-resolution PNG or a vector SVG that scales to any size without losing quality.",
-        ],
-      },
-    ],
-    relatedHeading: "More free tools from SimpleSketchpad",
-    related: {
-      "online-drawing": { label: "Online Drawing Tool", blurb: "Pencil, brush, shapes, and text for illustrations and sketches." },
-      "drawing-board": { label: "Online Drawing Board", blurb: "A workspace for planning, sticky notes, and visual notes." },
-      whiteboard: { label: "Free Online Whiteboard", blurb: "An infinite canvas for teaching, meetings, and brainstorming." },
-      "graph-paper": { label: "Online Graph Paper", blurb: "An adjustable grid for math, geometry, and technical sketches." },
-      "kids-drawing": { label: "Online Drawing for Kids", blurb: "Big buttons and fun stamps made for little artists." },
-    },
-    faqHeading: "Frequently Asked Questions",
-    faq: [
-      {
-        q: "Is this online drawing tool really free?",
-        a: "Yes, completely. There is no account, no watermarks, and no paid tier — the drawing tool runs in your browser and exports to PNG and SVG at no cost.",
-      },
-      {
-        q: "Can I draw on a phone or tablet?",
-        a: "Yes. The online drawing tool is optimized for touch and stylus input, so you can draw with your finger or a pen on any device. On a desktop, a mouse works perfectly.",
-      },
-      {
-        q: "Can I export my drawing as an image?",
-        a: "You can export a high-resolution PNG for sharing anywhere, or an SVG file for editing in graphics software, printing, or scaling without losing quality.",
-      },
-      {
-        q: "Do I need an account to save my drawing?",
-        a: "No. Your drawing is autosaved in your browser's local storage. Just close the tab — it will be waiting for you when you return.",
-      },
-    ],
-    closing: [
-      "This online drawing tool is one part of SimpleSketchpad. If you are planning, teaching, or sketching ideas as a team, the online drawing board and the free online whiteboard give you a canvas, sticky notes, and arrows for a very different kind of work.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "Online Drawing Board - Free Workspace for Planning & Brainstorming | SimpleSketchpad",
     seoDescription:
-      "A free online drawing board for brainstorming, planning, visual notes, diagrams, and teaching. Large canvas with pen, shapes, arrows, sticky notes, and PNG or SVG export.",
+      "A free online drawing board for brainstorming, planning, visual notes, and diagrams. Use the pen, shapes, arrows, and sticky notes, then export to PNG or SVG.",
     h1: "Online Drawing Board",
     intro: [
-      "An online drawing board is a shared space for thinking out loud. Where a drawing tool is about making art, a drawing board is about getting ideas out quickly — mapping a process, sketching a layout, taking visual notes, or walking a class through a concept step by step.",
-      "This page gives you that board: a large, clean workspace with a pen, lines, shapes, and arrows for structure, text for labels, and sticky notes for the ideas you want to pin in place. Everything stays private on your device and exports to PNG or SVG when you are ready.",
+      "An online drawing board is a place to think out loud. Where a drawing tool is about making a picture, a drawing board is about getting ideas out quickly: mapping a process, sketching a layout, taking visual notes, or walking a class through a concept step by step.",
+      "This page gives you that board. It is a large, clean workspace with a pen, a highlighter, lines, shapes, and arrows for structure, text for labels, and sticky notes for the ideas you want to pin in place. Everything stays on your device, saves as you work, and exports to PNG or SVG when the thinking is done.",
     ],
     sections: [
       {
         heading: "How a drawing board differs from a drawing tool",
         paragraphs: [
-          "A normal drawing or art tool is tuned for detail: pressure curves, brush textures, layers. A drawing board deliberately flips the focus. It is built for speed and clarity — drop a rectangle to frame a section, draw an arrow to show how ideas connect, pin a sticky note instead of writing a paragraph. If you are planning, explaining, or teaching, this is the faster way to work.",
+          "A normal drawing or art tool is tuned for detail: pressure curves, brush textures, layers, and precise color work. A drawing board deliberately flips the focus. It is built for speed and clarity. Drop a rectangle to frame a section, draw an arrow to show how ideas connect, and pin a sticky note instead of writing a paragraph.",
+          "That difference changes how you use the canvas. You are not trying to make a finished illustration; you are trying to make the structure of a conversation visible. The board should look organized enough to follow and loose enough to keep changing. If a box is in the wrong place, move it. If an idea stops mattering, delete it. The drawing is a working surface, not a deliverable.",
+        ],
+      },
+      {
+        heading: "How to use the drawing board",
+        paragraphs: [
+          "A short setup keeps the session focused. Do this before the first idea goes down:",
+        ],
+        ordered: true,
+        list: [
+          "Press F for fullscreen so the board fills the screen.",
+          "Choose the pen for handwriting or the pencil for a looser sketch.",
+          "Pick two or three colors and decide what each one means.",
+          "Turn the grid on if you are building columns or a layout.",
+          "Write the question or goal in a corner of the board.",
+          "Add ideas as sticky notes or short labels before connecting anything.",
+          "Group, connect, and delete until the board answers the question.",
+          "Export a PNG or SVG so the result can be shared.",
         ],
       },
       {
         heading: "Brainstorming, planning, and visual notes",
         paragraphs: [
           "Use the board to break a project into steps, compare options side by side, capture meeting notes as visuals, or design a rough layout before opening anything heavier. Sticky notes let you treat ideas as movable cards, so clustering and rearranging feels as natural as it does on a real wall.",
+          "The board is also a good place for the awkward middle of a project, when the plan is too detailed for a napkin and too uncertain for a formal document. Sketch the moving parts, mark the unknowns, and export the board as the working map everyone can react to.",
         ],
         list: [
           "Break big ideas into connected smaller ones",
@@ -99,18 +47,96 @@ const en = {
           "Take visual notes in meetings and classes",
           "Plan lessons, workshops, and presentations",
           "Rough out diagrams before formalizing them",
+          "Compare two or three options in parallel columns",
+          "Map a decision and the reasons behind it",
+          "Capture questions that still need an answer",
         ],
       },
       {
-        heading: "Made for teaching and presenting",
+        heading: "Sticky notes: thinking in movable pieces",
         paragraphs: [
-          "Because the board works in the browser, it is ready to use with a projector, in a video call with screen sharing, or on a tablet held up to a class. Draw, annotate, and rearrange live, then export the finished board so students or teammates can read it at their own pace.",
+          "Sticky notes are the most useful tool on the board because they separate an idea from its position. Write one thought per note, scatter the notes, then group the related ones and discard the rest. Because each note is a separate object, you can move it without redrawing anything around it, which is exactly what early-stage thinking needs.",
+          "Keep the writing short. A note should be a phrase or a single sentence, not a paragraph. If a note needs more explanation, split it into two notes or add a text label beside it. Color can carry meaning too: one color for facts, another for questions, a third for decisions. Just keep the meaning consistent for the whole session.",
+        ],
+      },
+      {
+        heading: "A simple workshop format that works on one board",
+        paragraphs: [
+          "If you are running a session with other people, a fixed sequence beats an open invitation to brainstorm. It gives quiet people room to contribute and stops the loudest idea from becoming the plan by default.",
+        ],
+        ordered: true,
+        list: [
+          "Write the question at the top of the board in one sentence.",
+          "Give everyone three minutes to add ideas silently as sticky notes.",
+          "Read the notes aloud and move duplicates together without judging them.",
+          "Group the remaining notes into three to five themes.",
+          "Draw arrows between themes that depend on each other.",
+          "Dot-vote the themes that deserve attention first.",
+          "Rewrite the winning theme as a short action with an owner and a date.",
+          "Export the board and send it to everyone who took part.",
+        ],
+      },
+      {
+        heading: "Visual notes for meetings and classes",
+        paragraphs: [
+          "Visual notes are faster to review than a wall of text because the structure is visible. Draw a box for each topic, write the key phrase inside it, and connect the boxes in the order the conversation moved. Use the highlighter for the one point that matters most, and leave white space so the page does not feel crowded.",
+          "In a class or a video call, the board can be the shared reference while you talk. Draw the concept, annotate it live, and rearrange it as questions come in. Because the board is local and saves automatically, there is no upload delay and no file to open. When the session ends, export a PNG and send it to the group.",
+        ],
+      },
+      {
+        heading: "Diagrams, flows, and layout sketches",
+        paragraphs: [
+          "The board includes rectangles, ellipses, triangles, lines, arrows, and text, which is enough for most explanatory diagrams. Keep the shapes aligned and the labels short. If the diagram needs precise measurements or a grid, move it to [online graph paper](/graph-paper/); if it needs a lot of open space and a more informal feel, the [whiteboard](/whiteboard/) is the better canvas.",
+          "For a layout sketch, draw the frame first, then block in the major regions, then add labels. A wireframe does not need realistic content. Three grey rectangles and a heading tell a reviewer more about structure than a detailed mockup with placeholder text. The goal is to make the layout arguable before it becomes expensive to change.",
+        ],
+      },
+      {
+        heading: "Organizing a board that has become messy",
+        paragraphs: [
+          "Every working board reaches a point where it has too many notes. That is normal, and it is a sign that the thinking is happening. The fix is not to start over; it is to impose a little structure.",
+        ],
+        list: [
+          "Move the notes that answer the main question into one column.",
+          "Park open questions in a separate corner and label them.",
+          "Delete duplicates and notes that no longer matter.",
+          "Replace clusters of notes with one summary note and a label.",
+          "Use a rectangle to draw a boundary around each theme.",
+          "Reduce the palette to two colors: one for structure, one for emphasis.",
+          "Leave the board for five minutes, then return and check whether it still reads.",
+        ],
+      },
+      {
+        heading: "Presenting and sharing the finished board",
+        paragraphs: [
+          "When the board is ready to leave your screen, check it at 100 percent and export. The file is cropped to the board's contents, so the grid and the current zoom do not appear in it. Export a PNG for documents, slides, chat, and printed handouts. Export an SVG when the board will be resized, printed large, or edited further in vector software. SVG keeps every line and label sharp at any size.",
+          "A board is often more useful as a source than as a poster. Keep the autosaved canvas if the project is still moving, and export a dated PNG at each milestone. That gives you a record of how the thinking changed without turning every session into a polished deliverable.",
+        ],
+      },
+      {
+        heading: "Keyboard shortcuts for a faster session",
+        paragraphs: [
+          "The board rewards speed. A handful of shortcuts keep your hand off the toolbar:",
+        ],
+        list: [
+          "V selects, B is the brush, P is the pencil, and E is the eraser.",
+          "R rectangle, O ellipse, L line, A arrow, and T text. The triangle is in the toolbar.",
+          "The highlighter and sticky note tools sit in the same toolbar.",
+          "Ctrl+Z undoes and Ctrl+Shift+Z redoes.",
+          "G toggles the grid and F toggles fullscreen.",
+          "Ctrl+scroll zooms, and holding space lets you pan.",
+          "Delete removes the selected element, and Ctrl+D downloads a PNG.",
+        ],
+      },
+      {
+        heading: "When another canvas is the better fit",
+        paragraphs: [
+          "The drawing board is the general-purpose thinking surface. It is not always the right one. If you need measured drawings, a snap-to-grid graph paper canvas will be faster. If you need a large, open space for a live lesson or a long brainstorming session, the whiteboard is designed for that. If you need a finished illustration with fine line control, the home [sketchpad](/) gives you a brush and a freer surface.",
+          "The board is also not a collaboration tool. Two people cannot edit the same canvas at the same time. It is designed to be private and local. For a group session, share your screen while one person draws, or export the board after each round and pass the file around. That limitation is what keeps the tool fast and account-free.",
         ],
       },
     ],
     relatedHeading: "More free tools from SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Drawing Tool", blurb: "Pencil, brush, shapes, and text for illustrations and sketches." },
       "drawing-board": { label: "Online Drawing Board", blurb: "A workspace for planning, sticky notes, and visual notes." },
       whiteboard: { label: "Free Online Whiteboard", blurb: "An infinite canvas for teaching, meetings, and brainstorming." },
       "graph-paper": { label: "Online Graph Paper", blurb: "An adjustable grid for math, geometry, and technical sketches." },
@@ -120,45 +146,85 @@ const en = {
     faq: [
       {
         q: "What is an online drawing board?",
-        a: "An online drawing board is a browser-based white space for sketching ideas, diagrams, and plans. Unlike a drawing tool focused on finished artwork, it emphasizes speed, structure, and clarity — perfect for brainstorming, planning, and teaching.",
+        a: "An online drawing board is a browser-based workspace for sketching ideas, diagrams, and plans. Unlike a drawing tool focused on finished artwork, it emphasizes speed, structure, and clarity, which makes it useful for brainstorming, planning, and teaching.",
       },
       {
         q: "Can I add sticky notes to the board?",
-        a: "Yes. Choose the sticky note tool, drag to draw a note, and type right into it. Notes behave like movable cards, so you can cluster and rearrange ideas as easily as on a real wall.",
+        a: "Yes. Choose the sticky note tool, drag to place a note, and type into it. Notes behave like movable cards, so you can cluster and rearrange ideas as easily as on a real wall.",
       },
       {
         q: "Can I export the finished board?",
-        a: "Yes. Export the board as a high-resolution PNG to share or print, or as an SVG if you want to keep editing it later in graphics software.",
+        a: "Yes. Export a PNG to share or print the board, or an SVG if you want a vector file that can be resized and edited without losing quality.",
       },
       {
         q: "Is the drawing board free?",
-        a: "Yes, and there is nothing to install and no account to create. Everything runs in your browser and your work is never uploaded anywhere.",
+        a: "Yes. There is nothing to install and no account to create. The board runs in your browser, and your work is saved locally on your device.",
+      },
+      {
+        q: "Does the board save automatically?",
+        a: "Yes. The canvas autosaves in your browser as you work. The saving indicator near the top shows the current state. Export a file for anything you want to keep permanently or move to another device.",
+      },
+      {
+        q: "Can two people edit the board at the same time?",
+        a: "No. The board is a private local canvas, not a live collaboration tool. For group work, share your screen while one person draws, or export the board and pass the file around after each round.",
+      },
+      {
+        q: "What is the highlighter for?",
+        a: "The highlighter lays down a wide, translucent stroke. Use it to emphasize a phrase, underline a key number, or mark the one part of a diagram the room should look at first without hiding what is underneath.",
+      },
+      {
+        q: "Can I use the board for teaching?",
+        a: "Yes. It works well for lessons, tutoring, and workshops. Draw the concept live, annotate as questions come in, and export the finished board so students can review it afterwards.",
+      },
+      {
+        q: "Does the drawing board work on a phone?",
+        a: "Yes. Touch input works, and the toolbar compacts on small screens. A tablet or laptop is more comfortable for a large board, but a phone is fine for quick notes and simple sketches.",
       },
     ],
     closing: [
-      "This drawing board is the thinking phase of SimpleSketchpad. When you are ready to move from rough ideas to something more visual, the online drawing tool adds a pencil, brush, and finer control for finished illustrations.",
+      "This drawing board is the thinking phase of SimpleSketchpad. When the ideas are settled and you need a more visual result, the home [sketchpad](/) adds a pencil, brush, and finer control for finished sketches.",
+      "Open a board, write the question in the corner, and start with one sticky note. That is enough to begin.",
     ],
   },
   whiteboard: {
     seoTitle: "Free Online Whiteboard - Virtual Whiteboard for Brainstorming | SimpleSketchpad",
     seoDescription:
-      "A free online whiteboard for meetings, teaching, studying, and brainstorming. Infinite canvas, pen, highlighter, shapes, arrows, sticky notes, and PNG or SVG export.",
+      "A free online whiteboard for meetings, teaching, studying, and brainstorming. Use the pen, highlighter, shapes, arrows, and sticky notes, then export to PNG or SVG.",
     h1: "Free Online Whiteboard",
     intro: [
-      "This free online whiteboard gives you an unlimited canvas for the moments when ideas need room to move. Sketch a flow, underline the key point, drop a sticky note, and zoom out to see the whole picture — nothing pins you to the edges of a page.",
-      "It works like a real whiteboard, but better: you can pan and zoom freely, highlight over diagrams in a soft marker, rearrange notes, and export everything as PNG or SVG. No accounts, no costs, and everything stays on your device.",
+      "This free online whiteboard gives you room to think. Sketch a flow, underline the key point, drop a sticky note, and zoom out to see the whole picture. Instead of running out of space at the edge of a page, you pan and zoom across a canvas that grows with the conversation.",
+      "It works like a real whiteboard, with a few advantages: a highlighter that does not smudge, notes you can move without redrawing, and an export that stays sharp at any size. There are no accounts, no costs, and no uploads. Everything stays on your device and saves as you work.",
     ],
     sections: [
       {
-        heading: "An infinite canvas for real work",
+        heading: "A canvas that makes room for the idea",
         paragraphs: [
-          "The canvas grows with your thinking. Zoom in to write small notes, then zoom back out to arrange them into a map of the conversation. Spacebar panning, wheel zoom, and touch pinch-zoom keep the experience fast on any device — laptop, tablet, or phone.",
+          "The whiteboard is built around movement. Zoom in to write a small note, then zoom back out to arrange ten notes into a map. Pan across the board to work on a different part of the conversation without erasing what came before. On a laptop, Ctrl+scroll zooms and holding space lets you drag the canvas; on a touch device, pinch gestures do the same job.",
+          "That freedom changes how you plan. You can keep the original question in one corner, the ideas in the middle, and the decisions at the edge, all on the same board. When the session ends, the geography of the board becomes part of the explanation.",
+        ],
+      },
+      {
+        heading: "How to run a whiteboard session",
+        paragraphs: [
+          "A little structure keeps a big canvas from turning into a pile of notes. This sequence works for a solo planning session and for a group watching a shared screen:",
+        ],
+        ordered: true,
+        list: [
+          "Press F for fullscreen and zoom to a comfortable writing size.",
+          "Write the question or goal in the top-left corner.",
+          "Choose the pen for handwriting and one color for the main ideas.",
+          "Add ideas as sticky notes or short labels before connecting anything.",
+          "Use the highlighter on the one point that matters most.",
+          "Draw arrows only where the relationship needs to be explicit.",
+          "Group the notes into a few clear zones and delete what no longer helps.",
+          "Zoom out to check the whole board, then export a PNG or SVG.",
         ],
       },
       {
         heading: "Built for brainstorming and explaining",
         paragraphs: [
-          "Use a pen for handwriting, a highlighter to draw attention, arrows to link cause and effect, and sticky notes to collect reactions and tasks. It is equally at home in a planning session, a study session, or a lesson where drawing the idea beats describing it.",
+          "Use the pen for handwriting, the highlighter to draw attention, arrows to link cause and effect, and sticky notes to collect reactions and tasks. It is equally at home in a planning session, a study session, or a lesson where drawing the idea beats describing it.",
+          "The important difference from a text document is that everything is spatial. Two ideas can sit side by side, overlap, or connect with an arrow. A question can literally surround the options it affects. That layout is often the fastest way to show why one plan is simpler than another.",
         ],
         list: [
           "Brainstorming and ideation sessions",
@@ -166,18 +232,92 @@ const en = {
           "Explaining ideas in meetings",
           "Studying and revision maps",
           "Planning projects on one canvas",
+          "Mapping a decision and its trade-offs",
+          "Reviewing a process with a group",
+          "Collecting questions before a workshop",
         ],
       },
       {
-        heading: "A virtual whiteboard that behaves like paper",
+        heading: "Teaching and tutoring on a virtual whiteboard",
         paragraphs: [
-          "Handwriting stays natural because strokes are stored as vectors, not flattened pixels. That means clean, sharp exports at any zoom level, and an SVG export that edits like a real drawing file.",
+          "For a lesson, the whiteboard replaces the scrap paper you would normally hold up to the camera. Draw the concept in steps, circle the part that changes, and leave the earlier steps visible so students can see how the argument developed. The highlighter is useful for emphasis, and sticky notes are a good place to park a question until the end.",
+          "Because the board is local, there is no upload delay and no file to open in the middle of a lesson. Share your screen, draw live, and export the finished board as a PNG for students to review. If a student needs to try something themselves, send the exported image and let them redraw it on their own device.",
+        ],
+      },
+      {
+        heading: "Meeting notes and decision maps",
+        paragraphs: [
+          "A useful meeting board has three zones: what we know, what we are deciding, and what happens next. Add items to the first zone as the conversation moves, move the real decisions into the middle, and convert the outcome into short actions on the right. The board becomes the minutes, and the shape of it makes follow-up easier to scan than a transcript.",
+          "For a decision with several options, give each option a column. Put the benefits, costs, and open questions underneath, then use arrows to show dependencies. Do not decorate the board; the goal is a shared picture of the trade-offs, not a presentation. A rough but honest map is more useful than a tidy one that hides the uncertainty.",
+        ],
+      },
+      {
+        heading: "Sticky notes and the highlighter",
+        paragraphs: [
+          "These two tools do most of the work on a whiteboard. Sticky notes turn an idea into a movable object, which means you can rearrange the thinking without rewriting it. Write one thought per note, keep it short, and use color to separate facts from questions or decisions. A note that needs a paragraph should be split into two notes.",
+          "The highlighter is for emphasis, not for coloring. A wide translucent stroke over a word or a box says look here without covering the content underneath. Use it once or twice per board. If everything is highlighted, nothing is, and the board becomes harder to read rather than easier.",
+        ],
+      },
+      {
+        heading: "Organizing a large board",
+        paragraphs: [
+          "The bigger the canvas, the more the board needs landmarks. Decide on a small number of zones and keep them in the same place for the whole session. A common pattern is question at the top, ideas in the middle, decisions on the right, and open questions at the bottom. Another is a simple left-to-right timeline.",
+        ],
+        list: [
+          "Give each zone a short heading so a newcomer can orient themselves.",
+          "Keep related notes close together and leave space between groups.",
+          "Use one color for structure and one for emphasis; avoid a rainbow.",
+          "Replace clusters of notes with a summary note once the cluster is settled.",
+          "Delete duplicates and notes that no longer affect the outcome.",
+          "Add a date and a one-line purpose if the board will be shared later.",
+        ],
+      },
+      {
+        heading: "Presenting from the board",
+        paragraphs: [
+          "A whiteboard is easiest to follow when you control the zoom. Start zoomed out to show the whole shape of the argument, then zoom into the section you are discussing. Pan deliberately rather than drifting, and leave the pointer or cursor near the part you are explaining. On a video call, fullscreen mode removes the browser chrome and gives the board the whole frame.",
+          "If the board is for someone else to read later, add the labels they will need before exporting. A board that made sense while you were talking can lose its thread without your voice. Short headings, a few arrows, and a clear left-to-right order are usually enough.",
+        ],
+      },
+      {
+        heading: "Saving and exporting a whiteboard",
+        paragraphs: [
+          "The board autosaves in your browser as you work, so you can close the tab and return to the same canvas later on the same device. That is protection between sessions, not a cloud backup. Clearing site data or moving to another device will not carry the board across, so export a file for anything you want to keep.",
+          "Use PNG for slides, chat, documents, and printed handouts. Use SVG when the board will be resized, printed large, or edited in a vector tool. Vector lines and text stay sharp at any size. Before exporting, review the board at 100 percent; the file is cropped to its contents, so the grid and zoom level stay out.",
+        ],
+      },
+      {
+        heading: "Shortcuts and gestures",
+        paragraphs: [
+          "The whiteboard rewards a few seconds of practice with the keyboard. These are the ones worth remembering:",
+        ],
+        list: [
+          "V selects, B is the brush, P is the pencil, and E is the eraser.",
+          "R rectangle, O ellipse, L line, A arrow, and T text.",
+          "The highlighter and sticky note tools sit in the same toolbar.",
+          "Ctrl+Z undoes and Ctrl+Shift+Z redoes.",
+          "G toggles the grid and F toggles fullscreen.",
+          "Ctrl+scroll zooms, space-drag pans, and pinch gestures work on touch.",
+          "Delete removes the selected element, and Ctrl+D downloads a PNG.",
+        ],
+      },
+      {
+        heading: "Privacy, sharing, and collaboration",
+        paragraphs: [
+          "The whiteboard is private by design. There is no account, no shared workspace, and no server copy of your board. That is a good fit for early ideas, internal planning, and lessons that should not be published. It also means the board does not sync between devices and cannot be edited by two people at once.",
+          "To work with someone else, share your screen while one person draws, or export the board after each round and send the image. For a workshop, assign one person to drive and let the group talk through the changes. The constraint is deliberate: it keeps the tool fast, free, and free of the account management that usually comes with real-time collaboration.",
+        ],
+      },
+      {
+        heading: "When graph paper or a drawing board is the better fit",
+        paragraphs: [
+          "The whiteboard is the loosest of the canvases, which makes it ideal for ideas that are still moving. When the work needs measurements, use [online graph paper](/graph-paper/) with snap-to-grid instead. When the work is more about structured planning, sticky notes, and a contained board, the [online drawing board](/drawing-board/) is a better match. When the goal becomes a finished illustration, move to the home [sketchpad](/).",
+          "Choosing the right canvas is part of the workflow. Start loose on the whiteboard, settle the structure on the drawing board, and move to graph paper when precision matters or to the home [sketchpad](/) when you want a freer surface. The tools share the same controls, so switching costs almost nothing.",
         ],
       },
     ],
     relatedHeading: "More free tools from SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Drawing Tool", blurb: "Pencil, brush, shapes, and text for illustrations and sketches." },
       "drawing-board": { label: "Online Drawing Board", blurb: "A workspace for planning, sticky notes, and visual notes." },
       whiteboard: { label: "Free Online Whiteboard", blurb: "An infinite canvas for teaching, meetings, and brainstorming." },
       "graph-paper": { label: "Online Graph Paper", blurb: "An adjustable grid for math, geometry, and technical sketches." },
@@ -191,63 +331,175 @@ const en = {
       },
       {
         q: "Can I use a highlighter on the whiteboard?",
-        a: "Yes, there is a dedicated highlighter tool with a soft, translucent stroke so it emphasizes your writing and diagrams without hiding them.",
+        a: "Yes. There is a dedicated highlighter with a wide, translucent stroke, so it emphasizes writing and diagrams without hiding what is underneath.",
       },
       {
         q: "Can I collaborate or share a whiteboard?",
-        a: "The whiteboard is designed to be private and autosaved on your device. To share work, export it as PNG or SVG and share the file — there is no third-party storage involved.",
+        a: "Not live. The whiteboard is private and autosaved on your device. To share work, export a PNG or SVG and send the file, or share your screen while one person draws.",
       },
       {
         q: "Does an online whiteboard work in meetings?",
-        a: "Yes. Pan and zoom keep a large board usable on a laptop, and the fullscreen mode makes it ideal for screen sharing in calls and lessons.",
+        a: "Yes. Pan and zoom keep a large board usable on a laptop, and fullscreen mode makes it practical for screen sharing in calls and lessons.",
+      },
+      {
+        q: "How big is the whiteboard canvas?",
+        a: "The canvas is large enough to hold a full workshop and can be panned and zoomed, so you are not limited by the visible screen. Zoom out to see the whole board and in to write comfortably.",
+      },
+      {
+        q: "Does the whiteboard save my work?",
+        a: "Yes. It autosaves in your browser as you draw. The saving indicator near the top shows the current state. Export a file for a permanent copy or to move the board to another device.",
+      },
+      {
+        q: "Can I use the whiteboard for teaching?",
+        a: "It works well for lessons, tutoring, and study sessions. Draw the concept live, highlight the key step, and export the board afterwards so students can review it at their own pace.",
+      },
+      {
+        q: "Does it work on a phone or tablet?",
+        a: "Yes. Touch input works, including pinch-to-zoom and pan. A tablet or laptop is more comfortable for a large board, but a phone is fine for quick sketches and notes.",
+      },
+      {
+        q: "Can I draw straight lines and arrows?",
+        a: "Yes. Lines, arrows, rectangles, and ellipses are built in, and each element can be selected, moved, resized, or deleted without affecting anything underneath it.",
       },
     ],
     closing: [
-      "The whiteboard is where simple usability meets serious planning. If your session needs structure and grids rather than freedom, try online graph paper; if it needs lined-up shapes and sticky notes, the online drawing board is a great fit.",
+      "The whiteboard is where simple usability meets serious planning. Open it before the next meeting, write the question in the corner, and let the board take shape around it.",
+      "If your session needs structure and grids rather than freedom, try [online graph paper](/graph-paper/); if it needs lined-up shapes and sticky notes, the [online drawing board](/drawing-board/) is a great fit.",
     ],
   },
   "graph-paper": {
     seoTitle: "Online Graph Paper - Adjustable Grid Paper for Drawing | SimpleSketchpad",
     seoDescription:
-      "Draw on online graph paper with an adjustable grid. Choose square, dotted, or line grids, change the spacing, snap to grid, and export to PNG or SVG. Free, no sign-up.",
+      "Draw on online graph paper with an adjustable grid. Choose line, dot, or square grids, change the spacing, snap to grid, and export to PNG or SVG. Free, no sign-up.",
     h1: "Online Graph Paper",
     intro: [
-      "Sometimes you need ruled paper, not a blank page. This online graph paper puts an adjustable grid at the center of a real drawing tool — pick square, dotted, or line grids, change the spacing, snap your strokes to the grid, and keep every measurement aligned.",
-      "It is built for the work where precision matters: geometry, math, plotting, technical sketches, and diagrams with boxes and arrows that have to line up. Everything exports to PNG or SVG, so your graph paper drawing is ready to print or share.",
+      "Sometimes you need ruled paper, not a blank page. This online graph paper puts an adjustable grid at the center of a real drawing tool: choose a line, dot, or square grid, change the spacing, snap your strokes to the grid, and keep every measurement aligned.",
+      "It is built for the work where precision matters: geometry, plotting, technical sketches, floor plans, and diagrams with boxes and arrows that have to line up. Everything saves in the browser and exports to PNG or SVG, so the drawing is ready to print, share, or keep working on.",
     ],
     sections: [
       {
         heading: "The grid is the feature",
         paragraphs: [
-          "Choose a square grid for plotting and geometry, a dotted grid for a subtler guide, or a line grid for graphs and charts. Adjust the cell size to match your task — fine spacing for detailed plots, larger cells for floor plans and layouts — and turn on snap to grid so lines, shapes, and text land exactly where you intend.",
+          "A grid gives your eye a reference and removes the need to measure by hand. The canvas offers three grid styles and several spacings, and you can change them at any time. Major lines are drawn more strongly every few cells, which makes it easy to count distances without losing your place.",
+          "Snap to grid is the setting that turns a neat sketch into an accurate one. With snap on, lines, shapes, and text lock to the nearest grid points, so edges land where you intended instead of a few pixels away. If you are drawing a floor plan, a chart, or a geometry construction, leave snap on for the whole session.",
         ],
         list: [
-          "Square, dotted, and line grid styles",
-          "Adjustable grid spacing",
-          "Major and minor grid lines",
-          "Snap drawing to the grid",
-          "Pencil, lines, arrows, shapes, and text",
-          "Measurements and annotations",
-          "Pan and zoom for large plots",
+          "Line grid for a classic ruled-paper look",
+          "Dot grid for a subtler reference with less visual noise",
+          "Square grid for cells, plots, and measured layouts",
+          "Adjustable spacing for fine detail or large plans",
+          "Major and minor lines for easier counting",
+          "Snap to grid for exact edges and corners",
+          "Pencil, lines, arrows, shapes, text, and eraser",
+          "Pan and zoom for large drawings",
           "PNG and SVG export",
         ],
       },
       {
-        heading: "For students, math, and technical work",
+        heading: "How to set up graph paper for your task",
         paragraphs: [
-          "Students can plot functions on an accurate grid, geometry classes get straight edges and clean angles, and engineers and designers can sketch technical layouts where alignment is everything. Use the text tool to label axes, note measurements, and annotate each step.",
+          "The right setup depends on what you are drawing. A geometry construction needs a different spacing from a floor plan, and a chart needs a different style from a sketch. Start with the task, then choose the grid to match.",
+        ],
+        ordered: true,
+        list: [
+          "Open the graph paper page and press F for fullscreen.",
+          "Choose a grid style: line, dot, or square.",
+          "Pick the spacing that matches the size of the drawing.",
+          "Turn on snap to grid before drawing the first line.",
+          "Select the pencil for construction lines and the shape tools for structure.",
+          "Draw the axes, frame, or outer boundary first.",
+          "Block in the main elements, then zoom in to refine small details.",
+          "Add labels, units, and a scale note before exporting.",
         ],
       },
       {
-        heading: "Graph paper, without the paper",
+        heading: "For students, math, and geometry",
         paragraphs: [
-          "Digital graph paper never runs out, never smudges, and never needs photocopying. Resize the grid of a half-finished plot, erase mistakes cleanly, and export a crisp version for a worksheet, a report, or a presentation.",
+          "Graph paper is the natural surface for the math that is easier to see than to describe. Plot points, draw axes, sketch a triangle, construct a perpendicular line, or compare two shapes on the same grid. The line tool gives you a straight edge, the ellipse tool draws circles and ovals, and the text tool labels vertices, lengths, and angles.",
+          "Because the grid is adjustable, the same canvas works for a small coordinate plot and a large geometric construction. Use a finer spacing for detailed work and a larger spacing when the whole drawing needs to fit on one screen. Snapping keeps vertices on exact intersections, which makes a construction easier to check and explain.",
+        ],
+      },
+      {
+        heading: "Plotting points and sketching charts",
+        paragraphs: [
+          "This is a drawing tool, not a spreadsheet or a graphing calculator. It will not calculate a function or generate data for you. What it does well is let you draw the axes, plot points, sketch a curve, and annotate the result by hand. That is often enough for a worksheet, a rough chart in a report, or an explanation on a whiteboard.",
+          "Start with the axes: one horizontal line, one vertical line, and arrowheads at the positive ends. Label the axes and mark a few values. Then plot the points, sketch the trend, and use the text tool for the title and any notes. Keep the number of grid cells between ticks consistent so the chart reads honestly.",
+        ],
+      },
+      {
+        heading: "Technical sketches, floor plans, and layouts",
+        paragraphs: [
+          "Graph paper is the middle ground between a napkin sketch and a CAD drawing. It is accurate enough to plan a room, lay out a workshop, or sketch a mechanical part, but fast enough that you can change your mind. Draw the outer boundary first, then the internal divisions, then the fixed elements and labels.",
+          "For a floor plan, decide what one grid cell represents before you draw and write that scale in the corner. One square per foot works for most rooms; one square per metre keeps a whole apartment manageable. If you want a full walkthrough of that workflow, the [floor plan guide](/blog/how-to-draw-a-floor-plan-online/) covers measuring, wall thickness, doors, windows, and furniture sizes in detail.",
+        ],
+      },
+      {
+        heading: "Choosing a grid style and spacing",
+        paragraphs: [
+          "The style is mostly a matter of visual noise. A line grid gives the strongest reference and suits measured drawings. A dot grid is quieter and works well for sketching and layout. A square grid is the most explicit option and is useful when the drawing is organized into cells.",
+          "Spacing is a trade-off between precision and coverage. A small spacing gives you fine control but fewer units on screen; a large spacing covers more area but makes small details harder to place. Pick the spacing based on the smallest feature you need to draw, not on how the finished drawing should look. You can always zoom.",
+        ],
+        list: [
+          "Fine spacing: geometry, small parts, detailed layouts.",
+          "Medium spacing: room plans, charts, wireframes, diagrams.",
+          "Large spacing: whole-floor plans, site layouts, teaching examples.",
+          "Dot grid: sketching and layout work where lines would distract.",
+          "Line grid: ruled-paper look, handwriting, math constructions.",
+        ],
+      },
+      {
+        heading: "Measuring, labeling, and keeping the drawing honest",
+        paragraphs: [
+          "A grid is only useful if the reader knows what it means. Add a scale note such as one square equals one foot, or label the axes with units. If the drawing is a plan, include the overall dimensions along the outside edges. If it is a chart, label both axes and the unit of measurement.",
+          "Use the text tool for short annotations and place them where they do not collide with the drawing. Dimension lines, arrows, and small tick marks can make a plan easier to read, but they are not a substitute for accurate measurements. For anything that will be built or manufactured, treat the sketch as a planning aid and have the final dimensions produced by a professional drafting tool.",
+        ],
+      },
+      {
+        heading: "Precision tips that make a visible difference",
+        paragraphs: [
+          "Precision is mostly a matter of setup and restraint. These habits keep a technical drawing clean:",
+        ],
+        list: [
+          "Turn snap to grid on before drawing anything and leave it on.",
+          "Draw the long reference lines first, then build around them.",
+          "Use one stroke weight for construction lines and one for the final edges.",
+          "Keep labels horizontal; rotated text is harder to read on a plan.",
+          "Zoom in to place small elements, then zoom out to check the whole drawing.",
+          "Align repeated elements by copying their position rather than eyeballing it.",
+          "Hide or simplify anything that does not help the reader understand the drawing.",
+        ],
+      },
+      {
+        heading: "Exporting graph paper drawings",
+        paragraphs: [
+          "Export a PNG when the drawing needs to be viewed or printed as an image. The grid is a guide on screen, not part of the file: exports are cropped to the drawing itself, so grid lines stay out and the result prints cleanly on plain paper or sits comfortably in a document. Export an SVG when the drawing will be resized or edited in vector software, where every line and label stays sharp.",
+          "For a worksheet or a plan that will be printed, include the scale note and any units in the drawing itself rather than relying on the page margins. A browser canvas is not a physically calibrated printer, so do not assume that a printed line will measure an exact distance. Use the drawing to communicate the design, and use a drafting tool when physical scale is critical.",
+        ],
+      },
+      {
+        heading: "Keyboard shortcuts for graph paper",
+        paragraphs: [
+          "The same shortcuts apply here, with the pencil as the default tool:",
+        ],
+        list: [
+          "V selects, P is the pencil, and E is the eraser.",
+          "R rectangle, O ellipse, L line, A arrow, and T text. The triangle is in the toolbar.",
+          "Ctrl+Z undoes and Ctrl+Shift+Z redoes.",
+          "G toggles the grid and F toggles fullscreen.",
+          "Ctrl+scroll zooms, and holding space lets you pan.",
+          "Ctrl+D downloads a PNG of the current canvas.",
+        ],
+      },
+      {
+        heading: "When plain paper or a whiteboard is the better choice",
+        paragraphs: [
+          "Graph paper is the wrong tool for a loose brainstorm. If the idea is still forming and alignment does not matter, a blank canvas or the [online whiteboard](/whiteboard/) will be faster. If the work is about planning and sticky notes rather than measurements, use the [online drawing board](/drawing-board/). If the drawing is an illustration rather than a technical sketch, the home [sketchpad](/) gives you a brush and a freer surface.",
+          "The useful rule is simple: choose graph paper when the position of a line relative to another line matters. Choose a blank canvas when the feeling of the drawing matters more than its measurements.",
         ],
       },
     ],
     relatedHeading: "More free tools from SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Drawing Tool", blurb: "Pencil, brush, shapes, and text for illustrations and sketches." },
       "drawing-board": { label: "Online Drawing Board", blurb: "A workspace for planning, sticky notes, and visual notes." },
       whiteboard: { label: "Free Online Whiteboard", blurb: "An infinite canvas for teaching, meetings, and brainstorming." },
       "graph-paper": { label: "Online Graph Paper", blurb: "An adjustable grid for math, geometry, and technical sketches." },
@@ -257,57 +509,177 @@ const en = {
     faq: [
       {
         q: "What is online graph paper?",
-        a: "Online graph paper is a ruled grid you draw on in the browser instead of printed paper. Unlike a static image, the grid size and style are adjustable and your strokes align to it.",
+        a: "Online graph paper is a ruled grid you draw on in the browser instead of printed paper. Unlike a static image, the grid style and spacing are adjustable, and your strokes can snap to the grid.",
       },
       {
         q: "Can I change the grid size and spacing?",
-        a: "Yes. Switch between square, dotted, and line grids and adjust the cell spacing to suit your task. Major lines are drawn more strongly every few cells to keep you oriented.",
+        a: "Yes. Switch between line, dot, and square grids and change the cell spacing to suit the task. Major lines are drawn more strongly every few cells to keep you oriented.",
       },
       {
         q: "Does the drawing snap to the grid?",
-        a: "Yes, when you enable snap to grid. Lines, shapes, and placed text then lock onto the nearest grid points, which keeps diagrams and plots precise.",
+        a: "Yes, when snap to grid is enabled. Lines, shapes, and placed text lock onto the nearest grid points, which keeps diagrams, plots, and plans precise.",
       },
       {
         q: "Can I export my graph paper drawing?",
-        a: "Yes. Export a high-resolution PNG for printing or sharing, or an SVG for editing in vector software. The grid itself appears in the export so your plot reads clearly.",
+        a: "Yes. Export a PNG for printing or sharing, or an SVG for editing in vector software. The grid is a screen guide and is not included in the export, so the file contains only the drawing.",
+      },
+      {
+        q: "Is the graph paper free?",
+        a: "Yes. There is no account, no trial, and no watermark. The canvas runs in your browser and saves your work locally on your device.",
+      },
+      {
+        q: "Can I use graph paper for a floor plan?",
+        a: "Yes. Decide what one grid cell represents, turn on snap to grid, and draw the walls, openings, and furniture at that scale. Add a scale note and dimensions so the plan is readable outside the browser.",
+      },
+      {
+        q: "Does the graph paper save my drawing?",
+        a: "Yes. The canvas autosaves in your browser as you work. Export a PNG or SVG for a permanent copy or to move the drawing to another device.",
+      },
+      {
+        q: "Can I draw circles and right angles?",
+        a: "The ellipse and rectangle tools give you clean closed shapes, and the line tool gives you straight edges. With snap to grid on, corners and endpoints land on grid intersections.",
+      },
+      {
+        q: "Will a printed drawing be exactly to scale?",
+        a: "Not reliably. A browser canvas is not a calibrated printer. Use the grid and a written scale note to communicate proportions, and use a drafting or CAD tool when a print must measure an exact physical distance.",
       },
     ],
     closing: [
-      "When blank paper feels loose and final artwork feels heavy, graph paper is the middle ground. For looser, idea-first boards, the online drawing board and free online whiteboard let you sketch without any rules at all.",
+      "When blank paper feels too loose and final artwork feels too heavy, graph paper is the middle ground. Choose a spacing, turn on snap, and draw the reference lines first.",
+      "For looser, idea-first boards, the [online drawing board](/drawing-board/) and [free online whiteboard](/whiteboard/) let you sketch without any rules at all.",
     ],
   },
   "kids-drawing": {
     seoTitle: "Online Drawing for Kids - Safe, Free & Fun | SimpleSketchpad",
     seoDescription:
-      "A free online drawing tool for kids with big buttons, bright colors, and fun stamps. Safe and ad-free, works on tablets and phones, and saves drawings to PNG.",
+      "A free online drawing tool for kids with big buttons, bright colors, and fun stamps. Safe and account-free, works on tablets and phones, and saves drawings to PNG.",
     h1: "Online Drawing for Kids",
     intro: [
-      "This drawing tool was built for small hands and big imaginations. No confusing menus, no accounts, and no ads — just huge buttons, bright colors, a forgiving eraser, and a stamp box full of stars, hearts, and animals to decorate any drawing.",
-      "Everything works with a tap or a finger, so a child can start creating in seconds, on a tablet, phone, or computer. Each drawing is saved on the device, and finished art downloads as a PNG to keep or print.",
+      "This drawing page was built for small hands and big imaginations. There are no confusing menus, no accounts, and no chat. A child gets big buttons, nine bright colors, a forgiving eraser, and a row of emoji stamps to decorate any drawing.",
+      "Everything works with a tap or a finger, so a child can start creating in seconds on a tablet, phone, or computer. Each drawing is saved on the device, and finished art downloads as a PNG to keep or print. This guide is for the grown-up setting up the session as much as for the child using it.",
     ],
     sections: [
       {
         heading: "Made for little artists",
         paragraphs: [
-          "The tools are sized to be impossible to miss: a big drawing button, a big eraser, and five large color swatches. There is no text tool, no shape tool, and no settings to trip over — just the joy of marking a bright canvas.",
+          "The interface is deliberately smaller than the main sketchpad. There is a brush, an eraser, undo and redo, a clear button, a palette of large color dots, and a stamp shelf. That is the whole toolset. No text tool, no shape settings, and no panels to accidentally close.",
+          "The buttons are sized to be easy to tap, and the canvas fills the space between the controls. On a tablet, a child can draw with a finger or a stylus. On a computer, a mouse works the same way. Nothing needs to be configured before the first mark.",
         ],
       },
       {
-        heading: "Stamps make every drawing a game",
+        heading: "How to start a drawing session",
         paragraphs: [
-          "The stamp box turns drawing into play. Pick a star, a heart, a fish, or a friendly animal, tap the canvas, and it appears instantly at finger size. Layer stamps with drawn lines to make scenes, patterns, and stories.",
+          "Show two or three controls, not all of them. The rest can be discovered later. A simple first session looks like this:",
+        ],
+        ordered: true,
+        list: [
+          "Open the page and hand over the device, or sit together at the computer.",
+          "Tap a color dot to choose a drawing color.",
+          "Pick the brush and draw a line, a shape, or a scribble.",
+          "Tap a stamp, then tap the canvas to place it.",
+          "Use the eraser for a small mistake, or undo to step back.",
+          "Try redo if the undo removed something worth keeping.",
+          "Download a PNG when the drawing is finished.",
+          "Use clear only when everyone is ready to start a fresh picture.",
         ],
       },
       {
-        heading: "Safe, private, and parent-friendly",
+        heading: "Stamps make drawing a game",
         paragraphs: [
-          "There are no ads, no in-app purchases, and no accounts. Drawings are stored only in the browser and are never uploaded. Parents can comfortably hand a tablet over without worrying about surprises.",
+          "The stamp shelf turns a blank canvas into a playground. Stars, hearts, rainbows, animals, rockets, and other small pictures appear wherever a child taps. Stamps can be layered with brush strokes to build scenes, patterns, and stories: a rocket among drawn planets, a cat on a drawn sofa, a rainbow over a scribbled house.",
+          "Stamps are also a gentle way to practice placement and composition. Ask a child to put three stars in the sky and one on the ground, or to make a pattern by alternating two stamps. The constraint gives the drawing a job without turning it into a lesson.",
+        ],
+      },
+      {
+        heading: "Drawing prompts that work for young children",
+        paragraphs: [
+          "Open-ended instructions can stall a young artist. A short, specific prompt gives them a place to start and leaves room to improvise. Try one of these when the canvas is blank:",
+        ],
+        list: [
+          "Draw a house for a favorite toy, then add a garden.",
+          "Fill the page with circles and turn three of them into faces.",
+          "Make a sky with stamps and draw the ground underneath.",
+          "Draw your pet, real or imaginary, with one unusual color.",
+          "Make a two-color poster for a pretend event.",
+          "Draw a map of your bedroom, then add a secret door.",
+          "Create a pattern using only stamps and one drawn line.",
+          "Draw the weather you wish it was today.",
+          "Make a birthday card for someone in the family.",
+          "Draw a story in three pictures from left to right.",
+        ],
+      },
+      {
+        heading: "What children practice without noticing",
+        paragraphs: [
+          "Drawing on a screen is play first, but it builds real skills. Choosing a color is a decision about contrast. Placing a stamp is a decision about space. Undoing a line is a first lesson in editing, and redrawing it is a lesson in persistence. A child who explains what is happening in the picture is also practicing language and sequencing.",
+          "The digital canvas adds one useful advantage over paper: mistakes are cheap. A child can experiment with a bold color, erase it, and try again without wasting materials. That freedom tends to produce more risks and more finished drawings, especially in the first few sessions.",
+        ],
+      },
+      {
+        heading: "A calm first session for parents",
+        paragraphs: [
+          "Keep the session short and the setup simple. Ten or fifteen minutes is enough for a first drawing, and a timer avoids the negotiation that comes with an open-ended screen session. Sit nearby, but let the child lead. The goal is exploration, not a tidy result.",
+          "Ask about the drawing rather than judging it. What is the purple animal doing? Where does that door go? Why is the sun on the left? The questions show that the ideas matter, which is more motivating than praise for a neat line. If the child wants to keep going, the drawing will still be there on the same device.",
+        ],
+      },
+      {
+        heading: "Using the page in a classroom or playgroup",
+        paragraphs: [
+          "The page works well as a station in a rotation because it needs no login and no setup. Pair children at one screen and let them take turns adding one stamp or one line. The exercise practices sharing, sequencing, and negotiation as much as it practices drawing.",
+          "For a group activity, give every pair the same prompt and compare the results at the end. The differences are the interesting part: the same instruction produces a completely different house, creature, or map. Export the drawings as PNGs so they can be printed for a wall display or sent home.",
+        ],
+      },
+      {
+        heading: "Setting up the device before you hand it over",
+        paragraphs: [
+          "A minute of preparation makes the first session smoother. Open the page in a browser tab, turn the device to landscape if it is a tablet, and close anything else that might steal a tap. Raise the screen brightness a little so the colors read properly, and check that the browser is not zoomed in so far that the controls crowd the canvas.",
+          "If the child uses a stylus, make sure it is charged and paired before the drawing starts. If they use a finger, a clean screen helps more than any setting. For a shared family tablet, consider a separate browser profile for drawing so the canvas does not replace someone else's saved picture.",
+        ],
+      },
+      {
+        heading: "Five art games that need no preparation",
+        paragraphs: [
+          "A game gives the session a shape without turning it into a lesson. These work with one child or two, and each one can be finished in a few minutes:",
+        ],
+        list: [
+          "Color hunt: name a color and ask the child to fill a corner with it, then add a stamp that matches.",
+          "Shape story: draw three shapes, then turn each one into a character.",
+          "Stamp pattern: alternate two stamps in a line, then break the pattern on purpose and spot the difference.",
+          "Finish the picture: draw half of an animal and let the child complete it.",
+          "Two-color challenge: make a whole picture using only two colors and one stamp.",
+        ],
+      },
+      {
+        heading: "A healthy approach to screen time",
+        paragraphs: [
+          "Drawing is one of the better uses of a screen because it is active rather than passive. A child is deciding, placing, correcting, and explaining, not just watching. That does not make the time unlimited, but it does mean a drawing session can sit comfortably alongside reading, building, and drawing on paper.",
+          "A simple rhythm works well: a short session with a clear ending, a look at what was made, and a download if the picture matters. Keep paper and pencils nearby too. The screen version has undo and stamps; paper has texture, weight, and no battery. Children benefit from both, and moving between them is part of learning how materials behave.",
+        ],
+      },
+      {
+        heading: "Safety, privacy, and what to expect",
+        paragraphs: [
+          "There is no account, no profile, no comment section, and no in-app purchase. Drawings stay in the browser on the device and are not uploaded by the canvas. That makes the page easy to hand over without creating a login or managing a password.",
+          "Like most websites, the page loads analytics and advertising scripts that may set cookies or record page-level information. Those scripts do not receive the contents of the drawing. A parent or teacher should decide whether that is acceptable for their setting, just as they would for any other site. The privacy policy has the details.",
+        ],
+      },
+      {
+        heading: "Saving, printing, and starting fresh",
+        paragraphs: [
+          "The drawing saves automatically in the browser. Close the tab and it will be waiting on the same device when the page is opened again. That is convenient between sessions, but it is not a permanent archive. Clearing browser data or switching devices will remove the local copy.",
+          "Download a PNG when the work is worth keeping. A PNG can be printed, added to a family album, sent to a relative, or used as a desktop background. Give the file a descriptive name so it is easy to find later. When the child is ready for a new picture, the clear button starts a fresh canvas; export the old one first if it matters.",
+        ],
+      },
+      {
+        heading: "When a child is ready for more tools",
+        paragraphs: [
+          "The kids page is intentionally limited. When a child starts asking for shapes, text, or a grid, move to the home [sketchpad](/) or the [drawing board](/drawing-board/). Those pages add rectangles, ellipses, lines, arrows, text, and more control without changing the basic way of drawing.",
+          "There is no need to rush the transition. A child who is comfortable experimenting, undoing, and explaining a picture has already learned the most important habits. The extra tools can wait until the work asks for them.",
         ],
       },
     ],
     relatedHeading: "More free tools from SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Drawing Tool", blurb: "Pencil, brush, shapes, and text for illustrations and sketches." },
       "drawing-board": { label: "Online Drawing Board", blurb: "A workspace for planning, sticky notes, and visual notes." },
       whiteboard: { label: "Free Online Whiteboard", blurb: "An infinite canvas for teaching, meetings, and brainstorming." },
       "graph-paper": { label: "Online Graph Paper", blurb: "An adjustable grid for math, geometry, and technical sketches." },
@@ -317,7 +689,7 @@ const en = {
     faq: [
       {
         q: "Is this drawing tool safe for kids?",
-        a: "Yes. There are no ads, no purchases, and no accounts. Everything runs in the browser and drawings never leave the device, so there is nothing for a child to click by mistake.",
+        a: "The page has no account, no chat, and no purchases, and the canvas does not upload drawings. Like most sites it loads analytics and advertising scripts, so a parent or teacher should decide whether that is acceptable.",
       },
       {
         q: "Can my child draw on a tablet or phone?",
@@ -325,91 +697,41 @@ const en = {
       },
       {
         q: "What are the stamps?",
-        a: "Stamps are fun pictures — stars, hearts, animals, and more — that a child taps to drop onto the canvas instantly. They make drawing feel like a game.",
+        a: "Stamps are small pictures such as stars, hearts, rainbows, animals, and rockets. A child taps a stamp and then taps the canvas to place it, which makes drawing feel like a game.",
       },
       {
         q: "Can we save or print the drawings?",
-        a: "Yes. Each drawing is autosaved on the device and can be downloaded as a PNG, ready to print, share, or hang on the fridge.",
+        a: "Yes. Each drawing is autosaved on the device and can be downloaded as a PNG, ready to print, share, or keep.",
+      },
+      {
+        q: "Do I need to create an account for my child?",
+        a: "No. There is no sign-up, email address, or profile. The page opens and the child can draw immediately.",
+      },
+      {
+        q: "Can my child undo a mistake?",
+        a: "Yes. There are undo and redo buttons, plus an eraser for small corrections. Undo is usually the faster fix when a whole stroke needs to go.",
+      },
+      {
+        q: "How do I start a new drawing?",
+        a: "Use the clear button to empty the canvas. Download a PNG first if the current drawing should be kept. The previous drawing cannot be recovered after clearing.",
+      },
+      {
+        q: "Does the kids page work offline?",
+        a: "Once the page has loaded, the canvas keeps working and autosave continues locally. A first visit or a hard refresh needs a connection.",
+      },
+      {
+        q: "When should a child move to the main sketchpad?",
+        a: "When they ask for shapes, text, or more control. The home sketchpad and the drawing board add those features while keeping the same simple approach to drawing.",
       },
     ],
     closing: [
-      "SimpleSketchpad's drawing space for kids keeps creativity frustration-free. When they are ready for more control, the online drawing tool and the online drawing board add shapes, text, and notes to grow into.",
+      "SimpleSketchpad's drawing space for kids keeps creativity frustration-free: a few big controls, bright colors, stamps, and a forgiving undo. The point is to make the first mark easy and the next one easier.",
+      "When they are ready for more control, the home [sketchpad](/) and the [drawing board](/drawing-board/) add shapes, text, and notes to grow into.",
     ],
   },
 };
 
 const es = {
-  "online-drawing": {
-    seoTitle: "Herramienta de Dibujo en Línea - Dibuja Online Gratis | SimpleSketchpad",
-    seoDescription:
-      "Dibuja en línea gratis con esta herramienta de dibujo en el navegador. Lápiz, pincel, borrador, formas, flechas y texto, con exportación a PNG o SVG. Sin registro.",
-    h1: "Herramienta de Dibujo en Línea",
-    intro: [
-      "Aquí es donde dibujas en línea, gratis y directamente en tu navegador. Reúne todo lo que esperas de una herramienta de dibujo en línea: un lápiz y un pincel suaves para esbozar, un borrador suave, una paleta completa de colores con selector personalizado, y formas, líneas y flechas limpias para diagramas.",
-      "Como todo se ejecuta localmente en tu dispositivo, dibujar es instantáneo y privado. Nada de lo que crees se sube a ninguna parte y nunca necesitas una cuenta. Solo abre el lienzo y empieza.",
-    ],
-    sections: [
-      {
-        heading: "Todo lo que necesitas para dibujar en línea",
-        paragraphs: [
-          "Desde garabatos rápidos hasta ilustraciones detalladas, esta herramienta cubre lo esencial: trazos de lápiz y pincel con tamaño y opacidad ajustables, rectángulos, círculos, triángulos, líneas y flechas para dar estructura, además de texto para anotar. Deshacer y rehacer hacen que los errores no duelan y la cuadrícula mantiene todo alineado.",
-        ],
-        list: [
-          "Lápiz y pincel con colores personalizados",
-          "Borrador con tamaño ajustable",
-          "Formas: rectángulo, círculo, triángulo, línea, flecha",
-          "Texto para etiquetas y títulos",
-          "Opciones de relleno para formas cerradas",
-          "Deshacer y rehacer ilimitados",
-          "Zoom y paneo para trabajo de precisión",
-          "Exportación a PNG y SVG",
-          "Funciona con ratón, táctil y lápiz óptico",
-        ],
-      },
-      {
-        heading: "Una herramienta de dibujo en línea gratis que funciona en todas partes",
-        paragraphs: [
-          "Dibuja en un portátil con ratón, en una tableta con lápiz óptico o en un teléfono con el dedo. La barra de herramientas se adapta a pantallas pequeñas y el zoom con dos dedos funciona en cualquier dispositivo táctil. Tu dibujo se guarda automáticamente en el navegador, así que puedes cerrar la pestaña y continuar donde lo dejaste.",
-        ],
-      },
-      {
-        heading: "Qué puedes crear",
-        paragraphs: [
-          "Úsala para bocetos de personajes, logos y diseños, guiones gráficos, wireframes de interfaz, tareas de geometría o simplemente para capturar una idea antes de que se escape. Cuando termines, exporta el resultado como PNG de alta resolución o SVG vectorial que escala a cualquier tamaño sin perder calidad.",
-        ],
-      },
-    ],
-    relatedHeading: "Más herramientas gratis de SimpleSketchpad",
-    related: {
-      "online-drawing": { label: "Herramienta de Dibujo en Línea", blurb: "Lápiz, pincel, formas y texto para ilustraciones y bocetos." },
-      "drawing-board": { label: "Pizarra de Dibujo en Línea", blurb: "Un espacio de trabajo para planificar, notas adhesivas y notas visuales." },
-      whiteboard: { label: "Pizarra Blanca en Línea Gratis", blurb: "Un lienzo infinito para enseñar, reuniones y lluvias de ideas." },
-      "graph-paper": { label: "Papel Cuadriculado en Línea", blurb: "Una cuadrícula ajustable para matemáticas, geometría y bocetos técnicos." },
-      "kids-drawing": { label: "Dibujo en Línea para Niños", blurb: "Botones grandes y sellos divertidos para pequeños artistas." },
-    },
-    faqHeading: "Preguntas Frecuentes",
-    faq: [
-      {
-        q: "¿Esta herramienta de dibujo en línea es gratis de verdad?",
-        a: "Sí, completamente. No hay cuenta, ni marcas de agua, ni nivel de pago: la herramienta funciona en tu navegador y exporta a PNG y SVG sin costo.",
-      },
-      {
-        q: "¿Puedo dibujar en un teléfono o tableta?",
-        a: "Sí. La herramienta está optimizada para táctil y lápiz óptico, así que puedes dibujar con el dedo o con un lápiz en cualquier dispositivo. En un escritorio, el ratón funciona de maravilla.",
-      },
-      {
-        q: "¿Puedo exportar mi dibujo como imagen?",
-        a: "Puedes exportar un PNG de alta resolución para compartirlo donde quieras, o un SVG para editarlo en software de gráficos, imprimirlo o escalarlo sin perder calidad.",
-      },
-      {
-        q: "¿Necesito una cuenta para guardar mi dibujo?",
-        a: "No. Tu dibujo se guarda automáticamente en el almacenamiento local del navegador. Solo cierra la pestaña: te estará esperando cuando vuelvas.",
-      },
-    ],
-    closing: [
-      "Esta herramienta de dibujo en línea forma parte de SimpleSketchpad. Si estás planificando, enseñando o esbozando ideas en equipo, la pizarra de dibujo en línea y la pizarra blanca en línea gratuita te dan un lienzo, notas adhesivas y flechas para un tipo de trabajo muy distinto.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "Pizarra de Dibujo en Línea - Espacio Gratis para Planificar | SimpleSketchpad",
     seoDescription:
@@ -448,7 +770,6 @@ const es = {
     ],
     relatedHeading: "Más herramientas gratis de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Herramienta de Dibujo en Línea", blurb: "Lápiz, pincel, formas y texto para ilustraciones y bocetos." },
       "drawing-board": { label: "Pizarra de Dibujo en Línea", blurb: "Un espacio de trabajo para planificar, notas adhesivas y notas visuales." },
       whiteboard: { label: "Pizarra Blanca en Línea Gratis", blurb: "Un lienzo infinito para enseñar, reuniones y lluvias de ideas." },
       "graph-paper": { label: "Papel Cuadriculado en Línea", blurb: "Una cuadrícula ajustable para matemáticas, geometría y bocetos técnicos." },
@@ -515,7 +836,6 @@ const es = {
     ],
     relatedHeading: "Más herramientas gratis de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Herramienta de Dibujo en Línea", blurb: "Lápiz, pincel, formas y texto para ilustraciones y bocetos." },
       "drawing-board": { label: "Pizarra de Dibujo en Línea", blurb: "Un espacio de trabajo para planificar, notas adhesivas y notas visuales." },
       whiteboard: { label: "Pizarra Blanca en Línea Gratis", blurb: "Un lienzo infinito para enseñar, reuniones y lluvias de ideas." },
       "graph-paper": { label: "Papel Cuadriculado en Línea", blurb: "Una cuadrícula ajustable para matemáticas, geometría y bocetos técnicos." },
@@ -585,7 +905,6 @@ const es = {
     ],
     relatedHeading: "Más herramientas gratis de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Herramienta de Dibujo en Línea", blurb: "Lápiz, pincel, formas y texto para ilustraciones y bocetos." },
       "drawing-board": { label: "Pizarra de Dibujo en Línea", blurb: "Un espacio de trabajo para planificar, notas adhesivas y notas visuales." },
       whiteboard: { label: "Pizarra Blanca en Línea Gratis", blurb: "Un lienzo infinito para enseñar, reuniones y lluvias de ideas." },
       "graph-paper": { label: "Papel Cuadriculado en Línea", blurb: "Una cuadrícula ajustable para matemáticas, geometría y bocetos técnicos." },
@@ -617,35 +936,34 @@ const es = {
   "kids-drawing": {
     seoTitle: "Dibujo en Línea para Niños - Gratis, Seguro y Divertido | SimpleSketchpad",
     seoDescription:
-      "Una herramienta de dibujo en línea para niños con botones grandes, colores brillantes y sellos divertidos. Segura y sin anuncios, funciona en tabletas y teléfonos, y guarda dibujos en PNG.",
+      "Una herramienta de dibujo en línea para niños con botones grandes, colores brillantes y sellos divertidos. Segura y sin registro, funciona en tabletas y teléfonos, y guarda dibujos en PNG.",
     h1: "Dibujo en Línea para Niños",
     intro: [
-      "Esta herramienta de dibujo está pensada para manos pequeñas y grandes imaginaciones. Sin menús confusos, sin cuentas y sin anuncios: solo botones enormes, colores brillantes, un borrador comprensivo y una caja de sellos llena de estrellas, corazones y animales para decorar cualquier dibujo.",
+      "Esta herramienta de dibujo está pensada para manos pequeñas y grandes imaginaciones. Sin menús confusos y sin cuentas: solo botones enormes, colores brillantes, un borrador comprensivo y una caja de sellos llena de estrellas, corazones y animales para decorar cualquier dibujo.",
       "Todo funciona con un toque o un dedo, así que un niño puede empezar a crear en segundos, en una tableta, teléfono o computadora. Cada dibujo se guarda en el dispositivo y la obra terminada se descarga como PNG para conservarla o imprimirla.",
     ],
     sections: [
       {
         heading: "Hecha para pequeños artistas",
         paragraphs: [
-          "Las herramientas tienen un tamaño imposible de pasar por alto: un gran botón de dibujo, una gran borrador y cinco muestras de color grandes. No hay herramienta de texto, ni de formas, ni ajustes con los que tropezarse: solo la alegría de marcar un lienzo brillante.",
+          "Las herramientas tienen un tamaño imposible de pasar por alto: un gran botón de dibujo, un gran borrador y nueve muestras grandes de color. No hay herramienta de texto, ni de formas, ni ajustes con los que tropezarse: solo la alegría de marcar un lienzo brillante.",
         ],
       },
       {
         heading: "Los sellos convierten cada dibujo en un juego",
         paragraphs: [
-          "La caja de sellos convierte el dibujo en juego. Elige una estrella, un corazón, un pez o un animal amigable, toca el lienzo y aparece al instante del tamaño del dedo. Combina sellos con líneas dibujadas para crear escenas, patrones e historias.",
+          "La caja de sellos convierte el dibujo en juego. Elige una estrella, un corazón o un animal amigable, toca el lienzo y aparece al instante del tamaño del dedo. Combina sellos con líneas dibujadas para crear escenas, patrones e historias.",
         ],
       },
       {
         heading: "Segura, privada y amable con los padres",
         paragraphs: [
-          "No hay anuncios, ni compras dentro de la app, ni cuentas. Los dibujos se guardan solo en el navegador y nunca se suben. Los padres pueden entregar una tableta tranquilamente sin preocuparse por sorpresas.",
+          "No hay compras dentro de la app ni cuentas. Los dibujos se guardan solo en el navegador y nunca se suben. Los padres pueden entregar una tableta tranquilamente sin preocuparse por sorpresas.",
         ],
       },
     ],
     relatedHeading: "Más herramientas gratis de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Herramienta de Dibujo en Línea", blurb: "Lápiz, pincel, formas y texto para ilustraciones y bocetos." },
       "drawing-board": { label: "Pizarra de Dibujo en Línea", blurb: "Un espacio de trabajo para planificar, notas adhesivas y notas visuales." },
       whiteboard: { label: "Pizarra Blanca en Línea Gratis", blurb: "Un lienzo infinito para enseñar, reuniones y lluvias de ideas." },
       "graph-paper": { label: "Papel Cuadriculado en Línea", blurb: "Una cuadrícula ajustable para matemáticas, geometría y bocetos técnicos." },
@@ -655,7 +973,7 @@ const es = {
     faq: [
       {
         q: "¿Esta herramienta de dibujo es segura para niños?",
-        a: "Sí. No hay anuncios, ni compras, ni cuentas. Todo funciona en el navegador y los dibujos nunca salen del dispositivo, así que no hay nada que un niño pueda tocar por error.",
+        a: "Sí. No hay compras ni cuentas. Todo funciona en el navegador y los dibujos nunca salen del dispositivo, así que no hay nada que un niño pueda tocar por error.",
       },
       {
         q: "¿Mi hijo puede dibujar en una tableta o teléfono?",
@@ -677,77 +995,6 @@ const es = {
 };
 
 const ja = {
-  "online-drawing": {
-    seoTitle: "オンライン描画ツール - 無料でブラウザ上で描く | SimpleSketchpad",
-    seoDescription:
-      "ブラウザ上で無料で描けるオンライン描画ツール。鉛筆、ブラシ、消しゴム、図形、矢印、テキストが使えて、PNG・SVGに書き出せます。登録不要。",
-    h1: "オンライン描画ツール",
-    intro: [
-      "ここはブラウザ上で直接、無料で描ける場所です。なめらかな鉛筆とブラシによるスケッチ、やわらかい消しゴム、カスタムカラーピッカー付きのフルカラーパレット、そして図や矢印に使えるきれいな図形まで、オンライン描画ツールに期待するすべてが揃っています。",
-      "すべてが端末上でローカルに動作するため、描画は即座で、プライベートです。作成したものはどこにもアップロードされず、アカウントも不要です。キャンバスを開いてすぐに始められます。",
-    ],
-    sections: [
-      {
-        heading: "オンラインで描くために必要なすべて",
-        paragraphs: [
-          "手早い落書きから細かなイラストまで、このツールは基本を網羅しています。サイズと不透明度を調整できる鉛筆とブラシ、構造を作る長方形・円・三角形・線・矢印、注釈用のテキスト。取り消し・やり直しで失敗も気になりませんし、グリッドで整列を保てます。",
-        ],
-        list: [
-          "カスタムカラー対応の鉛筆とブラシ",
-          "サイズ調整できる消しゴム",
-          "図形：長方形、円、三角形、線、矢印",
-          "ラベルやキャプション用のテキスト",
-          "閉じた図形の塗りつぶし",
-          "無制限の取り消し・やり直し",
-          "精密作業のためのズームとパン",
-          "PNG・SVG書き出し",
-          "マウス、タッチ、スタイラスに対応",
-        ],
-      },
-      {
-        heading: "どこでも使える無料のオンライン描画ツール",
-        paragraphs: [
-          "ノートパソコンではマウスで、タブレットではスタイラスで、スマホでは指で描けます。ツールバーは小さな画面にも対応し、タッチ端末では2本指ピンチズームが使えます。描画はブラウザに自動保存されるので、タブを閉じても続きから再開できます。",
-        ],
-      },
-      {
-        heading: "作れるもの",
-        paragraphs: [
-          "キャラクタースケッチ、ロゴやレイアウト、ストーリーボード、UIワイヤーフレーム、幾何の宿題、あるいはアイデアが逃げる前に書き留めるのに使いましょう。完成したら、高解像度のPNG、または品質を失わずどんなサイズにも拡張できるベクターSVGとして書き出せます。",
-        ],
-      },
-    ],
-    relatedHeading: "SimpleSketchpadのその他の無料ツール",
-    related: {
-      "online-drawing": { label: "オンライン描画ツール", blurb: "イラストやスケッチのための鉛筆、ブラシ、図形、テキスト。" },
-      "drawing-board": { label: "オンライン製図ボード", blurb: "企画、付箋、ビジュアルノートのためのワークスペース。" },
-      whiteboard: { label: "無料オンラインホワイトボード", blurb: "授業、会議、ブレインストーミングのための無限キャンバス。" },
-      "graph-paper": { label: "オンライン方眼紙", blurb: "数学、幾何、技術スケッチのための調整可能なグリッド。" },
-      "kids-drawing": { label: "子ども向けオンラインお絵かき", blurb: "小さなアーティスト向けの大きなボタンと楽しいスタンプ。" },
-    },
-    faqHeading: "よくある質問",
-    faq: [
-      {
-        q: "このオンライン描画ツールは本当に無料ですか？",
-        a: "はい、完全に無料です。アカウントも透かしも有料プランもありません。ツールはブラウザで動作し、PNG・SVGへの書き出しも無料です。",
-      },
-      {
-        q: "スマホやタブレットで描けますか？",
-        a: "はい。タッチとスタイラス入力に最適化されているので、どの端末でも指やペンで描けます。デスクトップではマウスが完璧に機能します。",
-      },
-      {
-        q: "描いた絵を画像として書き出せますか？",
-        a: "高解像度PNGで共有したり、グラフィックソフトでの編集・印刷・無劣化拡張に使えるSVGとして書き出せます。",
-      },
-      {
-        q: "絵を保存するのにアカウントは必要ですか？",
-        a: "いいえ。描画はブラウザのローカルストレージに自動保存されます。タブを閉じても、戻れば待っています。",
-      },
-    ],
-    closing: [
-      "このオンライン描画ツールはSimpleSketchpadの一部です。チームで企画したり、教えたり、アイデアをスケッチするなら、オンライン製図ボードと無料オンラインホワイトボードが、キャンバス、付箋、矢印によるまったく別の作業を提供します。",
-    ],
-  },
   "drawing-board": {
     seoTitle: "オンライン製図ボード - 企画・ブレスト用の無料スペース | SimpleSketchpad",
     seoDescription:
@@ -786,7 +1033,6 @@ const ja = {
     ],
     relatedHeading: "SimpleSketchpadのその他の無料ツール",
     related: {
-      "online-drawing": { label: "オンライン描画ツール", blurb: "イラストやスケッチのための鉛筆、ブラシ、図形、テキスト。" },
       "drawing-board": { label: "オンライン製図ボード", blurb: "企画、付箋、ビジュアルノートのためのワークスペース。" },
       whiteboard: { label: "無料オンラインホワイトボード", blurb: "授業、会議、ブレインストーミングのための無限キャンバス。" },
       "graph-paper": { label: "オンライン方眼紙", blurb: "数学、幾何、技術スケッチのための調整可能なグリッド。" },
@@ -853,7 +1099,6 @@ const ja = {
     ],
     relatedHeading: "SimpleSketchpadのその他の無料ツール",
     related: {
-      "online-drawing": { label: "オンライン描画ツール", blurb: "イラストやスケッチのための鉛筆、ブラシ、図形、テキスト。" },
       "drawing-board": { label: "オンライン製図ボード", blurb: "企画、付箋、ビジュアルノートのためのワークスペース。" },
       whiteboard: { label: "無料オンラインホワイトボード", blurb: "授業、会議、ブレインストーミングのための無限キャンバス。" },
       "graph-paper": { label: "オンライン方眼紙", blurb: "数学、幾何、技術スケッチのための調整可能なグリッド。" },
@@ -923,7 +1168,6 @@ const ja = {
     ],
     relatedHeading: "SimpleSketchpadのその他の無料ツール",
     related: {
-      "online-drawing": { label: "オンライン描画ツール", blurb: "イラストやスケッチのための鉛筆、ブラシ、図形、テキスト。" },
       "drawing-board": { label: "オンライン製図ボード", blurb: "企画、付箋、ビジュアルノートのためのワークスペース。" },
       whiteboard: { label: "無料オンラインホワイトボード", blurb: "授業、会議、ブレインストーミングのための無限キャンバス。" },
       "graph-paper": { label: "オンライン方眼紙", blurb: "数学、幾何、技術スケッチのための調整可能なグリッド。" },
@@ -955,17 +1199,17 @@ const ja = {
   "kids-drawing": {
     seoTitle: "子ども向けオンラインお絵かき - 無料・安全・楽しい | SimpleSketchpad",
     seoDescription:
-      "大きなボタン、明るい色、楽しいスタンプが揃った子ども向けの無料オンラインお絵かきツール。安全で広告なし。タブレットやスマホで使え、PNGで保存できます。",
+      "大きなボタン、明るい色、楽しいスタンプが揃った子ども向けの無料オンラインお絵かきツール。安全で登録不要。タブレットやスマホで使え、PNGで保存できます。",
     h1: "子ども向けオンラインお絵かき",
     intro: [
-      "このお絵かきツールは、小さな手と大きな想像力のために作られました。迷うメニューも、アカウントも、広告もありません。大きなボタン、明るい色、寛大な消しゴム、そして星、ハート、動物でいっぱいのスタンプボックスで、どんな絵も飾れます。",
+      "このお絵かきツールは、小さな手と大きな想像力のために作られました。迷うメニューも、アカウントもありません。大きなボタン、明るい色、寛大な消しゴム、そして星、ハート、動物でいっぱいのスタンプボックスで、どんな絵も飾れます。",
       "すべてタップか指で動くので、子どもはタブレット、スマホ、パソコンのどれでも数秒で作り始められます。絵は端末に保存され、完成作品はPNGとしてダウンロードして保管・印刷できます。",
     ],
     sections: [
       {
         heading: "小さなアーティストのために",
         paragraphs: [
-          "ツールは見逃しようがないサイズです。大きなお絵かきボタン、大きな消しゴム、5つの大きなカラースウォッチ。テキストツールも図形ツールも、つまずきそうな設定もありません。明るいキャンバスを塗る喜びだけがあります。",
+          "ツールは見逃しようがないサイズです。大きなお絵かきボタン、大きな消しゴム、9つの大きなカラースウォッチ。テキストツールも図形ツールも、つまずきそうな設定もありません。明るいキャンバスを塗る喜びだけがあります。",
         ],
       },
       {
@@ -977,13 +1221,12 @@ const ja = {
       {
         heading: "安全でプライベート、親に優しい",
         paragraphs: [
-          "広告も、アプリ内課金も、アカウントもありません。絵はブラウザ内にだけ保存され、アップロードされることはありません。親は安心してタブレットを渡せます。",
+          "アプリ内課金も、アカウントもありません。絵はブラウザ内にだけ保存され、アップロードされることはありません。親は安心してタブレットを渡せます。",
         ],
       },
     ],
     relatedHeading: "SimpleSketchpadのその他の無料ツール",
     related: {
-      "online-drawing": { label: "オンライン描画ツール", blurb: "イラストやスケッチのための鉛筆、ブラシ、図形、テキスト。" },
       "drawing-board": { label: "オンライン製図ボード", blurb: "企画、付箋、ビジュアルノートのためのワークスペース。" },
       whiteboard: { label: "無料オンラインホワイトボード", blurb: "授業、会議、ブレインストーミングのための無限キャンバス。" },
       "graph-paper": { label: "オンライン方眼紙", blurb: "数学、幾何、技術スケッチのための調整可能なグリッド。" },
@@ -993,7 +1236,7 @@ const ja = {
     faq: [
       {
         q: "このお絵かきツールは子どもに安全ですか？",
-        a: "はい。広告も、課金も、アカウントもありません。すべてブラウザで動き、絵が端末の外へ出ることはないので、子どもが誤って触ってしまうものはありません。",
+        a: "はい。課金も、アカウントもありません。すべてブラウザで動き、絵が端末の外へ出ることはないので、子どもが誤って触ってしまうものはありません。",
       },
       {
         q: "子どもはタブレットやスマホで描けますか？",
@@ -1015,77 +1258,6 @@ const ja = {
 };
 
 const fr = {
-  "online-drawing": {
-    seoTitle: "Outil de Dessin en Ligne - Dessiner en Ligne Gratuitement | SimpleSketchpad",
-    seoDescription:
-      "Dessinez en ligne gratuitement avec cet outil de dessin dans votre navigateur. Crayon, pinceau, gomme, formes, flèches et texte, export PNG et SVG. Sans inscription.",
-    h1: "Outil de Dessin en Ligne",
-    intro: [
-      "C'est ici que vous dessinez en ligne, gratuitement et directement dans votre navigateur. Il réunit tout ce que vous attendez d'un outil de dessin en ligne : un crayon et un pinceau fluides pour esquisser, une gomme souple, une palette complète avec un sélecteur de couleurs, et des formes, lignes et flèches nettes pour les schémas.",
-      "Comme tout fonctionne localement sur votre appareil, le dessin est instantané et privé. Rien de ce que vous créez n'est téléchargé nulle part et vous n'avez jamais besoin de compte. Ouvrez simplement la toile et commencez.",
-    ],
-    sections: [
-      {
-        heading: "Tout ce dont vous avez besoin pour dessiner en ligne",
-        paragraphs: [
-          "Du croquis rapide à l'illustration détaillée, cet outil couvre l'essentiel : traits de crayon et de pinceau avec taille et opacité modifiables, rectangles, cercles, triangles, lignes et flèches pour structurer, plus du texte pour annoter. Annuler et rétablir rendent les erreurs sans conséquence, et la grille maintient tout aligné.",
-        ],
-        list: [
-          "Crayon et pinceau avec couleurs personnalisées",
-          "Gomme à taille ajustable",
-          "Formes : rectangle, cercle, triangle, ligne, flèche",
-          "Texte pour étiquettes et légendes",
-          "Options de remplissage pour formes fermées",
-          "Annuler et rétablir illimités",
-          "Zoom et défilement pour un travail de précision",
-          "Export PNG et SVG",
-          "Compatible souris, tactile et stylet",
-        ],
-      },
-      {
-        heading: "Un outil de dessin en ligne gratuit qui fonctionne partout",
-        paragraphs: [
-          "Dessinez sur un ordinateur avec une souris, sur une tablette avec un stylet, ou sur un téléphone avec le doigt. La barre d'outils s'adapte aux petits écrans et le zoom à deux doigts fonctionne sur tous les appareils tactiles. Votre dessin est sauvegardé automatiquement dans le navigateur, vous pouvez fermer l'onglet et reprendre où vous en étiez.",
-        ],
-      },
-      {
-        heading: "Ce que vous pouvez créer",
-        paragraphs: [
-          "Utilisez-le pour des croquis de personnages, logos et maquettes, storyboards, wireframes, devoirs de géométrie, ou simplement pour capturer une idée avant qu'elle ne disparaisse. À la fin, exportez le résultat en PNG haute résolution ou en SVG vectoriel qui s'adapte à toute taille sans perte de qualité.",
-        ],
-      },
-    ],
-    relatedHeading: "Plus d'outils gratuits de SimpleSketchpad",
-    related: {
-      "online-drawing": { label: "Outil de Dessin en Ligne", blurb: "Crayon, pinceau, formes et texte pour illustrations et croquis." },
-      "drawing-board": { label: "Planche de Dessin en Ligne", blurb: "Un espace de travail pour planifier, notes adhésives et notes visuelles." },
-      whiteboard: { label: "Tableau Blanc en Ligne Gratuit", blurb: "Un canevas infini pour enseigner, réunions et brainstorming." },
-      "graph-paper": { label: "Papier Quadrillé en Ligne", blurb: "Une grille réglable pour mathématiques, géométrie et dessins techniques." },
-      "kids-drawing": { label: "Dessin en Ligne pour Enfants", blurb: "De grands boutons et des tampons amusants pour les petits artistes." },
-    },
-    faqHeading: "Foire Aux Questions",
-    faq: [
-      {
-        q: "Cet outil de dessin en ligne est-il vraiment gratuit ?",
-        a: "Oui, totalement. Pas de compte, pas de filigrane, pas d'abonnement payant — l'outil fonctionne dans votre navigateur et exporte en PNG et SVG sans frais.",
-      },
-      {
-        q: "Puis-je dessiner sur un téléphone ou une tablette ?",
-        a: "Oui. L'outil est optimisé pour le tactile et le stylet, vous pouvez dessiner avec le doigt ou un stylet sur n'importe quel appareil. Sur un bureau, la souris fonctionne parfaitement.",
-      },
-      {
-        q: "Puis-je exporter mon dessin en image ?",
-        a: "Vous pouvez exporter un PNG haute résolution pour le partager, ou un fichier SVG pour l'éditer dans un logiciel graphique, l'imprimer ou le redimensionner sans perte de qualité.",
-      },
-      {
-        q: "Ai-je besoin d'un compte pour sauvegarder mon dessin ?",
-        a: "Non. Votre dessin est sauvegardé automatiquement dans le stockage local du navigateur. Fermez simplement l'onglet — il vous attendra à votre retour.",
-      },
-    ],
-    closing: [
-      "Cet outil de dessin en ligne fait partie de SimpleSketchpad. Si vous planifiez, enseignez ou esquissez des idées en équipe, la planche de dessin et le tableau blanc en ligne vous offrent une toile, des notes adhésives et des flèches pour un travail très différent.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "Planche de Dessin en Ligne - Espace Gratuit pour Planifier | SimpleSketchpad",
     seoDescription:
@@ -1124,7 +1296,6 @@ const fr = {
     ],
     relatedHeading: "Plus d'outils gratuits de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Outil de Dessin en Ligne", blurb: "Crayon, pinceau, formes et texte pour illustrations et croquis." },
       "drawing-board": { label: "Planche de Dessin en Ligne", blurb: "Un espace de travail pour planifier, notes adhésives et notes visuelles." },
       whiteboard: { label: "Tableau Blanc en Ligne Gratuit", blurb: "Un canevas infini pour enseigner, réunions et brainstorming." },
       "graph-paper": { label: "Papier Quadrillé en Ligne", blurb: "Une grille réglable pour mathématiques, géométrie et dessins techniques." },
@@ -1191,7 +1362,6 @@ const fr = {
     ],
     relatedHeading: "Plus d'outils gratuits de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Outil de Dessin en Ligne", blurb: "Crayon, pinceau, formes et texte pour illustrations et croquis." },
       "drawing-board": { label: "Planche de Dessin en Ligne", blurb: "Un espace de travail pour planifier, notes adhésives et notes visuelles." },
       whiteboard: { label: "Tableau Blanc en Ligne Gratuit", blurb: "Un canevas infini pour enseigner, réunions et brainstorming." },
       "graph-paper": { label: "Papier Quadrillé en Ligne", blurb: "Une grille réglable pour mathématiques, géométrie et dessins techniques." },
@@ -1261,7 +1431,6 @@ const fr = {
     ],
     relatedHeading: "Plus d'outils gratuits de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Outil de Dessin en Ligne", blurb: "Crayon, pinceau, formes et texte pour illustrations et croquis." },
       "drawing-board": { label: "Planche de Dessin en Ligne", blurb: "Un espace de travail pour planifier, notes adhésives et notes visuelles." },
       whiteboard: { label: "Tableau Blanc en Ligne Gratuit", blurb: "Un canevas infini pour enseigner, réunions et brainstorming." },
       "graph-paper": { label: "Papier Quadrillé en Ligne", blurb: "Une grille réglable pour mathématiques, géométrie et dessins techniques." },
@@ -1293,35 +1462,34 @@ const fr = {
   "kids-drawing": {
     seoTitle: "Dessin en Ligne pour Enfants - Gratuit, Sûr et Amusant | SimpleSketchpad",
     seoDescription:
-      "Un outil de dessin en ligne pour enfants avec de grands boutons, des couleurs vives et des tampons amusants. Sûr et sans publicité, fonctionne sur tablettes et téléphones, et sauvegarde en PNG.",
+      "Un outil de dessin en ligne pour enfants avec de grands boutons, des couleurs vives et des tampons amusants. Sûr et sans inscription, fonctionne sur tablettes et téléphones, et sauvegarde en PNG.",
     h1: "Dessin en Ligne pour Enfants",
     intro: [
-      "Cet outil de dessin a été conçu pour les petites mains et les grandes imaginations. Pas de menus confus, pas de comptes, pas de publicités — juste des boutons énormes, des couleurs vives, une gomme indulgente et une boîte à tampons pleine d'étoiles, de cœurs et d'animaux pour décorer n'importe quel dessin.",
+      "Cet outil de dessin a été conçu pour les petites mains et les grandes imaginations. Pas de menus confus, pas de comptes — juste des boutons énormes, des couleurs vives, une gomme indulgente et une boîte à tampons pleine d'étoiles, de cœurs et d'animaux pour décorer n'importe quel dessin.",
       "Tout fonctionne avec un tap ou un doigt, un enfant peut donc commencer à créer en quelques secondes, sur une tablette, un téléphone ou un ordinateur. Chaque dessin est sauvegardé sur l'appareil, et l'œuvre terminée se télécharge en PNG pour la conserver ou l'imprimer.",
     ],
     sections: [
       {
         heading: "Conçu pour les petits artistes",
         paragraphs: [
-          "Les outils sont dimensionnés pour être impossibles à manquer : un gros bouton de dessin, une grosse gomme et cinq grands échantillons de couleurs. Pas d'outil de texte, pas d'outil de forme, pas de paramètres à traverser — juste la joie de marquer une toile lumineuse.",
+          "Les outils sont dimensionnés pour être impossibles à manquer : un gros bouton de dessin, une grosse gomme et neuf grands échantillons de couleurs. Pas d'outil de texte, pas d'outil de forme, pas de paramètres à traverser — juste la joie de marquer une toile lumineuse.",
         ],
       },
       {
         heading: "Les tampons transforment chaque dessin en jeu",
         paragraphs: [
-          "La boîte à tampons transforme le dessin en jeu. Choisissez une étoile, un cœur, un poisson ou un animal mignon, touchez la toile et il apparaît instantanément à la taille du doigt. Superposez des tampons et des lignes dessinées pour créer des scènes, des motifs et des histoires.",
+          "La boîte à tampons transforme le dessin en jeu. Choisissez une étoile, un cœur ou un animal mignon, touchez la toile et il apparaît instantanément à la taille du doigt. Superposez des tampons et des lignes dessinées pour créer des scènes, des motifs et des histoires.",
         ],
       },
       {
         heading: "Sûr, privé et rassurant pour les parents",
         paragraphs: [
-          "Pas de publicités, pas d'achats intégrés, pas de comptes. Les dessins sont stockés uniquement dans le navigateur et ne sont jamais téléchargés. Les parents peuvent sereinement confier une tablette, sans craindre de mauvaises surprises.",
+          "Pas d'achats intégrés, pas de comptes. Les dessins sont stockés uniquement dans le navigateur et ne sont jamais téléchargés. Les parents peuvent sereinement confier une tablette, sans craindre de mauvaises surprises.",
         ],
       },
     ],
     relatedHeading: "Plus d'outils gratuits de SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Outil de Dessin en Ligne", blurb: "Crayon, pinceau, formes et texte pour illustrations et croquis." },
       "drawing-board": { label: "Planche de Dessin en Ligne", blurb: "Un espace de travail pour planifier, notes adhésives et notes visuelles." },
       whiteboard: { label: "Tableau Blanc en Ligne Gratuit", blurb: "Un canevas infini pour enseigner, réunions et brainstorming." },
       "graph-paper": { label: "Papier Quadrillé en Ligne", blurb: "Une grille réglable pour mathématiques, géométrie et dessins techniques." },
@@ -1331,7 +1499,7 @@ const fr = {
     faq: [
       {
         q: "Cet outil de dessin est-il sûr pour les enfants ?",
-        a: "Oui. Pas de publicités, pas d'achats, pas de comptes. Tout fonctionne dans le navigateur et les dessins ne quittent jamais l'appareil, il n'y a donc rien qu'un enfant pourrait toucher par erreur.",
+        a: "Oui. Pas d'achats, pas de comptes. Tout fonctionne dans le navigateur et les dessins ne quittent jamais l'appareil, il n'y a donc rien qu'un enfant pourrait toucher par erreur.",
       },
       {
         q: "Mon enfant peut-il dessiner sur une tablette ou un téléphone ?",
@@ -1353,77 +1521,6 @@ const fr = {
 };
 
 const de = {
-  "online-drawing": {
-    seoTitle: "Online Zeichenwerkzeug - Kostenlos Online Zeichnen | SimpleSketchpad",
-    seoDescription:
-      "Zeichnen Sie kostenlos online mit diesem Zeichenwerkzeug im Browser. Bleistift, Pinsel, Radierer, Formen, Pfeile und Text, Export als PNG oder SVG. Ohne Registrierung.",
-    h1: "Online Zeichenwerkzeug",
-    intro: [
-      "Hier zeichnen Sie online, kostenlos und direkt im Browser. Es vereint alles, was Sie von einem Online-Zeichenwerkzeug erwarten: einen flüssigen Bleistift und Pinsel zum Skizzieren, einen sanften Radierer, eine vollständige Farbpalette mit Farbwähler und saubere Formen, Linien und Pfeile für Diagramme.",
-      "Da alles lokal auf Ihrem Gerät läuft, ist das Zeichnen sofort und privat. Nichts, was Sie erstellen, wird irgendwo hochgeladen, und Sie brauchen niemals ein Konto. Öffnen Sie einfach die Zeichenfläche und legen Sie los.",
-    ],
-    sections: [
-      {
-        heading: "Alles, was Sie zum Online-Zeichnen brauchen",
-        paragraphs: [
-          "Von schnellen Kritzeleien bis zu detaillierten Illustrationen deckt dieses Werkzeug das Wesentliche ab: Bleistift- und Pinselstriche mit einstellbarer Größe und Deckkraft, Rechtecke, Kreise, Dreiecke, Linien und Pfeile für Struktur sowie Text für Beschriftungen. Rückgängig und Wiederholen machen Fehler folgenlos, und das Raster hält alles ausgerichtet.",
-        ],
-        list: [
-          "Bleistift und Pinsel mit eigenen Farben",
-          "Radierer mit einstellbarer Größe",
-          "Formen: Rechteck, Kreis, Dreieck, Linie, Pfeil",
-          "Text für Beschriftungen und Untertitel",
-          "Fülloptionen für geschlossene Formen",
-          "Unbegrenztes Rückgängig und Wiederholen",
-          "Zoom und Schwenken für Präzisionsarbeit",
-          "Export als PNG und SVG",
-          "Funktioniert mit Maus, Touch und Stift",
-        ],
-      },
-      {
-        heading: "Ein kostenloses Online-Zeichenwerkzeug, das überall funktioniert",
-        paragraphs: [
-          "Zeichnen Sie auf einem Laptop mit Maus, auf einem Tablet mit Stift oder auf einem Telefon mit dem Finger. Die Symbolleiste passt sich kleinen Bildschirmen an, und die Zwei-Finger-Zoom-Geste funktioniert auf allen Touch-Geräten. Ihre Zeichnung wird automatisch im Browser gespeichert, sodass Sie den Tab schließen und später weitermachen können.",
-        ],
-      },
-      {
-        heading: "Was Sie erstellen können",
-        paragraphs: [
-          "Nutzen Sie es für Charakter-Skizzen, Logos und Layouts, Storyboards, UI-Drahtmodelle, Geometrie-Hausaufgaben oder einfach, um eine Idee festzuhalten, bevor sie verschwindet. Exportieren Sie das Ergebnis als hochauflösendes PNG oder als Vektor-SVG, das ohne Qualitätsverlust auf jede Größe skaliert.",
-        ],
-      },
-    ],
-    relatedHeading: "Weitere kostenlose Tools von SimpleSketchpad",
-    related: {
-      "online-drawing": { label: "Online Zeichenwerkzeug", blurb: "Bleistift, Pinsel, Formen und Text für Illustrationen und Skizzen." },
-      "drawing-board": { label: "Online Zeichenbrett", blurb: "Ein Arbeitsbereich für Planung, Haftnotizen und visuelle Notizen." },
-      whiteboard: { label: "Kostenloses Online-Whiteboard", blurb: "Eine unendliche Fläche für Unterricht, Besprechungen und Brainstorming." },
-      "graph-paper": { label: "Online-Millimeterpapier", blurb: "Ein einstellbares Raster für Mathematik, Geometrie und technische Skizzen." },
-      "kids-drawing": { label: "Online-Zeichnen für Kinder", blurb: "Große Buttons und lustige Stempel für kleine Künstler." },
-    },
-    faqHeading: "Häufig gestellte Fragen",
-    faq: [
-      {
-        q: "Ist dieses Online-Zeichenwerkzeug wirklich kostenlos?",
-        a: "Ja, vollständig. Kein Konto, keine Wasserzeichen, keine Bezahlstufe — das Werkzeug läuft in Ihrem Browser und exportiert ohne Kosten als PNG und SVG.",
-      },
-      {
-        q: "Kann ich auf einem Telefon oder Tablet zeichnen?",
-        a: "Ja. Das Werkzeug ist für Touch und Stift optimiert, sodass Sie auf jedem Gerät mit Finger oder Stift zeichnen können. Auf einem Desktop funktioniert die Maus perfekt.",
-      },
-      {
-        q: "Kann ich meine Zeichnung als Bild exportieren?",
-        a: "Sie können ein hochauflösendes PNG zum Teilen oder ein SVG zum Bearbeiten in Grafiksoftware, zum Drucken oder zum verlustfreien Skalieren exportieren.",
-      },
-      {
-        q: "Brauche ich ein Konto, um meine Zeichnung zu speichern?",
-        a: "Nein. Ihre Zeichnung wird automatisch im lokalen Speicher des Browsers gespeichert. Schließen Sie einfach den Tab — sie wartet auf Sie, wenn Sie zurückkommen.",
-      },
-    ],
-    closing: [
-      "Dieses Online-Zeichenwerkzeug ist Teil von SimpleSketchpad. Wenn Sie planen, unterrichten oder Ideen im Team skizzieren, bieten das Online-Zeichenbrett und das kostenlose Online-Whiteboard eine Fläche, Haftnotizen und Pfeile für eine ganz andere Art von Arbeit.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "Online Zeichenbrett - Kostenloser Raum für Planung | SimpleSketchpad",
     seoDescription:
@@ -1462,7 +1559,6 @@ const de = {
     ],
     relatedHeading: "Weitere kostenlose Tools von SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Zeichenwerkzeug", blurb: "Bleistift, Pinsel, Formen und Text für Illustrationen und Skizzen." },
       "drawing-board": { label: "Online Zeichenbrett", blurb: "Ein Arbeitsbereich für Planung, Haftnotizen und visuelle Notizen." },
       whiteboard: { label: "Kostenloses Online-Whiteboard", blurb: "Eine unendliche Fläche für Unterricht, Besprechungen und Brainstorming." },
       "graph-paper": { label: "Online-Millimeterpapier", blurb: "Ein einstellbares Raster für Mathematik, Geometrie und technische Skizzen." },
@@ -1529,7 +1625,6 @@ const de = {
     ],
     relatedHeading: "Weitere kostenlose Tools von SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Zeichenwerkzeug", blurb: "Bleistift, Pinsel, Formen und Text für Illustrationen und Skizzen." },
       "drawing-board": { label: "Online Zeichenbrett", blurb: "Ein Arbeitsbereich für Planung, Haftnotizen und visuelle Notizen." },
       whiteboard: { label: "Kostenloses Online-Whiteboard", blurb: "Eine unendliche Fläche für Unterricht, Besprechungen und Brainstorming." },
       "graph-paper": { label: "Online-Millimeterpapier", blurb: "Ein einstellbares Raster für Mathematik, Geometrie und technische Skizzen." },
@@ -1599,7 +1694,6 @@ const de = {
     ],
     relatedHeading: "Weitere kostenlose Tools von SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Zeichenwerkzeug", blurb: "Bleistift, Pinsel, Formen und Text für Illustrationen und Skizzen." },
       "drawing-board": { label: "Online Zeichenbrett", blurb: "Ein Arbeitsbereich für Planung, Haftnotizen und visuelle Notizen." },
       whiteboard: { label: "Kostenloses Online-Whiteboard", blurb: "Eine unendliche Fläche für Unterricht, Besprechungen und Brainstorming." },
       "graph-paper": { label: "Online-Millimeterpapier", blurb: "Ein einstellbares Raster für Mathematik, Geometrie und technische Skizzen." },
@@ -1631,35 +1725,34 @@ const de = {
   "kids-drawing": {
     seoTitle: "Online-Zeichnen für Kinder - Kostenlos, Sicher und Spaß | SimpleSketchpad",
     seoDescription:
-      "Ein kostenloses Online-Zeichenwerkzeug für Kinder mit großen Buttons, bunten Farben und lustigen Stempeln. Sicher und werbefrei, funktioniert auf Tablets und Telefonen, speichert Zeichnungen als PNG.",
+      "Ein kostenloses Online-Zeichenwerkzeug für Kinder mit großen Buttons, bunten Farben und lustigen Stempeln. Sicher und ohne Anmeldung, funktioniert auf Tablets und Telefonen, speichert Zeichnungen als PNG.",
     h1: "Online-Zeichnen für Kinder",
     intro: [
-      "Dieses Zeichenwerkzeug wurde für kleine Hände und große Fantasien gebaut. Keine verwirrenden Menüs, keine Konten, keine Werbung — nur riesige Buttons, helle Farben, ein verzeihender Radierer und eine Stempelbox voller Sterne, Herzen und Tiere, um jede Zeichnung zu verschönern.",
+      "Dieses Zeichenwerkzeug wurde für kleine Hände und große Fantasien gebaut. Keine verwirrenden Menüs, keine Konten — nur riesige Buttons, helle Farben, ein verzeihender Radierer und eine Stempelbox voller Sterne, Herzen und Tiere, um jede Zeichnung zu verschönern.",
       "Alles funktioniert mit einem Tipp oder Finger, sodass ein Kind in Sekunden zu zeichnen beginnen kann, auf einem Tablet, Telefon oder Computer. Jede Zeichnung wird auf dem Gerät gespeichert, und das fertige Kunstwerk kann als PNG heruntergeladen werden, um es aufzubewahren oder zu drucken.",
     ],
     sections: [
       {
         heading: "Für kleine Künstler gemacht",
         paragraphs: [
-          "Die Werkzeuge sind so dimensioniert, dass sie nicht zu übersehen sind: ein großer Zeichnen-Button, ein großer Radierer und fünf große Farbfelder. Kein Textwerkzeug, kein Formenwerkzeug, keine Einstellungen, über die man stolpert — nur die Freude, eine helle Fläche zu gestalten.",
+          "Die Werkzeuge sind so dimensioniert, dass sie nicht zu übersehen sind: ein großer Zeichnen-Button, ein großer Radierer und neun große Farbfelder. Kein Textwerkzeug, kein Formenwerkzeug, keine Einstellungen, über die man stolpert — nur die Freude, eine helle Fläche zu gestalten.",
         ],
       },
       {
         heading: "Stempel machen jede Zeichnung zum Spiel",
         paragraphs: [
-          "Die Stempelbox macht aus dem Zeichnen ein Spiel. Wählen Sie einen Stern, ein Herz, einen Fisch oder ein freundliches Tier, tippen Sie auf die Fläche, und es erscheint sofort in Fingergröße. Legen Sie Stempel und gezeichnete Linien übereinander, um Szenen, Muster und Geschichten zu schaffen.",
+          "Die Stempelbox macht aus dem Zeichnen ein Spiel. Wählen Sie einen Stern, ein Herz oder ein freundliches Tier, tippen Sie auf die Fläche, und es erscheint sofort in Fingergröße. Legen Sie Stempel und gezeichnete Linien übereinander, um Szenen, Muster und Geschichten zu schaffen.",
         ],
       },
       {
         heading: "Sicher, privat und elternfreundlich",
         paragraphs: [
-          "Keine Werbung, keine In-App-Käufe, keine Konten. Zeichnungen werden nur im Browser gespeichert und nie hochgeladen. Eltern können ein Tablet beruhigt weitergeben, ohne sich um Überraschungen zu sorgen.",
+          "Keine In-App-Käufe, keine Konten. Zeichnungen werden nur im Browser gespeichert und nie hochgeladen. Eltern können ein Tablet beruhigt weitergeben, ohne sich um Überraschungen zu sorgen.",
         ],
       },
     ],
     relatedHeading: "Weitere kostenlose Tools von SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Online Zeichenwerkzeug", blurb: "Bleistift, Pinsel, Formen und Text für Illustrationen und Skizzen." },
       "drawing-board": { label: "Online Zeichenbrett", blurb: "Ein Arbeitsbereich für Planung, Haftnotizen und visuelle Notizen." },
       whiteboard: { label: "Kostenloses Online-Whiteboard", blurb: "Eine unendliche Fläche für Unterricht, Besprechungen und Brainstorming." },
       "graph-paper": { label: "Online-Millimeterpapier", blurb: "Ein einstellbares Raster für Mathematik, Geometrie und technische Skizzen." },
@@ -1669,7 +1762,7 @@ const de = {
     faq: [
       {
         q: "Ist dieses Zeichenwerkzeug sicher für Kinder?",
-        a: "Ja. Keine Werbung, keine Käufe, keine Konten. Alles läuft im Browser, und Zeichnungen verlassen das Gerät nie, sodass es nichts gibt, was ein Kind versehentlich antippen könnte.",
+        a: "Ja. Keine Käufe, keine Konten. Alles läuft im Browser, und Zeichnungen verlassen das Gerät nie, sodass es nichts gibt, was ein Kind versehentlich antippen könnte.",
       },
       {
         q: "Kann mein Kind auf einem Tablet oder Telefon zeichnen?",
@@ -1691,77 +1784,6 @@ const de = {
 };
 
 const pt = {
-  "online-drawing": {
-    seoTitle: "Ferramenta de Desenho Online - Desenhe Online Grátis | SimpleSketchpad",
-    seoDescription:
-      "Desenhe online grátis com esta ferramenta de desenho no navegador. Lápis, pincel, borracha, formas, setas e texto, com exportação para PNG ou SVG. Sem cadastro.",
-    h1: "Ferramenta de Desenho Online",
-    intro: [
-      "É aqui que você desenha online, grátis e diretamente no navegador. Reúne tudo o que você espera de uma ferramenta de desenho online: um lápis e um pincel suaves para esboçar, uma borracha macia, uma paleta completa de cores com seletor personalizado e formas, linhas e setas limpas para diagramas.",
-      "Como tudo roda localmente no seu dispositivo, desenhar é instantâneo e privado. Nada do que você criar é enviado para lugar nenhum e você nunca precisa de uma conta. É só abrir a tela e começar.",
-    ],
-    sections: [
-      {
-        heading: "Tudo o que você precisa para desenhar online",
-        paragraphs: [
-          "De rabiscos rápidos a ilustrações detalhadas, esta ferramenta cobre o essencial: traços de lápis e pincel com tamanho e opacidade ajustáveis, retângulos, círculos, triângulos, linhas e setas para estruturar, além de texto para anotações. Desfazer e refazer tornam os erros sem consequências, e a grade mantém tudo alinhado.",
-        ],
-        list: [
-          "Lápis e pincel com cores personalizadas",
-          "Borracha com tamanho ajustável",
-          "Formas: retângulo, círculo, triângulo, linha, seta",
-          "Texto para rótulos e legendas",
-          "Opções de preenchimento para formas fechadas",
-          "Desfazer e refazer ilimitados",
-          "Zoom e rolagem para trabalho de precisão",
-          "Exportação para PNG e SVG",
-          "Funciona com mouse, toque e caneta",
-        ],
-      },
-      {
-        heading: "Uma ferramenta de desenho online grátis que funciona em qualquer lugar",
-        paragraphs: [
-          "Desenhe em um notebook com mouse, em um tablet com caneta ou em um celular com o dedo. A barra de ferramentas se adapta a telas pequenas e o zoom com dois dedos funciona em qualquer dispositivo com tela de toque. Seu desenho é salvo automaticamente no navegador, então você pode fechar a guia e retomar de onde parou.",
-        ],
-      },
-      {
-        heading: "O que você pode criar",
-        paragraphs: [
-          "Use para esboços de personagens, logos e layouts, storyboards, wireframes de interface, tarefas de geometria ou apenas para capturar uma ideia antes que ela escape. Ao terminar, exporte o resultado como PNG de alta resolução ou SVG vetorial que escala para qualquer tamanho sem perder qualidade.",
-        ],
-      },
-    ],
-    relatedHeading: "Mais ferramentas grátis do SimpleSketchpad",
-    related: {
-      "online-drawing": { label: "Ferramenta de Desenho Online", blurb: "Lápis, pincel, formas e texto para ilustrações e esboços." },
-      "drawing-board": { label: "Quadro de Desenho Online", blurb: "Um espaço de trabalho para planejar, notas adesivas e notas visuais." },
-      whiteboard: { label: "Quadro Branco Online Grátis", blurb: "Uma tela infinita para ensino, reuniões e brainstorms." },
-      "graph-paper": { label: "Papel Quadriculado Online", blurb: "Uma grade ajustável para matemática, geometria e esboços técnicos." },
-      "kids-drawing": { label: "Desenho Online para Crianças", blurb: "Botões grandes e carimbos divertidos para pequenos artistas." },
-    },
-    faqHeading: "Perguntas Frequentes",
-    faq: [
-      {
-        q: "Esta ferramenta de desenho online é realmente grátis?",
-        a: "Sim, completamente. Sem conta, sem marcas d'água, sem plano pago — a ferramenta roda no seu navegador e exporta para PNG e SVG gratuitamente.",
-      },
-      {
-        q: "Posso desenhar em um celular ou tablet?",
-        a: "Sim. A ferramenta é otimizada para toque e caneta, então você pode desenhar com o dedo ou com uma caneta em qualquer dispositivo. No desktop, o mouse funciona perfeitamente.",
-      },
-      {
-        q: "Posso exportar meu desenho como imagem?",
-        a: "Você pode exportar um PNG de alta resolução para compartilhar onde quiser, ou um SVG para editar em software gráfico, imprimir ou redimensionar sem perder qualidade.",
-      },
-      {
-        q: "Preciso de uma conta para salvar meu desenho?",
-        a: "Não. Seu desenho é salvo automaticamente no armazenamento local do navegador. É só fechar a guia — ele estará esperando quando você voltar.",
-      },
-    ],
-    closing: [
-      "Esta ferramenta de desenho online faz parte do SimpleSketchpad. Se você está planejando, ensinando ou esboçando ideias em equipe, o quadro de desenho online e o quadro branco online grátis dão a você uma tela, notas adesivas e setas para um tipo de trabalho bem diferente.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "Quadro de Desenho Online - Espaço Grátis para Planejar | SimpleSketchpad",
     seoDescription:
@@ -1800,7 +1822,6 @@ const pt = {
     ],
     relatedHeading: "Mais ferramentas grátis do SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Ferramenta de Desenho Online", blurb: "Lápis, pincel, formas e texto para ilustrações e esboços." },
       "drawing-board": { label: "Quadro de Desenho Online", blurb: "Um espaço de trabalho para planejar, notas adesivas e notas visuais." },
       whiteboard: { label: "Quadro Branco Online Grátis", blurb: "Uma tela infinita para ensino, reuniões e brainstorms." },
       "graph-paper": { label: "Papel Quadriculado Online", blurb: "Uma grade ajustável para matemática, geometria e esboços técnicos." },
@@ -1867,7 +1888,6 @@ const pt = {
     ],
     relatedHeading: "Mais ferramentas grátis do SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Ferramenta de Desenho Online", blurb: "Lápis, pincel, formas e texto para ilustrações e esboços." },
       "drawing-board": { label: "Quadro de Desenho Online", blurb: "Um espaço de trabalho para planejar, notas adesivas e notas visuais." },
       whiteboard: { label: "Quadro Branco Online Grátis", blurb: "Uma tela infinita para ensino, reuniões e brainstorms." },
       "graph-paper": { label: "Papel Quadriculado Online", blurb: "Uma grade ajustável para matemática, geometria e esboços técnicos." },
@@ -1937,7 +1957,6 @@ const pt = {
     ],
     relatedHeading: "Mais ferramentas grátis do SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Ferramenta de Desenho Online", blurb: "Lápis, pincel, formas e texto para ilustrações e esboços." },
       "drawing-board": { label: "Quadro de Desenho Online", blurb: "Um espaço de trabalho para planejar, notas adesivas e notas visuais." },
       whiteboard: { label: "Quadro Branco Online Grátis", blurb: "Uma tela infinita para ensino, reuniões e brainstorms." },
       "graph-paper": { label: "Papel Quadriculado Online", blurb: "Uma grade ajustável para matemática, geometria e esboços técnicos." },
@@ -1969,35 +1988,34 @@ const pt = {
   "kids-drawing": {
     seoTitle: "Desenho Online para Crianças - Grátis, Seguro e Divertido | SimpleSketchpad",
     seoDescription:
-      "Uma ferramenta de desenho online para crianças com botões grandes, cores vivas e carimbos divertidos. Segura e sem anúncios, funciona em tablets e celulares e salva desenhos em PNG.",
+      "Uma ferramenta de desenho online para crianças com botões grandes, cores vivas e carimbos divertidos. Segura e sem cadastro, funciona em tablets e celulares e salva desenhos em PNG.",
     h1: "Desenho Online para Crianças",
     intro: [
-      "Esta ferramenta de desenho foi feita para mãos pequenas e grandes imaginações. Sem menus confusos, sem contas e sem anúncios: só botões enormes, cores brilhantes, uma borracha generosa e uma caixa de carimbos cheia de estrelas, corações e animais para decorar qualquer desenho.",
+      "Esta ferramenta de desenho foi feita para mãos pequenas e grandes imaginações. Sem menus confusos e sem contas: só botões enormes, cores brilhantes, uma borracha generosa e uma caixa de carimbos cheia de estrelas, corações e animais para decorar qualquer desenho.",
       "Tudo funciona com um toque ou com o dedo, então uma criança pode começar a criar em segundos, num tablet, celular ou computador. Cada desenho é salvo no dispositivo e a obra finalizada é baixada como PNG para guardar ou imprimir.",
     ],
     sections: [
       {
         heading: "Feita para pequenos artistas",
         paragraphs: [
-          "As ferramentas têm um tamanho impossível de passar despercebido: um grande botão de desenhar, uma grande borracha e cinco amostras de cor grandes. Sem ferramenta de texto, sem ferramenta de formas, sem ajustes para tropeçar — só a alegria de marcar uma tela brilhante.",
+          "As ferramentas têm um tamanho impossível de passar despercebido: um grande botão de desenhar, uma grande borracha e nove amostras de cor grandes. Sem ferramenta de texto, sem ferramenta de formas, sem ajustes para tropeçar — só a alegria de marcar uma tela brilhante.",
         ],
       },
       {
         heading: "Os carimbos transformam cada desenho em um jogo",
         paragraphs: [
-          "A caixa de carimbos transforma o desenho em brincadeira. Escolha uma estrela, um coração, um peixe ou um animal amigável, toque na tela e ele aparece na hora no tamanho do dedo. Combine carimbos com linhas desenhadas para criar cenas, padrões e histórias.",
+          "A caixa de carimbos transforma o desenho em brincadeira. Escolha uma estrela, um coração ou um animal amigável, toque na tela e ele aparece na hora no tamanho do dedo. Combine carimbos com linhas desenhadas para criar cenas, padrões e histórias.",
         ],
       },
       {
         heading: "Segura, privada e amigável para os pais",
         paragraphs: [
-          "Sem anúncios, sem compras no aplicativo, sem contas. Os desenhos ficam salvos apenas no navegador e nunca são enviados. Os pais podem entregar um tablet com tranquilidade, sem se preocupar com surpresas.",
+          "Sem compras no aplicativo, sem contas. Os desenhos ficam salvos apenas no navegador e nunca são enviados. Os pais podem entregar um tablet com tranquilidade, sem se preocupar com surpresas.",
         ],
       },
     ],
     relatedHeading: "Mais ferramentas grátis do SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Ferramenta de Desenho Online", blurb: "Lápis, pincel, formas e texto para ilustrações e esboços." },
       "drawing-board": { label: "Quadro de Desenho Online", blurb: "Um espaço de trabalho para planejar, notas adesivas e notas visuais." },
       whiteboard: { label: "Quadro Branco Online Grátis", blurb: "Uma tela infinita para ensino, reuniões e brainstorms." },
       "graph-paper": { label: "Papel Quadriculado Online", blurb: "Uma grade ajustável para matemática, geometria e esboços técnicos." },
@@ -2007,7 +2025,7 @@ const pt = {
     faq: [
       {
         q: "Esta ferramenta de desenho é segura para crianças?",
-        a: "Sim. Sem anúncios, sem compras, sem contas. Tudo roda no navegador e os desenhos nunca saem do dispositivo, então não há nada que uma criança possa tocar por engano.",
+        a: "Sim. Sem compras, sem contas. Tudo roda no navegador e os desenhos nunca saem do dispositivo, então não há nada que uma criança possa tocar por engano.",
       },
       {
         q: "Meu filho pode desenhar em um tablet ou celular?",
@@ -2029,77 +2047,6 @@ const pt = {
 };
 
 const ko = {
-  "online-drawing": {
-    seoTitle: "온라인 드로잉 도구 - 무료로 온라인에서 그리기 | SimpleSketchpad",
-    seoDescription:
-      "브라우저에서 무료로 그릴 수 있는 온라인 드로잉 도구. 연필, 브러시, 지우개, 도형, 화살표, 텍스트를 사용하고 PNG·SVG로 내보낼 수 있습니다. 가입 불필요.",
-    h1: "온라인 드로잉 도구",
-    intro: [
-      "이곳은 브라우저에서 직접 무료로 그리는 곳입니다. 부드러운 연필과 브러시로 스케치하고, 말랑한 지우개로 고치고, 커스텀 색상 선택기가 있는 전체 팔레트와 다이어그램용 깔끔한 도형, 선, 화살표까지 온라인 드로잉 도구에서 기대하는 모든 것을 갖췄습니다.",
-      "모든 것이 기기에서 로컬로 작동하기 때문에 그리기는 즉각적이고 사적입니다. 만든 내용이 어디에도 업로드되지 않고 계정이 필요하지 않습니다. 캔버스를 열고 바로 시작하세요.",
-    ],
-    sections: [
-      {
-        heading: "온라인에서 그리는 데 필요한 모든 것",
-        paragraphs: [
-          "빠른 낙서부터 디테일한 일러스트까지, 이 도구는 핵심 기능을 모두 갖추고 있습니다. 크기와 불투명도를 조절할 수 있는 연필과 브러시, 구조를 만드는 사각형·원·삼각형·선·화살표, 주석을 위한 텍스트까지. 실행 취소와 다시 실행으로 실수도 걱정 없고, 그리드가 정렬을 유지해 줍니다.",
-        ],
-        list: [
-          "커스텀 색상의 연필과 브러시",
-          "크기 조절 가능한 지우개",
-          "도형: 사각형, 원, 삼각형, 선, 화살표",
-          "라벨과 캡션용 텍스트",
-          "닫힌 도형의 채우기 옵션",
-          "무제한 실행 취소·다시 실행",
-          "정밀 작업을 위한 확대·축소 및 이동",
-          "PNG·SVG 내보내기",
-          "마우스, 터치, 스타일러스 지원",
-        ],
-      },
-      {
-        heading: "어디서나 작동하는 무료 온라인 드로잉 도구",
-        paragraphs: [
-          "노트북에서는 마우스로, 태블릿에서는 스타일러스로, 휴대폰에서는 손가락으로 그릴 수 있습니다. 도구 모음은 작은 화면에 맞게 조정되고 터치 기기에서는 두 손가락 핀치 줌이 작동합니다. 그림은 브라우저에 자동으로 저장되므로 탭을 닫았다가 이어서 다시 시작할 수 있습니다.",
-        ],
-      },
-      {
-        heading: "만들 수 있는 것",
-        paragraphs: [
-          "캐릭터 스케치, 로고와 레이아웃, 스토리보드, UI 와이어프레임, 기하학 숙제, 또는 아이디어가 사라지기 전에 기록하는 데 사용하세요. 완성되면 고해상도 PNG 또는 품질 손실 없이 어떤 크기로도 확장되는 벡터 SVG로 내보낼 수 있습니다.",
-        ],
-      },
-    ],
-    relatedHeading: "SimpleSketchpad의 다른 무료 도구",
-    related: {
-      "online-drawing": { label: "온라인 드로잉 도구", blurb: "일러스트와 스케치를 위한 연필, 브러시, 도형, 텍스트." },
-      "drawing-board": { label: "온라인 드로잉 보드", blurb: "기획, 포스트잇, 비주얼 노트를 위한 작업 공간." },
-      whiteboard: { label: "무료 온라인 화이트보드", blurb: "수업, 회의, 브레인스토밍을 위한 무한 캔버스." },
-      "graph-paper": { label: "온라인 모눈종이", blurb: "수학, 기하, 기술 스케치를 위한 조절 가능한 그리드." },
-      "kids-drawing": { label: "어린이용 온라인 그리기", blurb: "어린 화가를 위한 큰 버튼과 재미있는 스탬프." },
-    },
-    faqHeading: "자주 묻는 질문",
-    faq: [
-      {
-        q: "이 온라인 드로잉 도구는 정말 무료인가요?",
-        a: "네, 완전히 무료입니다. 계정도, 워터마크도, 유료 플랜도 없습니다. 도구는 브라우저에서 실행되며 PNG와 SVG로 무료로 내보낼 수 있습니다.",
-      },
-      {
-        q: "휴대폰이나 태블릿에서 그릴 수 있나요?",
-        a: "네. 도구가 터치와 스타일러스 입력에 최적화되어 있어 어떤 기기에서든 손가락이나 펜으로 그릴 수 있습니다. 데스크톱에서는 마우스가 완벽하게 작동합니다.",
-      },
-      {
-        q: "그림을 이미지로 내보낼 수 있나요?",
-        a: "어디서든 공유할 수 있는 고해상도 PNG, 또는 그래픽 소프트웨어에서 편집하거나 인쇄하고 무손실로 확장할 수 있는 SVG 파일로 내보낼 수 있습니다.",
-      },
-      {
-        q: "그림을 저장하려면 계정이 필요한가요?",
-        a: "아니요. 그림은 브라우저의 로컬 스토리지에 자동 저장됩니다. 탭을 닫기만 하면 돌아왔을 때 기다리고 있습니다.",
-      },
-    ],
-    closing: [
-      "이 온라인 드로잉 도구는 SimpleSketchpad의 일부입니다. 팀으로 기획하거나, 가르치거나, 아이디어를 스케치한다면 온라인 드로잉 보드와 무료 온라인 화이트보드가 캔버스, 포스트잇, 화살표로 완전히 다른 작업 방식을 제공합니다.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "온라인 드로잉 보드 - 기획·브레인스토밍용 무료 공간 | SimpleSketchpad",
     seoDescription:
@@ -2138,7 +2085,6 @@ const ko = {
     ],
     relatedHeading: "SimpleSketchpad의 다른 무료 도구",
     related: {
-      "online-drawing": { label: "온라인 드로잉 도구", blurb: "일러스트와 스케치를 위한 연필, 브러시, 도형, 텍스트." },
       "drawing-board": { label: "온라인 드로잉 보드", blurb: "기획, 포스트잇, 비주얼 노트를 위한 작업 공간." },
       whiteboard: { label: "무료 온라인 화이트보드", blurb: "수업, 회의, 브레인스토밍을 위한 무한 캔버스." },
       "graph-paper": { label: "온라인 모눈종이", blurb: "수학, 기하, 기술 스케치를 위한 조절 가능한 그리드." },
@@ -2205,7 +2151,6 @@ const ko = {
     ],
     relatedHeading: "SimpleSketchpad의 다른 무료 도구",
     related: {
-      "online-drawing": { label: "온라인 드로잉 도구", blurb: "일러스트와 스케치를 위한 연필, 브러시, 도형, 텍스트." },
       "drawing-board": { label: "온라인 드로잉 보드", blurb: "기획, 포스트잇, 비주얼 노트를 위한 작업 공간." },
       whiteboard: { label: "무료 온라인 화이트보드", blurb: "수업, 회의, 브레인스토밍을 위한 무한 캔버스." },
       "graph-paper": { label: "온라인 모눈종이", blurb: "수학, 기하, 기술 스케치를 위한 조절 가능한 그리드." },
@@ -2275,7 +2220,6 @@ const ko = {
     ],
     relatedHeading: "SimpleSketchpad의 다른 무료 도구",
     related: {
-      "online-drawing": { label: "온라인 드로잉 도구", blurb: "일러스트와 스케치를 위한 연필, 브러시, 도형, 텍스트." },
       "drawing-board": { label: "온라인 드로잉 보드", blurb: "기획, 포스트잇, 비주얼 노트를 위한 작업 공간." },
       whiteboard: { label: "무료 온라인 화이트보드", blurb: "수업, 회의, 브레인스토밍을 위한 무한 캔버스." },
       "graph-paper": { label: "온라인 모눈종이", blurb: "수학, 기하, 기술 스케치를 위한 조절 가능한 그리드." },
@@ -2307,35 +2251,34 @@ const ko = {
   "kids-drawing": {
     seoTitle: "어린이용 온라인 그리기 - 무료·안전·재미 | SimpleSketchpad",
     seoDescription:
-      "큰 버튼, 밝은 색, 재미있는 스탬프가 있는 어린이용 무료 온라인 그리기 도구. 안전하고 광고 없음. 태블릿과 휴대폰에서 작동하며 PNG로 저장할 수 있습니다.",
+      "큰 버튼, 밝은 색, 재미있는 스탬프가 있는 어린이용 무료 온라인 그리기 도구. 안전하고 가입 없음. 태블릿과 휴대폰에서 작동하며 PNG로 저장할 수 있습니다.",
     h1: "어린이용 온라인 그리기",
     intro: [
-      "이 그리기 도구는 작은 손과 큰 상상력을 위해 만들어졌습니다. 헷갈리는 메뉴도, 계정도, 광고도 없습니다. 큰 버튼, 밝은 색, 너그러운 지우개, 그리고 어떤 그림이든 꾸밀 수 있는 별·하트·동물로 가득한 스탬프 상자만 있습니다.",
+      "이 그리기 도구는 작은 손과 큰 상상력을 위해 만들어졌습니다. 헷갈리는 메뉴도, 계정도 없습니다. 큰 버튼, 밝은 색, 너그러운 지우개, 그리고 어떤 그림이든 꾸밀 수 있는 별·하트·동물로 가득한 스탬프 상자만 있습니다.",
       "모든 것이 탭이나 손가락으로 작동하므로 아이는 태블릿, 휴대폰, 컴퓨터 어디에서든 몇 초 만에 만들기 시작할 수 있습니다. 각 그림은 기기에 저장되고 완성된 작품은 PNG로 다운로드해 보관하거나 인쇄할 수 있습니다.",
     ],
     sections: [
       {
         heading: "어린 화가를 위해",
         paragraphs: [
-          "도구는 지나칠 수 없을 만큼 크게 만들어졌습니다. 큰 그리기 버튼, 큰 지우개, 5개의 큰 색상 팔레트. 텍스트 도구도, 도형 도구도, 걸려 넘어질 설정도 없습니다. 밝은 캔버스를 칠하는 즐거움만 있습니다.",
+          "도구는 지나칠 수 없을 만큼 크게 만들어졌습니다. 큰 그리기 버튼, 큰 지우개, 9개의 큰 색상 팔레트. 텍스트 도구도, 도형 도구도, 걸려 넘어질 설정도 없습니다. 밝은 캔버스를 칠하는 즐거움만 있습니다.",
         ],
       },
       {
         heading: "스탬프가 모든 그림을 게임으로 만들다",
         paragraphs: [
-          "스탬프 상자는 그리기를 놀이로 바꿉니다. 별, 하트, 물고기, 귀여운 동물을 선택해 캔버스를 탭하면 손가락 크기로 즉시 나타납니다. 스탬프와 그린 선을 겹쳐서 장면, 패턴, 이야기를 만들어 보세요.",
+          "스탬프 상자는 그리기를 놀이로 바꿉니다. 별, 하트, 귀여운 동물을 선택해 캔버스를 탭하면 손가락 크기로 즉시 나타납니다. 스탬프와 그린 선을 겹쳐서 장면, 패턴, 이야기를 만들어 보세요.",
         ],
       },
       {
         heading: "안전하고 사적이며 부모님에게 친절한",
         paragraphs: [
-          "광고도, 인앱 구매도, 계정도 없습니다. 그림은 브라우저에만 저장되고 절대 업로드되지 않습니다. 부모는 걱정 없이 태블릿을 안심하고 건네줄 수 있습니다.",
+          "인앱 구매도, 계정도 없습니다. 그림은 브라우저에만 저장되고 절대 업로드되지 않습니다. 부모는 걱정 없이 태블릿을 안심하고 건네줄 수 있습니다.",
         ],
       },
     ],
     relatedHeading: "SimpleSketchpad의 다른 무료 도구",
     related: {
-      "online-drawing": { label: "온라인 드로잉 도구", blurb: "일러스트와 스케치를 위한 연필, 브러시, 도형, 텍스트." },
       "drawing-board": { label: "온라인 드로잉 보드", blurb: "기획, 포스트잇, 비주얼 노트를 위한 작업 공간." },
       whiteboard: { label: "무료 온라인 화이트보드", blurb: "수업, 회의, 브레인스토밍을 위한 무한 캔버스." },
       "graph-paper": { label: "온라인 모눈종이", blurb: "수학, 기하, 기술 스케치를 위한 조절 가능한 그리드." },
@@ -2345,7 +2288,7 @@ const ko = {
     faq: [
       {
         q: "이 그리기 도구는 아이에게 안전한가요?",
-        a: "네. 광고도, 구매도, 계정도 없습니다. 모든 것이 브라우저에서 실행되고 그림이 기기 밖으로 나가지 않으므로 아이가 잘못 터치할 것이 없습니다.",
+        a: "네. 구매도, 계정도 없습니다. 모든 것이 브라우저에서 실행되고 그림이 기기 밖으로 나가지 않으므로 아이가 잘못 터치할 것이 없습니다.",
       },
       {
         q: "아이가 태블릿이나 휴대폰에서 그릴 수 있나요?",
@@ -2367,77 +2310,6 @@ const ko = {
 };
 
 const it = {
-  "online-drawing": {
-    seoTitle: "Strumento di Disegno Online - Disegna Online Gratis | SimpleSketchpad",
-    seoDescription:
-      "Disegna online gratis con questo strumento di disegno nel browser. Matita, pennello, gomma, forme, frecce e testo, esportazione in PNG o SVG. Senza registrazione.",
-    h1: "Strumento di Disegno Online",
-    intro: [
-      "Ecco dove disegni online, gratis e direttamente nel tuo browser. Riunisce tutto ciò che ci si aspetta da uno strumento di disegno online: una matita e un pennello fluidi per schizzare, una gomma delicata, una palette completa con selettore colore personalizzato e forme, linee e frecce pulite per i diagrammi.",
-      "Poiché tutto funziona localmente sul tuo dispositivo, disegnare è immediato e privato. Niente di ciò che crei viene caricato da nessuna parte e non ti serve mai un account. Apri semplicemente la tela e inizia.",
-    ],
-    sections: [
-      {
-        heading: "Tutto ciò che serve per disegnare online",
-        paragraphs: [
-          "Dai veloci scarabocchi alle illustrazioni dettagliate, questo strumento copre l'essenziale: tratti di matita e pennello con dimensioni e opacità regolabili, rettangoli, cerchi, triangoli, linee e frecce per la struttura, più testo per le annotazioni. Annulla e ripeti rendono gli errori innocui, e la griglia mantiene tutto allineato.",
-        ],
-        list: [
-          "Matita e pennello con colori personalizzati",
-          "Gomma con dimensione regolabile",
-          "Forme: rettangolo, cerchio, triangolo, linea, freccia",
-          "Testo per etichette e didascalie",
-          "Opzioni di riempimento per forme chiuse",
-          "Annulla e ripeti illimitati",
-          "Zoom e scorrimento per lavori di precisione",
-          "Esportazione in PNG e SVG",
-          "Funziona con mouse, touch e pennino",
-        ],
-      },
-      {
-        heading: "Uno strumento di disegno online gratis che funziona ovunque",
-        paragraphs: [
-          "Disegna su un laptop con il mouse, su un tablet con il pennino o su un telefono con il dito. La barra degli strumenti si adatta agli schermi piccoli e lo zoom a due dita funziona su qualsiasi dispositivo touch. Il tuo disegno viene salvato automaticamente nel browser, quindi puoi chiudere la scheda e riprendere da dove eri rimasto.",
-        ],
-      },
-      {
-        heading: "Cosa puoi creare",
-        paragraphs: [
-          "Usalo per schizzi di personaggi, loghi e layout, storyboard, wireframe di interfacce, compiti di geometria o semplicemente per catturare un'idea prima che sfugga. Alla fine, esporta il risultato come PNG ad alta risoluzione o SVG vettoriale che si adatta a qualsiasi dimensione senza perdere qualità.",
-        ],
-      },
-    ],
-    relatedHeading: "Altri strumenti gratis di SimpleSketchpad",
-    related: {
-      "online-drawing": { label: "Strumento di Disegno Online", blurb: "Matita, pennello, forme e testo per illustrazioni e schizzi." },
-      "drawing-board": { label: "Tavoletta di Disegno Online", blurb: "Uno spazio di lavoro per pianificare, note adesive e note visive." },
-      whiteboard: { label: "Lavagna Online Gratuita", blurb: "Una tela infinita per insegnare, riunioni e brainstorming." },
-      "graph-paper": { label: "Carta a Quadretti Online", blurb: "Una griglia regolabile per matematica, geometria e schizzi tecnici." },
-      "kids-drawing": { label: "Disegno Online per Bambini", blurb: "Grandi pulsanti e timbri divertenti per piccoli artisti." },
-    },
-    faqHeading: "Domande Frequenti",
-    faq: [
-      {
-        q: "Questo strumento di disegno online è davvero gratis?",
-        a: "Sì, completamente. Nessun account, nessuna filigrana, nessun piano a pagamento — lo strumento funziona nel tuo browser ed esporta in PNG e SVG senza costi.",
-      },
-      {
-        q: "Posso disegnare su un telefono o un tablet?",
-        a: "Sì. Lo strumento è ottimizzato per touch e pennino, quindi puoi disegnare con il dito o con una penna su qualsiasi dispositivo. Su un desktop, il mouse funziona perfettamente.",
-      },
-      {
-        q: "Posso esportare il mio disegno come immagine?",
-        a: "Puoi esportare un PNG ad alta risoluzione per condividerlo ovunque, oppure un file SVG per modificarlo in software grafico, stamparlo o ridimensionarlo senza perdere qualità.",
-      },
-      {
-        q: "Mi serve un account per salvare il disegno?",
-        a: "No. Il tuo disegno viene salvato automaticamente nell'archiviazione locale del browser. Chiudi semplicemente la scheda — ti aspetterà al tuo ritorno.",
-      },
-    ],
-    closing: [
-      "Questo strumento di disegno online fa parte di SimpleSketchpad. Se pianifichi, insegni o schizzi idee in team, la tavoletta di disegno online e la lavagna online gratuita ti offrono tela, note adesive e frecce per un tipo di lavoro molto diverso.",
-    ],
-  },
   "drawing-board": {
     seoTitle: "Tavoletta di Disegno Online - Spazio Gratuito per Pianificare | SimpleSketchpad",
     seoDescription:
@@ -2476,7 +2348,6 @@ const it = {
     ],
     relatedHeading: "Altri strumenti gratis di SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Strumento di Disegno Online", blurb: "Matita, pennello, forme e testo per illustrazioni e schizzi." },
       "drawing-board": { label: "Tavoletta di Disegno Online", blurb: "Uno spazio di lavoro per pianificare, note adesive e note visive." },
       whiteboard: { label: "Lavagna Online Gratuita", blurb: "Una tela infinita per insegnare, riunioni e brainstorming." },
       "graph-paper": { label: "Carta a Quadretti Online", blurb: "Una griglia regolabile per matematica, geometria e schizzi tecnici." },
@@ -2543,7 +2414,6 @@ const it = {
     ],
     relatedHeading: "Altri strumenti gratis di SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Strumento di Disegno Online", blurb: "Matita, pennello, forme e testo per illustrazioni e schizzi." },
       "drawing-board": { label: "Tavoletta di Disegno Online", blurb: "Uno spazio di lavoro per pianificare, note adesive e note visive." },
       whiteboard: { label: "Lavagna Online Gratuita", blurb: "Una tela infinita per insegnare, riunioni e brainstorming." },
       "graph-paper": { label: "Carta a Quadretti Online", blurb: "Una griglia regolabile per matematica, geometria e schizzi tecnici." },
@@ -2613,7 +2483,6 @@ const it = {
     ],
     relatedHeading: "Altri strumenti gratis di SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Strumento di Disegno Online", blurb: "Matita, pennello, forme e testo per illustrazioni e schizzi." },
       "drawing-board": { label: "Tavoletta di Disegno Online", blurb: "Uno spazio di lavoro per pianificare, note adesive e note visive." },
       whiteboard: { label: "Lavagna Online Gratuita", blurb: "Una tela infinita per insegnare, riunioni e brainstorming." },
       "graph-paper": { label: "Carta a Quadretti Online", blurb: "Una griglia regolabile per matematica, geometria e schizzi tecnici." },
@@ -2645,35 +2514,34 @@ const it = {
   "kids-drawing": {
     seoTitle: "Disegno Online per Bambini - Gratis, Sicuro e Divertente | SimpleSketchpad",
     seoDescription:
-      "Uno strumento di disegno online per bambini con grandi pulsanti, colori vivaci e timbri divertenti. Sicuro e senza pubblicità, funziona su tablet e telefoni e salva i disegni in PNG.",
+      "Uno strumento di disegno online per bambini con grandi pulsanti, colori vivaci e timbri divertenti. Sicuro e senza registrazione, funziona su tablet e telefoni e salva i disegni in PNG.",
     h1: "Disegno Online per Bambini",
     intro: [
-      "Questo strumento di disegno è stato costruito per mani piccole e grandi immaginazioni. Niente menu confusi, niente account, niente pubblicità — solo pulsanti enormi, colori vivaci, una gomma indulgente e una scatola di timbri piena di stelle, cuori e animali per decorare qualsiasi disegno.",
+      "Questo strumento di disegno è stato costruito per mani piccole e grandi immaginazioni. Niente menu confusi, niente account — solo pulsanti enormi, colori vivaci, una gomma indulgente e una scatola di timbri piena di stelle, cuori e animali per decorare qualsiasi disegno.",
       "Tutto funziona con un tocco o con un dito, così un bambino può iniziare a creare in pochi secondi, su un tablet, un telefono o un computer. Ogni disegno viene salvato sul dispositivo e l'opera finita si scarica come PNG da conservare o stampare.",
     ],
     sections: [
       {
         heading: "Fatto per piccoli artisti",
         paragraphs: [
-          "Gli strumenti sono dimensionati per essere impossibili da non notare: un grande pulsante di disegno, una grande gomma e cinque grandi campioni di colore. Nessuno strumento di testo, nessuno strumento di forme, nessuna impostazione su cui inciampare — solo la gioia di segnare una tela luminosa.",
+          "Gli strumenti sono dimensionati per essere impossibili da non notare: un grande pulsante di disegno, una grande gomma e nove grandi campioni di colore. Nessuno strumento di testo, nessuno strumento di forme, nessuna impostazione su cui inciampare — solo la gioia di segnare una tela luminosa.",
         ],
       },
       {
         heading: "I timbri trasformano ogni disegno in un gioco",
         paragraphs: [
-          "La scatola dei timbri trasforma il disegno in gioco. Scegli una stella, un cuore, un pesce o un simpatico animale, tocca la tela e appare subito a grandezza di dito. Sovrapponi i timbri alle linee disegnate per creare scene, motivi e storie.",
+          "La scatola dei timbri trasforma il disegno in gioco. Scegli una stella, un cuore o un simpatico animale, tocca la tela e appare subito a grandezza di dito. Sovrapponi i timbri alle linee disegnate per creare scene, motivi e storie.",
         ],
       },
       {
         heading: "Sicuro, privato e amico dei genitori",
         paragraphs: [
-          "Niente pubblicità, niente acquisti in-app, niente account. I disegni sono salvati solo nel browser e non vengono mai caricati. I genitori possono affidare un tablet con serenità, senza preoccuparsi di sorprese.",
+          "Niente acquisti in-app, niente account. I disegni sono salvati solo nel browser e non vengono mai caricati. I genitori possono affidare un tablet con serenità, senza preoccuparsi di sorprese.",
         ],
       },
     ],
     relatedHeading: "Altri strumenti gratis di SimpleSketchpad",
     related: {
-      "online-drawing": { label: "Strumento di Disegno Online", blurb: "Matita, pennello, forme e testo per illustrazioni e schizzi." },
       "drawing-board": { label: "Tavoletta di Disegno Online", blurb: "Uno spazio di lavoro per pianificare, note adesive e note visive." },
       whiteboard: { label: "Lavagna Online Gratuita", blurb: "Una tela infinita per insegnare, riunioni e brainstorming." },
       "graph-paper": { label: "Carta a Quadretti Online", blurb: "Una griglia regolabile per matematica, geometria e schizzi tecnici." },
@@ -2683,7 +2551,7 @@ const it = {
     faq: [
       {
         q: "Questo strumento di disegno è sicuro per i bambini?",
-        a: "Sì. Niente pubblicità, niente acquisti, niente account. Tutto funziona nel browser e i disegni non escono mai dal dispositivo, quindi non c'è nulla che un bambino possa toccare per sbaglio.",
+        a: "Sì. Niente acquisti, niente account. Tutto funziona nel browser e i disegni non escono mai dal dispositivo, quindi non c'è nulla che un bambino possa toccare per sbaglio.",
       },
       {
         q: "Mio figlio può disegnare su un tablet o telefono?",
@@ -2705,77 +2573,6 @@ const it = {
 };
 
 const zh = {
-  "online-drawing": {
-    seoTitle: "在线绘图工具 - 免费在线画画 | SimpleSketchpad",
-    seoDescription:
-      "使用这款浏览器绘图工具免费在线画画。铅笔、画笔、橡皮、图形、箭头和文字，支持导出 PNG 或 SVG。无需注册。",
-    h1: "在线绘图工具",
-    intro: [
-      "这里就是你在浏览器中免费直接在线画画的地方。它汇集了你对在线绘图工具的一切期待：流畅的铅笔和画笔用于素描、柔和的橡皮擦、带自定义颜色选择器的完整调色板，以及用于图表的整洁图形、线条和箭头。",
-      "因为一切都在你的设备上本地运行，画画是即时的且私密的。你创作的内容不会上传到任何地方，也永远不需要账户。打开画布，马上开始。",
-    ],
-    sections: [
-      {
-        heading: "在线画画所需的一切",
-        paragraphs: [
-          "从快速涂鸦到细致的插图，这款工具涵盖了所有基本功能：可调节大小和不透明度的铅笔与画笔，用于构建结构的矩形、圆形、三角形、线条和箭头，以及用于标注的文字。撤销和重做让错误毫无压力，网格则让一切保持对齐。",
-        ],
-        list: [
-          "支持自定义颜色的铅笔和画笔",
-          "可调节大小的橡皮",
-          "图形：矩形、圆形、三角形、线条、箭头",
-          "用于标签和标题的文字",
-          "闭合图形的填充选项",
-          "无限撤销和重做",
-          "用于精细工作的缩放和平移",
-          "PNG 和 SVG 导出",
-          "支持鼠标、触控和触控笔",
-        ],
-      },
-      {
-        heading: "一款随处可用的免费在线绘图工具",
-        paragraphs: [
-          "在笔记本电脑上用鼠标画，在平板电脑上用触控笔画，或在手机上用手指画。工具栏会适应小屏幕，双指缩放适用于任何触控设备。你的画作会自动保存在浏览器中，因此可以关闭标签页，下次继续创作。",
-        ],
-      },
-      {
-        heading: "你可以创作什么",
-        paragraphs: [
-          "用它来画角色草图、logo 和布局、故事板、UI 线框图、几何作业，或者仅仅是在想法溜走之前把它捕捉下来。完成后，将结果导出为高分辨率 PNG，或可无损缩放到任意尺寸的矢量 SVG。",
-        ],
-      },
-    ],
-    relatedHeading: "SimpleSketchpad 的更多免费工具",
-    related: {
-      "online-drawing": { label: "在线绘图工具", blurb: "用于插图和素描的铅笔、画笔、图形和文字。" },
-      "drawing-board": { label: "在线绘画板", blurb: "用于规划、便签和视觉笔记的工作空间。" },
-      whiteboard: { label: "免费在线白板", blurb: "用于教学、会议和头脑风暴的无限画布。" },
-      "graph-paper": { label: "在线方格纸", blurb: "用于数学、几何和技术草图的可调网格。" },
-      "kids-drawing": { label: "儿童在线画画", blurb: "为小画家设计的超大按钮和趣味印章。" },
-    },
-    faqHeading: "常见问题",
-    faq: [
-      {
-        q: "这款在线绘图工具真的免费吗？",
-        a: "是的，完全免费。没有账户、没有水印、没有付费层级——工具在你的浏览器中运行，可免费导出 PNG 和 SVG。",
-      },
-      {
-        q: "我可以在手机或平板电脑上画画吗？",
-        a: "可以。这款工具针对触控和触控笔做了优化，因此你可以在任何设备上用手指或笔作画。在桌面上，鼠标也完全适用。",
-      },
-      {
-        q: "我可以把画作导出为图片吗？",
-        a: "你可以导出高分辨率 PNG 用于随处分享，或导出 SVG 文件用于在图形软件中编辑、打印或无损缩放。",
-      },
-      {
-        q: "保存画作需要账户吗？",
-        a: "不需要。你的画作会自动保存在浏览器的本地存储中。只需关闭标签页——回来时它会在那里等你。",
-      },
-    ],
-    closing: [
-      "这款在线绘图工具是 SimpleSketchpad 的一部分。如果你在团队中规划、教学或勾画想法，在线绘画板和免费在线白板会提供画布、便签和箭头，适合完全不同类型的工作。",
-    ],
-  },
   "drawing-board": {
     seoTitle: "在线绘画板 - 免费规划与头脑风暴空间 | SimpleSketchpad",
     seoDescription:
@@ -2814,7 +2611,6 @@ const zh = {
     ],
     relatedHeading: "SimpleSketchpad 的更多免费工具",
     related: {
-      "online-drawing": { label: "在线绘图工具", blurb: "用于插图和素描的铅笔、画笔、图形和文字。" },
       "drawing-board": { label: "在线绘画板", blurb: "用于规划、便签和视觉笔记的工作空间。" },
       whiteboard: { label: "免费在线白板", blurb: "用于教学、会议和头脑风暴的无限画布。" },
       "graph-paper": { label: "在线方格纸", blurb: "用于数学、几何和技术草图的可调网格。" },
@@ -2881,7 +2677,6 @@ const zh = {
     ],
     relatedHeading: "SimpleSketchpad 的更多免费工具",
     related: {
-      "online-drawing": { label: "在线绘图工具", blurb: "用于插图和素描的铅笔、画笔、图形和文字。" },
       "drawing-board": { label: "在线绘画板", blurb: "用于规划、便签和视觉笔记的工作空间。" },
       whiteboard: { label: "免费在线白板", blurb: "用于教学、会议和头脑风暴的无限画布。" },
       "graph-paper": { label: "在线方格纸", blurb: "用于数学、几何和技术草图的可调网格。" },
@@ -2951,7 +2746,6 @@ const zh = {
     ],
     relatedHeading: "SimpleSketchpad 的更多免费工具",
     related: {
-      "online-drawing": { label: "在线绘图工具", blurb: "用于插图和素描的铅笔、画笔、图形和文字。" },
       "drawing-board": { label: "在线绘画板", blurb: "用于规划、便签和视觉笔记的工作空间。" },
       whiteboard: { label: "免费在线白板", blurb: "用于教学、会议和头脑风暴的无限画布。" },
       "graph-paper": { label: "在线方格纸", blurb: "用于数学、几何和技术草图的可调网格。" },
@@ -2983,35 +2777,34 @@ const zh = {
   "kids-drawing": {
     seoTitle: "儿童在线画画 - 免费、安全又有趣 | SimpleSketchpad",
     seoDescription:
-      "为儿童打造的免费在线画画工具，超大的按钮、鲜艳的颜色和有趣的印章。安全无广告，可在平板和手机上使用，支持保存为 PNG。",
+      "为儿童打造的免费在线画画工具，超大的按钮、鲜艳的颜色和有趣的印章。安全无需注册，可在平板和手机上使用，支持保存为 PNG。",
     h1: "儿童在线画画",
     intro: [
-      "这个画画工具是为小手和大大的想象力而造。没有令人困惑的菜单、没有账户、没有广告——只有超大的按钮、鲜艳的颜色、宽容的橡皮擦，以及装满星星、爱心和动物印章的图章盒，用来装饰任何画作。",
+      "这个画画工具是为小手和大大的想象力而造。没有令人困惑的菜单、没有账户——只有超大的按钮、鲜艳的颜色、宽容的橡皮擦，以及装满星星、爱心和动物印章的图章盒，用来装饰任何画作。",
       "一切都可以轻点或用手指操作，所以孩子能在几秒钟内开始创作，无论在平板、手机还是电脑上。每幅画都会保存在设备上，完成后可以下载为 PNG 保存或打印。",
     ],
     sections: [
       {
         heading: "为小艺术家而生",
         paragraphs: [
-          "工具的尺寸大到不容错过：一个超大的画画按钮、一把大橡皮擦和五个大色块。没有文字工具、没有图形工具、没有会绊倒人的设置——只有在一块明亮画布上涂画的乐趣。",
+          "工具的尺寸大到不容错过：一个超大的画画按钮、一把大橡皮擦和九个大色块。没有文字工具、没有图形工具、没有会绊倒人的设置——只有在一块明亮画布上涂画的乐趣。",
         ],
       },
       {
         heading: "印章让每幅画都变成游戏",
         paragraphs: [
-          "图章盒把画画变成玩耍。选一颗星星、一颗爱心、一条鱼或一个可爱的动物，点一下画布，它就以手指大小立刻出现。把印章和画的线条叠起来，创作场景、图案和故事。",
+          "图章盒把画画变成玩耍。选一颗星星、一颗爱心或一个可爱的动物，点一下画布，它就以手指大小立刻出现。把印章和画的线条叠起来，创作场景、图案和故事。",
         ],
       },
       {
         heading: "安全、私密、对家长友好",
         paragraphs: [
-          "没有广告、没有应用内购买、没有账户。画作只保存在浏览器中，永远不会上传。家长可以放心地把平板交给孩子，不用担心惊喜。",
+          "没有应用内购买、没有账户。画作只保存在浏览器中，永远不会上传。家长可以放心地把平板交给孩子，不用担心惊喜。",
         ],
       },
     ],
     relatedHeading: "SimpleSketchpad 的更多免费工具",
     related: {
-      "online-drawing": { label: "在线绘图工具", blurb: "用于插图和素描的铅笔、画笔、图形和文字。" },
       "drawing-board": { label: "在线绘画板", blurb: "用于规划、便签和视觉笔记的工作空间。" },
       whiteboard: { label: "免费在线白板", blurb: "用于教学、会议和头脑风暴的无限画布。" },
       "graph-paper": { label: "在线方格纸", blurb: "用于数学、几何和技术草图的可调网格。" },
@@ -3021,7 +2814,7 @@ const zh = {
     faq: [
       {
         q: "这个画画工具对孩子安全吗？",
-        a: "是的。没有广告、没有购买、没有账户。一切都在浏览器中运行，画作永远不会离开设备，孩子没有可以误点的东西。",
+        a: "是的。没有购买、没有账户。一切都在浏览器中运行，画作永远不会离开设备，孩子没有可以误点的东西。",
       },
       {
         q: "我的孩子可以在平板或手机上画画吗？",

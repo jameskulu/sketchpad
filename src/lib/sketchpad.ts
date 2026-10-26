@@ -47,6 +47,10 @@ export interface SketchpadUI {
     autosaveSaving: string;
     autosaveNotSaved: string;
     px: string;
+    clearConfirmTitle: string;
+    clearConfirmBody: string;
+    clearConfirmDelete: string;
+    clearConfirmCancel: string;
   };
 }
 
@@ -228,8 +232,8 @@ export class Sketchpad {
   private editingText = false;
   private textEl: HTMLDivElement | null = null;
   private pendingText: { x: number; y: number; el: TextElement | StickyElement | null } | null = null;
-  private clearArmed = false;
-  private clearTimer: number | null = null;
+  private clearDialogOpen = false;
+  private dialogSeq = 0;
   private hover = { x: -10000, y: -10000, over: false };
   private selEl: Element | null = null;
   private selSet: Set<Element> = new Set();
@@ -426,14 +430,12 @@ export class Sketchpad {
   }
 
   clear(): void {
-    if (!this.clearArmed) {
-      this.clearArmed = true;
-      this.ui.clearBtn.classList.add("is-armed");
-      if (this.clearTimer) window.clearTimeout(this.clearTimer);
-      this.clearTimer = window.setTimeout(() => this.disarmClear(), 3000);
-      return;
-    }
-    this.disarmClear();
+    if (this.elements.length === 0 && this.erasures.length === 0) return;
+    if (this.clearDialogOpen) return;
+    this.confirmClear();
+  }
+
+  private performClear(): void {
     this.pushHistory();
     this.elements = [];
     this.erasures = [];
@@ -443,13 +445,132 @@ export class Sketchpad {
     this.emit();
   }
 
-  private disarmClear(): void {
-    this.clearArmed = false;
-    this.ui.clearBtn.classList.remove("is-armed");
-    if (this.clearTimer) {
-      window.clearTimeout(this.clearTimer);
-      this.clearTimer = null;
-    }
+  /**
+   * Ask before wiping the canvas. Dismissing the dialog leaves the drawing
+   * untouched; confirming clears it and keeps the previous state on the undo
+   * stack so the change can be reversed straight away.
+   */
+  private confirmClear(): void {
+    const strings = this.ui.strings;
+    const title = strings?.clearConfirmTitle ?? "Delete this drawing?";
+    const body =
+      strings?.clearConfirmBody ??
+      "This clears everything on the canvas. You can undo it right after if you change your mind.";
+    const deleteLabel = strings?.clearConfirmDelete ?? "Delete";
+    const cancelLabel = strings?.clearConfirmCancel ?? "Cancel";
+
+    this.ensureDialogStyles();
+    this.clearDialogOpen = true;
+
+    const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    const id = `sp-confirm-${++this.dialogSeq}`;
+
+    const overlay = document.createElement("div");
+    overlay.className = "sp-confirm-overlay";
+
+    const panel = document.createElement("div");
+    panel.className = "sp-confirm-panel";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-modal", "true");
+    panel.setAttribute("aria-labelledby", `${id}-title`);
+    panel.setAttribute("aria-describedby", `${id}-body`);
+
+    const heading = document.createElement("h2");
+    heading.id = `${id}-title`;
+    heading.className = "sp-confirm-title";
+    heading.textContent = title;
+
+    const copy = document.createElement("p");
+    copy.id = `${id}-body`;
+    copy.className = "sp-confirm-body";
+    copy.textContent = body;
+
+    const actions = document.createElement("div");
+    actions.className = "sp-confirm-actions";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "sp-confirm-btn";
+    cancelBtn.textContent = cancelLabel;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "sp-confirm-btn sp-confirm-btn--danger";
+    deleteBtn.textContent = deleteLabel;
+
+    actions.append(cancelBtn, deleteBtn);
+    panel.append(heading, copy, actions);
+    overlay.append(panel);
+
+    const cleanup = (): void => {
+      this.clearDialogOpen = false;
+      document.removeEventListener("keydown", onKey, true);
+      overlay.remove();
+      document.body.style.overflow = previousOverflow;
+      previouslyFocused?.focus();
+    };
+
+    const close = (confirmed: boolean): void => {
+      cleanup();
+      if (confirmed) this.performClear();
+    };
+
+    const onKey = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        close(false);
+        return;
+      }
+      if (e.key === "Tab") {
+        // Keep focus inside the dialog while it is open.
+        if (e.shiftKey && document.activeElement === cancelBtn) {
+          e.preventDefault();
+          deleteBtn.focus();
+        } else if (!e.shiftKey && document.activeElement === deleteBtn) {
+          e.preventDefault();
+          cancelBtn.focus();
+        }
+        return;
+      }
+      // Swallow canvas shortcuts while the dialog is open.
+      e.stopPropagation();
+    };
+
+    cancelBtn.addEventListener("click", () => close(false));
+    deleteBtn.addEventListener("click", () => close(true));
+    overlay.addEventListener("pointerdown", (e) => {
+      if (e.target === overlay) close(false);
+    });
+
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey, true);
+    // In fullscreen only the fullscreen subtree is painted, so mount inside it.
+    (document.fullscreenElement ?? document.body).append(overlay);
+    cancelBtn.focus();
+  }
+
+  private ensureDialogStyles(): void {
+    if (document.getElementById("sp-confirm-styles")) return;
+    const style = document.createElement("style");
+    style.id = "sp-confirm-styles";
+    style.textContent = `
+.sp-confirm-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(13,37,61,.45);backdrop-filter:blur(2px);animation:sp-confirm-fade .12s ease-out}
+.sp-confirm-panel{width:100%;max-width:22rem;padding:20px;border:1px solid var(--color-hairline,#e3e8ee);border-radius:16px;background:var(--color-canvas,#fff);color:var(--color-ink,#0d253d);box-shadow:0 24px 60px rgba(13,37,61,.28);font-family:inherit;line-height:1.5;animation:sp-confirm-pop .14s ease-out}
+.sp-confirm-title{margin:0;font-size:16px;font-weight:600;letter-spacing:-.01em}
+.sp-confirm-body{margin:8px 0 0;font-size:14px;color:var(--color-ink-mute,#64748d)}
+.sp-confirm-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+.sp-confirm-btn{appearance:none;cursor:pointer;border-radius:8px;border:1px solid var(--color-hairline,#e3e8ee);background:var(--color-canvas,#fff);color:var(--color-ink,#0d253d);font:inherit;font-size:14px;font-weight:600;padding:8px 14px;transition:background-color .12s ease,border-color .12s ease}
+.sp-confirm-btn:hover{background:var(--color-canvas-soft,#f6f9fc)}
+.sp-confirm-btn:focus-visible{outline:2px solid var(--color-primary,#533afd);outline-offset:2px}
+.sp-confirm-btn--danger{border-color:#ea2261;background:#ea2261;color:#fff}
+.sp-confirm-btn--danger:hover{background:#d81b55;border-color:#d81b55}
+@keyframes sp-confirm-fade{from{opacity:0}to{opacity:1}}
+@keyframes sp-confirm-pop{from{opacity:0;transform:translateY(4px) scale(.98)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sp-confirm-overlay,.sp-confirm-panel{animation:none}}
+`;
+    document.head.append(style);
   }
 
   private markDirty(): void {
@@ -1483,7 +1604,6 @@ export class Sketchpad {
   }
 
   private onPointerDown(e: PointerEvent): void {
-    this.disarmClear();
     const pt = this.pointerFromEvent(e, e.pointerType !== "mouse");
     this.activePointers.set(e.pointerId, pt);
 
@@ -2176,7 +2296,6 @@ export class Sketchpad {
       }
       if (e.key === "Escape") {
         if (this.tool === "select" && this.selEl) this.deselect();
-        else this.disarmClear();
         return;
       }
       if ((e.key === "Delete" || e.key === "Backspace") && !e.metaKey && !e.ctrlKey && !e.altKey) {

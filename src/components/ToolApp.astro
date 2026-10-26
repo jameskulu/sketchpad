@@ -10,7 +10,7 @@ import { toolUiFor } from "../i18n/tool-ui";
 import type { ToolPageContent, ToolPageKey } from "../i18n/tool-content-types";
 import { deriveLocaleHref, type Locale } from "../i18n/locales";
 
-export type ToolAppMode = "draw" | "board" | "whiteboard" | "graph";
+export type ToolAppMode = "board" | "whiteboard" | "graph";
 
 interface Props {
   mode: ToolAppMode;
@@ -24,7 +24,6 @@ const ui = uiFor(locale);
 const toolUi = toolUiFor(locale);
 
 const ROUTES: Record<ToolPageKey, string> = {
-  "online-drawing": "/online-drawing",
   "drawing-board": "/drawing-board",
   whiteboard: "/whiteboard",
   "graph-paper": "/graph-paper",
@@ -34,18 +33,6 @@ const ROUTES: Record<ToolPageKey, string> = {
 const route = ROUTES[pageKey];
 
 const TOOLS: Record<ToolAppMode, { id: string; icon: string; label: string; hint?: string }[]> = {
-  draw: [
-    { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
-    { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
-    { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
-    { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
-    { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
-    { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
-    { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
-    { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
-    { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
-    { id: "eraser", icon: "eraser", label: ui.tools.eraser, hint: "E" },
-  ],
   board: [
     { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
     { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
@@ -53,7 +40,7 @@ const TOOLS: Record<ToolAppMode, { id: string; icon: string; label: string; hint
     { id: "highlighter", icon: "highlighter", label: toolUi.tools.highlighter },
     { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
     { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
-    { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+    { id: "triangle", icon: "triangle", label: ui.tools.triangle },
     { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
     { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
     { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
@@ -78,7 +65,7 @@ const TOOLS: Record<ToolAppMode, { id: string; icon: string; label: string; hint
     { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
     { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
     { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
-    { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+    { id: "triangle", icon: "triangle", label: ui.tools.triangle },
     { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
     { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
     { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
@@ -456,9 +443,6 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   .btn-icon.is-active {
     @apply bg-canvas-soft text-primary;
   }
-  #clear-btn.is-armed {
-    @apply bg-[#ea2261] text-white hover:bg-[#d81b55] hover:text-white;
-  }
 </style>
 
 <style is:global>
@@ -555,7 +539,6 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   });
 
   const defaults: Record<string, { defaultTool: string; defaultGridOn: boolean; grid: GridConfig | undefined; autosaveKey: string }> = {
-    draw: { defaultTool: "brush", defaultGridOn: true, grid: undefined, autosaveKey: "simplesketchpad.online-drawing.v1" },
     board: { defaultTool: "brush", defaultGridOn: true, grid: undefined, autosaveKey: "simplesketchpad.drawing-board.v1" },
     whiteboard: { defaultTool: "brush", defaultGridOn: false, grid: undefined, autosaveKey: "simplesketchpad.whiteboard.v1" },
     graph: { defaultTool: "pencil", defaultGridOn: true, grid: { spacing: 20, majorEvery: 5, style: "line", snap: true }, autosaveKey: "simplesketchpad.graph-paper.v1" },
@@ -595,6 +578,10 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         autosaveSaving: ui.canvas.autosaveSaving,
         autosaveNotSaved: ui.canvas.autosaveNotSaved,
         px: ui.canvas.px,
+        clearConfirmTitle: ui.canvas.clearConfirmTitle,
+        clearConfirmBody: ui.canvas.clearConfirmBody,
+        clearConfirmDelete: ui.canvas.clearConfirmDelete,
+        clearConfirmCancel: ui.canvas.clearConfirmCancel,
       },
     },
     defaultTool: cfg.defaultTool as ToolId,

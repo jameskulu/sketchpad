@@ -47,13 +47,13 @@ const faqData = {
   })),
 };
 
-const tools: { id: string; icon: string; label: string; hint: string }[] = [
+const tools: { id: string; icon: string; label: string; hint?: string }[] = [
   { id: "select", icon: "select", label: ui.tools.select, hint: "V" },
   { id: "brush", icon: "brush", label: ui.tools.brush, hint: "B" },
   { id: "pencil", icon: "pencil", label: ui.tools.pencil, hint: "P" },
   { id: "rect", icon: "rect", label: ui.tools.rect, hint: "R" },
   { id: "ellipse", icon: "ellipse", label: ui.tools.ellipse, hint: "O" },
-  { id: "triangle", icon: "triangle", label: ui.tools.triangle, hint: "G" },
+  { id: "triangle", icon: "triangle", label: ui.tools.triangle },
   { id: "line", icon: "line", label: ui.tools.line, hint: "L" },
   { id: "arrow", icon: "arrow", label: ui.tools.arrow, hint: "A" },
   { id: "text", icon: "text", label: ui.tools.text, hint: "T" },
@@ -174,8 +174,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
           <button
             id={`tool-${t.id}`}
             class="btn-icon relative shrink-0 max-md:size-[30px]!"
-            aria-label={`${t.label} (${t.hint})`}
-            title={`${t.label} (${t.hint})`}
+            aria-label={t.hint ? `${t.label} (${t.hint})` : t.label}
+            title={t.hint ? `${t.label} (${t.hint})` : t.label}
             aria-pressed="false"
           >
             <Icon name={t.icon} />
@@ -351,9 +351,6 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   .kbd {
     @apply rounded border border-hairline bg-white px-1 py-px font-sans text-[10px] font-medium text-ink-mute shadow-sm;
   }
-  #clear-btn.is-armed {
-    @apply bg-[#ea2261] text-white hover:bg-[#d81b55] hover:text-white;
-  }
 </style>
 
 <style is:global>
@@ -483,6 +480,10 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         autosaveSaving: ui.canvas.autosaveSaving,
         autosaveNotSaved: ui.canvas.autosaveNotSaved,
         px: ui.canvas.px,
+        clearConfirmTitle: ui.canvas.clearConfirmTitle,
+        clearConfirmBody: ui.canvas.clearConfirmBody,
+        clearConfirmDelete: ui.canvas.clearConfirmDelete,
+        clearConfirmCancel: ui.canvas.clearConfirmCancel,
       },
     },
     onState: (s) => {

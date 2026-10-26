@@ -1,0 +1,29 @@
+# The /online-drawing page was merged into the homepage canvas.
+# 301 so existing links and search results keep working.
+
+/online-drawing      /          301
+/online-drawing/     /          301
+
+/es/online-drawing   /es/       301
+/es/online-drawing/  /es/       301
+
+/ja/online-drawing   /ja/       301
+/ja/online-drawing/  /ja/       301
+
+/fr/online-drawing   /fr/       301
+/fr/online-drawing/  /fr/       301
+
+/de/online-drawing   /de/       301
+/de/online-drawing/  /de/       301
+
+/pt/online-drawing   /pt/       301
+/pt/online-drawing/  /pt/       301
+
+/ko/online-drawing   /ko/       301
+/ko/online-drawing/  /ko/       301
+
+/it/online-drawing   /it/       301
+/it/online-drawing/  /it/       301
+
+/zh/online-drawing   /zh/       301
+/zh/online-drawing/  /zh/       301

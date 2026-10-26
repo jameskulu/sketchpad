@@ -8,6 +8,7 @@ import { deriveLocaleHref, type Locale } from "../i18n/locales";
 interface Props {
   title: string;
   description?: string;
+  keywords?: string;
   locale: Locale;
   /** current route path (e.g. "/about") for localized links + hreflang */
   route: string;
@@ -21,6 +22,7 @@ interface Props {
 const {
   title,
   description,
+  keywords,
   locale,
   route,
   structuredData,
@@ -48,6 +50,7 @@ const openHref = deriveLocaleHref(locale, "/");
 <Layout
   title={`${title} — Simple Sketchpad`}
   description={description}
+  keywords={keywords}
   locale={locale}
   route={route}
   structuredData={structuredData}

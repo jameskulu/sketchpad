@@ -5,54 +5,153 @@ export const CONTENT: Content = {
     htmlLang: "en",
     seoTitle: "Sketchpad — Free Online Sketchpad & Digital Drawing Board",
     seoDescription:
-      "Draw online for free with this fast digital sketchpad — a drawing pad online for sketching, shapes, text, and more. This free sketchpad needs no sign-up, works on any device, and exports to PNG.",
+      "Draw online for free with a fast, private sketchpad. Sketch with a brush or pencil, add shapes, arrows, and text, then export a PNG — no sign-up required.",
     home: {
       h1: "Free Online Sketchpad",
       intro: [
-        "Meet Sketchpad, a free online sketchpad built for anyone who wants to draw online without signing up, installing software, or dealing with cluttered interfaces. Whether you are sketching ideas, mapping out a diagram, teaching a child to draw, or prototyping your next project, this online drawing board gives you a crisp white canvas and the essentials — nothing more, nothing less. No account. No watermarks. No ads interrupting your flow. Think of it as a simple sketch pad online that is always open in your browser, ready the moment inspiration strikes.",
+        "Sketchpad is a free online sketchpad that opens in a browser tab and is ready the moment the page loads. There is no account to create, nothing to install, and no trial that expires. You get a clean canvas, a short list of drawing tools, and familiar controls for saving and exporting your work. That is the whole product, and the restraint is deliberate.",
+        "It is built for the drawings that happen between thinking and making: a rough concept, a diagram for a meeting, a floor plan, a lesson illustration, a wireframe, or a note to yourself. Those drawings rarely need a hundred brushes or a color-managed print workflow. They need to be quick to start, easy to correct, and simple to share. A browser canvas that saves locally does all three.",
+        "Because rendering and storage happen on your device, drawing stays responsive. Strokes follow the pointer, zoom and pan remain usable on an older laptop, and nothing you draw is uploaded to a server. The same page works on a phone, tablet, or desktop with a mouse, trackpad, finger, or stylus. The tools adapt to the screen; your drawing stays in the same place.",
+        "This page explains what the sketchpad does, how the pieces fit together, and how to finish a clean sketch in one sitting. If you are here to draw, scroll up and start. If you are deciding whether it fits your work, the sections below are the honest version — including where a full illustration app is the better choice.",
       ],
-      toolsHeading: "Draw Online Sketchpad — Everything You Need, Nothing You Don't",
+      toolsHeading: "What is on the canvas",
       tools: [
-        "This digital sketchpad ships with a smooth brush and a lifelike graphite pencil for natural strokes, plus rectangles, circles, triangles, lines, and arrows for crisp diagrams. Add text labels, pick any color from the palette or a custom picker, and dial in stroke size and opacity to get the exact look you want. Undo and redo make mistakes painless, and a toggleable grid keeps aligned sketches easy. Everything runs on your device, so you can sketchpad app-style anywhere — on a laptop, tablet, or phone, with a mouse, touch, or stylus. Rendering is instant and local, which means you get a smooth drawing online sketchpad experience even on older devices and slower connections. On a desktop it becomes a capable drawing pad for laptop work, and on a tablet it feels like a dedicated digital drawing pad that follows you everywhere.",
-      "And when a sketch needs a sense of direction — a trail map, a site plan, a route you plotted by hand — [Online Compass](https://trueonlinecompass.com/) adds a live true-north heading, a bearing calculator, and the sun's position right in the browser. Nothing to install, nothing to sign up for.",
+        "The toolbar is deliberately short. The brush lays down a smooth, opaque stroke for outlines, filled areas, and confident shapes. The pencil has a softer, grainier edge that feels closer to paper and suits rough ideas, shading, and handwriting. The eraser removes marks from a local area, while undo and redo step through changes in the order you made them.",
+        "Shapes cover the structural side: rectangles, ellipses, triangles, lines, and arrows. Each one can be moved, resized, restyled, or deleted with the selection tool, so a diagram remains editable instead of becoming a fixed picture. Text adds short labels and captions, and closed shapes can be filled when you want a solid block of color rather than an outline.",
+        "Two sliders control most of the visual character. Stroke size creates hierarchy: a thick outline for the main shape, a thin line for detail, a heavier label when it needs to be read first. Opacity adds depth — a second shape at 30 to 40 percent reads as a shadow, a background zone, or a highlight without any extra tool. The palette offers useful starting colors and a custom picker for anything exact.",
+        "Around the canvas sit the controls that keep a session moving: a toggleable grid for alignment, zoom and pan for detail work, fullscreen for fewer distractions, and a status bar that shows the current zoom level. Autosave writes the drawing to browser storage as you work. The download button turns the drawing into a PNG you can keep, and each tool page keeps its own separate drawing.",
       ],
-      rankingHeading: "Best Online Sketchpad Tools 2025 & 2026",
+      rankingHeading: "How it compares with a full drawing app",
       ranking: [
-        "Roundups of the best online sketchpad tools 2025 and the best online sketchpad tools 2026 keep pointing to the same winners for quick sketchpad drawing: fast, private, and free. Our online sketchpad free of charge story hits all three. While heavyweight suites pile on accounts, subscriptions, and cloud sync, this drawpad keeps drawing front and center. It is lightweight enough to open instantly on a slow connection and private enough that your sketches never leave your browser. No plugins to install, no tutorials to sit through — you land on the online drawing board and your first stroke is seconds away.",
+        "A browser sketchpad is a thinking tool, not a replacement for every drawing program. If your work depends on pressure-sensitive brushes, dozens of layers, color-managed printing, animation, or a professional typography engine, a dedicated illustration app will save you time. It is also the right choice when a client expects a production file with exact specifications.",
+        "For everything before that point, the trade favors the browser. There is no launch time, no project file to manage, and no subscription between you and the first mark. The tool stays fast on modest hardware because the scene is intentionally simple. Because the drawing is stored locally, it remains available without a login or a sync service, and it keeps working if the connection drops after the page has loaded.",
+        "The useful boundary is easy to remember: use the sketchpad to get the idea out, then move to a full app when the idea becomes a finished piece with production requirements. Many people never need the second tool. The ones who do still benefit from sketching here first, where opening a canvas costs nothing and nothing has to be set up.",
       ],
-      kidsHeading: "The Perfect Online Drawing Board for Kids",
+      kidsHeading: "For kids, parents, and classrooms",
       kids: [
-        "Looking for a drawing board for kids? This digital sketchpad is a wonderful pick. There are no ads or prompts to buy things, a clean undo button encourages experimentation, and bright swatches make color fun. A parent-approved online drawing board means safe, distraction-free creativity — a sketching pad online that doubles as the ideal doodle pad online for classroom brainstorms, rainy-afternoon doodles, or a quick drawing board for learning shapes and letters. Young artists can draw online sketchpad sessions for hours with nothing but their imagination. And because there is no login or email required, a child can go from idea to doodle in seconds — safely and without friction. Parents often keep this bookmarked as their go-to drawing pad for kids: calm, colorful, and endlessly forgiving.",
+        "The same short toolbar makes this a comfortable first drawing app. There is no account, no social feed, and no in-app store prompting a purchase. A child can open the page, choose a color, and draw. Undo is the first shortcut worth teaching, because a child who knows mistakes disappear experiments more freely.",
+        "For a classroom or a rainy afternoon, keep the first session to two controls: color and undo. Short prompts work better than open instructions — draw a house with rectangles and triangles, fill the page with circles and turn three into faces, make a two-color poster for a pretend event. The dedicated [kids drawing](/kids-drawing/) page uses larger controls and a friendlier starting palette for exactly this kind of session.",
+        "Autosave is tied to the browser, so there is no audience and no upload. Export a PNG when the work is worth printing or sending home. If several children share a device, clear the canvas between sessions or use a separate browser profile so each drawing starts fresh.",
+      ],
+      sections: [
+        {
+          heading: "Start drawing in 60 seconds",
+          paragraphs: [
+            "If you only want to make a mark and see how the canvas feels, this is the entire setup. It is also the fastest way to check whether a mouse, trackpad, or finger suits you before you commit to a longer drawing.",
+          ],
+          ordered: true,
+          list: [
+            "Open the canvas and press F for fullscreen so browser tabs stop competing for attention.",
+            "Pick the brush with B or the pencil with P.",
+            "Choose one color and one stroke size. Both can change later.",
+            "Draw a single confident shape, or fill the page with loose marks.",
+            "Press Ctrl+Z to undo something you do not like, then try it again.",
+            "Press G if the drawing needs alignment, and leave the grid off if it does not.",
+            "Press Ctrl+D to download a PNG and confirm that the result looks the way you expected.",
+          ],
+        },
+        {
+          heading: "A workflow that produces clean sketches",
+          paragraphs: [
+            "Most drawings go wrong in the first two minutes, not the last two. The fix is a repeatable order: block, refine, detail, label. Blocking means drawing the largest shapes at the size they will actually occupy. A face starts as an oval, a room starts as a rectangle, a dashboard starts as three stacked bands. At this stage you are deciding how much space each part gets, not how it looks.",
+            "Refining means correcting proportions and moving things into place. Use the selection tool to nudge a shape rather than redrawing it; resize it if the size is wrong, and restyle it if the look is wrong. Redrawing is the slowest possible edit. Details come next, once the composition is stable and you know where the empty space is. Labels come last, when you know which words a reader actually needs.",
+            "Zoom has two jobs and it helps to separate them. At 100 percent you judge composition: balance, spacing, and whether the drawing reads at a glance. At 200 or 300 percent you judge execution: line quality, text alignment, and small gaps. Finish every session zoomed out, because that is how other people will see the work.",
+          ],
+        },
+        {
+          heading: "Mouse, trackpad, finger, and stylus",
+          paragraphs: [
+            "A mouse produces lines that are confident but slightly mechanical. That is an advantage for diagrams and a limitation for expressive illustration. Work with it: draw each line in one motion, undo the ones that wobble, and use the line and arrow tools for anything that has to be straight. Zooming in to chase perfect detail early usually hides proportion mistakes rather than fixing them.",
+            "A trackpad is less precise than a mouse, so lean on shapes. Place a rectangle, resize it, and move it into position instead of drawing freehand. A finger on a phone or tablet is best for quick notes, color blocks, and rough ideas; pinch to zoom, and accept that small handwriting will be harder. A stylus improves aim but does not change the toolset, so the same limited palette and block-first workflow still apply.",
+            "On any device, the fastest correction is undo, not the eraser. Save the eraser for small local fixes inside an area that otherwise works. If a whole stroke is wrong, step back and draw it again in one deliberate motion.",
+          ],
+        },
+        {
+          heading: "Saving, exporting, and keeping your work",
+          paragraphs: [
+            "The sketchpad saves your drawing in the browser as you work, and the indicator at the top of the canvas shows whether the latest change has been written. That is genuinely useful: close the tab, come back tomorrow, and the drawing is still there on the same device. Each tool page keeps its own canvas, so a whiteboard sketch and a graph paper drawing do not overwrite each other.",
+            "Autosave is a safety net, not a backup. Browser storage belongs to one browser on one device, and clearing site data or switching machines will not carry the drawing with it. Treat autosave as protection between sessions and an export as the archive. Anything you would be upset to lose should leave the browser as a file the same day.",
+            "The download button produces a PNG of the drawing. The export is cropped to the marks on the canvas with a small margin, so the grid, the zoom level, and selection outlines stay out of the file. PNG is the right format for documents, slides, chat messages, and social posts because it looks the same everywhere. The [drawing board](/drawing-board/) and other tool pages also offer an SVG export for artwork that needs to stay sharp when resized.",
+          ],
+        },
+        {
+          heading: "Privacy, accounts, and what leaves your device",
+          paragraphs: [
+            "You do not need an account, an email address, or a profile to draw. The canvas stores its state in your browser's local storage, and the drawing itself is not uploaded to a server. That means no cloud library to manage, but it also means you are responsible for exporting anything you want to keep permanently.",
+            "The website uses analytics and advertising scripts, which may set cookies or record page-level information such as visits and approximate location. Those scripts do not receive the contents of your canvas. The privacy policy explains the details. If you are drawing something confidential, work in a private window, export the file when you are done, and close the window so the local copy is discarded.",
+          ],
+        },
+        {
+          heading: "Where the sketchpad fits: work, teaching, and study",
+          paragraphs: [
+            "At work, the sketchpad is useful for the drawings that never justify opening a design suite: a process flow for a meeting, a rough wireframe, a seating plan, an org chart, or an annotated diagram that explains a decision. Draw it, export a PNG, and paste it into the document where the conversation is happening. If the plan needs to keep changing, the [drawing board](/drawing-board/) adds sticky notes and a highlighter for rearranging ideas.",
+            "For teaching and study, the value is speed. Explain a concept by drawing it, highlight the one part that matters, and export the result as a handout or revision card. The [whiteboard](/whiteboard/) is the better fit for live sessions and mind maps; [graph paper](/graph-paper/) is better for geometry, charts, and anything that has to line up. Because the canvas is local, a lesson does not pause while a file uploads.",
+            "The same flexibility covers personal projects: a floor plan before moving furniture, a route map for a trip, a birthday sign, or a drawing made with a child. The tool does not care what the drawing is for, which is exactly why it stays useful.",
+          ],
+        },
+        {
+          heading: "A seven-day practice plan",
+          paragraphs: [
+            "Skill in this kind of drawing comes from repetition, not from reading. One short session a day for a week will change how the tools feel and make the workflow automatic.",
+          ],
+          ordered: true,
+          list: [
+            "Day 1: draw five parallel lines, five circles, and five arrows, first at 100 percent and then zoomed in.",
+            "Day 2: copy a simple icon using only rectangles and ellipses.",
+            "Day 3: sketch a room from memory with the grid on, then hide the grid and check the alignment.",
+            "Day 4: draw the same object with the pencil and with the brush, and note which one suits it.",
+            "Day 5: turn a paragraph of instructions into a five-box flowchart with arrows.",
+            "Day 6: build a three-color poster with one line of text and one shape.",
+            "Day 7: take an old sketch, simplify it, and export both versions to compare.",
+          ],
+        },
       ],
       faqHeading: "Frequently Asked Questions",
       faq: [
         {
-          q: "What are the best online sketchpad tools?",
-          a: "The best online sketchpad tools run right in your browser and cost nothing to use. Our Sketchpad pairs a smooth brush with a lifelike graphite pencil, plus shapes, lines, arrows, text, autosave, and one-click PNG export on every device. No account, no watermarks, and no ads — just a clean space to draw.",
+          q: "Is this sketchpad free?",
+          a: "Yes. The canvas, the drawing tools, autosave, and PNG export are free to use. There is no trial, no watermark, and no paid tier waiting behind a button.",
         },
         {
-          q: "What is a sketchpad?",
-          a: "A sketchpad is a surface for drawing and sketching. Traditionally it is a small pad of blank paper; digitally, it is an app or website where you draw on a screen with a mouse, touch, or stylus. This free online sketchpad puts a blank digital canvas with drawing tools, colors, and shapes right in your browser.",
+          q: "Do I need an account to draw?",
+          a: "No. The sketchpad opens without a login and saves your drawing in the browser. You never have to provide an email address or create a profile.",
         },
         {
-          q: "How to use the sketchpad app?",
-          a: "Open the sketchpad, pick a tool — brush, pencil, rectangle, ellipse, triangle, line, arrow, or text — choose a color and stroke size, then start drawing. Undo and redo fix mistakes, text labels annotate your work, the grid keeps things aligned, and Download PNG saves your drawing as an image file.",
+          q: "Where are my drawings stored?",
+          a: "In your browser's local storage on the device you are using. Nothing is uploaded to a server. Clearing site data, using a different browser, or switching devices will not carry the drawing across, so export a PNG when you want a permanent copy.",
         },
         {
-          q: "What is a drawing pad?",
-          a: "A drawing pad is a surface used for making drawings. It can be physical — a paper sketchpad or a graphics tablet — or digital, like a browser-based drawing pad. Online drawing pads let you sketch directly on your screen with a finger, stylus, or mouse, with no extra hardware required.",
+          q: "Can I export or print my drawing?",
+          a: "Yes. Download a PNG from the canvas and print it, add it to a document, or send it in a message. On the dedicated tool pages you can also export an SVG, which stays sharp at any size and can be edited in vector software.",
         },
         {
-          q: "What does a drawing pad do?",
-          a: "A drawing pad turns your drawing movements into digital artwork. You draw with a finger, stylus, or mouse; the pad captures each stroke and lets you change colors, fix mistakes, reposition elements, and export the finished drawing. It is a digital replacement for physical paper and is this simple sketchpad's core job.",
+          q: "Does the sketchpad work offline?",
+          a: "Once the page has loaded, the canvas keeps working and autosave continues locally. A hard refresh or a first visit still needs a connection. Keep the tab open if your connection is unreliable.",
         },
         {
-          q: "Can I use the sketchpad on mobile phones?",
-          a: "Yes. The sketchpad is fully touch-optimized: draw with your finger, pinch to zoom, and switch tools, colors, and sizes from a compact mobile toolbar. It works on phones, tablets, desktops, and laptops, and includes a fullscreen mode for distraction-free drawing.",
+          q: "Does it work on phones and tablets?",
+          a: "Yes. The canvas accepts touch, mouse, and stylus input. On a phone or tablet, pinch gestures zoom and pan, and the toolbar compacts so the drawing area stays usable. A larger screen remains more comfortable for detailed work.",
+        },
+        {
+          q: "Can I draw with a mouse?",
+          a: "Absolutely. A mouse is well suited to diagrams, icons, wireframes, and notes. Use the shape tools for straight lines, draw each freehand stroke in one motion, and undo rather than patching a wobbly line with the eraser.",
+        },
+        {
+          q: "Is the sketchpad safe for children?",
+          a: "It needs no account, has no social feed or comments, and does not upload drawings. A child can draw without creating a profile. As with any website, a parent should supervise the session and decide whether the page's analytics and advertising scripts are acceptable.",
+        },
+        {
+          q: "Can I collaborate with someone else?",
+          a: "Not live. The sketchpad is designed as a private local canvas. To share work, export a PNG and send it, or use screen sharing during a call while one person draws. The whiteboard and drawing board work well for that kind of guided session.",
+        },
+        {
+          q: "Which tool page should I use?",
+          a: "Use the home canvas for general sketching and illustration, the [drawing board](/drawing-board/) for planning and sticky notes, the [whiteboard](/whiteboard/) for teaching and brainstorming, and [graph paper](/graph-paper/) for measured or technical work. The home canvas is the quick all-purpose option.",
         },
       ],
       closing: [
-        "That is the whole idea: a fast, private, genuinely free digital sketchpad — a simple sketchpad that does one thing beautifully. Whether you call it a sketchpad, a drawpad, or a drawing pad online, it is here for every idea. Give it a try — scroll up, pick a tool, and start creating.",
+        "The point of a browser sketchpad is to remove the gap between an idea and the first mark. No installation, no account, no decision about which file to open. Pick a tool, draw the big shapes, correct what does not work, and export when the idea is clear.",
+        "Open the canvas above and give it ten minutes. If you want a more structured start, the [complete guide to drawing online](/blog/complete-guide-to-online-drawing/) walks through the tools, the shortcuts, and a twenty-minute sketch routine in more detail.",
       ],
       toolLinksHeading: "More Free Drawing Tools",
     },
@@ -90,9 +189,9 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "Privacy Policy",
-      updated: "Last updated: September 2026. This policy explains what data Simple Sketchpad (\"we\", \"us\") may handle when you use this website.",
+      updated: "Last updated: October 2026. This policy explains what data Simple Sketchpad (\"we\", \"us\") may handle when you use this website.",
       shortHeading: "The short version",
-      short: ["We do not collect, store, or sell your personal information. Your drawings live in your own browser and never leave your device."],
+      short: ["Your drawings stay in your browser and are never uploaded. The site itself uses Google Analytics and Google AdSense, which may set cookies and process usage data as described below."],
       storeHeading: "What we store — and where",
       store: [
         "Simple Sketchpad is a client-side application. When you draw, the app saves your work to your browser's local storage so your drawing is restored the next time you visit. This data:",
@@ -105,12 +204,12 @@ export const CONTENT: Content = {
       notHeading: "What we do not do",
       notList: [
         "No accounts. There is nothing to sign up for and no profile is created.",
-        "No tracking. We do not use analytics, advertising, or fingerprinting scripts.",
-        "No third-party data sharing. We do not share data with anyone because we do not collect it.",
+        "Advertising and analytics. The site uses Google Analytics to measure traffic and Google AdSense to show ads. These services may set cookies and process data such as your IP address, approximate location, and the pages you visit. They never receive the contents of your canvas.",
+        "No sale of your drawings. We do not sell your drawings or share them with advertisers; the canvas stays on your device.",
       ],
       cookiesHeading: "Cookies",
       cookies: [
-        "This site does not set tracking cookies. Browsers may use local storage for the autosave feature described above; this is not a cookie and does not leave your device.",
+        "Google Analytics and Google AdSense may set cookies to measure traffic and serve ads. You can block or delete cookies in your browser settings, and you can control personalized advertising through Google Ads Settings (adssettings.google.com). Local storage used for autosave is not a cookie and stays on your device.",
       ],
       changesHeading: "Changes to this policy",
       changes: ["If we change this policy, the updated version will be posted on this page with a new \"last updated\" date."],
@@ -141,7 +240,7 @@ export const CONTENT: Content = {
     home: {
       h1: "Sketchpad — Tu Sketchpad en Línea Gratis y Pizarra Digital",
       intro: [
-        "Conoce Sketchpad, un sketchpad en línea gratis para cualquiera que quiera dibujar en línea sin registrarse, instalar programas ni lidiar con interfaces llenas de opciones. Ya sea que estés esbozando ideas, armando un diagrama, enseñando a dibujar a un niño o prototipando tu próximo proyecto, esta pizarra online te da un lienzo blanco nítido y lo esencial: nada más y nada menos. Sin cuenta. Sin marcas de agua. Sin anuncios que interrumpan tu flujo. Piensa en él como un simple bloc de dibujo siempre abierto en tu navegador, listo en cuanto llega la inspiración.",
+        "Conoce Sketchpad, un sketchpad en línea gratis para cualquiera que quiera dibujar en línea sin registrarse, instalar programas ni lidiar con interfaces llenas de opciones. Ya sea que estés esbozando ideas, armando un diagrama, enseñando a dibujar a un niño o prototipando tu próximo proyecto, esta pizarra online te da un lienzo blanco nítido y lo esencial: nada más y nada menos. Sin cuenta. Sin marcas de agua. Sin distracciones que interrumpan tu flujo. Piensa en él como un simple bloc de dibujo siempre abierto en tu navegador, listo en cuanto llega la inspiración.",
       ],
       toolsHeading: "Dibuja en Línea con el Sketchpad: Todo lo que Necesitas",
       tools: [
@@ -154,11 +253,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "La Pizarra Online Perfecta para Niños",
       kids: [
-        "¿Buscas una pizarra para niños? Este sketchpad digital es una opción maravillosa. No tiene anuncios ni avisos de compra, un botón de deshacer limpio invita a experimentar y los colores brillantes hacen que pintar sea divertido. Una pizarra online aprobada por los padres significa creatividad segura y sin distracciones, ideal para lluvias de ideas en clase o dibujos de tarde lluviosa. Los pequeños artistas pueden dibujar durante horas con solo su imaginación.",
+        "¿Buscas una pizarra para niños? Este sketchpad digital es una opción maravillosa. No tiene avisos de compra, un botón de deshacer limpio invita a experimentar y los colores brillantes hacen que pintar sea divertido. Una pizarra online aprobada por los padres significa creatividad segura y sin distracciones, ideal para lluvias de ideas en clase o dibujos de tarde lluviosa. Los pequeños artistas pueden dibujar durante horas con solo su imaginación.",
       ],
       faqHeading: "Preguntas Frecuentes",
       faq: [
-        { q: "¿Cuáles son los mejores sketchpads en línea?", a: "Los mejores sketchpads en línea funcionan directamente en tu navegador y no cuestan nada. Nuestro Sketchpad combina un pincel suave con un lápiz de grafito realista, además de formas, líneas, flechas, texto, autoguardado y exportación a PNG en un clic en cada dispositivo. Sin cuenta, sin marcas de agua y sin anuncios." },
+        { q: "¿Cuáles son los mejores sketchpads en línea?", a: "Los mejores sketchpads en línea funcionan directamente en tu navegador y no cuestan nada. Nuestro Sketchpad combina un pincel suave con un lápiz de grafito realista, además de formas, líneas, flechas, texto, autoguardado y exportación a PNG en un clic en cada dispositivo. Sin cuenta y sin marcas de agua." },
         { q: "¿Qué es un sketchpad?", a: "Un sketchpad es una superficie para dibujar y esbozar. Tradicionalmente es una pequeña libreta de papel en blanco; en formato digital es una app o web donde dibujas en pantalla con ratón, táctil o lápiz óptico. Este sketchpad en línea gratis pone un lienzo digital en blanco con herramientas, colores y formas en tu navegador." },
         { q: "¿Cómo se usa la app de sketchpad?", a: "Abre el sketchpad, elige una herramienta (pincel, lápiz, rectángulo, elipse, triángulo, línea, flecha o texto), selecciona un color y el grosor del trazo, y empieza a dibujar. Deshacer y rehacer corrigen errores, el texto anota tu trabajo, la cuadrícula mantiene todo alineado y Descargar PNG guarda tu dibujo como imagen." },
         { q: "¿Qué es una pizarra de dibujo?", a: "Una pizarra de dibujo es una superficie para hacer dibujos. Puede ser física (un bloc de papel o una tableta gráfica) o digital, como una pizarra de dibujo en el navegador. Las pizarras online te permiten esbozar directamente en pantalla con el dedo, el lápiz óptico o el ratón, sin hardware adicional." },
@@ -196,20 +295,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "Política de Privacidad",
-      updated: "Última actualización: septiembre de 2026. Esta política explica qué datos puede manejar Simple Sketchpad (\"nosotros\") cuando usas este sitio web.",
+      updated: "Última actualización: octubre de 2026. Esta política explica qué datos puede manejar Simple Sketchpad (\"nosotros\") cuando usas este sitio web.",
       shortHeading: "La versión corta",
-      short: ["No recopilamos, almacenamos ni vendemos tu información personal. Tus dibujos viven en tu propio navegador y nunca salen de tu dispositivo."],
+      short: ["Tus dibujos permanecen en tu navegador y nunca se suben. El sitio utiliza Google Analytics y Google AdSense, que pueden establecer cookies y tratar datos de uso como se describe a continuación."],
       storeHeading: "Qué almacenamos — y dónde",
       store: ["Simple Sketchpad es una aplicación de cliente. Cuando dibujas, la app guarda tu trabajo en el almacenamiento local del navegador para que tu dibujo se restaure la próxima vez que visites. Estos datos:"],
       storeList: ["se guardan solo en tu dispositivo;", "pueden borrarse en cualquier momento con las herramientas de \"borrar datos del sitio\" del navegador;", "nunca se transmiten a ningún servidor."],
       notHeading: "Qué no hacemos",
       notList: [
         "Sin cuentas. No hay nada a lo que registrarse y no se crea ningún perfil.",
-        "Sin seguimiento. No usamos scripts de analíticas, publicidad ni huellas digitales.",
-        "Sin compartir con terceros. No compartimos datos con nadie porque no los recopilamos.",
+        "Publicidad y analíticas. El sitio usa Google Analytics para medir el tráfico y Google AdSense para mostrar anuncios. Estos servicios pueden establecer cookies y tratar datos como tu dirección IP, ubicación aproximada y las páginas que visitas. Nunca reciben el contenido de tu lienzo.",
+        "Sin venta de tus dibujos. No vendemos tus dibujos ni los compartimos con anunciantes; el lienzo permanece en tu dispositivo.",
       ],
       cookiesHeading: "Cookies",
-      cookies: ["Este sitio no establece cookies de seguimiento. Los navegadores pueden usar almacenamiento local para la función de autoguardado; esto no es una cookie y no sale de tu dispositivo."],
+      cookies: ["Google Analytics y Google AdSense pueden establecer cookies para medir el tráfico y mostrar anuncios. Puedes bloquear o eliminar cookies en la configuración de tu navegador y controlar la publicidad personalizada en la Configuración de anuncios de Google (adssettings.google.com). El almacenamiento local usado para el autoguardado no es una cookie y permanece en tu dispositivo."],
       changesHeading: "Cambios en esta política",
       changes: ["Si cambiamos esta política, la versión actualizada se publicará en esta página con una nueva fecha de última actualización."],
       contactHeading: "Contacto",
@@ -239,7 +338,7 @@ export const CONTENT: Content = {
     home: {
       h1: "スケッチパッド｜無料オンラインスケッチパッド＆デジタル画板",
       intro: [
-        "登録やインストール、ごちゃごちゃした画面を敬遠するすべての人へ。これが無料のオンラインスケッチパッド、Sketchpadです。アイデアのスケッチ、図の整理、子どもへのお絵かき指導、新しい企画のプロトタイプなど、どんな用途でもこのオンライン画板が白く澄んだキャンバスと必要な機能を提供します。それ以上でも以下でもありません。アカウント不要、ウォーターマークなし、作業を妨げる広告もありません。ブラウザに常に開いている簡単なお絵かきパッド、インスピレーションが湧いた瞬間にすぐ使えます。",
+        "登録やインストール、ごちゃごちゃした画面を敬遠するすべての人へ。これが無料のオンラインスケッチパッド、Sketchpadです。アイデアのスケッチ、図の整理、子どもへのお絵かき指導、新しい企画のプロトタイプなど、どんな用途でもこのオンライン画板が白く澄んだキャンバスと必要な機能を提供します。それ以上でも以下でもありません。アカウント不要、ウォーターマークなし、作業を妨げるものもありません。ブラウザに常に開いている簡単なお絵かきパッド、インスピレーションが湧いた瞬間にすぐ使えます。",
       ],
       toolsHeading: "オンラインお絵かきスケッチパッド：必要なものだけ、シンプルに",
       tools: [
@@ -252,11 +351,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "子どもにぴったりのオンライン画板",
       kids: [
-        "子ども向けの描画パッドをお探しなら、このデジタルスケッチパッドがおすすめです。広告や購入を促す表示がなく、シンプルな元に戻すボタンで気軽に試せ、鮮やかな色見本で色遊びが楽しめます。保護者も安心できるオンラインお絵かきボードで、安全で集中を妨げない創造の場。教室でのアイデア出しや雨の午後の落書きに最適です。小さな芸術家たちは想像力だけで何時間でもオンラインお絵かきを楽しめます。ログインもメールも不要なので、思いつきから落書きまで数秒で始められます。",
+        "子ども向けの描画パッドをお探しなら、このデジタルスケッチパッドがおすすめです。購入を促す表示がなく、シンプルな元に戻すボタンで気軽に試せ、鮮やかな色見本で色遊びが楽しめます。保護者も安心できるオンラインお絵かきボードで、安全で集中を妨げない創造の場。教室でのアイデア出しや雨の午後の落書きに最適です。小さな芸術家たちは想像力だけで何時間でもオンラインお絵かきを楽しめます。ログインもメールも不要なので、思いつきから落書きまで数秒で始められます。",
       ],
       faqHeading: "よくある質問",
       faq: [
-        { q: "最高のオンラインスケッチパッドは？", a: "最高のオンラインスケッチパッドはブラウザでそのまま動作し、無料で使えます。当サイトのスケッチパッドは、なめらかなブラシとリアルなグラファイト鉛筆に加え、図形、線、矢印、テキスト、自動保存、ワンクリックPNG書き出しをすべての端末で提供します。アカウント不要、ウォーターマークなし、広告なしです。" },
+        { q: "最高のオンラインスケッチパッドは？", a: "最高のオンラインスケッチパッドはブラウザでそのまま動作し、無料で使えます。当サイトのスケッチパッドは、なめらかなブラシとリアルなグラファイト鉛筆に加え、図形、線、矢印、テキスト、自動保存、ワンクリックPNG書き出しをすべての端末で提供します。アカウント不要、ウォーターマークなしです。" },
         { q: "スケッチパッドとは？", a: "スケッチパッドは描画・スケッチ用の台です。伝統的には白紙の小さなパッドですが、デジタルではマウス・タッチ・スタイラスで画面に描くアプリやサイトです。当サイトの無料オンラインスケッチパッドは、描画ツール、色、図形を備えた白いデジタルキャンバスをブラウザに用意します。" },
         { q: "スケッチパッドアプリの使い方は？", a: "スケッチパッドを開き、ツール（ブラシ、鉛筆、長方形、円、三角形、直線、矢印、テキスト）を選び、色と線の太さを設定して描き始めます。元に戻す・やり直すで修正し、テキストで注釈を付け、グリッドで整列を保ち、PNGをダウンロードで画像として保存できます。" },
         { q: "描画パッドとは？", a: "描画パッドは絵を描くための面です。紙のスケッチブックやグラフィックタブレットのような物理的なものもあれば、ブラウザベースの描画パッドのようなデジタルなものもあります。オンライン描画パッドなら指、スタイラス、マウスで画面に直接描けます。" },
@@ -294,20 +393,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "プライバシーポリシー",
-      updated: "最終更新：2026年9月。このポリシーは、Simple Sketchpad（「当社」）が本ウェブサイトの利用時に取り扱う可能性のあるデータについて説明します。",
+      updated: "最終更新：2026年10月。このポリシーは、Simple Sketchpad（「当社」）が本ウェブサイトの利用時に取り扱う可能性のあるデータについて説明します。",
       shortHeading: "簡単なまとめ",
-      short: ["当社はあなたの個人情報を収集・保存・販売しません。あなたの作品は自分のブラウザにのみ存在し、端末から離れることはありません。"],
+      short: ["作品はブラウザ内に保存され、アップロードされることはありません。本サイトでは Google Analytics と Google AdSense を使用しており、以下に説明するように Cookie を設定し、利用データを処理する場合があります。"],
       storeHeading: "保存するものとその場所",
       store: ["Simple Sketchpadはクライアントサイドアプリケーションです。描画すると、アプリは作品をブラウザのローカルストレージに保存し、次回訪問時に復元します。このデータは："],
       storeList: ["あなたの端末にのみ保存されます。", "ブラウザの「サイトデータを消去」機能でいつでも削除できます。", "サーバーに送信されることは一切ありません。"],
       notHeading: "当社が行わないこと",
       notList: [
         "アカウントなし。登録するものはなく、プロフィールも作成されません。",
-        "トラッキングなし。分析、広告、フィンガープリンティングのスクリプトは使用しません。",
-        "第三者との共有なし。データを収集していないため、誰とも共有しません。",
+        "広告と分析。本サイトはアクセス解析に Google Analytics、広告表示に Google AdSense を使用しています。これらのサービスは Cookie を設定し、IP アドレス、おおよその位置情報、閲覧ページなどのデータを処理する場合があります。キャンバスの内容が送信されることはありません。",
+        "作品の販売なし。作品を販売したり広告主と共有したりすることはありません。キャンバスは端末内に留まります。",
       ],
       cookiesHeading: "Cookieについて",
-      cookies: ["このサイトはトラッキングCookieを設定しません。ブラウザは上記の自動保存機能にローカルストレージを使用する場合があります。これはCookieではなく、端末から出ることはありません。"],
+      cookies: ["Google Analytics と Google AdSense は、アクセス測定や広告配信のために Cookie を設定する場合があります。Cookie はブラウザ設定でブロックまたは削除でき、パーソナライズ広告は Google の広告設定（adssettings.google.com）で管理できます。自動保存に使われるローカルストレージは Cookie ではなく、端末内に留まります。"],
       changesHeading: "このポリシーの変更",
       changes: ["このポリシーを変更した場合、更新版をこのページに新しい「最終更新」日付とともに掲載します。"],
       contactHeading: "お問い合わせ",
@@ -337,7 +436,7 @@ export const CONTENT: Content = {
     home: {
       h1: "Sketchpad — Votre sketchpad en ligne gratuit et tableau de dessin numérique",
       intro: [
-        "Voici Sketchpad, un sketchpad en ligne gratuit pensé pour quiconque veut dessiner en ligne sans créer de compte, installer de logiciel ni subir des interfaces surchargées. Pour esquisser des idées, bâtir un schéma, apprendre à dessiner à un enfant ou prototyper votre prochain projet, ce tableau de dessin en ligne vous offre un canevas blanc net et l'essentiel — rien de plus, rien de moins. Pas de compte. Pas de filigrane. Pas de publicité qui casse votre rythme. Pensez-y comme à un simple bloc de dessin toujours ouvert dans votre navigateur, prêt dès que l'inspiration arrive.",
+        "Voici Sketchpad, un sketchpad en ligne gratuit pensé pour quiconque veut dessiner en ligne sans créer de compte, installer de logiciel ni subir des interfaces surchargées. Pour esquisser des idées, bâtir un schéma, apprendre à dessiner à un enfant ou prototyper votre prochain projet, ce tableau de dessin en ligne vous offre un canevas blanc net et l'essentiel — rien de plus, rien de moins. Pas de compte. Pas de filigrane. Rien qui casse votre rythme. Pensez-y comme à un simple bloc de dessin toujours ouvert dans votre navigateur, prêt dès que l'inspiration arrive.",
       ],
       toolsHeading: "Dessinez en ligne avec le sketchpad : tout ce qu'il faut, rien de superflu",
       tools: [
@@ -350,11 +449,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "Le tableau de dessin en ligne idéal pour les enfants",
       kids: [
-        "Vous cherchez une ardoise de dessin pour enfants ? Ce sketchpad numérique est un excellent choix. Pas de publicité ni d'invitations à acheter, un bouton annuler épuré encourage l'expérimentation, et des pastilles lumineuses rendent la couleur amusante. Un tableau de dessin en ligne approuvé par les parents, c'est une créativité sûre et sans distraction — idéal pour les brainstormings en classe ou les gribouillages d'après-midi pluvieux. Les jeunes artistes peuvent dessiner en ligne pendant des heures avec leur seule imagination.",
+        "Vous cherchez une ardoise de dessin pour enfants ? Ce sketchpad numérique est un excellent choix. Pas d'invitations à acheter, un bouton annuler épuré encourage l'expérimentation, et des pastilles lumineuses rendent la couleur amusante. Un tableau de dessin en ligne approuvé par les parents, c'est une créativité sûre et sans distraction — idéal pour les brainstormings en classe ou les gribouillages d'après-midi pluvieux. Les jeunes artistes peuvent dessiner en ligne pendant des heures avec leur seule imagination.",
       ],
       faqHeading: "Questions fréquentes",
       faq: [
-        { q: "Quels sont les meilleurs sketchpads en ligne ?", a: "Les meilleurs sketchpads en ligne s'exécutent directement dans votre navigateur et ne coûtent rien. Notre Sketchpad associe un pinceau lisse à un crayon graphite réaliste, plus des formes, des lignes, des flèches, du texte, une sauvegarde automatique et l'export PNG en un clic sur tous les appareils. Pas de compte, pas de filigrane, pas de publicité." },
+        { q: "Quels sont les meilleurs sketchpads en ligne ?", a: "Les meilleurs sketchpads en ligne s'exécutent directement dans votre navigateur et ne coûtent rien. Notre Sketchpad associe un pinceau lisse à un crayon graphite réaliste, plus des formes, des lignes, des flèches, du texte, une sauvegarde automatique et l'export PNG en un clic sur tous les appareils. Pas de compte, pas de filigrane." },
         { q: "Qu'est-ce qu'un sketchpad ?", a: "Un sketchpad est une surface pour dessiner et esquisser. Traditionnellement, c'est un petit carnet de papier vierge ; en version numérique, c'est une app ou un site où l'on dessine à l'écran à la souris, au doigt ou au stylet. Ce sketchpad en ligne gratuit met un canevas numérique vierge avec outils, couleurs et formes dans votre navigateur." },
         { q: "Comment utiliser l'app sketchpad ?", a: "Ouvrez le sketchpad, choisissez un outil (pinceau, crayon, rectangle, ellipse, triangle, ligne, flèche ou texte), sélectionnez une couleur et une épaisseur, puis dessinez. Annuler et rétablir corrigent, le texte annote, la grille aligne et Télécharger PNG sauvegarde votre dessin en image." },
         { q: "Qu'est-ce qu'une tablette de dessin ?", a: "Une tablette de dessin est une surface pour faire des dessins. Elle peut être physique (bloc de papier ou tablette graphique) ou numérique, comme une tablette de dessin en ligne. Les tablettes en ligne permettent d'esquisser directement à l'écran avec le doigt, le stylet ou la souris, sans matériel supplémentaire." },
@@ -392,20 +491,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "Politique de confidentialité",
-      updated: "Dernière mise à jour : septembre 2026. Cette politique explique quelles données Simple Sketchpad (\"nous\") peut traiter lorsque vous utilisez ce site web.",
+      updated: "Dernière mise à jour : octobre 2026. Cette politique explique quelles données Simple Sketchpad (\"nous\") peut traiter lorsque vous utilisez ce site web.",
       shortHeading: "La version courte",
-      short: ["Nous ne collectons, ne stockons ni ne vendons vos informations personnelles. Vos dessins vivent dans votre propre navigateur et ne quittent jamais votre appareil."],
+      short: ["Vos dessins restent dans votre navigateur et ne sont jamais envoyés. Le site utilise Google Analytics et Google AdSense, qui peuvent déposer des cookies et traiter des données d'usage comme décrit ci-dessous."],
       storeHeading: "Ce que nous stockons — et où",
       store: ["Simple Sketchpad est une application côté client. Lorsque vous dessinez, l'app sauvegarde votre travail dans le stockage local du navigateur afin que votre dessin soit restauré à votre prochaine visite. Ces données :"],
       storeList: ["ne sont stockées que sur votre appareil ;", "peuvent être effacées à tout moment via \"effacer les données du site\" de votre navigateur ;", "ne sont jamais transmises à aucun serveur."],
       notHeading: "Ce que nous ne faisons pas",
       notList: [
         "Pas de comptes. Rien à créer et aucun profil n'est généré.",
-        "Pas de suivi. Nous n'utilisons ni scripts d'analyse, ni publicité, ni empreinte numérique.",
-        "Pas de partage tiers. Nous ne partageons rien parce que nous ne collectons rien.",
+        "Publicité et analyse. Le site utilise Google Analytics pour mesurer le trafic et Google AdSense pour afficher des annonces. Ces services peuvent déposer des cookies et traiter des données telles que votre adresse IP, votre localisation approximative et les pages visitées. Ils ne reçoivent jamais le contenu de votre canevas.",
+        "Aucune vente de vos dessins. Nous ne vendons pas vos dessins et ne les partageons pas avec des annonceurs ; le canevas reste sur votre appareil.",
       ],
       cookiesHeading: "Cookies",
-      cookies: ["Ce site ne dépose pas de cookies de suivi. Les navigateurs peuvent utiliser le stockage local pour la fonction d'auto-sauvegarde décrite ci-dessus ; ce n'est pas un cookie et cela ne quitte pas votre appareil."],
+      cookies: ["Google Analytics et Google AdSense peuvent déposer des cookies pour mesurer le trafic et diffuser des annonces. Vous pouvez bloquer ou supprimer les cookies dans les réglages de votre navigateur et gérer la publicité personnalisée via les paramètres des annonces Google (adssettings.google.com). Le stockage local utilisé pour l'auto-sauvegarde n'est pas un cookie et reste sur votre appareil."],
       changesHeading: "Modifications de cette politique",
       changes: ["Si nous modifions cette politique, la version mise à jour sera publiée sur cette page avec une nouvelle date."],
       contactHeading: "Contact",
@@ -435,7 +534,7 @@ export const CONTENT: Content = {
     home: {
       h1: "Sketchpad — Dein kostenloses Online-Sketchpad und digitales Zeichenbrett",
       intro: [
-        "Das ist Sketchpad, ein kostenloses Online-Sketchpad für alle, die online zeichnen möchten, ohne sich anzumelden, Software zu installieren oder mit überladenen Oberflächen zu kämpfen. Ob du Ideen skizzierst, ein Diagramm aufbaust, einem Kind das Zeichnen beibringst oder dein nächstes Projekt prototypisierst – dieses Online-Zeichenbrett gibt dir eine gestochen scharfe weiße Leinwand und das Wesentliche. Nicht mehr und nicht weniger. Kein Konto. Keine Wasserzeichen. Keine Werbung, die deinen Fluss unterbricht. Denk daran wie an ein einfaches Zeichenpad, das immer offen in deinem Browser ist und bereit liegt, sobald die Inspiration kommt.",
+        "Das ist Sketchpad, ein kostenloses Online-Sketchpad für alle, die online zeichnen möchten, ohne sich anzumelden, Software zu installieren oder mit überladenen Oberflächen zu kämpfen. Ob du Ideen skizzierst, ein Diagramm aufbaust, einem Kind das Zeichnen beibringst oder dein nächstes Projekt prototypisierst – dieses Online-Zeichenbrett gibt dir eine gestochen scharfe weiße Leinwand und das Wesentliche. Nicht mehr und nicht weniger. Kein Konto. Keine Wasserzeichen. Nichts, was deinen Fluss unterbricht. Denk daran wie an ein einfaches Zeichenpad, das immer offen in deinem Browser ist und bereit liegt, sobald die Inspiration kommt.",
       ],
       toolsHeading: "Online zeichnen im Sketchpad: Alles was du brauchst, nichts was du nicht brauchst",
       tools: [
@@ -448,11 +547,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "Das perfekte Online-Zeichenbrett für Kinder",
       kids: [
-        "Du suchst ein Zeichenbrett für Kinder? Dieses digitale Sketchpad ist eine wunderbare Wahl. Keine Werbung und keine Kaufaufforderungen, ein sauberer Rückgängig-Button lädt zum Ausprobieren ein und bunte Farbfelder machen das Malen zum Spaß. Ein elternfreundliches Online-Zeichenbrett bedeutet sichere, ablenkungsfreie Kreativität – ideal für Brainstormings im Klassenzimmer oder Kritzeleien an Regentagen. Junge Künstler können stundenlang online zeichnen, nur mit ihrer Fantasie.",
+        "Du suchst ein Zeichenbrett für Kinder? Dieses digitale Sketchpad ist eine wunderbare Wahl. Keine Kaufaufforderungen, ein sauberer Rückgängig-Button lädt zum Ausprobieren ein und bunte Farbfelder machen das Malen zum Spaß. Ein elternfreundliches Online-Zeichenbrett bedeutet sichere, ablenkungsfreie Kreativität – ideal für Brainstormings im Klassenzimmer oder Kritzeleien an Regentagen. Junge Künstler können stundenlang online zeichnen, nur mit ihrer Fantasie.",
       ],
       faqHeading: "Häufig gestellte Fragen",
       faq: [
-        { q: "Was sind die besten Online-Sketchpad-Tools?", a: "Die besten Online-Sketchpad-Tools laufen direkt im Browser und kosten nichts. Unser Sketchpad verbindet einen weichen Pinsel mit einem realistischen Graphitstift, dazu Formen, Linien, Pfeile, Text, Autospeicherung und PNG-Export mit einem Klick auf jedem Gerät. Kein Konto, keine Wasserzeichen, keine Werbung." },
+        { q: "Was sind die besten Online-Sketchpad-Tools?", a: "Die besten Online-Sketchpad-Tools laufen direkt im Browser und kosten nichts. Unser Sketchpad verbindet einen weichen Pinsel mit einem realistischen Graphitstift, dazu Formen, Linien, Pfeile, Text, Autospeicherung und PNG-Export mit einem Klick auf jedem Gerät. Kein Konto, keine Wasserzeichen." },
         { q: "Was ist ein Sketchpad?", a: "Ein Sketchpad ist eine Fläche zum Zeichnen und Skizzieren. Traditionell ist es ein kleiner Block mit leerem Papier; digital ist es eine App oder Website, auf der du am Bildschirm mit Maus, Touch oder Stift zeichnest. Dieses kostenlose Online-Sketchpad bringt eine leere digitale Leinwand mit Werkzeugen, Farben und Formen direkt in deinen Browser." },
         { q: "Wie nutzt man die Sketchpad-App?", a: "Öffne das Sketchpad, wähle ein Werkzeug (Pinsel, Bleistift, Rechteck, Ellipse, Dreieck, Linie, Pfeil oder Text), wähle Farbe und Strichstärke und zeichne. Rückgängig/Wiederholen korrigiert, Text beschriftet, das Raster richtet aus und PNG herunterladen speichert dein Bild." },
         { q: "Was ist ein Zeichenpad?", a: "Ein Zeichenpad ist eine Fläche zum Anfertigen von Zeichnungen. Es kann physisch sein (Papiervorlage oder Grafiktablett) oder digital, wie ein browserbasiertes Zeichenpad. Online-Zeichenpads lassen dich direkt am Bildschirm mit Finger, Stift oder Maus skizzieren, ganz ohne zusätzliche Hardware." },
@@ -490,20 +589,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "Datenschutzerklärung",
-      updated: "Zuletzt aktualisiert: September 2026. Diese Erklärung beschreibt, welche Daten Simple Sketchpad (\"wir\") bei der Nutzung dieser Website verarbeiten kann.",
+      updated: "Zuletzt aktualisiert: Oktober 2026. Diese Erklärung beschreibt, welche Daten Simple Sketchpad (\"wir\") bei der Nutzung dieser Website verarbeiten kann.",
       shortHeading: "Die Kurzfassung",
-      short: ["Wir erfassen, speichern oder verkaufen deine persönlichen Daten nicht. Deine Zeichnungen leben in deinem eigenen Browser und verlassen dein Gerät nie."],
+      short: ["Deine Zeichnungen bleiben in deinem Browser und werden nie hochgeladen. Die Website nutzt Google Analytics und Google AdSense, die wie unten beschrieben Cookies setzen und Nutzungsdaten verarbeiten können."],
       storeHeading: "Was wir speichern – und wo",
       store: ["Simple Sketchpad ist eine clientseitige Anwendung. Wenn du zeichnest, speichert die App deine Arbeit im lokalen Speicher des Browsers, damit dein Bild bei deinem nächsten Besuch wiederhergestellt wird. Diese Daten:"],
       storeList: ["werden nur auf deinem Gerät gespeichert;", "können jederzeit über \"Seitendaten löschen\" deines Browsers entfernt werden;", "werden niemals an einen Server übertragen."],
       notHeading: "Was wir nicht tun",
       notList: [
         "Keine Konten. Es gibt nichts anzumelden und es wird kein Profil erstellt.",
-        "Kein Tracking. Wir nutzen keine Analytics-, Werbe- oder Fingerprinting-Skripte.",
-        "Keine Weitergabe an Dritte. Wir teilen nichts, weil wir nichts erheben.",
+        "Werbung und Analyse. Die Website nutzt Google Analytics zur Messung der Zugriffe und Google AdSense zur Anzeige von Anzeigen. Diese Dienste können Cookies setzen und Daten wie deine IP-Adresse, deinen ungefähren Standort und die besuchten Seiten verarbeiten. Sie erhalten niemals den Inhalt deiner Zeichenfläche.",
+        "Kein Verkauf deiner Zeichnungen. Wir verkaufen deine Zeichnungen nicht und geben sie nicht an Werbetreibende weiter; die Zeichenfläche bleibt auf deinem Gerät.",
       ],
       cookiesHeading: "Cookies",
-      cookies: ["Diese Seite setzt keine Tracking-Cookies. Browser können den lokalen Speicher für die oben beschriebene Autosave-Funktion nutzen; das ist kein Cookie und verlässt dein Gerät nicht."],
+      cookies: ["Google Analytics und Google AdSense können Cookies setzen, um Zugriffe zu messen und Anzeigen auszuliefern. Du kannst Cookies in den Browsereinstellungen blockieren oder löschen und personalisierte Werbung über die Google-Anzeigeneinstellungen (adssettings.google.com) steuern. Der lokale Speicher für die Autosave-Funktion ist kein Cookie und bleibt auf deinem Gerät."],
       changesHeading: "Änderungen an dieser Erklärung",
       changes: ["Wenn wir diese Erklärung ändern, wird die aktuelle Version auf dieser Seite mit neuem Datum veröffentlicht."],
       contactHeading: "Kontakt",
@@ -533,7 +632,7 @@ export const CONTENT: Content = {
     home: {
       h1: "Sketchpad — Seu Sketchpad Online Grátis e Quadro de Desenho Digital",
       intro: [
-        "Conheça o Sketchpad, um sketchpad online grátis para quem quer desenhar online sem se cadastrar, instalar programas ou lidar com interfaces poluídas. Se você está esboçando ideias, montando um diagrama, ensinando uma criança a desenhar ou criando um protótipo, esta prancha de desenho online oferece uma tela branca nítida e o essencial — nada mais, nada menos. Sem conta. Sem marcas d'água. Sem anúncios que interrompam seu fluxo. Pense nele como uma simples prancheta de desenho sempre aberta no seu navegador, pronta no momento em que a inspiração chegar.",
+        "Conheça o Sketchpad, um sketchpad online grátis para quem quer desenhar online sem se cadastrar, instalar programas ou lidar com interfaces poluídas. Se você está esboçando ideias, montando um diagrama, ensinando uma criança a desenhar ou criando um protótipo, esta prancha de desenho online oferece uma tela branca nítida e o essencial — nada mais, nada menos. Sem conta. Sem marcas d'água. Nada que interrompa seu fluxo. Pense nele como uma simples prancheta de desenho sempre aberta no seu navegador, pronta no momento em que a inspiração chegar.",
       ],
       toolsHeading: "Desenhe Online no Sketchpad: Tudo o que Você Precisa, Nada Além",
       tools: [
@@ -546,11 +645,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "O Quadro de Desenho Online Perfeito para Crianças",
       kids: [
-        "Procurando uma prancheta de desenho para crianças? Este sketchpad digital é uma ótima escolha. Não há anúncios nem pedidos de compra, um botão desfazer limpo incentiva a experimentação e as cores vivas tornam tudo divertido. Um quadro de desenho online aprovado pelos pais significa criatividade segura e sem distrações — ideal para chuvas de ideias na sala de aula ou rabiscos em tardes chuvosas. Pequenos artistas podem desenhar online por horas com apenas a imaginação.",
+        "Procurando uma prancheta de desenho para crianças? Este sketchpad digital é uma ótima escolha. Não há pedidos de compra, um botão desfazer limpo incentiva a experimentação e as cores vivas tornam tudo divertido. Um quadro de desenho online aprovado pelos pais significa criatividade segura e sem distrações — ideal para chuvas de ideias na sala de aula ou rabiscos em tardes chuvosas. Pequenos artistas podem desenhar online por horas com apenas a imaginação.",
       ],
       faqHeading: "Perguntas Frequentes",
       faq: [
-        { q: "Quais são os melhores sketchpads online?", a: "Os melhores sketchpads online funcionam direto no navegador e custam nada. Nosso Sketchpad combina um pincel suave com um lápis grafite realista, além de formas, linhas, setas, texto, salvamento automático e exportação PNG com um clique em todos os dispositivos. Sem conta, sem marcas d'água e sem anúncios." },
+        { q: "Quais são os melhores sketchpads online?", a: "Os melhores sketchpads online funcionam direto no navegador e custam nada. Nosso Sketchpad combina um pincel suave com um lápis grafite realista, além de formas, linhas, setas, texto, salvamento automático e exportação PNG com um clique em todos os dispositivos. Sem conta e sem marcas d'água." },
         { q: "O que é um sketchpad?", a: "Um sketchpad é uma superfície para desenhar e esboçar. Tradicionalmente é um pequeno bloco de papel em branco; no digital, é um app ou site onde você desenha na tela com mouse, toque ou caneta. Este sketchpad online grátis coloca uma tela digital em branco com ferramentas, cores e formas no seu navegador." },
         { q: "Como usar o app de sketchpad?", a: "Abra o sketchpad, escolha uma ferramenta (pincel, lápis, retângulo, elipse, triângulo, linha, seta ou texto), selecione cor e espessura, e comece a desenhar. Desfazer e refazer corrigem, o texto anota, a grade alinha e Baixar PNG salva seu desenho como imagem." },
         { q: "O que é uma prancheta de desenho?", a: "Uma prancheta de desenho é uma superfície para fazer desenhos. Pode ser física (um bloco de papel ou tablet gráfico) ou digital, como uma prancheta de desenho no navegador. Pranchetas online permitem esboçar direto na tela com o dedo, a caneta ou o mouse, sem hardware extra." },
@@ -588,20 +687,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "Política de Privacidade",
-      updated: "Última atualização: setembro de 2026. Esta política explica quais dados o Simple Sketchpad (\"nós\") pode tratar quando você usa este site.",
+      updated: "Última atualização: outubro de 2026. Esta política explica quais dados o Simple Sketchpad (\"nós\") pode tratar quando você usa este site.",
       shortHeading: "A versão curta",
-      short: ["Não coletamos, armazenamos nem vendemos suas informações pessoais. Seus desenhos vivem no seu navegador e nunca saem do seu dispositivo."],
+      short: ["Seus desenhos ficam no seu navegador e nunca são enviados. O site usa Google Analytics e Google AdSense, que podem definir cookies e tratar dados de uso conforme descrito abaixo."],
       storeHeading: "O que armazenamos — e onde",
       store: ["O Simple Sketchpad é um aplicativo do lado do cliente. Quando você desenha, o app salva seu trabalho no armazenamento local do navegador para restaurá-lo na próxima visita. Esses dados:"],
       storeList: ["são armazenados apenas no seu dispositivo;", "podem ser apagados a qualquer momento com as ferramentas de \"limpar dados do site\" do navegador;", "nunca são transmitidos a nenhum servidor."],
       notHeading: "O que não fazemos",
       notList: [
         "Sem contas. Não há nada para se cadastrar e nenhum perfil é criado.",
-        "Sem rastreamento. Não usamos scripts de análise, publicidade ou impressão digital.",
-        "Sem compartilhamento com terceiros. Não compartilhamos dados com ninguém porque não os coletamos.",
+        "Publicidade e análise. O site usa Google Analytics para medir o tráfego e Google AdSense para exibir anúncios. Esses serviços podem definir cookies e tratar dados como seu endereço IP, localização aproximada e páginas visitadas. Eles nunca recebem o conteúdo da sua tela.",
+        "Sem venda dos seus desenhos. Não vendemos seus desenhos nem os compartilhamos com anunciantes; a tela permanece no seu dispositivo.",
       ],
       cookiesHeading: "Cookies",
-      cookies: ["Este site não define cookies de rastreamento. Os navegadores podem usar o armazenamento local para o recurso de salvamento automático descrito acima; isso não é um cookie e não sai do seu dispositivo."],
+      cookies: ["Google Analytics e Google AdSense podem definir cookies para medir o tráfego e exibir anúncios. Você pode bloquear ou apagar cookies nas configurações do navegador e controlar a publicidade personalizada nas Configurações de anúncios do Google (adssettings.google.com). O armazenamento local usado para o salvamento automático não é um cookie e permanece no seu dispositivo."],
       changesHeading: "Mudanças nesta política",
       changes: ["Se alterarmos esta política, a versão atualizada será publicada nesta página com nova data."],
       contactHeading: "Contato",
@@ -631,7 +730,7 @@ export const CONTENT: Content = {
     home: {
       h1: "스케치패드 — 무료 온라인 스케치패드 겸 디지털 드로잉 보드",
       intro: [
-        "회원가입, 프로그램 설치, 복잡한 인터페이스 없이 온라인으로 그림을 그리고 싶은 모든 사람을 위한 무료 온라인 스케치패드 '스케치패드'를 만나보세요. 아이디어를 스케치하거나, 다이어그램을 정리하거나, 아이에게 그림을 가르치거나, 새 프로젝트를 프로토타이핑할 때 이 온라인 드로잉 보드는 깨끗한 흰 캔버스와 필요한 기능만을 제공합니다. 그 이상도 이하도 아닙니다. 계정 없음, 워터마크 없음, 작업을 방해하는 광고 없음. 브라우저에 항상 열려 있는 간단한 그림판으로, 영감이 떠오르는 순간 바로 사용할 수 있습니다.",
+        "회원가입, 프로그램 설치, 복잡한 인터페이스 없이 온라인으로 그림을 그리고 싶은 모든 사람을 위한 무료 온라인 스케치패드 '스케치패드'를 만나보세요. 아이디어를 스케치하거나, 다이어그램을 정리하거나, 아이에게 그림을 가르치거나, 새 프로젝트를 프로토타이핑할 때 이 온라인 드로잉 보드는 깨끗한 흰 캔버스와 필요한 기능만을 제공합니다. 그 이상도 이하도 아닙니다. 계정 없음, 워터마크 없음, 작업을 방해하는 요소 없음. 브라우저에 항상 열려 있는 간단한 그림판으로, 영감이 떠오르는 순간 바로 사용할 수 있습니다.",
       ],
       toolsHeading: "온라인 드로잉 스케치패드: 필요한 것만, 군더더기 없이",
       tools: [
@@ -644,11 +743,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "아이에게 딱 맞는 온라인 드로잉 보드",
       kids: [
-        "아이용 그림판을 찾고 계신가요? 이 디지털 스케치패드가 훌륭한 선택입니다. 광고나 구매를 유도하는 메시지가 없고, 깔끔한 실행 취소 버튼이 시도를 장려하며, 선명한 색상으로 색칠이 즐거워집니다. 부모가 믿을 수 있는 온라인 그림판은 안전하고 집중을 방해하지 않는 창의성의 공간입니다. 교실 아이디어 회의나 비 오는 오후의 낙서에 안성맞춤입니다. 어린 예술가들은 상상력만으로 몇 시간이고 온라인 스케치를 즐길 수 있습니다.",
+        "아이용 그림판을 찾고 계신가요? 이 디지털 스케치패드가 훌륭한 선택입니다. 구매를 유도하는 메시지가 없고, 깔끔한 실행 취소 버튼이 시도를 장려하며, 선명한 색상으로 색칠이 즐거워집니다. 부모가 믿을 수 있는 온라인 그림판은 안전하고 집중을 방해하지 않는 창의성의 공간입니다. 교실 아이디어 회의나 비 오는 오후의 낙서에 안성맞춤입니다. 어린 예술가들은 상상력만으로 몇 시간이고 온라인 스케치를 즐길 수 있습니다.",
       ],
       faqHeading: "자주 묻는 질문",
       faq: [
-        { q: "최고의 온라인 스케치패드 도구는 무엇인가요?", a: "최고의 온라인 스케치패드 도구는 브라우저에서 바로 실행되며 무료입니다. 저희 스케치패드는 부드러운 브러시와 사실적인 흑연 연필에 더해 도형, 선, 화살표, 텍스트, 자동 저장, 모든 기기에서의 원클릭 PNG 내보내기를 제공합니다. 계정 없음, 워터마크 없음, 광고 없음입니다." },
+        { q: "최고의 온라인 스케치패드 도구는 무엇인가요?", a: "최고의 온라인 스케치패드 도구는 브라우저에서 바로 실행되며 무료입니다. 저희 스케치패드는 부드러운 브러시와 사실적인 흑연 연필에 더해 도형, 선, 화살표, 텍스트, 자동 저장, 모든 기기에서의 원클릭 PNG 내보내기를 제공합니다. 계정 없음, 워터마크 없음입니다." },
         { q: "스케치패드란 무엇인가요?", a: "스케치패드는 그림을 그리고 낙서를 하기 위한 판입니다. 전통적으로는 빈 종이로 된 작은 패드지만, 디지털에서는 마우스·터치·스타일러스로 화면에 그리는 앱이나 웹사이트입니다. 이 무료 온라인 스케치패드는 그리기 도구, 색상, 도형을 갖춘 빈 디지털 캔버스를 브라우저에 제공합니다." },
         { q: "스케치패드 앱은 어떻게 사용하나요?", a: "스케치패드를 열고 도구(브러시, 연필, 사각형, 타원, 삼각형, 선, 화살표, 텍스트)를 고르고 색과 선 두께를 선택한 뒤 그리기 시작합니다. 실행 취소·다시 실행으로 수정하고, 텍스트로 메모하고, 격자로 정렬하며, PNG 다운로드로 이미지를 저장합니다." },
         { q: "드로잉 패드란 무엇인가요?", a: "드로잉 패드는 그림을 그리기 위한 판입니다. 종이 스케치북이나 그래픽 태블릿 같은 물리적인 것이 될 수도 있고, 브라우저 기반 그림판 같은 디지털 것이 될 수도 있습니다. 온라인 드로잉 패드는 추가 장비 없이 손가락, 스타일러스, 마우스로 화면에 직접 그릴 수 있습니다." },
@@ -686,20 +785,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "개인정보 처리방침",
-      updated: "최종 업데이트: 2026년 9월. 본 방침은 이 웹사이트를 이용할 때 Simple Sketchpad(\"저희\")가 처리할 수 있는 데이터에 대해 설명합니다.",
+      updated: "최종 업데이트: 2026년 10월. 본 방침은 이 웹사이트를 이용할 때 Simple Sketchpad(\"저희\")가 처리할 수 있는 데이터에 대해 설명합니다.",
       shortHeading: "간단 요약",
-      short: ["저희는 귀하의 개인정보를 수집, 저장, 판매하지 않습니다. 귀하의 그림은 귀하의 브라우저에만 존재하며 기기 밖으로 나가지 않습니다."],
+      short: ["그림은 브라우저에 저장되며 업로드되지 않습니다. 이 사이트는 Google Analytics와 Google AdSense를 사용하며, 아래에 설명한 대로 쿠키를 설정하고 사용 데이터를 처리할 수 있습니다."],
       storeHeading: "저장하는 것과 위치",
       store: ["Simple Sketchpad는 클라이언트 측 애플리케이션입니다. 그리면 앱이 브라우저의 로컬 저장소에 작업을 저장하여 다음 방문 시 복원합니다. 이 데이터는:"],
       storeList: ["귀하의 기기에만 저장됩니다.", "브라우저의 '사이트 데이터 삭제' 기능으로 언제든 지울 수 있습니다.", "어떤 서버로도 전송되지 않습니다."],
       notHeading: "저희가 하지 않는 것",
       notList: [
         "계정 없음. 가입할 것이 없으며 프로필도 만들어지지 않습니다.",
-        "추적 없음. 분석, 광고, 지문 인식 스크립트를 사용하지 않습니다.",
-        "제3자 공유 없음. 수집하지 않기 때문에 누구와도 데이터를 공유하지 않습니다.",
+        "광고 및 분석. 이 사이트는 트래픽 측정에 Google Analytics를, 광고 표시에 Google AdSense를 사용합니다. 이러한 서비스는 쿠키를 설정하고 IP 주소, 대략적인 위치, 방문한 페이지 등의 데이터를 처리할 수 있습니다. 캔버스 내용은 전송되지 않습니다.",
+        "그림 판매 없음. 그림을 판매하거나 광고주와 공유하지 않습니다. 캔버스는 기기에 남아 있습니다.",
       ],
       cookiesHeading: "쿠키",
-      cookies: ["이 사이트는 추적 쿠키를 설정하지 않습니다. 브라우저는 위에서 설명한 자동 저장 기능을 위해 로컬 저장소를 사용할 수 있습니다. 이는 쿠키가 아니며 기기를 떠나지 않습니다."],
+      cookies: ["Google Analytics와 Google AdSense는 트래픽 측정과 광고 게재를 위해 쿠키를 설정할 수 있습니다. 브라우저 설정에서 쿠키를 차단하거나 삭제할 수 있으며, 맞춤 광고는 Google 광고 설정(adssettings.google.com)에서 관리할 수 있습니다. 자동 저장에 사용되는 로컬 저장소는 쿠키가 아니며 기기에 남아 있습니다."],
       changesHeading: "본 방침의 변경",
       changes: ["본 방침을 변경할 경우, 업데이트된 버전을 새 '최종 업데이트' 날짜와 함께 이 페이지에 게시합니다."],
       contactHeading: "문의",
@@ -729,7 +828,7 @@ export const CONTENT: Content = {
     home: {
       h1: "Sketchpad — Il Tuo Sketchpad Online Gratis e Lavagna Digitale",
       intro: [
-        "Ecco Sketchpad, uno sketchpad online gratis per chiunque voglia disegnare online senza registrarsi, installare software o avere a che fare con interfacce piene di cose. Che tu stia abbozzando idee, costruendo un diagramma, insegnando a un bambino a disegnare o prototipando il tuo prossimo progetto, questa lavagna di disegno online ti offre una tela bianca nitida e l'essenziale — niente di più, niente di meno. Nessun account. Nessuna filigrana. Nessuna pubblicità che interrompe il tuo flusso. Pensala come a un semplice blocco da disegno sempre aperto nel tuo browser, pronto nel momento in cui arriva l'ispirazione.",
+        "Ecco Sketchpad, uno sketchpad online gratis per chiunque voglia disegnare online senza registrarsi, installare software o avere a che fare con interfacce piene di cose. Che tu stia abbozzando idee, costruendo un diagramma, insegnando a un bambino a disegnare o prototipando il tuo prossimo progetto, questa lavagna di disegno online ti offre una tela bianca nitida e l'essenziale — niente di più, niente di meno. Nessun account. Nessuna filigrana. Niente che interrompa il tuo flusso. Pensala come a un semplice blocco da disegno sempre aperto nel tuo browser, pronto nel momento in cui arriva l'ispirazione.",
       ],
       toolsHeading: "Disegna Online con lo Sketchpad: Tutto Quello che Serve, Niente di Più",
       tools: [
@@ -742,11 +841,11 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "La Lavagna di Disegno Online Perfetta per Bambini",
       kids: [
-        "Cerchi una lavagna per disegnare per bambini? Questo sketchpad digitale è una scelta meravigliosa. Niente pubblicità né richieste di acquisto, un pulsante Annulla pulito incoraggia la sperimentazione e i colori vivaci rendono il colore divertente. Una lavagna di disegno online approvata dai genitori significa creatività sicura e senza distrazioni — ideale per i brainstorming in classe o i ghirigori dei pomeriggi di pioggia. I piccoli artisti possono disegnare online per ore con la sola immaginazione.",
+        "Cerchi una lavagna per disegnare per bambini? Questo sketchpad digitale è una scelta meravigliosa. Niente richieste di acquisto, un pulsante Annulla pulito incoraggia la sperimentazione e i colori vivaci rendono il colore divertente. Una lavagna di disegno online approvata dai genitori significa creatività sicura e senza distrazioni — ideale per i brainstorming in classe o i ghirigori dei pomeriggi di pioggia. I piccoli artisti possono disegnare online per ore con la sola immaginazione.",
       ],
       faqHeading: "Domande Frequenti",
       faq: [
-        { q: "Quali sono i migliori sketchpad online?", a: "I migliori sketchpad online funzionano direttamente nel browser e non costano nulla. Il nostro Sketchpad unisce un pennello morbido a una matita a grafite realistica, più forme, linee, frecce, testo, salvataggio automatico ed esportazione PNG con un clic su ogni dispositivo. Nessun account, nessuna filigrana e nessuna pubblicità." },
+        { q: "Quali sono i migliori sketchpad online?", a: "I migliori sketchpad online funzionano direttamente nel browser e non costano nulla. Il nostro Sketchpad unisce un pennello morbido a una matita a grafite realistica, più forme, linee, frecce, testo, salvataggio automatico ed esportazione PNG con un clic su ogni dispositivo. Nessun account e nessuna filigrana." },
         { q: "Cos'è uno sketchpad?", a: "Uno sketchpad è una superficie per disegnare e abbozzare. Tradizionalmente è un piccolo blocco di carta bianca; in digitale è un'app o un sito dove disegni sullo schermo con mouse, tocco o stilo. Questo sketchpad online gratis mette una tela digitale bianca con strumenti, colori e forme nel tuo browser." },
         { q: "Come si usa l'app sketchpad?", a: "Apri lo sketchpad, scegli uno strumento (pennello, matita, rettangolo, ellisse, triangolo, linea, freccia o testo), seleziona colore e spessore, e inizia a disegnare. Annulla e Ripeti correggono, il testo annota, la griglia allinea e Scarica PNG salva il disegno come immagine." },
         { q: "Cos'è una tavoletta da disegno?", a: "Una tavoletta da disegno è una superficie per fare disegni. Può essere fisica (un blocco di carta o una tavoletta grafica) o digitale, come una tavoletta da disegno nel browser. Le tavolette online ti permettono di abbozzare direttamente sullo schermo con dito, stilo o mouse, senza hardware aggiuntivo." },
@@ -784,20 +883,20 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "Informativa sulla Privacy",
-      updated: "Ultimo aggiornamento: settembre 2026. Questa informativa spiega quali dati Simple Sketchpad (\"noi\") può trattare quando utilizzi questo sito web.",
+      updated: "Ultimo aggiornamento: ottobre 2026. Questa informativa spiega quali dati Simple Sketchpad (\"noi\") può trattare quando utilizzi questo sito web.",
       shortHeading: "La versione breve",
-      short: ["Non raccogliamo, conserviamo né vendiamo le tue informazioni personali. I tuoi disegni vivono nel tuo browser e non lasciano mai il tuo dispositivo."],
+      short: ["I tuoi disegni restano nel browser e non vengono mai caricati. Il sito usa Google Analytics e Google AdSense, che possono impostare cookie e trattare dati di utilizzo come descritto di seguito."],
       storeHeading: "Cosa conserviamo — e dove",
       store: ["Simple Sketchpad è un'applicazione lato client. Quando disegni, l'app salva il tuo lavoro nell'archiviazione locale del browser così che il disegno venga ripristinato alla prossima visita. Questi dati:"],
       storeList: ["sono conservati solo sul tuo dispositivo;", "possono essere cancellati in qualsiasi momento con gli strumenti \"cancella dati del sito\" del browser;", "non vengono mai trasmessi ad alcun server."],
       notHeading: "Cosa non facciamo",
       notList: [
         "Nessun account. Non c'è nulla a cui registrarsi e non viene creato alcun profilo.",
-        "Nessun tracciamento. Non usiamo script di analisi, pubblicità o impronte digitali.",
-        "Nessuna condivisione con terzi. Non condividiamo dati con nessuno perché non li raccogliamo.",
+        "Pubblicità e analisi. Il sito usa Google Analytics per misurare il traffico e Google AdSense per mostrare annunci. Questi servizi possono impostare cookie e trattare dati come il tuo indirizzo IP, la posizione approssimativa e le pagine visitate. Non ricevono mai il contenuto della tua tela.",
+        "Nessuna vendita dei tuoi disegni. Non vendiamo i tuoi disegni né li condividiamo con gli inserzionisti; la tela resta sul tuo dispositivo.",
       ],
       cookiesHeading: "Cookie",
-      cookies: ["Questo sito non imposta cookie di tracciamento. I browser possono usare l'archiviazione locale per la funzione di salvataggio automatico descritta sopra; non è un cookie e non lascia il tuo dispositivo."],
+      cookies: ["Google Analytics e Google AdSense possono impostare cookie per misurare il traffico e mostrare annunci. Puoi bloccare o eliminare i cookie nelle impostazioni del browser e gestire la pubblicità personalizzata nelle Impostazioni annunci di Google (adssettings.google.com). L'archiviazione locale usata per il salvataggio automatico non è un cookie e resta sul tuo dispositivo."],
       changesHeading: "Modifiche a questa informativa",
       changes: ["Se modifichiamo questa informativa, la versione aggiornata verrà pubblicata su questa pagina con una nuova data."],
       contactHeading: "Contatti",
@@ -827,7 +926,7 @@ export const CONTENT: Content = {
     home: {
       h1: "Sketchpad — 您的免费在线画板与数字绘图工具",
       intro: [
-        "Sketchpad 是一款免费的在线画板，专为想要在线绘图而无需注册、安装软件或面对杂乱界面的人打造。无论您是在勾勒想法、绘制图表、教孩子画画，还是为下一个项目制作原型，这款在线绘图板都能为您提供一个清晰的白色画布和必要的工具 — 不多也不少。没有账户，没有水印，没有广告打断您的创作流。把它想象成一个随时打开的简单绘图板，灵感来了就能用。",
+        "Sketchpad 是一款免费的在线画板，专为想要在线绘图而无需注册、安装软件或面对杂乱界面的人打造。无论您是在勾勒想法、绘制图表、教孩子画画，还是为下一个项目制作原型，这款在线绘图板都能为您提供一个清晰的白色画布和必要的工具 — 不多也不少。没有账户，没有水印，也没有打断创作流的东西。把它想象成一个随时打开的简单绘图板，灵感来了就能用。",
       ],
       toolsHeading: "在线绘图 — 所需功能，恰到好处",
       tools: [
@@ -840,13 +939,13 @@ export const CONTENT: Content = {
       ],
       kidsHeading: "完美的儿童在线绘图板",
       kids: [
-        "正在寻找适合孩子的绘图板？这款数字画板是一个绝佳的选择。没有广告或购买提示，简洁的撤销按钮鼓励尝试，鲜艳的色彩让画画变得有趣。家长认可的在线绘图板意味着安全、无干扰的创造力 — 非常适合课堂头脑风暴、雨天涂鸦，或快速学习形状和字母。年轻艺术家可以凭想象力在线画上几个小时。而且因为无需登录或电子邮件，孩子可以从想法到涂鸦只需几秒钟 — 安全无摩擦。家长们常把它收藏为首选的儿童绘图板：平静、多彩且无限包容。",
+        "正在寻找适合孩子的绘图板？这款数字画板是一个绝佳的选择。没有购买提示，简洁的撤销按钮鼓励尝试，鲜艳的色彩让画画变得有趣。家长认可的在线绘图板意味着安全、无干扰的创造力 — 非常适合课堂头脑风暴、雨天涂鸦，或快速学习形状和字母。年轻艺术家可以凭想象力在线画上几个小时。而且因为无需登录或电子邮件，孩子可以从想法到涂鸦只需几秒钟 — 安全无摩擦。家长们常把它收藏为首选的儿童绘图板：平静、多彩且无限包容。",
       ],
       faqHeading: "常见问题",
       faq: [
         {
           q: "什么是最好的在线画板工具？",
-          a: "最好的在线画板工具直接在浏览器中运行，完全免费。我们的画板将流畅的画笔与逼真的石墨铅笔相结合，还提供形状、直线、箭头、文字、自动保存和一键 PNG 导出，适用于所有设备。没有账户、没有水印、没有广告 — 只有一个干净的绘图空间。",
+          a: "最好的在线画板工具直接在浏览器中运行，完全免费。我们的画板将流畅的画笔与逼真的石墨铅笔相结合，还提供形状、直线、箭头、文字、自动保存和一键 PNG 导出，适用于所有设备。没有账户、没有水印 — 只有一个干净的绘图空间。",
         },
         {
           q: "什么是画板？",
@@ -908,9 +1007,9 @@ export const CONTENT: Content = {
     },
     privacy: {
       h1: "隐私政策",
-      updated: "最后更新：2026年9月。本政策说明了您使用本网站时 Sketchpad（\u201c我们\u201d）可能处理的数据。",
+      updated: "最后更新：2026年10月。本政策说明了您使用本网站时 Sketchpad（\u201c我们\u201d）可能处理的数据。",
       shortHeading: "简要说明",
-      short: ["我们不收集、存储或出售您的个人信息。您的绘图仅保存在浏览器中，永远不会离开您的设备。"],
+      short: ["您的绘图保存在浏览器中，绝不会被上传。本网站使用 Google Analytics 和 Google AdSense，它们可能会按下文所述设置 Cookie 并处理使用数据。"],
       storeHeading: "我们存储什么 — 以及存储位置",
       store: [
         "Sketchpad 是一款客户端应用。当您绘画时，应用会将作品保存到浏览器的本地存储中，以便下次访问时恢复。这些数据：",
@@ -923,12 +1022,12 @@ export const CONTENT: Content = {
       notHeading: "我们不做什么",
       notList: [
         "不设账户。无需注册，不创建个人资料。",
-        "不跟踪。我们不使用分析、广告或指纹识别脚本。",
-        "不与第三方共享数据。我们不与任何人共享数据，因为我们不收集数据。",
+        "广告与分析。本网站使用 Google Analytics 统计流量，并使用 Google AdSense 展示广告。这些服务可能会设置 Cookie，并处理您的 IP 地址、大致位置和访问的页面等数据。它们绝不会获取您画布中的内容。",
+        "不出售您的绘图。我们不会出售您的绘图，也不会将其分享给广告商；画布内容保留在您的设备上。",
       ],
       cookiesHeading: "Cookies",
       cookies: [
-        "本网站不设置跟踪 cookies。浏览器可能会使用本地存储来实现上述自动保存功能；这不是 cookie，也不会离开您的设备。",
+        "Google Analytics 和 Google AdSense 可能会设置 Cookie，用于统计流量和投放广告。您可以在浏览器设置中阻止或删除 Cookie，并通过 Google 广告设置（adssettings.google.com）管理个性化广告。用于自动保存的本地存储不是 Cookie，且保留在您的设备上。",
       ],
       changesHeading: "政策变更",
       changes: ["如果我们更改本政策，更新后的版本将发布在此页面上，并标注新的“最后更新”日期。"],

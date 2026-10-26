@@ -57,7 +57,6 @@ const en: ToolUIStrings = {
     boards: "Boards",
     menuAria: "Drawing tools and boards",
     short: {
-      "online-drawing": "Drawing Tool",
       "drawing-board": "Drawing Board",
       whiteboard: "Whiteboard",
       "graph-paper": "Graph Paper",
@@ -97,7 +96,6 @@ export const TOOL_UI: ToolUI = {
       boards: "Pizarras",
       menuAria: "Herramientas de dibujo y pizarras",
       short: {
-        "online-drawing": "Herramienta de Dibujo",
         "drawing-board": "Pizarra de Dibujo",
         whiteboard: "Pizarra Blanca",
         "graph-paper": "Papel Cuadriculado",
@@ -134,7 +132,6 @@ export const TOOL_UI: ToolUI = {
       boards: "ボード",
       menuAria: "お絵かきツールとボード",
       short: {
-        "online-drawing": "お絵かきツール",
         "drawing-board": "製図ボード",
         whiteboard: "ホワイトボード",
         "graph-paper": "方眼紙",
@@ -171,7 +168,6 @@ export const TOOL_UI: ToolUI = {
       boards: "Tableaux",
       menuAria: "Outils de dessin et tableaux",
       short: {
-        "online-drawing": "Outil de Dessin",
         "drawing-board": "Planche de Dessin",
         whiteboard: "Tableau Blanc",
         "graph-paper": "Papier Quadrillé",
@@ -208,7 +204,6 @@ export const TOOL_UI: ToolUI = {
       boards: "Boards",
       menuAria: "Zeichenwerkzeuge und Boards",
       short: {
-        "online-drawing": "Zeichenwerkzeug",
         "drawing-board": "Zeichenbrett",
         whiteboard: "Whiteboard",
         "graph-paper": "Millimeterpapier",
@@ -245,7 +240,6 @@ export const TOOL_UI: ToolUI = {
       boards: "Quadros",
       menuAria: "Ferramentas de desenho e quadros",
       short: {
-        "online-drawing": "Ferramenta de Desenho",
         "drawing-board": "Quadro de Desenho",
         whiteboard: "Quadro Branco",
         "graph-paper": "Papel Quadriculado",
@@ -282,7 +276,6 @@ export const TOOL_UI: ToolUI = {
       boards: "보드",
       menuAria: "그리기 도구와 보드",
       short: {
-        "online-drawing": "드로잉 도구",
         "drawing-board": "드로잉 보드",
         whiteboard: "화이트보드",
         "graph-paper": "모눈종이",
@@ -319,7 +312,6 @@ export const TOOL_UI: ToolUI = {
       boards: "Lavagne",
       menuAria: "Strumenti di disegno e lavagne",
       short: {
-        "online-drawing": "Strumento di Disegno",
         "drawing-board": "Tavoletta di Disegno",
         whiteboard: "Lavagna",
         "graph-paper": "Carta a Quadretti",
@@ -356,7 +348,6 @@ export const TOOL_UI: ToolUI = {
       boards: "画板",
       menuAria: "绘图工具和画板",
       short: {
-        "online-drawing": "绘图工具",
         "drawing-board": "绘图板",
         whiteboard: "白板",
         "graph-paper": "方格纸",

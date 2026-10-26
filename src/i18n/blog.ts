@@ -5,6 +5,11 @@ export interface BlogSection {
   ordered?: boolean;
 }
 
+export interface BlogFaq {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -14,7 +19,14 @@ export interface BlogPost {
   date: string;
   readingTime: number;
   sections: BlogSection[];
+  /** Site routes with a matching tool/page, used for inline links and tool CTAs. */
   related: string[];
+  /** Blog slugs to feature under "Keep reading". Falls back to the most recent posts. */
+  relatedPosts?: string[];
+  /** Optional FAQ block, also emitted as FAQPage structured data. */
+  faqs?: BlogFaq[];
+  /** Extra search terms for the meta keywords tag. */
+  keywords?: string[];
 }
 
 export const BLOG_POSTS: BlogPost[] = [
@@ -28,13 +40,13 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Guides",
     date: "2026-10-25",
     readingTime: 16,
-    related: ["/online-drawing", "/drawing-board", "/whiteboard", "/graph-paper"],
+    related: ["/drawing-board", "/whiteboard", "/graph-paper"],
     sections: [
       {
         paragraphs: [
           "Drawing online sounds like a compromise: a browser tab instead of a sketchbook, a mouse instead of a pencil. In practice, it is one of the fastest ways to turn a thought into something visible. There is nothing to install, nothing to charge, and no reason to postpone the first mark while you look for the right notebook.",
           "This guide is the long version. It covers what each tool is actually good for, how to make lines you are happy with using whatever input device you have, how to move from a loose sketch to a diagram somebody else can follow, and how to end a session with a file that is worth keeping. Read it start to finish once, then use the headings as a reference when you get stuck.",
-          "Everything here works in the free [online drawing](/online-drawing/) canvas, the [drawing board](/drawing-board/), the [whiteboard](/whiteboard/), and the [graph paper](/graph-paper/) view. The tools are the same; only the defaults change.",
+          "Everything here works in the free [sketchpad](/) canvas, the [drawing board](/drawing-board/), the [whiteboard](/whiteboard/), and the [graph paper](/graph-paper/) view. The tools are the same; only the defaults change.",
         ],
       },
       {
@@ -179,7 +191,7 @@ export const BLOG_POSTS: BlogPost[] = [
           "The canvas offers two exports, and they solve different problems.",
           "PNG is a flat image made of pixels. Use it for documents, slides, chat messages, social posts, and anything that will be viewed rather than edited. It is the safe default because it looks the same everywhere.",
           "SVG is a vector file made of shapes and paths. Use it for logos, icons, diagrams that will be resized, and anything headed into a design tool or a print workflow. Vector edges stay sharp at any size, which pixel images cannot do.",
-          "Either way, hide the grid first and frame the drawing the way you want it to appear. The export matches what is on screen, including the zoom, so a quick check before downloading saves a second attempt.",
+          "Either way, check the drawing at 100 percent before downloading. The export is cropped to the artwork itself, so the grid and the zoom level do not appear in the file.",
         ],
       },
       {
@@ -195,7 +207,7 @@ export const BLOG_POSTS: BlogPost[] = [
           "Minutes 11–14: refine line weights and add the second color for emphasis.",
           "Minutes 15–17: add short labels and arrows, or leave them out if they are not needed.",
           "Minutes 18–19: zoom out, simplify, and delete anything that does not help.",
-          "Minute 20: hide the grid if it is on, then export a PNG or SVG.",
+          "Minute 20: check the drawing at 100 percent, then export a PNG or SVG.",
         ],
       },
       {
@@ -207,7 +219,7 @@ export const BLOG_POSTS: BlogPost[] = [
           "Too many colors: cut to one neutral, one primary, one accent.",
           "Everything the same weight: make the outline thicker than the details, and the labels thicker still.",
           "Details too early: undo back to the blocking stage and re-place the big shapes first.",
-          "A grid that fights the drawing: turn it off before exporting, and choose spacing before you draw.",
+          "A grid that fights the drawing: choose the spacing before you draw, and remember that the grid stays out of exports.",
           "A diagram with no direction: pick left-to-right or top-to-bottom and make every arrow agree.",
         ],
       },
@@ -267,8 +279,8 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "The short version",
         paragraphs: [
-          "Set up a quiet canvas, pick one tool and three colors, block the big shapes, refine with the selection tool, add details and labels last, then export. Use the grid when alignment matters and hide it before you download. Treat undo as part of drawing rather than a correction, and treat autosave as a safety net rather than a backup.",
-          "That is the whole method. Everything else is practice. Open the [online drawing](/online-drawing/) canvas now and give it twenty minutes — the routine above is a good place to start.",
+          "Set up a quiet canvas, pick one tool and three colors, block the big shapes, refine with the selection tool, add details and labels last, then export. Use the grid when alignment matters; it stays out of the exported file. Treat undo as part of drawing rather than a correction, and treat autosave as a safety net rather than a backup.",
+          "That is the whole method. Everything else is practice. Open the [sketchpad](/) canvas now and give it twenty minutes — the routine above is a good place to start.",
         ],
       },
     ],
@@ -283,7 +295,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Tips & tutorials",
     date: "2026-10-14",
     readingTime: 6,
-    related: ["/online-drawing", "/drawing-board", "/graph-paper"],
+    related: ["/drawing-board", "/graph-paper"],
     sections: [
       {
         paragraphs: [
@@ -369,7 +381,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Guides",
     date: "2026-09-30",
     readingTime: 6,
-    related: ["/online-drawing", "/drawing-board", "/whiteboard"],
+    related: ["/drawing-board", "/whiteboard"],
     sections: [
       {
         paragraphs: [
@@ -415,7 +427,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "The practical takeaway",
         paragraphs: [
-          "Choose the right tool, lean on shapes, keep the canvas simple, and export when the idea is readable. You can try the full workflow in the [online drawing](/online-drawing/) tool or open a fresh [drawing board](/drawing-board/) and sketch for five minutes.",
+          "Choose the right tool, lean on shapes, keep the canvas simple, and export when the idea is readable. You can try the full workflow in the [sketchpad](/) or open a fresh [drawing board](/drawing-board/) and sketch for five minutes.",
         ],
       },
     ],
@@ -430,7 +442,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "For parents & teachers",
     date: "2026-09-18",
     readingTime: 5,
-    related: ["/kids-drawing", "/drawing-board", "/online-drawing"],
+    related: ["/kids-drawing", "/drawing-board"],
     sections: [
       {
         paragraphs: [
@@ -553,7 +565,7 @@ export const BLOG_POSTS: BlogPost[] = [
     category: "Product",
     date: "2026-08-22",
     readingTime: 6,
-    related: ["/online-drawing", "/drawing-board", "/whiteboard"],
+    related: ["/drawing-board", "/whiteboard"],
     sections: [
       {
         paragraphs: [
@@ -569,7 +581,7 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "PNG export turns a drawing into a file",
         paragraphs: [
-          "Use the download button or press Ctrl+D to export the canvas as a PNG. The exported image matches what you see on screen, including the current zoom level and any grid that is visible. If you want a clean final image, hide the grid first and frame the drawing the way you want it to appear.",
+          "Use the download button or press Ctrl+D to export the drawing as a PNG. The file is cropped to the marks on the canvas with a small margin and rendered at twice the screen resolution, so it stays sharp. The grid, the current zoom level, and selection outlines are not included.",
         ],
       },
       {
@@ -603,8 +615,326 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         heading: "Putting it together",
         paragraphs: [
-          "Sketch with the pencil, clean up with the brush, align with the grid, label with text, and export when the idea is ready. Autosave covers the gaps between sessions. If you want to see the whole flow in action, open the [online drawing](/online-drawing/) page and try a five-minute sketch.",
+          "Sketch with the pencil, clean up with the brush, align with the grid, label with text, and export when the idea is ready. Autosave covers the gaps between sessions. If you want to see the whole flow in action, open the [sketchpad](/) and try a five-minute sketch.",
         ],
+      },
+    ],
+  },
+  {
+    slug: "how-to-draw-a-floor-plan-online",
+    title: "How to Draw a Floor Plan Online: A Free Step-by-Step Guide",
+    description:
+      "Learn how to draw a floor plan online for free: measure a room, set a scale, draw walls, doors, and windows, add furniture, and export a clean plan.",
+    excerpt:
+      "A floor plan does not need expensive software. With graph paper, a pencil, and a few measurements, you can draw a room accurately enough to rearrange furniture, plan a move, or brief a contractor.",
+    category: "Guides",
+    date: "2026-10-26",
+    readingTime: 16,
+    related: ["/graph-paper", "/drawing-board", "/whiteboard"],
+    relatedPosts: [
+      "complete-guide-to-online-drawing",
+      "sketchpad-for-planning-and-diagrams",
+      "sketchpad-tips-for-beginners",
+    ],
+    keywords: [
+      "how to draw a floor plan",
+      "floor plan online",
+      "free floor plan maker",
+      "draw floor plan online",
+      "online floor plan drawing",
+      "room layout planner",
+      "floor plan sketch",
+      "house plan drawing",
+      "floor plan on graph paper",
+      "how to draw a room plan",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "A floor plan is the most practical drawing most people ever make. It answers a simple question from above: what is in this room, how big is it, and what fits where? You do not need CAD software or an architect to answer that. A browser canvas, a tape measure, and twenty minutes are enough for a sketch that is accurate enough to rearrange furniture, plan a move, or explain an idea to a builder.",
+          "This guide walks through the whole process in the order you would actually do it. You will measure the room, choose a scale, draw the walls as a closed loop, add doors, windows, and furniture, label the dimensions, and export a plan somebody else can read. Every step works in the free [graph paper](/graph-paper/) canvas, and the same drawing tools are available in the [drawing board](/drawing-board/) if you prefer a blank page.",
+          "One thing to get out of the way first: this is a planning sketch, not a permit drawing. It is excellent for layouts, furniture, rentals, and early design conversations. When a project needs structural changes, exact construction dimensions, or official approval, a professional with CAD tools should produce the final drawing. For everything before that point, a sketch plan is faster and easier to change.",
+        ],
+      },
+      {
+        heading: "The short answer: draw the shell, then fill it",
+        paragraphs: [
+          "If you only remember one thing, remember the order. Floor plans go wrong when people start with furniture and try to fit the room around it. Build the container first, then decide what goes inside.",
+        ],
+        ordered: true,
+        list: [
+          "Measure each wall and note the door and window openings.",
+          "Open the graph paper canvas and choose a scale, such as one square = one foot.",
+          "Draw the outer walls as one closed shape, including wall thickness.",
+          "Cut openings for doors and windows, and mark which way doors swing.",
+          "Block in large furniture and fixed fixtures with simple rectangles and circles.",
+          "Add dimensions, room names, a north arrow, and a scale note.",
+          "Check the plan at 100 percent, then export it as PNG or SVG.",
+        ],
+      },
+      {
+        heading: "What a floor plan actually needs",
+        paragraphs: [
+          "A useful plan carries a small amount of information beyond the shapes. Before you start drawing, know what you are trying to communicate, because that decides how much detail belongs on the page.",
+        ],
+        list: [
+          "Wall positions and thickness, so the room reads as an enclosed space rather than a floating rectangle.",
+          "Door openings and swing direction, because a door that cannot open is a layout problem.",
+          "Windows, with enough of a mark to show where light enters and where a wall is solid.",
+          "Fixed elements: sink, toilet, bathtub, kitchen run, radiators, stairs, and built-in storage.",
+          "Movable furniture at roughly the right size, so clearances can be judged.",
+          "Dimensions for the overall room and any wall that matters for a decision.",
+          "Labels for room names, plus a north arrow and a scale note if the plan leaves your screen.",
+        ],
+      },
+      {
+        heading: "Before you draw: measure the room properly",
+        paragraphs: [
+          "A plan is only as good as its measurements. You do not need laser precision, but you do need consistency. Measure in the same unit everywhere and write the numbers down before you open the canvas, so you are not guessing halfway through.",
+        ],
+        ordered: true,
+        list: [
+          "Sketch the room roughly on paper first, with a line for every wall.",
+          "Measure wall to wall at the widest point, at skirting-board height rather than at the ceiling.",
+          "Measure each wall twice. If the numbers disagree by more than a couple of centimetres, measure again.",
+          "Record every opening: door width, window width, and the distance from each opening to the nearest corner.",
+          "Note anything that protrudes into the room, such as a chimney breast, radiator, pipe box, or column.",
+          "Photograph each wall. Photos make it much easier to remember which side the door hinges are on.",
+          "Measure the ceiling height once, even though it does not appear on the plan. It matters when you judge whether a wardrobe will feel oppressive.",
+        ],
+      },
+      {
+        heading: "Pick a scale you can keep",
+        paragraphs: [
+          "Scale is the relationship between a distance on the canvas and a distance in the room. You do not need a formal architectural ratio for a sketch, but you do need one rule and the discipline to keep it.",
+          "The simplest rule is one grid square equals one foot (about 30 cm). A typical bedroom is then roughly 11 to 13 squares wide, which fits comfortably on screen. If you are drawing a whole apartment, one square per metre keeps the page manageable. For a small bathroom or a detailed kitchen run, one square per six inches (15 cm) gives you room for accurate fittings.",
+          "Write the scale in the corner of the drawing while you work. It takes five seconds and it prevents the most common floor plan error: a plan where the sofa is drawn at one scale and the room at another, making a tight room look generous.",
+        ],
+        list: [
+          "One square = 1 ft (30 cm): good default for bedrooms, living rooms, and offices.",
+          "One square = 1 m: good for a whole flat or house, where furniture detail matters less.",
+          "One square = 6 in (15 cm): good for bathrooms, kitchens, and storage planning.",
+        ],
+      },
+      {
+        heading: "Set up the graph paper canvas",
+        paragraphs: [
+          "Open the [online graph paper](/graph-paper/) and set it up before you draw a single wall. Two minutes of setup saves a lot of correcting later.",
+        ],
+        ordered: true,
+        list: [
+          "Press F to go fullscreen so the toolbar and browser tabs stop competing for space.",
+          "Choose a square grid. Dotted grids look softer, but square cells make wall lengths easier to count.",
+          "Set the grid spacing to match your scale, and turn on snap to grid.",
+          "Pick the pencil for measuring lines and the rectangle tool for walls and furniture.",
+          "Choose a neutral dark color for structure and leave a second color for annotation.",
+          "Stay at 100% zoom while you block the walls; zoom in only when you place small fixtures.",
+        ],
+      },
+      {
+        heading: "Draw the outside walls as one closed loop",
+        paragraphs: [
+          "Walls are the skeleton of the plan. Draw them as a closed loop so the room reads as an enclosed space, and give them thickness. A single hairline rectangle looks like a table, not a room.",
+          "A practical approach is two rectangles: the outer edge of the walls and the inner edge. The gap between them is wall thickness, usually 4 to 6 inches (10 to 15 cm) for interior walls and a little more for exterior walls. With snap to grid on, both rectangles stay aligned and the wall reads evenly all the way around.",
+          "If the room is not a simple rectangle, build it from rectangles rather than trying to draw the whole outline freehand. Place one rectangle for each straight section, line the edges up, then add the interior walls that divide the space. Simple shapes snapped to the grid will always look more convincing than a single wobbly outline.",
+        ],
+        list: [
+          "Draw the inner wall line first, because that is the usable floor area.",
+          "Add the outer line a few grid cells away, or draw a second rectangle and align its centre.",
+          "Keep the same wall thickness everywhere unless the building genuinely changes.",
+          "Use the select tool to nudge walls rather than redrawing them.",
+        ],
+      },
+      {
+        heading: "Add doors and windows the way they behave",
+        paragraphs: [
+          "Openings are where a floor plan starts to feel real. A door is not just a gap in a wall; it is a gap plus a swing. Draw the opening in the wall, then draw a thin line for the door leaf and a quarter-circle arc for the space it sweeps through. If two doors open into each other, the arcs will overlap and you will see the problem immediately.",
+          "Most interior doors are 30 to 36 inches (75 to 90 cm) wide, with 32 inches being a common compromise. Front doors are wider, often 36 inches. A doorway needs a little more space than the door itself because of the frame, so leave a grid cell of clearance on each side when you are blocking in furniture.",
+          "Windows are usually drawn as a thinner double line inside the wall, sometimes with a break in the wall line. Note the sill height for anything that will sit underneath a window, such as a desk, a sofa, or a radiator. Sliding doors and folding doors get a straight track line instead of a swing arc, which keeps the drawing honest about how much floor space they actually need.",
+        ],
+        list: [
+          "Mark every door with a swing arc; it is the fastest way to spot a blocked layout.",
+          "Show which side the door is hinged on, not just which wall it sits in.",
+          "Use a straight line for sliding and bifold doors instead of an arc.",
+          "Add window sill heights as a short note if furniture will sit below them.",
+        ],
+      },
+      {
+        heading: "Block furniture instead of decorating it",
+        paragraphs: [
+          "At planning stage, furniture is a footprint, not an illustration. A rectangle with a label is more useful than a detailed sofa, because the rectangle is easy to resize and move. Keep everything to the same level of abstraction so the plan reads consistently.",
+          "Use known sizes so the plan tells the truth. A double bed is roughly 4 ft 6 in by 6 ft 3 in (135 by 190 cm). A three-seat sofa is usually 6 to 7 ft (1.8 to 2.1 m) long and about 3 ft deep. A dining chair needs about 2 ft (60 cm) of table edge and 3 ft of pull-out space behind it. A kitchen counter is 2 ft (60 cm) deep, and a standard bathtub is 5 ft 6 in by 2 ft 6 in (170 by 75 cm).",
+          "Place the largest items first, then the ones that need a wall or a service connection, then the small pieces. If a piece does not fit, do not shrink it until it does. Move it, rotate it, or decide it belongs in another room. A plan that quietly lies about furniture size is worse than no plan at all.",
+        ],
+        list: [
+          "Beds, sofas, tables, and storage: simple rectangles at true size.",
+          "Chairs: small squares, rotated where needed.",
+          "Round tables: use the ellipse tool and keep the footprint as circular as you can.",
+          "Rugs: a light outline at low opacity, so they read as floor rather than furniture.",
+        ],
+      },
+      {
+        heading: "Annotate dimensions, names, and orientation",
+        paragraphs: [
+          "Labels turn a drawing into a document. Add them after the layout is stable, when you know which numbers a reader will actually need. You do not have to dimension every wall; dimension the ones that answer a question.",
+        ],
+        list: [
+          "Overall room width and depth, placed outside the walls.",
+          "Any wall run that constrains furniture: a chimney breast, a kitchen return, a short wall beside a door.",
+          "Room names in short, plain words: bedroom, kitchen, store, landing.",
+          "A north arrow, drawn as a simple line and a triangle.",
+          "A scale note such as one square = 1 ft, placed in a corner where it will survive cropping.",
+          "A date if the plan is part of a project conversation and may be revised.",
+        ],
+      },
+      {
+        heading: "Check the plan before you share it",
+        paragraphs: [
+          "Most floor plan mistakes are visible in ten seconds if you know what to look for. Run this check before the plan leaves your browser:",
+        ],
+        ordered: true,
+        list: [
+          "Does the outer wall loop close, with no gaps at the corners?",
+          "Does every door have room to open, including the space in front of it?",
+          "Are there any furniture pieces overlapping each other or passing through a wall?",
+          "Is the walking route between the door and the main furniture at least 2 ft 6 in (75 cm) wide?",
+          "Do the dimensions match the measurements you wrote down?",
+          "Is the same scale used for the room and for the furniture?",
+          "Can someone who has never seen the room tell where the window and the door are?",
+          "Is the grid hidden, and is the whole plan inside the frame?",
+        ],
+      },
+      {
+        heading: "A worked example: one bedroom in ten minutes",
+        paragraphs: [
+          "Here is how the process looks with real numbers. The room is 12 ft by 10 ft (3.6 by 3.0 m), with one door on the short wall and one window on the long wall.",
+        ],
+        ordered: true,
+        list: [
+          "Set the scale to one square = 1 ft. Draw a 12 by 10 rectangle for the inside face of the walls.",
+          "Offset a second rectangle by half a square to show wall thickness, and align the corners with snap on.",
+          "Mark a 3 ft opening on the short wall for the door, then draw the leaf and a quarter-circle swing into the room.",
+          "Mark a 5 ft window on the long wall as a double line, and note a 3 ft sill height underneath it.",
+          "Place a 4.5 by 6.3 rectangle for the bed, with its head against the long wall away from the door.",
+          "Add two 2 by 2 bedside tables and a 6 by 2 wardrobe along the opposite wall.",
+          "Check clearances: 3 ft beside the bed, 2.5 ft at the foot, and a clear path from the door.",
+          "Label the room, add the overall dimensions outside the walls, and export.",
+        ],
+      },
+      {
+        heading: "Test a layout before you move anything",
+        paragraphs: [
+          "The real value of a sketch plan is that it lets you try a layout without lifting a sofa. Draw the room once, then duplicate the plan or save a copy before you experiment. Move the furniture, rotate the bed, swap the desk and the wardrobe, and see which arrangement leaves the best walking route.",
+          "Judge each version by clearances rather than by how tidy it looks. A 3 ft (90 cm) gap is comfortable for a main route, 2 ft 6 in (75 cm) is workable beside a bed, and anything under 2 ft (60 cm) will feel tight every day. Leave more space in front of a wardrobe or a chest of drawers than the drawer itself pulls out.",
+          "Sketch the version you like, then sketch one alternative with the main pieces swapped. Comparing two plans side by side is much easier than arguing about a room in the abstract, and the losing version often reveals a constraint you had not noticed.",
+        ],
+      },
+      {
+        heading: "Export the right file for the job",
+        paragraphs: [
+          "When the plan is ready, decide where it is going before you export it. Use PNG for documents, chat messages, slides, and anything that only needs to be looked at. It is a flat image that opens everywhere and preserves exactly what you drew.",
+          "Use SVG when the plan will be resized, printed, or edited further. Vector files keep their edges sharp at any size, which matters for a plan that might become a poster, a worksheet, or an asset inside a design tool. If you plan to keep adjusting the layout, the autosaved canvas is the working copy and the export is the archive.",
+          "Check the plan at 100 percent before exporting. The file is cropped to the drawing itself, so the grid and zoom level stay out of it. If the plan is leaving your screen, add the scale note and north arrow before exporting. Those two marks are what make a drawing portable.",
+        ],
+      },
+      {
+        heading: "Where a sketch plan stops being enough",
+        paragraphs: [
+          "A sketch plan is a communication tool, not a construction document. It is the right choice for deciding where the bed goes, testing a desk layout, planning a move, or showing a landlord what you mean. It is the wrong choice for anything that will be built from the drawing without interpretation.",
+          "If walls are being removed, a load-bearing structure is involved, electrics or plumbing are moving, or a permit is required, the final plan needs a qualified professional and proper drafting software. That is not a limitation of a browser canvas; it is the difference between thinking visually and certifying a design. Use the sketch to have a better first conversation, then hand the decision to someone with the right tools.",
+        ],
+      },
+      {
+        heading: "Seven floor plan mistakes to avoid",
+        paragraphs: [
+          "These are the errors that show up again and again in hand-drawn plans. Each one has a quick correction:",
+        ],
+        list: [
+          "Drawing walls as a single line: use two lines or two rectangles to show thickness.",
+          "Forgetting door swings: add the arc, then move any furniture that blocks it.",
+          "Mixing scales: pick one rule and write it on the plan.",
+          "Shrinking furniture to make it fit: keep true sizes and change the layout instead.",
+          "Ignoring fixed elements: measure radiators, chimney breasts, and pipe boxes before you draw.",
+          "Crowding the drawing with labels: keep only the dimensions a reader needs.",
+          "Exporting with the grid visible: not a problem; the grid is never included in the file.",
+        ],
+      },
+      {
+        heading: "Floor plan, mind map, or whiteboard?",
+        paragraphs: [
+          "Not every spatial idea needs a measured plan. If you are deciding what belongs in a room, a [whiteboard](/whiteboard/) with sticky notes is faster: one note per object, grouped by zone, no scale required. If you are deciding where the objects physically fit, switch to graph paper and draw them at size.",
+          "The distinction is useful because it stops you from over-measuring an early idea. Start loose on a whiteboard, agree on the zones, then draw the winning layout as a plan. The same workflow applies to project planning: brainstorm first, then commit to boxes, arrows, and dimensions. Our guide to [turning a doodle into a diagram](/blog/sketchpad-for-planning-and-diagrams/) covers that transition in more detail.",
+        ],
+      },
+      {
+        heading: "Using a floor plan with a team or a class",
+        paragraphs: [
+          "A plan is a good shared object because everyone reads it the same way. In an office move, draw the room shell once, then let each person place their own desk footprint and check the route to the door. In a classroom, give pairs a simple room and a fixed list of furniture, and ask them to fit everything without blocking the entrance.",
+          "Keep the rules short so the exercise stays about spatial reasoning: walls first, doors second, big furniture third, labels last. Export the finished plan as a PNG so it can be printed or added to a shared document. Because the canvas saves locally and needs no account, there is no setup cost and no audience beyond the people in the room.",
+        ],
+      },
+      {
+        heading: "A five-minute practice exercise",
+        paragraphs: [
+          "The fastest way to learn this workflow is to draw a room you already know. Pick one room, measure it roughly, and give yourself five minutes:",
+        ],
+        ordered: true,
+        list: [
+          "Minute 1: open the graph paper, set one square = 1 ft, and turn on snap.",
+          "Minute 2: draw the inner rectangle and the outer wall line.",
+          "Minute 3: add the door opening, the swing arc, and the window.",
+          "Minute 4: block in the three largest pieces of furniture at true size.",
+          "Minute 5: check the door clearance, add the dimension and scale note, and export.",
+        ],
+      },
+      {
+        heading: "The short version",
+        paragraphs: [
+          "Measure the walls and openings, choose one scale, draw the wall loop with thickness, cut the doors and windows, block the furniture at true size, then label and export. Keep the drawing abstract, keep the clearances honest, and use the plan to compare layouts rather than to decorate them.",
+          "That is enough to plan a move, rearrange a room, or brief someone else without ambiguity. Open the [online graph paper](/graph-paper/) and draw the room you are sitting in. The five-minute exercise above is a good place to start, and the [complete guide to drawing online](/blog/complete-guide-to-online-drawing/) covers the tools in more depth if you want to go further.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I draw a floor plan online for free?",
+        answer:
+          "Yes. Open the online graph paper in any browser, set a scale such as one square equals one foot, and draw with the pencil, rectangle, line, and text tools. There is no account, no trial, and no watermark, and you can export the finished plan as a PNG or SVG.",
+      },
+      {
+        question: "What scale should I use for a floor plan?",
+        answer:
+          "One grid square per foot (30 cm) works for most bedrooms, living rooms, and offices. Use one square per metre for a whole apartment, or one square per six inches (15 cm) for bathrooms and kitchens where fittings need more detail. Pick one scale, write it on the plan, and keep it consistent.",
+      },
+      {
+        question: "Do I need exact measurements to draw a floor plan?",
+        answer:
+          "No, but you need consistent ones. Measure each wall once, check the numbers, and note door and window openings. A plan that is accurate to a few centimetres is plenty for furniture layouts. If the drawing will guide construction, a professional should measure and draft it.",
+      },
+      {
+        question: "Can I draw a floor plan on a phone or tablet?",
+        answer:
+          "Yes. The canvas works with touch, mouse, and stylus, and pinch gestures zoom and pan. A larger screen makes wall lengths easier to judge, so a laptop or tablet is more comfortable for a full room. On a phone, keep the plan simple and use fullscreen mode.",
+      },
+      {
+        question: "Can I print or share the floor plan?",
+        answer:
+          "Export a PNG for sharing in chat, documents, or slides, and an SVG if the plan will be resized or edited further. Include the scale note and north arrow so the drawing still makes sense away from the canvas.",
+      },
+      {
+        question: "Is my floor plan private?",
+        answer:
+          "Yes. Drawings are saved in your browser on your own device and are not uploaded to a server. That also means the plan does not follow you to another device, so export a file when you want a permanent copy.",
+      },
+      {
+        question: "Can I use a sketch floor plan for a building permit?",
+        answer:
+          "No. A permit or construction drawing needs precise dimensions, structural information, and a qualified professional. A sketch plan is ideal for planning furniture, briefing a designer, or comparing layouts before that stage begins.",
+      },
+      {
+        question: "How long does it take to draw a floor plan?",
+        answer:
+          "A single room takes about ten to twenty minutes once you have measurements. Most of that time goes into measuring and checking clearances, not drawing. The drawing itself is a rectangle for the walls, a few openings, and labelled blocks for the furniture.",
       },
     ],
   },
@@ -621,7 +951,29 @@ export function sortedPosts(): BlogPost[] {
 }
 
 export function relatedPosts(post: BlogPost, limit = 3): BlogPost[] {
-  return BLOG_POSTS.filter((candidate) => candidate.slug !== post.slug).slice(0, limit);
+  const explicit: BlogPost[] = [];
+  for (const slug of post.relatedPosts ?? []) {
+    const candidate = getPost(slug);
+    if (candidate && candidate.slug !== post.slug) explicit.push(candidate);
+  }
+  const fallback = sortedPosts().filter(
+    (candidate) => candidate.slug !== post.slug && !explicit.some((item) => item.slug === candidate.slug),
+  );
+  return [...explicit, ...fallback].slice(0, limit);
+}
+
+/** Anchor id for an H2, stable across builds. */
+export { headingId } from "../lib/anchors";
+
+/** Rough word count of the body, used for BlogPosting structured data. */
+export function postWordCount(post: BlogPost): number {
+  const chunks = post.sections.flatMap((section) => [
+    section.heading ?? "",
+    ...(section.paragraphs ?? []),
+    ...(section.list ?? []),
+  ]);
+  for (const faq of post.faqs ?? []) chunks.push(faq.question, faq.answer);
+  return chunks.join(" ").split(/\s+/).filter(Boolean).length;
 }
 
 export function formatPostDate(iso: string): string {

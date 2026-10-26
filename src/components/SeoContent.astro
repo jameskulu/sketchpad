@@ -4,6 +4,7 @@ import ToolLinks from "./ToolLinks.astro";
 import type { PageContent } from "../i18n/content-types";
 import { DEFAULT_LOCALE, type Locale } from "../i18n/locales";
 import { sortedPosts } from "../i18n/blog";
+import { headingIds } from "../lib/anchors";
 
 interface Props {
   locale: Locale;
@@ -11,8 +12,21 @@ interface Props {
 }
 
 const { locale, home } = Astro.props;
+const extraSections = home.sections ?? [];
 
-const h2 = "mt-12 text-xl font-semibold tracking-tight text-ink";
+const legacyHeadings = [home.toolsHeading, home.rankingHeading, home.kidsHeading];
+const allHeadings = [
+  ...legacyHeadings,
+  ...extraSections.map((section) => section.heading),
+  home.faqHeading,
+];
+const ids = headingIds(allHeadings);
+const [toolsId, rankingId, kidsId] = ids;
+const sectionIds = ids.slice(legacyHeadings.length, legacyHeadings.length + extraSections.length);
+const faqId = ids[ids.length - 1];
+const toc = allHeadings.map((heading, index) => ({ id: ids[index], heading }));
+
+const h2 = "mt-12 scroll-mt-24 text-xl font-semibold tracking-tight text-ink";
 const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
 const faqQ = "text-[16px] font-semibold text-ink";
 const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
@@ -26,16 +40,54 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
       <p class="mt-6 text-[17px] leading-8 text-ink-secondary"><Prose text={para} /></p>
     ))}
 
-    <h2 class={h2}>{home.toolsHeading}</h2>
+    {toc.length >= 5 && (
+      <nav class="mt-10 rounded-xl border border-hairline bg-canvas-soft p-5" aria-label="On this page">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-mute">On this page</p>
+        <ol class="mt-3 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+          {toc.map((item) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                class="text-[14px] leading-6 text-ink-secondary transition-colors hover:text-primary"
+              >
+                {item.heading}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    <h2 id={toolsId} class={h2}>{home.toolsHeading}</h2>
     {home.tools.map((para) => <p class={p}><Prose text={para} /></p>)}
 
-    <h2 class={h2}>{home.rankingHeading}</h2>
+    <h2 id={rankingId} class={h2}>{home.rankingHeading}</h2>
     {home.ranking.map((para) => <p class={p}><Prose text={para} /></p>)}
 
-    <h2 class={h2}>{home.kidsHeading}</h2>
+    <h2 id={kidsId} class={h2}>{home.kidsHeading}</h2>
     {home.kids.map((para) => <p class={p}><Prose text={para} /></p>)}
 
-    <h2 class={h2}>{home.faqHeading}</h2>
+    {extraSections.map((section, index) => (
+      <section>
+        <h2 id={sectionIds[index]} class={h2}>{section.heading}</h2>
+        {section.paragraphs.map((para) => (
+          <p class={p}><Prose text={para} /></p>
+        ))}
+        {section.list && (
+          section.ordered ? (
+            <ol class="mt-4 list-decimal space-y-2 pl-5 text-[16px] leading-8 text-ink-secondary">
+              {section.list.map((item) => <li><Prose text={item} /></li>)}
+            </ol>
+          ) : (
+            <ul class="mt-4 list-disc space-y-2 pl-5 text-[16px] leading-8 text-ink-secondary">
+              {section.list.map((item) => <li><Prose text={item} /></li>)}
+            </ul>
+          )
+        )}
+      </section>
+    ))}
+
+    <h2 id={faqId} class={h2}>{home.faqHeading}</h2>
     <div class="mt-4 divide-y divide-hairline">
       {home.faq.map((item) => (
         <div class="py-4">

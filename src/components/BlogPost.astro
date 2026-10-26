@@ -1,7 +1,13 @@
 ---
 import SiteShell from "./SiteShell.astro";
 import Prose from "./Prose.astro";
-import { formatPostDate, relatedPosts, type BlogPost } from "../i18n/blog";
+import {
+  formatPostDate,
+  headingId,
+  postWordCount,
+  relatedPosts,
+  type BlogPost,
+} from "../i18n/blog";
 import { DEFAULT_LOCALE } from "../i18n/locales";
 import { SITE } from "../lib/site";
 
@@ -13,6 +19,30 @@ const { post } = Astro.props;
 const related = relatedPosts(post);
 const postUrl = new URL(`/blog/${post.slug}/`, SITE.url).href;
 const blogUrl = new URL("/blog/", SITE.url).href;
+const wordCount = postWordCount(post);
+
+const seenHeadings = new Map<string, number>();
+const toc: { id: string; heading: string }[] = [];
+const renderedSections = post.sections.map((section) => {
+  if (!section.heading) return { ...section, id: undefined };
+  const base = headingId(section.heading);
+  const count = (seenHeadings.get(base) ?? 0) + 1;
+  seenHeadings.set(base, count);
+  const id = count === 1 ? base : `${base}-${count}`;
+  toc.push({ id, heading: section.heading });
+  return { ...section, id };
+});
+if (post.faqs?.length) toc.push({ id: "faq", heading: "Frequently asked questions" });
+
+const TOOL_LABELS: Record<string, string> = {
+  "/drawing-board": "Drawing board",
+  "/whiteboard": "Whiteboard",
+  "/graph-paper": "Graph paper",
+  "/kids-drawing": "Kids drawing",
+};
+const relatedTools = post.related
+  .map((route) => ({ href: `${route}/`, label: TOOL_LABELS[route] }))
+  .filter((tool): tool is { href: string; label: string } => Boolean(tool.label));
 
 const articleData = {
   "@context": "https://schema.org",
@@ -43,7 +73,25 @@ const articleData = {
     "@id": postUrl,
   },
   url: postUrl,
+  wordCount,
+  timeRequired: `PT${post.readingTime}M`,
+  ...(post.keywords?.length ? { keywords: post.keywords.join(", ") } : {}),
 };
+
+const faqData = post.faqs?.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: post.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    }
+  : null;
 
 const breadcrumbData = {
   "@context": "https://schema.org",
@@ -70,6 +118,10 @@ const breadcrumbData = {
   ],
 };
 
+const structuredData = faqData
+  ? [articleData, breadcrumbData, faqData]
+  : [articleData, breadcrumbData];
+
 const h2 = "mt-10 text-xl font-semibold tracking-tight text-ink";
 const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
 ---
@@ -77,9 +129,10 @@ const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
 <SiteShell
   title={post.title}
   description={post.description}
+  keywords={post.keywords?.join(", ")}
   locale={DEFAULT_LOCALE}
   route={`/blog/${post.slug}`}
-  structuredData={[articleData, breadcrumbData]}
+  structuredData={structuredData}
   localized={false}
   showLangSwitcher={false}
   ogType="article"
@@ -103,9 +156,27 @@ const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
       {post.excerpt}
     </p>
 
-    {post.sections.map((section) => (
+    {toc.length >= 5 && (
+      <nav class="mt-8 rounded-xl border border-hairline bg-canvas-soft p-5" aria-label="On this page">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-mute">On this page</p>
+        <ol class="mt-3 space-y-1.5">
+          {toc.map((item) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                class="text-[14px] leading-6 text-ink-secondary transition-colors hover:text-primary"
+              >
+                {item.heading}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    {renderedSections.map((section) => (
       <section>
-        {section.heading && <h2 class={h2}>{section.heading}</h2>}
+        {section.heading && <h2 id={section.id} class={`${h2} scroll-mt-24`}>{section.heading}</h2>}
         {section.paragraphs?.map((para) => (
           <p class={p}><Prose text={para} /></p>
         ))}
@@ -123,12 +194,38 @@ const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
       </section>
     ))}
 
+    {post.faqs && post.faqs.length > 0 && (
+      <section>
+        <h2 id="faq" class={`${h2} scroll-mt-24`}>Frequently asked questions</h2>
+        <dl class="mt-4 divide-y divide-hairline border-y border-hairline">
+          {post.faqs.map((faq) => (
+            <div class="py-4">
+              <dt class="text-[16px] font-semibold leading-7 text-ink">{faq.question}</dt>
+              <dd class="mt-2 text-[15px] leading-7 text-ink-secondary">{faq.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    )}
+
     <aside class="mt-12 rounded-xl border border-hairline bg-canvas-soft p-6">
       <h2 class="text-lg font-semibold tracking-tight text-ink">Try it in your browser</h2>
       <p class="mt-2 text-[14px] leading-7 text-ink-secondary">
         Simple Sketchpad is free, needs no account, and saves your drawing as you work. Open a blank canvas
         and put these ideas into practice.
       </p>
+      {relatedTools.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {relatedTools.map((tool) => (
+            <a
+              href={tool.href}
+              class="rounded-full border border-hairline bg-white px-3 py-1.5 text-[12px] font-medium text-ink-secondary transition-colors hover:border-primary/40 hover:text-ink"
+            >
+              {tool.label}
+            </a>
+          ))}
+        </div>
+      )}
       <a
         href="/"
         class="mt-4 inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep"
