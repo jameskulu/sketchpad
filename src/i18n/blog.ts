@@ -938,6 +938,313 @@ export const BLOG_POSTS: BlogPost[] = [
       },
     ],
   },
+  {
+    slug: "how-to-draw-a-flowchart-online",
+    title: "How to Draw a Flowchart Online: A Complete, Practical Guide",
+    description:
+      "Learn how to draw a clear flowchart online: choose the right symbols, map the happy path, add decisions and swimlanes, avoid the common mistakes, and export a diagram people can follow.",
+    excerpt:
+      "A good flowchart is not a diagram of everything you know. It is a diagram of the one path a reader needs to follow. Here is how to build one from a blank canvas, step by step.",
+    category: "Guides",
+    date: "2026-10-27",
+    readingTime: 18,
+    related: ["/whiteboard", "/drawing-board", "/graph-paper"],
+    relatedPosts: [
+      "sketchpad-for-planning-and-diagrams",
+      "complete-guide-to-online-drawing",
+      "how-to-draw-a-floor-plan-online",
+    ],
+    keywords: [
+      "how to draw a flowchart",
+      "flowchart online",
+      "free flowchart maker",
+      "flowchart symbols",
+      "flowchart tutorial",
+      "process flow diagram",
+      "decision flowchart",
+      "online flowchart tool",
+      "how to make a flowchart",
+      "flowchart examples",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "A flowchart is the most quietly useful drawing most teams ever make. It answers three questions on one page: what happens next, who does it, and what happens when something goes wrong. That is why flowcharts survive in engineering, support, operations, and software while fancier diagram styles come and go.",
+          "You do not need dedicated diagramming software to draw a good one. A browser canvas with rectangles, arrows, and text is enough, and it has an advantage over a rigid template library: you can think in the same space where you present. This guide walks through the full process, from deciding whether you need a flowchart at all to exporting one that still makes sense when it leaves your screen.",
+          "Every step works in the free [whiteboard](/whiteboard/) canvas. The same tools are available on the [drawing board](/drawing-board/) if you want a blank page, or on [graph paper](/graph-paper/) if the process has rows, columns, or a fixed layout.",
+        ],
+      },
+      {
+        heading: "The short answer: start with the question, not the boxes",
+        paragraphs: [
+          "Most bad flowcharts are bad before the first shape is drawn, because the author starts by listing steps instead of deciding what the chart must prove. Fix that first, and the drawing becomes much easier.",
+        ],
+        ordered: true,
+        list: [
+          "Write the question the chart must answer in one sentence, such as \u201cHow does a refund request get approved?\u201d",
+          "List every step as a short verb phrase on paper or in sticky notes. Do not draw anything yet.",
+          "Mark the single starting event and every acceptable ending. A process can have several ends, but it should have one obvious start.",
+          "Open the whiteboard and place the start at the top, with room below for the longest path.",
+          "Connect the happy path first: the sequence that happens when nothing goes wrong.",
+          "Add decisions only where the path genuinely splits, and label every arrow with the condition that sends the reader down it.",
+          "Read the chart aloud from start to finish, then delete, align, and shorten until a stranger could follow it.",
+        ],
+      },
+      {
+        heading: "What a flowchart is good at, and what it is not",
+        paragraphs: [
+          "A flowchart is a tool for showing a sequence with branches. It is at its best when the reader needs to know what to do next, who owns the step, or where a request can go wrong. Onboarding sequences, approval chains, support escalations, publishing pipelines, refund policies, and troubleshooting guides all fit the form.",
+          "It is a poor fit for open-ended thinking. If you are still deciding which steps exist, a wall of sticky notes is faster and more honest than a tidy chart that implies a decision has been made. It is also the wrong shape for showing relationships between ideas, a schedule over time, or the layout of a screen. Those need a mind map, a timeline, or a wireframe respectively.",
+          "The practical rule: use a flowchart when the reader has to follow a path. Use something else when the reader has to compare, explore, or imagine. Our guide to [turning a doodle into a diagram](/blog/sketchpad-for-planning-and-diagrams/) covers the earlier, messier stage if you are not ready to commit to a sequence yet.",
+        ],
+      },
+      {
+        heading: "The only symbols most flowcharts need",
+        paragraphs: [
+          "Formal flowchart standards define dozens of shapes. Real workplace diagrams use six or seven, and readers only reliably recognise a handful. Stick to this set unless your industry expects otherwise.",
+        ],
+        list: [
+          "Terminator (rounded rectangle or stadium): the start and the end. Label it with an event, not a task: \u201crequest received\u201d, \u201crefund issued\u201d.",
+          "Process (rectangle): a single action or task. Begin each label with a verb: check order, send email, issue refund.",
+          "Decision (diamond): a question with two or more exits. Draw a square, then rotate it 45 degrees with the select tool, or build a diamond from four straight lines.",
+          "Input or output (parallelogram, or a rectangle with a note): information entering or leaving the process, such as a customer form or a confirmation email.",
+          "Document (rectangle with a wavy bottom edge, or just a labelled rectangle): a physical or digital artefact the process produces.",
+          "Predefined process (rectangle with a second vertical line near each side): a step handled by another documented process. Use it to avoid exploding a chart into detail.",
+          "Connector (small circle): a jump from one part of the page to another, or to a second page. Label it A, B, C so the pairs are easy to match.",
+          "Annotation (bracket or dashed line with text): a note for the reader that is not part of the flow.",
+        ],
+      },
+      {
+        heading: "Set up a canvas that keeps you honest",
+        paragraphs: [
+          "A few minutes of setup prevents most of the correction work later. The goal is a canvas where boxes align without effort and arrows have room to breathe.",
+        ],
+        ordered: true,
+        list: [
+          "Press F to go fullscreen and close the tabs you are not using.",
+          "Turn the grid on for alignment. On the [graph paper](/graph-paper/) view, snap-to-grid is already enabled, which is the fastest way to keep a flowchart even.",
+          "Pick two line weights: a medium weight for boxes and a thinner one for arrows. The contrast does most of the visual hierarchy for you.",
+          "Choose three colors at most: a dark neutral for structure, one fill for decisions, and one accent for the steps you want the reader to notice.",
+          "Set the default text size large enough to read at 100 percent. Flowcharts fail when labels are shrunk to fit boxes instead of boxes being made to fit labels.",
+          "Leave a margin around the whole page. Arrows that touch the edge look accidental, and export crops close to the artwork.",
+        ],
+      },
+      {
+        heading: "Step 1: Draw the happy path before anything else",
+        paragraphs: [
+          "The happy path is the shortest successful route through the process. Draw it as a straight column of rectangles from the start terminator to the end terminator, connected with downward arrows. No decisions, no exceptions, no annotations.",
+          "This first pass is deliberately boring. It establishes the spine of the chart and the vertical spacing that everything else will hang from. If a step does not belong on the shortest successful route, it does not belong in this pass.",
+          "Keep the boxes the same width where the labels allow it. Equal width creates a visual rhythm and makes the chart scannable; wildly different box sizes make the reader work to find the sequence. If one label is much longer than the others, shorten the label rather than widening one box.",
+          "When the spine is in place, walk it out loud. \u201cRequest received, check order, verify address, issue refund, notify customer, done.\u201d If a step feels missing or out of order, fix it now, while there is nothing else to disturb.",
+        ],
+      },
+      {
+        heading: "Step 2: Add decisions one at a time",
+        paragraphs: [
+          "Decisions are where flowcharts earn their keep and where they most often fall apart. Add one diamond at a time, and finish its branches before starting the next.",
+          "A decision should be a real question with a clear answer. \u201cIs the order within 30 days?\u201d is a decision. \u201cWhat should we do about the order?\u201d is not; it is a conversation that needs its own chart. If a diamond needs three or four exits, ask whether two of them are actually the same outcome, or whether the chart has drifted into showing policy rather than process.",
+          "Give each exit its own arrow and write the condition on the arrow itself: yes, no, approved, declined, in stock, out of stock. An unlabelled branch forces the reader to guess, and guessing is exactly what a flowchart is supposed to prevent.",
+          "Send the less common branch to the side rather than straight down. The eye reads the vertical spine as the main path, so keeping exceptions off to one side preserves the story. Rejoin the branches at a single point when they produce the same next step; separate paths that never meet should end in their own terminators.",
+        ],
+      },
+      {
+        heading: "Step 3: Keep the reader moving in one direction",
+        paragraphs: [
+          "Choose one reading direction and commit to it. Top to bottom suits processes with clear stages; left to right suits pipelines and handoffs. Mixing the two is the fastest way to make a simple process look complicated.",
+          "Arrows should enter a shape on one side and leave from another, not both from the top or both from the bottom. A short, straight arrow is easier to follow than a long diagonal, so move the boxes rather than routing the line around them.",
+          "Try to avoid crossing lines. When two arrows must cross, a small hop or a break in one line signals that they do not connect. If the drawing needs more than two or three crossings, the layout is telling you something: split the chart, move a branch, or use a connector to jump to a second page.",
+          "A useful test is to trace the chart with a finger. If your finger has to double back, change direction twice, or hover over a junction to decide where to go, the reader will struggle too. Redraw for the finger, not for the page.",
+        ],
+      },
+      {
+        heading: "Step 4: Use swimlanes when responsibility changes hands",
+        paragraphs: [
+          "A flowchart shows what happens. A swimlane flowchart also shows who makes it happen. The moment a process involves more than one person, team, or system, lanes prevent the most common ambiguity: a step that everyone assumes someone else owns.",
+          "Draw one horizontal lane per owner, label the lanes at the left edge, and place each step inside the lane of the person who performs it. Arrows that cross a lane boundary are handoffs, and they are worth counting. Every crossing is a place where work can wait, be dropped, or be misunderstood.",
+        ],
+        list: [
+          "Use the customer, the support agent, and the finance team as lanes for a refund process.",
+          "Keep each step in exactly one lane. A step shared by two owners usually means two steps.",
+          "Draw handoff arrows as straight vertical lines where possible; they read faster than diagonals.",
+          "Label the handoff with the artefact that moves: request form, approval note, payment file.",
+          "If one lane is overloaded with boxes, the process is probably concentrated on one role. That is a finding, not a drawing problem.",
+        ],
+      },
+      {
+        heading: "Step 5: Label the arrows, not just the boxes",
+        paragraphs: [
+          "Box labels describe actions; arrow labels describe conditions. Both are necessary. \u201cApprove refund\u201d tells the reader what happens, while \u201cwithin 30 days\u201d on the incoming arrow tells them why this path was taken.",
+          "Keep arrow labels to two or three words. Put them near the middle of the line, with a small gap so the text does not sit on top of the stroke. If an arrow label needs a sentence, the decision above it is doing too much work and should be split.",
+          "This is also where you document the rules that people usually keep in their heads. \u201cManager approval required\u201d, \u201citem opened\u201d, \u201cpayment failed twice\u201d. Written on the chart, those rules become reviewable. Left unwritten, they become the reason two people disagree about the process a month later.",
+        ],
+      },
+      {
+        heading: "Step 6: Build hierarchy with size, color, and space",
+        paragraphs: [
+          "A flowchart with forty identical boxes is technically correct and practically unreadable. Visual hierarchy tells the reader where to start and what matters.",
+        ],
+        list: [
+          "Make the start and end terminators visually distinct, either with a fill or a heavier outline.",
+          "Keep ordinary process boxes light. Use a single accent fill for decisions so the eye can find the branches.",
+          "Reserve color for meaning. If red means \u201cexception\u201d, do not also use red for a normal step.",
+          "Leave more space between stages than between a box and its arrow. Grouping by whitespace is faster to read than grouping by borders.",
+          "Use bold text for the few labels that carry the main story, and normal weight for supporting detail.",
+        ],
+      },
+      {
+        heading: "A worked example: the refund request",
+        paragraphs: [
+          "Here is the whole method applied to a process most online stores recognise. The chart answers one question: how does a refund request get resolved?",
+        ],
+        ordered: true,
+        list: [
+          "Start terminator: refund request received.",
+          "Process: look up the order in the store admin.",
+          "Decision: is the order found? If no, output \u201cask the customer for the order number\u201d, then loop back to the lookup step.",
+          "Decision: is the request within the 30-day window? If no, go to the faulty-item check on the exception branch.",
+          "Decision: is the item faulty or damaged? If yes, continue to approval. If no, send a decline with a link to the returns policy and end.",
+          "On the main branch, process: check whether the item has been opened or used.",
+          "Decision: is it unopened? If yes, approve the refund. If no, offer a partial refund or store credit and end.",
+          "Process: issue the refund to the original payment method, and note the 3 to 5 business day settlement.",
+          "Process: email the customer a confirmation with the refund reference.",
+          "End terminator: refund issued, request closed.",
+        ],
+      },
+      {
+        heading: "The three-pass edit that makes a flowchart readable",
+        paragraphs: [
+          "Do not try to draw a polished chart in one pass. Draw it roughly, then edit it three times with a different question each time. This is faster than fiddling with individual boxes as you go.",
+        ],
+        ordered: true,
+        list: [
+          "Pass one, remove: delete every box the reader does not need to follow the path. Merge steps that always happen together. Move implementation detail into a note or a predefined-process box.",
+          "Pass two, align: put the spine on one axis, make repeated boxes the same size, and straighten the arrows. Turn the grid on if you have not already, and nudge rather than redraw.",
+          "Pass three, style: apply the two line weights, the three colors, and the larger text size. Add the title, the owner, and the date. Then stop.",
+        ],
+      },
+      {
+        heading: "Eight flowchart mistakes and their fixes",
+        paragraphs: [
+          "Nearly every confusing flowchart fails in one of these ways. Each fix takes a minute or two.",
+        ],
+        list: [
+          "No clear start: add one terminator at the top and make sure every path can be traced from it.",
+          "Decision boxes with one exit: if there is no branch, it is a process, not a decision.",
+          "Unlabelled branches: write yes, no, or the actual condition on every arrow out of a diamond.",
+          "Arrows that end in mid-air: connect them to a shape or a labelled connector circle.",
+          "Two start points: keep one, and turn the other into a process or an annotation.",
+          "Mixing owners without lanes: add swimlanes or state the owner in each box.",
+          "Too much detail: replace a cluster of steps with one predefined-process box and a separate chart.",
+          "A chart that answers five questions: split it into one chart per decision the reader needs to make.",
+        ],
+      },
+      {
+        heading: "The pre-share checklist",
+        paragraphs: [
+          "Run this check before the chart goes into a document, a ticket, or a meeting. It takes less time than the questions you will otherwise answer in the meeting.",
+        ],
+        ordered: true,
+        list: [
+          "Can a stranger name the start, the main path, and every ending?",
+          "Does every decision have at least two labelled exits?",
+          "Does every arrow begin and end on a shape or a connector?",
+          "Is every process label a verb phrase, and every terminator an event?",
+          "Are all handoffs visible, either as lane crossings or as owner labels?",
+          "Is there exactly one scale of detail, or are some boxes hiding whole sub-processes?",
+          "Does the chart still work when printed in black and white?",
+          "Is the title specific enough to stand alone, such as \u201cRefund request, standard orders, 2026\u201d?",
+          "Is the working file saved, and is the exported file named for the process and date?",
+        ],
+      },
+      {
+        heading: "Flowchart, mind map, or process map?",
+        paragraphs: [
+          "These three diagrams look related but answer different questions. Choosing the wrong one is a common reason a session feels harder than it should.",
+        ],
+        list: [
+          "Mind map: what are the parts of this idea, and how do they relate? Use it to explore, not to prescribe.",
+          "Flowchart: what happens next, in what order, and under which condition? Use it to define a path.",
+          "Process map or swimlane: who does what, and where does work wait? Use it to find handoffs and bottlenecks.",
+          "Timeline: when does each stage happen, and how long does it take? Use it when duration is the point.",
+          "Wireframe: what does the screen look like, and where does the user click? Use it when layout is the point.",
+        ],
+      },
+      {
+        heading: "Export the version the reader needs",
+        paragraphs: [
+          "A flowchart usually has two audiences: the people who will edit it and the people who will read it. Export for the second group and keep the working canvas for the first.",
+          "PNG is the right choice for tickets, chat, documentation, and slides. It is flat, reliable, and opens everywhere. Export at 100 percent zoom with the grid hidden, and check that small labels are still legible on a laptop screen.",
+          "SVG is better when the chart will be resized, printed, or pulled into a design tool. Vector edges stay sharp, which matters for a process that ends up on a wall or in a handbook. Either way, the export is cropped to the artwork, so the grid and selection handles do not appear in the file.",
+          "Name exports with the process and a date, such as refund-flow-2026-10.png. A folder of files called diagram.png, diagram-2.png, and diagram-final.png is not an archive; it is a future argument.",
+        ],
+      },
+      {
+        heading: "A ten-minute practice exercise",
+        paragraphs: [
+          "The fastest way to learn this is to chart a process you already know, where you can tell immediately when the drawing lies. Pick something small and bounded.",
+        ],
+        ordered: true,
+        list: [
+          "Minute 1: write the question, the start, and the end on a sticky note.",
+          "Minute 2: list the steps as verbs, then cross out two that are really one.",
+          "Minutes 3 to 5: draw the happy path as a straight column, all boxes the same width.",
+          "Minutes 6 to 7: add one decision and label both exits.",
+          "Minute 8: add the exception branch and rejoin it where it belongs.",
+          "Minute 9: run the three-pass edit, remove and align first, style last.",
+          "Minute 10: read it aloud, fix one unclear arrow, and export a PNG.",
+        ],
+      },
+      {
+        heading: "The short version",
+        paragraphs: [
+          "Decide the question first, list the steps as verbs, and draw the happy path as one straight column. Add decisions one at a time, label every exit, keep the flow in one direction, and use swimlanes the moment more than one person owns a step. Edit in three passes, check it against a reader, and export a PNG for sharing or an SVG for resizing.",
+          "That is enough to turn a process that lives in people's heads into a document they can agree on. Open the [whiteboard](/whiteboard/) and chart the last process that caused confusion in your team. Ten minutes is usually enough to find the step nobody owned.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I draw a flowchart online for free?",
+        answer:
+          "Yes. Open the free whiteboard or drawing board in any browser and use rectangles, rotated squares for decisions, arrows, and text. There is no account, no trial, and no watermark, and you can export the finished chart as a PNG or SVG.",
+      },
+      {
+        question: "What are the basic symbols in a flowchart?",
+        answer:
+          "Most flowcharts need only a few: a rounded terminator for start and end, a rectangle for a process, a diamond for a decision, a parallelogram for input or output, a circle for a connector, and a rectangle with a doubled edge for a predefined process. Keep the set small so readers do not have to learn a legend.",
+      },
+      {
+        question: "How do I draw a decision diamond in a browser sketchpad?",
+        answer:
+          "Draw a square with the rectangle tool, select it, and rotate it 45 degrees using the rotation handle. Alternatively, draw four straight lines between the four points. Either way, keep the diamond the same size as the other decisions so the chart reads consistently.",
+      },
+      {
+        question: "How many steps should a flowchart have?",
+        answer:
+          "Aim for roughly 10 to 20 shapes on one page. Beyond that, readers lose the thread and the layout starts to cross itself. Split the chart into a high-level overview with predefined-process boxes, then draw a separate detail chart for each one.",
+      },
+      {
+        question: "Should I use swimlanes in every flowchart?",
+        answer:
+          "No. Add swimlanes when responsibility changes hands, because that is when ownership becomes ambiguous. For a single-owner process or a simple troubleshooting guide, a plain top-to-bottom chart is easier to read.",
+      },
+      {
+        question: "How do I label arrows in a flowchart?",
+        answer:
+          "Write the condition that sends the reader down that path: yes, no, approved, declined, within 30 days. Keep labels to two or three words, place them near the middle of the arrow, and leave a small gap so the text does not sit on the line.",
+      },
+      {
+        question: "Can I share or print the flowchart?",
+        answer:
+          "Export a PNG for chat, tickets, documents, and slides, or an SVG if the chart will be resized or printed large. Add a title, an owner, and a date so the file still makes sense outside the canvas. The grid is never included in the export.",
+      },
+      {
+        question: "Is my flowchart private?",
+        answer:
+          "Yes. Drawings are saved in your browser on your own device and are not uploaded to a server. That also means the chart does not follow you to another device, so export a file when you want a permanent copy.",
+      },
+    ],
+  },
 ];
 
 export const BLOG_CATEGORIES = Array.from(new Set(BLOG_POSTS.map((post) => post.category)));

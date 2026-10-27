@@ -50,8 +50,6 @@ export interface PageContent {
     intro: string[];
     emailTitle: string;
     emailDesc: string;
-    githubTitle: string;
-    githubDesc: string;
   };
 
   // Privacy

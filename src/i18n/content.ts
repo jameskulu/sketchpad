@@ -87,6 +87,7 @@ export const CONTENT: Content = {
             "At work, the sketchpad is useful for the drawings that never justify opening a design suite: a process flow for a meeting, a rough wireframe, a seating plan, an org chart, or an annotated diagram that explains a decision. Draw it, export a PNG, and paste it into the document where the conversation is happening. If the plan needs to keep changing, the [drawing board](/drawing-board/) adds sticky notes and a highlighter for rearranging ideas.",
             "For teaching and study, the value is speed. Explain a concept by drawing it, highlight the one part that matters, and export the result as a handout or revision card. The [whiteboard](/whiteboard/) is the better fit for live sessions and mind maps; [graph paper](/graph-paper/) is better for geometry, charts, and anything that has to line up. Because the canvas is local, a lesson does not pause while a file uploads.",
             "The same flexibility covers personal projects: a floor plan before moving furniture, a route map for a trip, a birthday sign, or a drawing made with a child. The tool does not care what the drawing is for, which is exactly why it stays useful.",
+            "For classroom games, workshop warm-ups, or any lesson that needs a visible score, a free [online tally counter](https://simpletallycounter.com/) keeps count in a browser tab while the drawing stays open in another. It needs no account and adds no extra setup to the session.",
           ],
         },
         {
@@ -184,8 +185,6 @@ export const CONTENT: Content = {
       ],
       emailTitle: "Email us",
       emailDesc: "For support and feedback. We reply as soon as we can.",
-      githubTitle: "Open an issue",
-      githubDesc: "Report a bug or request a feature on GitHub.",
     },
     privacy: {
       h1: "Privacy Policy",
@@ -290,8 +289,6 @@ export const CONTENT: Content = {
       intro: ["¿Tienes una pregunta, encontraste un error o tienes una idea para Simple Sketchpad? Nos encantaría saber de ti."],
       emailTitle: "Escríbenos",
       emailDesc: "Para soporte y comentarios. Respondemos lo antes posible.",
-      githubTitle: "Abre un tema",
-      githubDesc: "Reporta un error o solicita una función en GitHub.",
     },
     privacy: {
       h1: "Política de Privacidad",
@@ -388,8 +385,6 @@ export const CONTENT: Content = {
       intro: ["質問がある方、バグを見つけた方、Simple Sketchpadへのアイデアをお持ちの方、ぜひご連絡ください。"],
       emailTitle: "メールで送る",
       emailDesc: "サポートやフィードバック用。できるだけ早く返信します。",
-      githubTitle: "Issueを開く",
-      githubDesc: "GitHubでバグを報告するか、機能をリクエストできます。",
     },
     privacy: {
       h1: "プライバシーポリシー",
@@ -486,8 +481,6 @@ export const CONTENT: Content = {
       intro: ["Une question, un bug ou une idée pour Simple Sketchpad ? Nous serions ravis d'avoir de vos nouvelles."],
       emailTitle: "Écrivez-nous",
       emailDesc: "Pour le support et les retours. Nous répondons dès que possible.",
-      githubTitle: "Ouvrir une issue",
-      githubDesc: "Signalez un bug ou demandez une fonctionnalité sur GitHub.",
     },
     privacy: {
       h1: "Politique de confidentialité",
@@ -584,8 +577,6 @@ export const CONTENT: Content = {
       intro: ["Hast du eine Frage, einen Fehler gefunden oder eine Idee für Simple Sketchpad? Wir freuen uns auf deine Nachricht."],
       emailTitle: "Schreib uns",
       emailDesc: "Für Support und Feedback. Wir antworten so schnell wir können.",
-      githubTitle: "Issue eröffnen",
-      githubDesc: "Melde einen Bug oder fordere eine Funktion auf GitHub an.",
     },
     privacy: {
       h1: "Datenschutzerklärung",
@@ -682,8 +673,6 @@ export const CONTENT: Content = {
       intro: ["Tem uma pergunta, encontrou um bug ou tem uma ideia para o Simple Sketchpad? Adoraríamos ouvir você."],
       emailTitle: "Envie um e-mail",
       emailDesc: "Para suporte e feedback. Respondemos o quanto antes.",
-      githubTitle: "Abra uma issue",
-      githubDesc: "Relate um bug ou solicite um recurso no GitHub.",
     },
     privacy: {
       h1: "Política de Privacidade",
@@ -780,8 +769,6 @@ export const CONTENT: Content = {
       intro: ["질문이 있거나 버그를 발견했거나 Simple Sketchpad에 대한 아이디어가 있으신가요? 여러분의 소식을 듣고 싶습니다."],
       emailTitle: "이메일 보내기",
       emailDesc: "지원 및 피드백용입니다. 가능한 한 빨리 답변드립니다.",
-      githubTitle: "이슈 열기",
-      githubDesc: "GitHub에서 버그를 신고하거나 기능을 요청하세요.",
     },
     privacy: {
       h1: "개인정보 처리방침",
@@ -878,8 +865,6 @@ export const CONTENT: Content = {
       intro: ["Hai una domanda, trovato un bug o un'idea per Simple Sketchpad? Saremo felici di sentirti."],
       emailTitle: "Scrivici",
       emailDesc: "Per supporto e feedback. Rispondiamo appena possibile.",
-      githubTitle: "Apri una segnalazione",
-      githubDesc: "Segnala un bug o richiedi una funzione su GitHub.",
     },
     privacy: {
       h1: "Informativa sulla Privacy",
@@ -1002,8 +987,6 @@ export const CONTENT: Content = {
       ],
       emailTitle: "发送邮件",
       emailDesc: "用于支持和反馈。我们会尽快回复。",
-      githubTitle: "提交 issue",
-      githubDesc: "在 GitHub 上报告错误或请求功能。",
     },
     privacy: {
       h1: "隐私政策",
