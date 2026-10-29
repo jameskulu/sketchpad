@@ -1,0 +1,99 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ToolHeader from "../components/ToolHeader.astro";
+
+
+import { MAX_STORYBOARD_FRAMES } from "../lib/storyboard";
+const faqs = [
+  { q: "Is this storyboard maker free?", a: "Yes. You can draw scenes, write captions, and download your storyboard without creating an account or paying a subscription. It works directly in your browser." },
+  { q: "Can I add frames one at a time?", a: "Yes. Click Add frame whenever the story needs another moment. You can use up to 24 frames and choose an exact frame count. Reducing the count hides later scenes without deleting their contents." },
+  { q: "Do I need drawing skills?", a: "No. Stick figures, boxes, and arrows can communicate a scene. Use captions for dialogue, movement, and camera instructions. Clear sequencing matters more than polished illustration when planning a first draft." },
+  { q: "How do I save or share my storyboard?", a: "Download PNG creates one image containing every visible scene and caption. Print / Save as PDF opens your browser's print dialog. Autosave stays in this browser on this device; export important work before clearing site data." },
+];
+const faqData = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
+---
+<Layout title="Free Online Storyboard Maker — Draw Scenes & Add Frames" description="Create a hand-drawn storyboard online for free. Add frames one at a time, sketch scenes, write captions, and download your sequence. No account needed." locale="en" route="/storyboard" alternates={false} structuredData={faqData}>
+  <div id="storyboard-app">
+    <ToolHeader locale="en" route="/storyboard" languageRoute="/" statusId="story-save" statusText="Saved on this device" svg={false} print={true} />
+    <main class="story-main">
+      <div class="intro"><div><p class="eyebrow">A LITTLE STRUCTURE. A BIG IDEA.</p><p class="hero-title">Your story starts here.</p><p>Sketch the moment. Add a few words. See the whole story.</p></div></div>
+      <div class="project-row"><label class="project-label" for="story-title">STORY TITLE<input id="story-title" maxlength="100" placeholder="Give your story a name" /></label></div>
+      <section class="story-toolbar" aria-label="Storyboard tools">
+        <div class="toolbar-group"><button id="story-pen" class="tool active" aria-pressed="true">✎ <span>Draw</span></button><button id="story-eraser" class="tool" aria-pressed="false">◇ <span>Erase</span></button></div>
+        <div class="toolbar-group colors" aria-label="Drawing colors">{["#25354d", "#7254df", "#df6384", "#2f9884", "#e3a33d"].map((color, i) => <button class="story-color" style={`--swatch:${color}`} data-color={color} aria-label={`Color ${color}`} aria-pressed={i === 0 ? "true" : "false"}></button>)}<input id="story-color" type="color" value="#25354d" aria-label="Custom drawing color" /></div>
+        <label class="size-control">Size <input id="story-size" type="range" min="1" max="30" value="4" /><output id="story-size-value">4</output></label>
+        <div class="toolbar-group"><button id="story-undo" class="tool" disabled aria-label="Undo in selected scene">↶ Undo</button><button id="story-redo" class="tool" disabled aria-label="Redo in selected scene">↷ Redo</button><button id="story-clear" class="tool" disabled>Clear scene</button></div>
+        <label class="frame-control">Frames<select id="story-layout">{Array.from({ length: MAX_STORYBOARD_FRAMES }, (_, i) => <option value={i + 1} selected={i === 2}>{i + 1} {i === 0 ? "frame" : "frames"}</option>)}</select></label>
+      </section>
+      <div class="board-heading"><span id="story-active" aria-live="polite">Scene 01 selected</span><p>Draw directly in any frame. Each scene has its own undo history.</p></div>
+      <div class="scene-grid">{Array.from({ length: MAX_STORYBOARD_FRAMES }, (_, index) => <article class:list={["scene-card", { selected: index === 0 }]} data-scene={index} hidden={index >= 3}>
+        <div class="scene-top"><span class="scene-number">{String(index + 1).padStart(2, "0")}</span><span>SCENE {index + 1}</span><span class="scene-dot" aria-hidden="true"></span></div>
+        <div class="scene-stage"><canvas width="640" height="360" aria-label={`Draw scene ${index + 1}`} tabindex="0"></canvas><span class="scene-placeholder" aria-hidden="true">✎<small>Sketch a moment</small></span></div>
+        <label class="caption-label">WHAT HAPPENS?<textarea maxlength="500" rows="3" placeholder="Action, dialogue, or a camera note…" aria-label={`Caption for scene ${index + 1}`}></textarea></label>
+      </article>)}</div>
+      <div class="add-frame-row"><button id="story-add" type="button">+ Add frame</button><span id="story-frame-count" aria-live="polite">3 of 24 frames</span></div>
+      <div class="board-footer"><p>Made for rough ideas, not perfect lines.</p><button id="story-print" class="print-button">Print / Save as PDF ↗</button></div>
+      <section class="story-guide" aria-labelledby="storyboard-guide-title">
+        <h1 id="storyboard-guide-title">Free Online Storyboard Maker</h1>
+        <p>Turn a rough idea into a sequence you can explain. This online storyboard maker gives you numbered drawing frames and space for captions, so you can plan a short film, classroom story, animation, or product demonstration. Start with three frames, sketch the key moments, and add another frame whenever your story needs one. No account or installation is required.</p>
+        <h2>How to make a storyboard online</h2>
+        <p>Give the project a descriptive title, then draw directly inside the first frame. Choose a color and line size, use the eraser for small corrections, and undo changes in the selected scene. Write a caption beneath each drawing to explain action, dialogue, or camera movement. Click Add frame to extend the sequence one scene at a time, up to 24 frames.</p>
+        <h2>Plan the beginning, change, and ending</h2>
+        <p>For a simple example, imagine a character missing a bus. The opening frame shows the character approaching the stop. The next frame shows the bus leaving. The final frame reveals their decision to walk. If the jump between two moments is confusing, add a frame to show the missing action. Keep each panel focused on one clear beat.</p>
+        <h2>Keep drawings simple and captions specific</h2>
+        <p>You do not need finished artwork to test a story. Draw the main subject large enough to recognize and leave out details that do not affect the scene. A caption such as “Close-up: the phone battery reaches zero” communicates more than “Phone scene.” Read the frames in order and check whether someone unfamiliar with your idea could follow the action.</p>
+        <h2>Download your sequence and keep a copy</h2>
+        <p>Export the visible frames as one PNG with the title and captions included, or use the print option to create a PDF through your browser. Reducing the frame count keeps later scenes in your local draft. Browser autosave is useful between visits, but it does not provide cloud storage or shared editing. Keep an exported copy of important work.</p>
+        <h2>Frequently asked questions</h2>
+        <div class="story-faq">{faqs.map(faq => <details><summary>{faq.q}</summary><p>{faq.a}</p></details>)}</div>
+        <a href="/blog/how-to-wireframe-a-website/">Planning a website instead? Read the wireframing guide →</a>
+      </section>
+    </main>
+    <dialog id="story-clear-dialog" aria-labelledby="story-clear-title"><h2 id="story-clear-title">Clear this scene?</h2><p>The drawing in the selected frame will be cleared. Its caption stays, and you can undo this change.</p><div><button id="story-clear-cancel" autofocus>Keep drawing</button><button id="story-clear-confirm" class="primary">Clear scene</button></div></dialog>
+  </div>
+</Layout>
+
+<style>
+  .intro .hero-title { margin:8px 0; color:#25354d; font-size:clamp(28px,4vw,40px); font-weight:650; letter-spacing:-.045em; line-height:1.2; }
+  .add-frame-row { display:flex; align-items:center; justify-content:center; gap:12px; margin-top:20px; }
+  #story-add { padding:10px 20px; border:1px dashed #ae98e8; border-radius:10px; color:#7254df; background:#f1eefb; font-size:12px; font-weight:600; }
+  #story-add:hover:not(:disabled) { background:#e8e0f9; border-style:solid; }
+  #story-frame-count { font-size:11px; color:#8a92a4; }
+  .story-guide { max-width:800px; margin-inline:auto; }
+  .story-guide > h2 { margin-top:28px; }
+  .story-guide > p,.story-faq p { margin-top:12px; color:#667189; font-size:14px; line-height:1.85; }
+  .story-faq { margin-top:16px; }
+  .story-faq details { padding:16px 0; border-bottom:1px solid #e3e6ef; }
+  .story-faq summary { cursor:pointer; font-size:14px; font-weight:600; }
+  @media print { .add-frame-row { display:none; } }
+  #storyboard-app { min-height:100dvh; background:#f7f8fc; color:#25354d; }
+  button,select { cursor:pointer; } button:disabled { opacity:.35; cursor:default; }
+  .story-header { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 30px; border-bottom:1px solid #e7e9f1; background:white; }
+  .brand { display:flex; align-items:center; gap:9px; font-size:14px; font-weight:650; text-decoration:none; }.brand span { color:#7254df; font-size:30px; line-height:1; }
+  .header-actions { display:flex; align-items:center; gap:12px; }.primary { display:flex; align-items:center; justify-content:center; gap:12px; background:#7254df; color:white; padding:10px 16px; border-radius:10px; font-size:12px; font-weight:600; }.primary:hover { background:#6040cb; }
+  .story-main { max-width:1250px; margin:auto; padding:38px 30px; }.intro { display:flex; align-items:center; justify-content:space-between; }.eyebrow { font-size:10px; font-weight:700; letter-spacing:.15em; color:#8a76b8; }h1 { margin:8px 0; font-size:clamp(28px,4vw,40px); font-weight:650; letter-spacing:-.045em; }.intro p:not(.eyebrow):not(.hero-title) { color:#788299; font-size:14px; }
+  .project-row { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:30px 0 20px; }.project-label { display:block; flex:1; font-size:9px; letter-spacing:.12em; font-weight:700; color:#8a92a4; }.project-label input { display:block; width:100%; max-width:600px; margin-top:5px; color:#25354d; font-size:20px; font-weight:550; letter-spacing:-.02em; background:transparent; padding:5px 0; border-bottom:1px solid transparent; }.project-label input:focus { outline:none; border-color:#b8a8ea; }.project-label input::placeholder { color:#a5adbd; }#story-save { color:#788299; font-size:11px; }
+  .story-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:14px; padding:12px; background:white; border:1px solid #e5e7f0; border-radius:14px; box-shadow:0 3px 8px #26334e03; }.toolbar-group { display:flex; align-items:center; gap:5px; }.tool { padding:7px 9px; border-radius:7px; font-size:11px; color:#667189; white-space:nowrap; }.tool:hover { background:#f5f2fc; }.tool.active { background:#eee9fb; color:#7254df; }.colors { gap:7px; padding-left:10px; border-left:1px solid #e8eaf1; }.story-color { width:20px; height:20px; border-radius:50%; background:var(--swatch); border:3px solid white; box-shadow:0 0 0 1px transparent; }.story-color[aria-pressed="true"] { box-shadow:0 0 0 1px var(--swatch); }input[type="color"] { width:23px; height:23px; padding:0; border:none; background:transparent; cursor:pointer; }.size-control { display:flex; align-items:center; gap:7px; font-size:11px; color:#667189; }.size-control input { width:65px; accent-color:#7254df; }.size-control output { min-width:16px; }.frame-control { display:flex; align-items:center; gap:8px; margin-left:auto; color:#788299; font-size:11px; }.frame-control select { padding:7px 9px; background:#f7f8fc; color:#25354d; border-radius:7px; }
+  .board-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:25px 0 13px; font-size:11px; color:#8a92a4; }#story-active { color:#7254df; font-weight:600; }.scene-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }.scene-card { background:white; border:1px solid #e1e5ee; border-radius:14px; overflow:hidden; box-shadow:0 4px 12px #24304a04; transition:border-color .15s,box-shadow .15s; }.scene-card[hidden] { display:none; }.scene-card.selected { border-color:#ae98e8; box-shadow:0 0 0 2px #7254df0e; }.scene-top { display:flex; align-items:center; gap:9px; padding:12px 14px; color:#8a92a4; font-size:9px; letter-spacing:.1em; font-weight:600; }.scene-number { display:grid; place-items:center; width:25px; height:25px; background:#f1eef9; color:#8870c1; border-radius:7px; font-size:10px; letter-spacing:0; }.scene-dot { margin-left:auto; width:5px; height:5px; background:#d9deea; border-radius:50%; }.selected .scene-dot { background:#a28ad6; }.scene-stage { position:relative; border-block:1px solid #eef0f5; background:white; }.scene-stage canvas { display:block; width:100%; aspect-ratio:16/9; height:auto; touch-action:none; cursor:crosshair; }.scene-placeholder { pointer-events:none; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:5px; color:#c6c9d6; font-size:30px; }.scene-placeholder small { font-size:11px; }.scene-placeholder[hidden] { display:none; }.caption-label { display:block; padding:14px; font-size:8px; font-weight:700; letter-spacing:.12em; color:#9aa1b2; }.caption-label textarea { display:block; margin-top:7px; width:100%; resize:vertical; min-height:65px; max-height:240px; color:#536078; background:transparent; font:400 12px/1.6 var(--font-sans); letter-spacing:0; }.caption-label textarea::placeholder { color:#adb3c1; }.board-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:20px; color:#9aa1b2; font-size:11px; }.print-button { color:#7254df; font-weight:500; }.story-guide { margin-top:55px; padding-top:30px; border-top:1px solid #e3e6ef; }h2 { font-size:20px; letter-spacing:-.025em; font-weight:600; }.guide-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:22px; }.guide-grid b { font-size:12px; font-weight:600; }.guide-grid p,.storage-note { margin-top:9px; font-size:12px; line-height:1.8; color:#788299; }.storage-note { margin-top:26px; }.story-guide a { display:inline-block; margin-top:14px; color:#7254df; font-size:12px; }dialog { margin:auto; max-width:420px; width:calc(100vw - 32px); padding:26px; border:1px solid #e5e7f0; border-radius:18px; color:#25354d; }dialog::backdrop { background:#25354d88; backdrop-filter:blur(3px); }dialog p { margin:12px 0 20px; font-size:13px; line-height:1.7; color:#788299; }dialog>div { display:flex; justify-content:flex-end; gap:16px; font-size:12px; }
+  @media(max-width:950px) { .scene-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.story-toolbar { gap:10px; }.frame-control { margin-left:0; } }
+  @media(max-width:600px) { .story-header { padding:12px 16px; }.story-main { padding:26px 16px; }.scene-grid,.guide-grid { grid-template-columns:1fr; }.project-row { align-items:flex-start; flex-direction:column; gap:6px; }.project-label { width:100%; }.board-heading { align-items:flex-start; flex-direction:column; }.header-actions { gap:6px; }.primary { padding:9px 11px; font-size:11px; }.brand { font-size:12px; }.story-toolbar { gap:10px 6px; }.board-footer { align-items:flex-start; } }
+  @media print { @page { size:A4 landscape; margin:12mm; }.story-header,.intro,.story-toolbar,.board-heading,.board-footer,.story-guide,#story-save,.scene-placeholder { display:none!important; }#storyboard-app { background:white; }.story-main { padding:0; max-width:none; }.project-row { margin:0 0 15px; }.project-label { color:#25354d; }.scene-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }.scene-card { break-inside:avoid; box-shadow:none; }.scene-card.selected { border-color:#e1e5ee; box-shadow:none; }.caption-label textarea { max-height:none; resize:none; }.project-label input::placeholder { color:transparent; } }
+</style>
+<style>
+  .story-header { height:48px; padding:0 16px; gap:6px; }
+  .brand { gap:6px; padding:4px 6px; border-radius:6px; font-size:14px; font-weight:600; letter-spacing:-.025em; color:var(--color-ink); flex-shrink:0; }
+  .brand span { font-size:14px; color:var(--color-ink); line-height:normal; }
+  .brand svg { flex-shrink:0; }
+  .header-save { margin-left:4px; border:1px solid var(--color-hairline); border-radius:999px; padding:2px 10px; font-size:11px; font-weight:500; white-space:nowrap; }
+  .header-actions { flex:1; min-width:0; justify-content:flex-end; gap:4px; }
+  .header-actions .primary { height:32px; padding:0 14px; border-radius:999px; font-size:13px; gap:6px; background:var(--color-primary); flex-shrink:0; }
+  .header-actions .primary:hover { background:var(--color-primary-deep); }
+  .header-actions .primary :global(svg) { width:16px; height:16px; }
+  @media(max-width:640px) { .story-header { padding:0 12px; }.header-save { display:none; }.header-actions .primary { height:28px; padding:0 12px; }.header-actions .primary span { display:none; } }
+  @media(max-width:420px) { .brand span { display:none; } }
+  @media(max-width:360px) { .header-language { display:none; } }
+</style>
+<script>
+  import { initStoryboard } from "../lib/storyboard";
+  initStoryboard();
+</script>

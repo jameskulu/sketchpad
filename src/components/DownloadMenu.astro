@@ -3,8 +3,8 @@ import Icon from "./Icon.astro";
 import { uiFor } from "../i18n/ui";
 import { toolUiFor } from "../i18n/tool-ui";
 import type { Locale } from "../i18n/locales";
-interface Props { locale: Locale }
-const { locale } = Astro.props;
+interface Props { locale: Locale; svg?: boolean; print?: boolean }
+const { locale, svg = true, print = false } = Astro.props;
 const ui = uiFor(locale);
 const toolUi = toolUiFor(locale);
 ---
@@ -17,9 +17,10 @@ const toolUi = toolUiFor(locale);
     <button id="download-btn" type="button" role="menuitem" aria-label={ui.canvas.downloadPng}>
       <span class="format-icon">PNG</span><span class="format-label">{ui.canvas.downloadPngShort}<small>.png</small></span><kbd>Ctrl+D</kbd>
     </button>
-    <button id="download-svg-btn" type="button" role="menuitem" aria-label={toolUi.exportSvg}>
+    {svg && <button id="download-svg-btn" type="button" role="menuitem" aria-label={toolUi.exportSvg}>
       <span class="format-icon vector">SVG</span><span class="format-label">{toolUi.exportSvg}<small>.svg</small></span>
-    </button>
+    </button>}
+    {print && <button id="download-print-btn" type="button" role="menuitem" aria-label="Print or save as PDF"><span class="format-icon vector">PDF</span><span class="format-label">Print / Save as PDF<small>Browser print dialog</small></span></button>}
   </div>
 </div>
 <style>

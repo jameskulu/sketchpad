@@ -1,0 +1,53 @@
+---
+import { uiFor } from "../i18n/ui";
+import { toolUiFor } from "../i18n/tool-ui";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
+import { TOOL_DISPLAY_ORDER, TOOL_ROUTES } from "../i18n/tool-content-types";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const ui = uiFor(locale);
+const tools = toolUiFor(locale);
+const home = deriveLocaleHref(locale, "/");
+const pages = [
+  { label: ui.nav.blog, href: "/blog/" },
+  { label: ui.nav.about, href: deriveLocaleHref(locale, "/about") },
+  { label: ui.nav.contact, href: deriveLocaleHref(locale, "/contact") },
+];
+---
+<footer id="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand-block">
+      <a href={home} class="footer-brand" aria-label="Simple Sketchpad home">
+        <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" /></svg>
+        <span>{ui.siteName}</span>
+      </a>
+      <a href={home} class="footer-open">{ui.footer.openSketchpad} <span aria-hidden="true">↗</span></a>
+    </div>
+    <nav aria-label={ui.canvas.drawingTools} class="footer-tools">
+      <h2>{ui.canvas.drawingTools}</h2>
+      <div class="tool-columns">
+        <a href={home}>{ui.siteName}</a>
+        {TOOL_DISPLAY_ORDER.map(key => <a href={deriveLocaleHref(locale, TOOL_ROUTES[key])}>{tools.boardNav.short[key]}</a>)}
+        <a href="/storyboard/">Storyboard</a>
+      </div>
+    </nav>
+    <nav aria-label={ui.nav.about} class="footer-pages"><h2>{ui.nav.about}</h2>{pages.map(page => <a href={page.href}>{page.label}</a>)}</nav>
+  </div>
+  <div class="footer-bottom"><p>{ui.footer.copyright(String(new Date().getUTCFullYear()))}</p><nav aria-label={ui.nav.privacyPolicy}><a href={deriveLocaleHref(locale, "/privacy")}>{ui.nav.privacyPolicy}</a><span aria-hidden="true">·</span><a href={deriveLocaleHref(locale, "/terms")}>{ui.nav.terms}</a></nav></div>
+</footer>
+<style>
+  #site-footer { flex-shrink:0; border-top:1px solid var(--color-hairline); background:white; color:var(--color-ink); }
+  .footer-main { display:grid; grid-template-columns:1.1fr 1.5fr .7fr; gap:40px; max-width:1180px; margin:auto; padding:42px 30px 36px; }
+  .footer-brand { display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; letter-spacing:-.025em; text-decoration:none; }
+  .footer-open { display:block; width:fit-content; margin-top:16px; color:var(--color-primary); font-size:12px; }
+  h2 { margin:0 0 14px; font-size:11px; font-weight:650; color:var(--color-ink); }
+  .tool-columns { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px 22px; }
+  .footer-tools a,.footer-pages a { font-size:12px; line-height:1.5; color:var(--color-ink-mute); text-decoration:none; }
+  .footer-pages a { display:block; margin-top:10px; }
+  a { transition:color .15s; }a:hover { color:var(--color-primary); }
+  .footer-bottom { max-width:1120px; display:flex; justify-content:space-between; align-items:center; gap:16px; margin:auto; padding:18px 0 22px; border-top:1px solid var(--color-hairline); color:var(--color-ink-mute); font-size:11px; }
+  .footer-bottom nav { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+  @media(max-width:1180px) { .footer-bottom { margin-inline:30px; } }
+  @media(max-width:640px) { .footer-main { grid-template-columns:1fr 1fr; gap:28px 20px; padding:30px 20px; }.footer-brand-block { grid-column:1/-1; }.footer-open { margin-top:10px; }.tool-columns { grid-template-columns:1fr; }.footer-bottom { margin-inline:20px; align-items:flex-start; flex-direction:column; gap:12px; } }
+  @media print { #site-footer { display:none; } }
+</style>

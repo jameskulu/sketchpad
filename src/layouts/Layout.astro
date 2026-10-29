@@ -2,6 +2,7 @@
 import "@fontsource-variable/inter";
 import "../styles/global.css";
 import Tooltips from "../components/Tooltips.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 import { SITE } from "../lib/site";
 import { localeAlternates, LOCALES, DEFAULT_LOCALE, type Locale } from "../i18n/locales";
 
@@ -128,6 +129,7 @@ const scripts = structuredData
 	</head>
 	<body class="min-h-full bg-canvas-soft text-ink font-sans antialiased">
 		<slot />
+		<SiteFooter locale={locale} />
 		<Tooltips />
 	</body>
 </html>

@@ -30,6 +30,7 @@ const visuals = {
 const items = [
   { key: "sketchpad", href: deriveLocaleHref(locale, "/"), label: ui.siteName, description: copy[4], current: route === "/", icon: "pencil", color: "#6746df", tint: "#f1edff" },
   ...TOOL_DISPLAY_ORDER.map((key) => ({ key, href: deriveLocaleHref(locale, TOOL_ROUTES[key]), label: toolUi.boardNav.short[key], description: TOOL_CONTENT[locale]["drawing-board"].related[key].blurb, current: route === TOOL_ROUTES[key], ...visuals[key] })),
+  { key: "storyboard", href: "/storyboard/", label: "Storyboard", description: "Add frames, sketch scenes, write captions, and share your story.", current: route === "/storyboard", icon: "rect", color: "#6a69b5", tint: "#efeffc" },
 ];
 ---
 <div id="board-nav" class="board-nav">
@@ -50,6 +51,9 @@ const items = [
           <a href={item.href} class:list={["space-card", { "is-current": item.current }]} aria-current={item.current ? "page" : undefined} style={`--space-color:${item.color};--space-tint:${item.tint}`}>
             <div class="space-preview" aria-hidden="true">
               <svg viewBox="0 0 280 116" fill="none" class="preview-drawing">
+                {item.key === "storyboard" && <>
+                  {[30, 108, 186].map((x, i) => <g><rect x={x} y="26" width="65" height="48" rx="4" fill="white" stroke="currentColor" stroke-width="2" /><circle cx={x + 32} cy="43" r="6" stroke="currentColor" stroke-width="2" /><path d={`M${x + 32} 49v16m-10-7 10-5 10 5M${x + 8} 86h48m-48 8h30`} stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity={.5 + i * .2} /></g>)}
+                </>}
                 {item.key === "sketchpad" && <>
                   <path d="M49 82c21-61 37-59 49-8s30 24 40-14 26-28 37 9 29 8 48-19" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
                   <path d="m196 22 5 11 12 2-9 8 2 12-10-6-11 6 3-12-9-8 12-2Z" fill="#f5c65d" />

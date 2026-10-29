@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
 import ToolSeo from "./ToolSeo.astro";
-import ToolBoardNav from "./ToolBoardNav.astro";
+import ToolHeader from "./ToolHeader.astro";
 import { SITE } from "../lib/site";
 import { uiFor } from "../i18n/ui";
 import { toolUiFor } from "../i18n/tool-ui";
@@ -67,30 +67,7 @@ const homeHref = deriveLocaleHref(locale, "/");
 >
   <div id="app" class="flex h-dvh flex-col" data-lang={locale}>
     <!-- Top bar -->
-    <header class="z-40 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-5">
-      <a href={homeHref} class="flex items-center gap-1.5 rounded-md px-1.5 py-1" aria-label="Simple Sketchpad home">
-        <svg width="24" height="24" viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
-        </svg>
-        <span class="text-sm font-semibold tracking-tight text-ink max-[420px]:hidden">{ui.siteName}</span>
-      </a>
-
-      <div class="flex items-center gap-2">
-        <div class="hidden items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 sm:flex">
-          <span id="autosave-dot" class="size-2 rounded-full bg-emerald-500"></span>
-          <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
-        </div>
-        <ToolBoardNav locale={locale} route="/kids-drawing" />
-        <button
-          id="download-btn"
-          class="flex h-9 items-center gap-1.5 rounded-full bg-primary px-4 text-[13px] font-semibold text-white transition-colors hover:bg-primary-deep active:bg-primary-press"
-          aria-label={toolUi.kids.download}
-        >
-          <Icon name="download" class="size-4" />
-          <span>{toolUi.kids.download}</span>
-        </button>
-      </div>
-    </header>
+    <ToolHeader locale={locale} route="/kids-drawing" />
 
     <!-- Canvas -->
     <main id="stage" class="relative min-h-0 flex-1 touch-none select-none overflow-hidden bg-white">
@@ -311,6 +288,7 @@ const homeHref = deriveLocaleHref(locale, "/");
       fullscreenBtn: q<HTMLButtonElement>("fullscreen-btn"),
       fullscreenBtnMobile: q<HTMLButtonElement>("fullscreen-btn-mobile"),
       downloadBtn: q<HTMLButtonElement>("download-btn"),
+      downloadSvgBtn: q<HTMLButtonElement>("download-svg-btn"),
       swatches,
       colorInput: q<HTMLInputElement>("color-input"),
       sizeSlider: q<HTMLInputElement>("size-slider"),

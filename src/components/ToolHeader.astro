@@ -1,0 +1,49 @@
+---
+import ToolBoardNav from "./ToolBoardNav.astro";
+import LangSwitcher from "./LangSwitcher.astro";
+import DownloadMenu from "./DownloadMenu.astro";
+import { uiFor } from "../i18n/ui";
+import { deriveLocaleHref, type Locale } from "../i18n/locales";
+interface Props {
+  locale: Locale;
+  route: string;
+  statusId?: string;
+  statusText?: string;
+  svg?: boolean;
+  print?: boolean;
+  languageRoute?: string;
+}
+const { locale, route, statusId = "autosave-label", statusText, svg = true, print = false, languageRoute = route } = Astro.props;
+const ui = uiFor(locale);
+---
+<header class="tool-header">
+  <div class="header-main">
+    <a href={deriveLocaleHref(locale, "/")} class="tool-brand" aria-label="Simple Sketchpad home">
+      <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" /></svg>
+      <span>{ui.siteName}</span>
+    </a>
+    <div class="save-status"><span id="autosave-dot" class="save-dot bg-emerald-500"></span><span id={statusId} data-state="saved" role="status" aria-live="polite">{statusText ?? ui.canvas.autosaveSaved}</span></div>
+    <nav class="header-navigation" aria-label={ui.canvas.drawingTools}>
+      <ToolBoardNav locale={locale} route={route} />
+      <div class="header-language"><LangSwitcher locale={locale} route={languageRoute} compact={true} /></div>
+      <DownloadMenu locale={locale} svg={svg} print={print} />
+    </nav>
+  </div>
+  {Astro.slots.has("actions") && <div class="header-editing"><slot name="actions" /></div>}
+</header>
+<style>
+  .tool-header { position:relative; z-index:40; flex-shrink:0; border-bottom:1px solid var(--color-hairline); background:#ffffffF2; backdrop-filter:blur(12px); }
+  .header-main { height:48px; display:flex; align-items:center; gap:6px; padding:0 16px; }
+  .tool-brand { display:flex; align-items:center; gap:6px; padding:4px 6px; flex-shrink:0; border-radius:6px; font-size:14px; font-weight:600; letter-spacing:-.025em; color:var(--color-ink); text-decoration:none; }
+  .tool-brand svg { flex-shrink:0; }
+  .save-status { display:flex; align-items:center; gap:6px; margin-left:4px; padding:2px 10px; border:1px solid var(--color-hairline); border-radius:999px; color:var(--color-ink-mute); font-size:11px; font-weight:500; white-space:nowrap; }
+  .save-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .header-navigation { display:flex; align-items:center; justify-content:flex-end; gap:4px; margin-left:auto; min-width:0; }
+  .header-editing { display:flex; align-items:center; justify-content:center; gap:4px; height:39px; padding:2px 12px; border-top:1px solid #edf0f5; overflow-x:auto; scrollbar-width:none; }
+  .header-editing::-webkit-scrollbar { display:none; }
+  .header-editing :global(> *) { flex-shrink:0; }
+  @media(max-width:640px) { .header-main { padding:0 12px; }.save-status { display:none; } }
+  @media(max-width:420px) { .tool-brand span { display:none; } }
+  @media(max-width:360px) { .header-main { padding:0 8px; }.header-language { display:none; } }
+  @media print { .tool-header { display:none; } }
+</style>

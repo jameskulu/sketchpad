@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
-import DownloadMenu from "./DownloadMenu.astro";
+import ToolHeader from "./ToolHeader.astro";
 import SeoContent from "./SeoContent.astro";
-import LangSwitcher from "./LangSwitcher.astro";
-import ToolBoardNav from "./ToolBoardNav.astro";
+
+
 import { SITE } from "../lib/site";
 import { uiFor } from "../i18n/ui";
 import { deriveLocaleHref, type Locale } from "../i18n/locales";
@@ -80,26 +80,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
 >
   <div id="app" class="flex h-dvh flex-col" data-lang={locale}>
     <!-- Top bar -->
-    <header class="z-40 flex h-12 shrink-0 items-center gap-1 border-b border-hairline bg-white/95 px-3 backdrop-blur sm:px-4 max-[360px]:px-2">
-      <a href={homeHref} class="flex items-center gap-1.5 rounded-md px-1.5 py-1 max-md:gap-1 max-md:px-1" aria-label="Simple Sketchpad home">
-        <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
-        </svg>
-        <span class="text-sm font-semibold tracking-tight text-ink max-[420px]:hidden">{ui.siteName}</span>
-      </a>
-
-      <div class="ml-1 hidden items-center gap-1.5 rounded-full border border-hairline px-2.5 py-0.5 sm:flex">
-        <span id="autosave-dot" class="size-1.5 rounded-full bg-emerald-500"></span>
-        <span id="autosave-label" data-state="saved" class="text-[11px] font-medium text-ink-mute">{ui.canvas.autosaveSaved}</span>
-      </div>
-
-      <div class="flex min-w-0 flex-1 items-center justify-end gap-0.5 sm:gap-1">
-        <ToolBoardNav locale={locale} route="/" />
-        <div class="max-[360px]:hidden shrink-0">
-          <LangSwitcher locale={locale} route="/" compact={true} />
-        </div>
-
-        <div class="hdr-actions flex min-w-0 items-center gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
+    <ToolHeader locale={locale} route="/"><Fragment slot="actions">
 
         <button
           id="undo-btn"
@@ -151,10 +132,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
           <Icon name="palette" />
         </button>
 
-        <DownloadMenu locale={locale} />
-        </div>
-      </div>
-    </header>
+        </Fragment></ToolHeader>
 
     <!-- Workspace -->
     <main class="relative flex min-h-0 flex-1">
