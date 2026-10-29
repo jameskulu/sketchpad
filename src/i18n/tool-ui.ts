@@ -1,4 +1,5 @@
 import type { Locale } from "./locales";
+import { indonesianToolUI } from "./indonesian";
 import type { ToolPageKey } from "./tool-content-types";
 
 export interface ToolUIStrings {
@@ -77,6 +78,7 @@ const en: ToolUIStrings = {
 };
 
 export const TOOL_UI: ToolUI = {
+  id: indonesianToolUI,
   en,
   es: {
     exportSvg: "Descargar SVG",

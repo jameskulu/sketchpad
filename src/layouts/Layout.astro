@@ -1,6 +1,7 @@
 ---
 import "@fontsource-variable/inter";
 import "../styles/global.css";
+import Tooltips from "../components/Tooltips.astro";
 import { SITE } from "../lib/site";
 import { localeAlternates, LOCALES, DEFAULT_LOCALE, type Locale } from "../i18n/locales";
 
@@ -38,6 +39,7 @@ const canonical = new URL(pathname, SITE.url).href;
 const ogUrl = canonical;
 const ogImageUrl = new URL(ogImage, SITE.url).href;
 const ogLocales: Record<Locale, string> = {
+  id: "id_ID",
   en: "en_US",
   es: "es_ES",
   ja: "ja_JP",
@@ -126,5 +128,6 @@ const scripts = structuredData
 	</head>
 	<body class="min-h-full bg-canvas-soft text-ink font-sans antialiased">
 		<slot />
+		<Tooltips />
 	</body>
 </html>

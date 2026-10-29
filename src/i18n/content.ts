@@ -1,6 +1,8 @@
 import type { Content } from "./content-types";
+import { indonesianContent } from "./indonesian";
 
 export const CONTENT: Content = {
+  id: indonesianContent,
   en: {
     htmlLang: "en",
     seoTitle: "Sketchpad — Free Online Sketchpad & Digital Drawing Board",

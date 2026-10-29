@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://simplesketchpad.com',
   i18n: {
-    locales: ['en', 'es', 'ja', 'fr', 'de', 'pt', 'ko', 'it', 'zh'],
+    locales: ['en', 'es', 'ja', 'fr', 'de', 'pt', 'ko', 'it', 'zh', 'id'],
     defaultLocale: 'en',
     routing: {
       prefixDefaultLocale: false,
@@ -16,7 +16,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Emit <xhtml:link rel="alternate" hreflang="..."> alternates for every
-      // locale version of each page so search engines treat all 9 languages
+      // locale version of each page so search engines treat all languages
       // as independent, canonical pages (Google's recommended pattern).
       i18n: {
         defaultLocale: 'en',
@@ -30,6 +30,7 @@ export default defineConfig({
           ko: 'ko',
           it: 'it',
           zh: 'zh-CN',
+          id: 'id',
         },
       },
       serialize(item) {

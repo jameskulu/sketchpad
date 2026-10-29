@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
+import DownloadMenu from "./DownloadMenu.astro";
 import LangSwitcher from "./LangSwitcher.astro";
 import { SITE } from "../lib/site";
 import ToolSeo from "./ToolSeo.astro";
@@ -199,24 +200,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
             <Icon name="palette" />
           </button>
 
-          <button
-            id="download-svg-btn"
-            class="ml-1 flex h-8 items-center gap-1.5 rounded-full border border-hairline px-3 text-[13px] font-medium text-ink-secondary transition-colors hover:bg-canvas-soft max-md:ml-0 max-md:h-7 max-md:px-2.5 max-md:text-[11px]"
-            aria-label={toolUi.exportSvg}
-            title={toolUi.exportSvg}
-          >
-            <Icon name="download" class="size-4" />
-            <span class="hidden sm:inline">{toolUi.exportSvg}</span>
-          </button>
-          <button
-            id="download-btn"
-            class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press max-md:ml-0 max-md:h-7 max-md:px-3 max-md:text-[11px]"
-            aria-label={ui.canvas.downloadPng}
-            title={ui.canvas.downloadPng}
-          >
-            <Icon name="download" class="size-4" />
-            <span class="hidden sm:inline">{ui.canvas.downloadPngShort}</span>
-          </button>
+          <DownloadMenu locale={locale} />
         </div>
       </div>
     </header>

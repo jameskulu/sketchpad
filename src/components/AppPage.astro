@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "./Icon.astro";
+import DownloadMenu from "./DownloadMenu.astro";
 import SeoContent from "./SeoContent.astro";
 import LangSwitcher from "./LangSwitcher.astro";
 import ToolBoardNav from "./ToolBoardNav.astro";
@@ -150,15 +151,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
           <Icon name="palette" />
         </button>
 
-        <button
-          id="download-btn"
-          class="ml-1 flex h-8 items-center gap-1.5 rounded-full bg-primary px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-primary-deep active:bg-primary-press max-md:ml-0 max-md:h-7 max-md:px-3 max-md:text-[11px]"
-          aria-label={ui.canvas.downloadPng}
-          title={ui.canvas.downloadPng}
-        >
-          <Icon name="download" class="size-4" />
-          <span class="hidden sm:inline">{ui.canvas.downloadPngShort}</span>
-        </button>
+        <DownloadMenu locale={locale} />
         </div>
       </div>
     </header>
@@ -465,6 +458,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
       fullscreenBtn: q<HTMLButtonElement>("fullscreen-btn"),
       fullscreenBtnMobile: q<HTMLButtonElement>("fullscreen-btn-mobile"),
       downloadBtn: q<HTMLButtonElement>("download-btn"),
+      downloadSvgBtn: q<HTMLButtonElement>("download-svg-btn"),
       swatches,
       colorInput: q<HTMLInputElement>("color-input"),
       sizeSlider: q<HTMLInputElement>("size-slider"),

@@ -1,127 +1,155 @@
----
+﻿---
 import Icon from "./Icon.astro";
 import { TOOL_DISPLAY_ORDER, TOOL_ROUTES } from "../i18n/tool-content-types";
+import { TOOL_CONTENT } from "../i18n/tool-content";
 import { toolUiFor } from "../i18n/tool-ui";
 import { uiFor } from "../i18n/ui";
 import { deriveLocaleHref, type Locale } from "../i18n/locales";
-
-interface Props {
-  locale: Locale;
-  /** current page route (e.g. "/" or "/whiteboard") to highlight */
-  route: string;
-}
-
+interface Props { locale: Locale; route: string }
 const { locale, route } = Astro.props;
 const ui = uiFor(locale);
 const toolUi = toolUiFor(locale);
-
-const items = TOOL_DISPLAY_ORDER.map((key) => ({
-  href: deriveLocaleHref(locale, TOOL_ROUTES[key]),
-  label: toolUi.boardNav.short[key],
-  current: route === TOOL_ROUTES[key],
-}));
-
-const home = {
-  href: deriveLocaleHref(locale, "/"),
-  label: ui.siteName,
-  current: route === "/",
+const copy = {
+  id: ["Pilih ruang kreatifmu", "Setiap ide membutuhkan kanvas yang tepat.", "Ruang saat ini", "Tutup", "Buat sketsa, corat-coret, dan wujudkan idemu."],
+  en: ["Choose your creative space", "A fresh idea deserves the right canvas.", "Current space", "Close", "Sketch, doodle, and bring your ideas to life."],
+  es: ["Elige tu espacio creativo", "Cada idea merece su propio lienzo.", "Espacio actual", "Cerrar", "Dibuja y da vida a tus ideas."],
+  ja: ["創作スペースを選ぶ", "アイデアにぴったりのキャンバスを。", "現在のスペース", "閉じる", "スケッチや落書きでアイデアを形に。"],
+  fr: ["Choisissez votre espace créatif", "À chaque idée, sa toile.", "Espace actuel", "Fermer", "Dessinez et donnez vie à vos idées."],
+  de: ["Wähle deinen kreativen Raum", "Für jede Idee die passende Leinwand.", "Aktueller Bereich", "Schließen", "Skizziere und erwecke Ideen zum Leben."],
+  pt: ["Escolha seu espaço criativo", "Cada ideia merece a tela certa.", "Espaço atual", "Fechar", "Desenhe e dê vida às suas ideias."],
+  ko: ["창작 공간을 선택하세요", "아이디어에 맞는 캔버스를 찾아보세요.", "현재 공간", "닫기", "스케치와 그림으로 아이디어를 표현하세요."],
+  it: ["Scegli il tuo spazio creativo", "Ogni idea merita la tela giusta.", "Spazio attuale", "Chiudi", "Disegna e dai vita alle tue idee."],
+  zh: ["选择你的创作空间", "为每个灵感找到合适的画布。", "当前空间", "关闭", "自由涂鸦，让灵感跃然纸上。"],
+}[locale];
+const visuals = {
+  "drawing-board": { icon: "sticky", color: "#b66a20", tint: "#fff4e6" },
+  whiteboard: { icon: "squares", color: "#187f72", tint: "#eaf8f3" },
+  "graph-paper": { icon: "grid", color: "#3478bd", tint: "#edf5ff" },
+  "kids-drawing": { icon: "brush", color: "#ce598b", tint: "#fff0f6" },
 };
+const items = [
+  { key: "sketchpad", href: deriveLocaleHref(locale, "/"), label: ui.siteName, description: copy[4], current: route === "/", icon: "pencil", color: "#6746df", tint: "#f1edff" },
+  ...TOOL_DISPLAY_ORDER.map((key) => ({ key, href: deriveLocaleHref(locale, TOOL_ROUTES[key]), label: toolUi.boardNav.short[key], description: TOOL_CONTENT[locale]["drawing-board"].related[key].blurb, current: route === TOOL_ROUTES[key], ...visuals[key] })),
+];
 ---
-
-<div id="board-nav" class="relative shrink-0">
-  <button
-    id="board-nav-trigger"
-    type="button"
-    class="flex h-8 items-center gap-1.5 whitespace-nowrap rounded-full border border-hairline px-2.5 text-[12px] font-medium text-ink-secondary transition-colors hover:bg-canvas-soft hover:text-ink max-sm:h-7 max-sm:px-2"
-    aria-haspopup="true"
-    aria-expanded="false"
-    aria-label={toolUi.boardNav.menuAria}
-    title={toolUi.boardNav.menuAria}
-  >
-    <Icon name="squares" class="size-4 shrink-0" />
-    <span class="hidden sm:inline">{toolUi.boardNav.boards}</span>
-    <svg
-      id="board-nav-chevron"
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      aria-hidden="true"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
+<div id="board-nav" class="board-nav">
+  <button id="board-nav-trigger" type="button" aria-haspopup="dialog" aria-controls="board-nav-menu" aria-expanded="false" aria-label={toolUi.boardNav.menuAria} title={toolUi.boardNav.menuAria}>
+    <Icon name="squares" /><span>{toolUi.boardNav.boards}</span>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
   </button>
-
-  <div
-    id="board-nav-menu"
-    role="menu"
-    hidden
-    class="absolute right-0 top-full z-50 mt-1.5 w-60 rounded-xl border border-hairline bg-white p-1.5 shadow-xl shadow-shadow-blue/10"
-  >
-    <a
-      href={home.href}
-      role="menuitem"
-      aria-current={home.current ? "page" : undefined}
-      class:list={[
-        "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
-        home.current ? "bg-canvas-soft text-ink" : "text-ink-secondary hover:bg-canvas-soft hover:text-ink",
-      ]}
-    >
-      <Icon name="brush" class="size-4 shrink-0 text-ink-mute" />
-      <span class="flex-1 truncate">{home.label}</span>
-      {home.current && <Icon name="check" class="size-4 shrink-0 text-primary" />}
-    </a>
-
-    <div class="mx-2 my-1 h-px bg-hairline" role="separator"></div>
-
-    {items.map((item) => (
-      <a
-        href={item.href}
-        role="menuitem"
-        aria-current={item.current ? "page" : undefined}
-        class:list={[
-          "flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
-          item.current ? "bg-canvas-soft text-ink" : "text-ink-secondary hover:bg-canvas-soft hover:text-ink",
-        ]}
-      >
-        <Icon name="squares" class="size-4 shrink-0 text-ink-mute" />
-        <span class="flex-1 truncate">{item.label}</span>
-        {item.current && <Icon name="check" class="size-4 shrink-0 text-primary" />}
-      </a>
-    ))}
-  </div>
+  <dialog id="board-nav-menu" aria-labelledby="board-picker-title" aria-describedby="board-picker-description">
+    <div class="picker-shell">
+      <header class="picker-header">
+        <div class="picker-eyebrow"><span>✦</span> {toolUi.boardNav.boards}</div>
+        <h2 id="board-picker-title">{copy[0]}</h2>
+        <p id="board-picker-description">{copy[1]}</p>
+        <button id="board-picker-close" type="button" aria-label={copy[3]} autofocus><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+      </header>
+      <nav class="picker-grid" aria-label={toolUi.boardNav.menuAria}>
+        {items.map((item) => (
+          <a href={item.href} class:list={["space-card", { "is-current": item.current }]} aria-current={item.current ? "page" : undefined} style={`--space-color:${item.color};--space-tint:${item.tint}`}>
+            <div class="space-preview" aria-hidden="true">
+              <svg viewBox="0 0 280 116" fill="none" class="preview-drawing">
+                {item.key === "sketchpad" && <>
+                  <path d="M49 82c21-61 37-59 49-8s30 24 40-14 26-28 37 9 29 8 48-19" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+                  <path d="m196 22 5 11 12 2-9 8 2 12-10-6-11 6 3-12-9-8 12-2Z" fill="#f5c65d" />
+                </>}
+                {(item.key === "drawing-board" || item.key === "whiteboard") && <>
+                  <path d="M86 53h39m28 0h40M140 64v20" stroke="currentColor" stroke-width="2" />
+                  <rect x="34" y="28" width="57" height="44" rx="7" fill="white" stroke="currentColor" stroke-width="2" />
+                  <rect x="116" y="33" width="48" height="35" rx="17" fill="white" stroke="currentColor" stroke-width="2" />
+                  <rect x="192" y="28" width="54" height="44" rx="7" fill="white" stroke="currentColor" stroke-width="2" />
+                  <rect x="117" y="82" width="47" height="22" rx="4" fill={item.key === "whiteboard" ? "#bce8d7" : "#ffda87"} transform="rotate(-5 140 93)" />
+                  <path d="M47 44h29m-29 9h19m169-9h-29m0 9h19" stroke="currentColor" stroke-opacity=".45" stroke-width="2" stroke-linecap="round" />
+                </>}
+                {item.key === "graph-paper" && <>
+                  {Array.from({ length: 15 }, (_, i) => <path d={`M${i * 20} 0v116`} stroke="currentColor" stroke-opacity=".12" />)}
+                  {Array.from({ length: 6 }, (_, i) => <path d={`M0 ${i * 20}h280`} stroke="currentColor" stroke-opacity=".12" />)}
+                  <path d="M53 90h177M65 100V16" stroke="currentColor" stroke-opacity=".5" stroke-width="2" />
+                  <path d="m65 80 40-20 40 10 40-40 35 10" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                </>}
+                {item.key === "kids-drawing" && <>
+                  <path d="M80 93a60 60 0 0 1 120 0" stroke="#e99abc" stroke-width="12" />
+                  <path d="M94 93a46 46 0 0 1 92 0" stroke="#f5ce72" stroke-width="11" />
+                  <path d="M107 93a33 33 0 0 1 66 0" stroke="#91cdb8" stroke-width="10" />
+                  <path d="m222 22 4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1Z" fill="#efc75b" />
+                  <circle cx="50" cy="43" r="15" fill="#f7da87" /><path d="m44 45 4 3 6-5" stroke="#bc8843" stroke-width="2" stroke-linecap="round" />
+                </>}
+              </svg>
+              <span class="space-icon"><Icon name={item.icon} /></span>
+            </div>
+            <div class="space-info"><h3>{item.label}<span aria-hidden="true">↗</span></h3><p>{item.description}</p>{item.current && <span class="current-badge"><Icon name="check" />{copy[2]}</span>}</div>
+          </a>
+        ))}
+      </nav>
+      <footer class="picker-footer"><span class="footer-dots" aria-hidden="true"><i></i><i></i><i></i></span>{toolUi.boardNav.menuAria}<span class="escape-hint">Esc</span></footer>
+    </div>
+  </dialog>
 </div>
-
+<style>
+  .board-nav { flex-shrink:0; }
+  #board-nav-trigger { display:flex; align-items:center; gap:6px; height:32px; padding:0 10px; border:1px solid var(--color-hairline); border-radius:999px; color:var(--color-ink-secondary); font-size:12px; font-weight:500; cursor:pointer; transition:background .15s; }
+  #board-nav-trigger:hover,#board-nav-trigger[aria-expanded="true"] { background:#f1edff; color:#6746df; }
+  #board-nav-trigger :global(svg:first-child) { width:16px; height:16px; }
+  dialog { width:min(940px,calc(100vw - 40px)); max-height:calc(100dvh - 48px); margin:auto; padding:0; border:1px solid #ffffff90; border-radius:24px; background:#fafbfe; color:var(--color-ink); box-shadow:0 32px 100px #0d253d40; overflow:auto; overscroll-behavior:contain; }
+  dialog::backdrop { background:#10213988; backdrop-filter:blur(7px); }
+  dialog[open] { animation:picker-in .22s ease-out; }
+  .picker-header { position:relative; padding:34px 36px 26px; background:radial-gradient(ellipse at top right,#e9e2ff90,transparent 65%); }
+  .picker-eyebrow { display:flex; align-items:center; gap:8px; color:#7353d3; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+  .picker-eyebrow span { font-size:21px; line-height:1; }
+  h2 { margin:12px 40px 8px 0; font-size:clamp(24px,4vw,32px); font-weight:650; letter-spacing:-.045em; line-height:1.2; }
+  .picker-header p { color:var(--color-ink-mute); font-size:14px; line-height:1.6; }
+  #board-picker-close { position:absolute; top:24px; right:24px; width:34px; height:34px; display:grid; place-items:center; border:1px solid #e6e5ef; border-radius:50%; background:#ffffffb0; color:#69738a; cursor:pointer; }
+  #board-picker-close:hover { background:#fff; color:#533afd; }
+  .picker-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; padding:0 36px 30px; }
+  .space-card { display:block; min-width:0; border:1px solid #e5e8ef; border-radius:16px; overflow:hidden; background:white; text-decoration:none; transition:transform .18s,box-shadow .18s,border-color .18s; }
+  .space-card:hover { transform:translateY(-4px); border-color:var(--space-color); box-shadow:0 10px 25px #17264b0d; }
+  .space-card:focus-visible { outline:3px solid var(--space-color); outline-offset:3px; }
+  .space-card.is-current { border-color:var(--space-color); box-shadow:0 0 0 1px var(--space-color); }
+  .space-preview { position:relative; height:126px; background:var(--space-tint); color:var(--space-color); overflow:hidden; }
+  .preview-drawing { width:100%; height:100%; padding:8px 0; }
+  .space-icon { position:absolute; bottom:10px; left:12px; display:grid; place-items:center; width:30px; height:30px; border:1px solid white; border-radius:9px; background:#ffffffd9; }
+  .space-icon :global(svg) { width:17px; height:17px; }
+  .current-badge { display:inline-flex; align-items:center; gap:4px; margin-top:10px; border-radius:999px; padding:3px 7px; color:var(--space-color); background:var(--space-tint); font-size:10px; font-weight:600; }
+  .current-badge :global(svg) { width:12px; height:12px; }
+  .space-info { padding:16px; }
+  h3 { display:flex; justify-content:space-between; gap:8px; font-size:14px; font-weight:650; letter-spacing:-.02em; }
+  h3 span { color:var(--space-color); transition:transform .18s; }
+  .space-card:hover h3 span { transform:translate(2px,-2px); }
+  .space-info p { margin-top:7px; color:var(--color-ink-mute); font-size:12px; line-height:1.6; }
+  .picker-footer { display:flex; align-items:center; gap:10px; padding:15px 36px; border-top:1px solid #e8ebf2; background:white; color:var(--color-ink-mute); font-size:11px; }
+  .footer-dots { display:flex; gap:3px; }.footer-dots i { width:6px; height:6px; border-radius:50%; background:#a99ae5; }.footer-dots i:nth-child(2) { background:#94cbb9; }.footer-dots i:nth-child(3) { background:#f0ca80; }
+  .escape-hint { margin-left:auto; padding:2px 5px; border:1px solid #e5e8ef; border-radius:4px; font-size:10px; }
+  @keyframes picker-in { from { opacity:0; transform:translateY(12px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+  @media (max-width:700px) { .picker-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding:0 22px 22px; }.picker-header { padding:26px 22px 22px; }.picker-footer { padding:14px 22px; }.space-preview { height:110px; } }
+  @media (max-width:440px) { dialog { width:calc(100vw - 24px); max-height:calc(100dvh - 24px); border-radius:20px; }.picker-grid { grid-template-columns:1fr; padding:0 16px 20px; }.space-card { display:grid; grid-template-columns:100px minmax(0,1fr); }.space-preview { height:100%; min-height:110px; }.preview-drawing { width:160px; max-width:none; margin-left:-30px; }.space-info { padding:14px 12px; }#board-nav-trigger { height:28px; padding:0 8px; }#board-nav-trigger span { display:none; } }
+  @media (prefers-reduced-motion:reduce) { dialog[open] { animation:none; }.space-card,h3 span { transition:none; }.space-card:hover { transform:none; } }
+</style>
 <script>
-  const root = document.getElementById("board-nav");
-  const trigger = document.getElementById("board-nav-trigger") as HTMLButtonElement | null;
-  const menu = document.getElementById("board-nav-menu") as HTMLElement | null;
-  const chevron = document.getElementById("board-nav-chevron");
-  if (root && trigger && menu) {
-    const close = (): void => {
-      menu.hidden = true;
+  const trigger = document.getElementById("board-nav-trigger");
+  const dialog = document.getElementById("board-nav-menu");
+  const closeButton = document.getElementById("board-picker-close");
+  if (trigger instanceof HTMLButtonElement && dialog instanceof HTMLDialogElement) {
+    let previousOverflow = "";
+    trigger.addEventListener("click", () => {
+      if (dialog.open) return;
+      previousOverflow = document.body.style.overflow;
+      dialog.showModal();
+      document.body.style.overflow = "hidden";
+      trigger.setAttribute("aria-expanded", "true");
+    });
+    closeButton?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target !== dialog) return;
+      const bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+    dialog.addEventListener("keydown", (event) => event.stopPropagation());
+    dialog.addEventListener("keyup", (event) => event.stopPropagation());
+    dialog.addEventListener("close", () => {
+      document.body.style.overflow = previousOverflow;
       trigger.setAttribute("aria-expanded", "false");
-      chevron?.setAttribute("style", "");
-    };
-    trigger.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (menu.hidden) {
-        menu.hidden = false;
-        trigger.setAttribute("aria-expanded", "true");
-        chevron?.setAttribute("style", "transform: rotate(180deg)");
-      } else {
-        close();
-      }
-    });
-    document.addEventListener("click", (e) => {
-      if (!root.contains(e.target as Node)) close();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
+      trigger.focus();
     });
   }
 </script>

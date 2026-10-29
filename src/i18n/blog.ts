@@ -31,6 +31,312 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "how-to-make-a-mind-map-online",
+    title: "How to Make a Mind Map Online: A Worked Example and Simple Template",
+    description:
+      "Build a useful mind map with a worked community-event example, a copyable outline, a 15-minute exercise, and a checklist for turning branches into actions.",
+    excerpt:
+      "Start with one question, organize ideas into readable branches, and turn the result into next steps. Includes a worked example and a template you can reuse.",
+    category: "Guides",
+    date: "2026-10-29",
+    readingTime: 7,
+    related: ["/whiteboard", "/drawing-board"],
+    relatedPosts: ["sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online", "how-to-wireframe-a-website"],
+    keywords: ["how to make a mind map online", "mind map example", "mind map template", "brainstorming mind map"],
+    sections: [
+      {
+        paragraphs: [
+          "A mind map arranges ideas around one central topic. Main branches hold broad categories; smaller branches hold details. Its value is that you can see the structure of a subject while still having room to add, move, or question an idea.",
+          "This guide builds a map for a fictional neighborhood book swap. You can follow the same steps for an essay, a personal project, or a lesson. Open the [online whiteboard](/whiteboard/) to draw along: text, lines, shapes, and a few colors are enough. This is a manual drawing workflow; the app does not automatically arrange branches.",
+        ],
+      },
+      {
+        heading: "Choose a mind map when relationships matter more than sequence",
+        paragraphs: [
+          "Use a mind map to explore what belongs to a topic: what an event needs, which questions an essay should answer, or how parts of a subject relate. It lets you develop several branches without deciding a strict order first.",
+          "If your main question is what happens next, use a [flowchart](/blog/how-to-draw-a-flowchart-online/) instead. If you already know the work and only need owners and deadlines, a task list may be enough. A mind map helps you discover and organize the work before you schedule it.",
+        ],
+      },
+      {
+        heading: "Put a specific question in the center",
+        paragraphs: [
+          "Draw a small central rectangle or ellipse and add a short question. Leave space around it for branches. A question gives you a test for new ideas: does this help answer what we are trying to decide?",
+          "For our example, write: What do we need to run a neighborhood book swap? That is more useful than Event because it defines both the activity and the job of the map. You are planning what is needed, rather than collecting every possible thought about events.",
+          "Under the question, add a small note: First draft; venue and date unconfirmed. This keeps a planning sketch from looking like an approved plan when someone else reads it.",
+        ],
+      },
+      {
+        heading: "Collect ideas before deciding the branches",
+        paragraphs: [
+          "Spend two minutes adding short text labels or sticky notes around the center. Write one idea per item. At this stage, a messy collection is useful because you can move related items together later.",
+          "For the book swap, the first ideas might be tables, rain plan, unwanted books, volunteers, opening hours, posters, step-free access, signs, and a place to hold it. These are different levels of detail. Resist making every item a main branch; first look for categories that explain why they belong together.",
+          "Keep questions as questions. Where can leftover books go? is an honest planning item. Donate leftovers sounds decided even though no recipient has agreed to take them.",
+        ],
+      },
+      {
+        heading: "Group the ideas into a few main branches",
+        paragraphs: [
+          "Move related notes into clusters and name each cluster. For this example, five branches are enough: Place and timing, Books and rules, People, Visitor experience, and Promotion. Five is a choice for this map, not a requirement for every mind map.",
+          "Draw a line from the center to each branch label. Then place the details farther out and connect each to its category. Keep line thickness and text size consistent within each level so readers can distinguish categories from details.",
+        ],
+        list: [
+          "Place and timing: venue options, date, opening hours, table space, and rain plan.",
+          "Books and rules: accepted books, condition guidelines, swap method, and leftover-book plan.",
+          "People: organizer, welcome volunteer, table helpers, setup, and cleanup.",
+          "Visitor experience: entrance signs, clear paths, reachable tables, and instructions.",
+          "Promotion: noticeboard poster, invitation wording, confirmed location, and contact details.",
+        ],
+      },
+      {
+        heading: "Expand one branch with a useful stopping rule",
+        paragraphs: [
+          "Choose the branch with the most uncertainty and add another level. Under Books and rules, expand Swap method into three questions: Must visitors bring a book? Is there a limit? Who explains the rules? These details expose decisions that the broad label would hide.",
+          "Stop expanding when the item is specific enough to investigate, decide, or do. Ask the venue whether tables are included is actionable. Tables is still a subject. Buy six tables is premature if you have not checked what the venue provides.",
+          "If one branch needs much more detail than the rest, make a second map for it. Keep a reference such as See volunteer plan on the overview. Forcing every detail onto one canvas can make the central question hard to find.",
+        ],
+      },
+      {
+        heading: "Make uncertainty and cross-links readable",
+        paragraphs: [
+          "Use a small notation key: a question mark for an open question, CONFIRMED for an agreed fact, and NEXT for an immediate action. Write the key on the canvas so it travels with the exported image. Color can reinforce these labels, but the words should carry the meaning too.",
+          "Some ideas belong to more than one branch. Posters depend on a confirmed date and venue. Draw one labelled cross-link from Promotion to Place and timing: confirm before printing. Use cross-links sparingly; if every branch connects to every other branch, record dependencies in a separate task list.",
+          "When rearranging the map in this sketchpad, check the connecting lines too. Treat them as separate drawing elements and adjust their endpoints when you move a label. Do not assume they remain attached automatically.",
+        ],
+      },
+      {
+        heading: "Copy this outline for your own map",
+        paragraphs: [
+          "Use these labels as a starting point. Replace the examples with details from your project, then rename or remove branches that do not help. This is a text outline to draw from, rather than an importable template.",
+        ],
+        list: [
+          "Center: What do we need to [specific outcome]?",
+          "Outcome: who it serves; what success looks like; what is outside scope.",
+          "Resources: people; materials; space; budget questions.",
+          "Work: preparation; delivery; follow-up.",
+          "Constraints: timing; permissions to check; dependencies; practical limits.",
+          "Open questions: missing facts; choices to compare; people to ask.",
+          "Next actions: task; owner; target date; what confirms completion.",
+        ],
+      },
+      {
+        heading: "Turn the map into three next actions",
+        paragraphs: [
+          "A map can feel complete while leaving everyone unsure what to do. Add a small Next actions area beside it and choose the few steps that unblock the most decisions. Give each a verb, an owner, and a date that the owner agrees to.",
+          "For the book swap: Maya asks the community hall about availability and included tables; Leo drafts two swap-rule options for review; Sam contacts a potential recipient about leftover books. Their completion conditions are a venue response, two written options, and an explicit answer from the recipient. None of those requires pretending the event is already confirmed.",
+          "If you are mapping with a group, use screen sharing while one person draws, or gather feedback on an exported image. SimpleSketchpad's whiteboard is a local canvas; it does not provide simultaneous editing or shared sticky-note entry.",
+        ],
+      },
+      {
+        heading: "A 15-minute mind-mapping exercise",
+        ordered: true,
+        list: [
+          "Minutes 1–2: write the central question and define the boundary of the topic.",
+          "Minutes 3–4: add individual ideas without organizing them yet.",
+          "Minutes 5–7: group related ideas, name the main branches, and connect them to the center.",
+          "Minutes 8–10: expand the branch with the most uncertainty and mark missing facts.",
+          "Minutes 11–12: remove duplicates, shorten labels, and repair unclear connections.",
+          "Minutes 13–14: choose three next actions and record owners and completion conditions.",
+          "Minute 15: zoom out, check readability, and export a dated copy.",
+        ],
+      },
+      {
+        heading: "Check the map before sharing it",
+        paragraphs: [
+          "View the whole map before exporting. If the smaller labels become unreadable, simplify the overview or split out the crowded branch. More canvas space does not guarantee a readable image when it is placed in a document or message.",
+          "Download a PNG for a straightforward review image, or an SVG from the whiteboard for a scalable version. Name it for its subject and revision, such as book-swap-plan-v1.png. Local autosave can help you return in the same browser, but keep an exported copy of work you need. An exported image is a record of the map, not a restorable sketchpad project file.",
+        ],
+        list: [
+          "The central question is clear without a spoken explanation.",
+          "Main branches describe different categories, and duplicate ideas have been merged.",
+          "Each detail has an understandable connection to its parent branch.",
+          "Unconfirmed ideas are visibly different from agreed decisions.",
+          "Cross-links have labels that explain the relationship.",
+          "Next actions say who will do what and how completion will be recognized.",
+          "The exported image is readable at the size its recipient will use.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the difference between a mind map and a flowchart?",
+        answer: "A mind map groups ideas around a central topic. A flowchart shows a sequence of steps and decisions. Use a mind map to explore what belongs to a project, then a flowchart if you need to explain how a process works.",
+      },
+      {
+        question: "How many branches should a mind map have?",
+        answer: "Use enough branches to separate the main categories without repeating them. Start with a handful and revise as you add detail. If the overview becomes crowded, move a detailed branch into its own map.",
+      },
+      {
+        question: "Can I make a mind map without drawing skills?",
+        answer: "Yes. Short text labels, simple shapes, and connecting lines are enough. Clear grouping and readable relationships matter more than decorative illustrations.",
+      },
+      {
+        question: "Does SimpleSketchpad arrange mind-map branches automatically?",
+        answer: "No. You place labels, shapes, and connecting lines manually. The whiteboard provides a flexible drawing surface, rather than a dedicated mind-map layout engine or a live collaboration workspace.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-wireframe-a-website",
+    title: "How to Wireframe a Website: A Practical Guide with a Worked Example",
+    description:
+      "Learn to sketch a useful website wireframe with a worked service-page example, mobile layout decisions, a 30-minute exercise, and a practical review checklist.",
+    excerpt:
+      "Turn a vague website idea into a page you can explain and test. Follow a worked example, plan the mobile version, and check the important decisions before you start designing.",
+    category: "Guides",
+    date: "2026-10-28",
+    readingTime: 8,
+    related: ["/drawing-board", "/graph-paper", "/whiteboard"],
+    relatedPosts: ["sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online", "complete-guide-to-online-drawing"],
+    keywords: ["how to wireframe a website", "website wireframe", "low fidelity wireframe", "mobile wireframe", "website planning"],
+    sections: [
+      {
+        paragraphs: [
+          "A website wireframe is a rough plan of a page: what information appears, in what order, and what a visitor can do next. Rectangles, short labels, and a few arrows are enough. The useful part is deciding which content deserves space and which action the page should support.",
+          "This guide walks through a fictional bicycle repair shop's service page. By the end, you will have a repeatable way to plan your own page, a mobile version, and a list of questions to resolve before you spend time on polished design. Open the [drawing board](/drawing-board/) if you want to sketch along.",
+        ],
+      },
+      {
+        heading: "Write a one-sentence page brief",
+        paragraphs: [
+          "Before drawing a box, finish this sentence: This page helps [person] decide [question] so they can [action]. Keep it specific enough that you can judge whether each section helps.",
+          "For the bicycle shop: This page helps a local cyclist decide whether the shop can fix their bike so they can request a repair appointment. That sentence gives the page a clear job. A shop history, photo gallery, and newsletter might all be useful elsewhere, but they do not automatically belong at the top of this page.",
+        ],
+        list: [
+          "Visitor: a cyclist with a repair problem, possibly viewing the page on a phone.",
+          "Questions: Do you handle my problem? What might it cost? Where are you? What happens after I request a visit?",
+          "Primary action: request a repair appointment.",
+          "Secondary action: call to ask about an unusual repair.",
+          "Constraint: appointment requests need shop confirmation; submitting a form does not reserve a time.",
+        ],
+      },
+      {
+        heading: "List real content before arranging it",
+        paragraphs: [
+          "Write the smallest content inventory that answers the visitor's questions. Use working copy rather than filler text. A box labelled text hides whether you need one sentence or six paragraphs; a box labelled Repairs for everyday bikes and e-bikes exposes a meaningful content decision.",
+          "In our fictional example, the inventory is a service summary, repair categories, indicative prices with qualifications, expected timing, location, opening hours, an appointment request, and an explanation of the next step. Any price or timing claim would need confirmation from the shop before publication.",
+          "Mark missing information directly on the sketch: Confirm e-bike brands serviced or Need current turnaround estimate. An unresolved fact is easier to fix while the page is still a drawing.",
+        ],
+      },
+      {
+        heading: "Draw the page as a sequence of questions",
+        paragraphs: [
+          "Start with one tall rectangle for the page. Divide it into broad horizontal sections. Make each section answer a question, then write its purpose beside it. This gives you a reason for the order instead of copying a layout that happens to look familiar.",
+          "For the bicycle repair page, sketch this sequence from top to bottom. The example is a starting hypothesis to review, not a universal template.",
+        ],
+        ordered: true,
+        list: [
+          "Header: shop name, a short navigation, and a clearly labelled contact route. Can I tell whose page this is?",
+          "Opening section: Bicycle repairs in [neighborhood], a one-sentence service summary, and Request a repair. Am I in the right place?",
+          "Service list: punctures, brakes, gears, and other confirmed repair categories. Can you fix my problem?",
+          "Price and timing section: starting prices, what inspection changes, and how estimates are confirmed. What should I expect?",
+          "Visit details: address, hours, and any instructions for bringing a bike. Can I get there?",
+          "Request section: a short form and a sentence explaining confirmation. How do I start, and what happens next?",
+          "Footer: contact details and essential policy links. Where can I find supporting information?",
+        ],
+      },
+      {
+        heading: "Make the first screen earn its space",
+        paragraphs: [
+          "Draw a horizontal line across the page frame to suggest the bottom of the first visible screen. Treat it as an approximation because screen sizes vary. Check whether the opening area identifies the service, the location, and the next action without requiring the visitor to interpret a large decorative image.",
+          "For our shop, a full-screen bicycle photo would postpone the repair information. Try a smaller image beside the headline on desktop, or leave it out of the first mobile draft. Label every image placeholder with its job, such as Shop entrance so visitors can recognize the location. If you cannot name its job, question whether it needs that space.",
+          "You do not need to fit the whole page above that line. You need enough information for a visitor to understand the page and decide whether to continue.",
+        ],
+      },
+      {
+        heading: "Use simple drawing conventions",
+        paragraphs: [
+          "Use rectangles for sections, smaller outlined rectangles for buttons, and text for headings and content notes. Reserve arrows for navigation or interactions; avoid arrows between every section of an ordinary scrolling page. Keep notes outside the page frame so readers can distinguish visible content from instructions to the person building it.",
+          "The [graph paper](/graph-paper/) view can help you align repeated blocks. Keep one dark color for page content and one accent for annotations. You can decide typography, brand colors, and image treatments after the content and sequence make sense.",
+        ],
+        list: [
+          "Use a few short horizontal lines to suggest body copy only after writing its actual subject.",
+          "Label buttons with actions: Request a repair is more informative than Submit or Click here.",
+          "Mark image placeholders with a rectangle and a description of the intended subject.",
+          "Number interaction notes so a reviewer can refer to them precisely.",
+          "Draw repeated items at the same size when they have the same role.",
+        ],
+      },
+      {
+        heading: "Sketch mobile as a separate decision",
+        paragraphs: [
+          "Draw a narrow frame beside the desktop version. Keep the same visitor goal, then decide the reading order again. Shrinking the desktop sketch would make labels tiny and preserve columns that no longer have enough space.",
+          "For the shop, place the headline, service summary, and request button first. Put the supporting image below them. Stack service categories into a single column. Keep prices beside their service labels so the visitor does not have to match information across distant sections.",
+          "Write down what happens to navigation. If you propose a menu button, list the links inside it and sketch the open state. If the navigation only has a few short links, try keeping them visible. The wireframe should make the choice explicit.",
+        ],
+        list: [
+          "Can the main action's label fit comfortably without being abbreviated?",
+          "Does the page still make sense when sections stack in a single column?",
+          "Are important instructions next to the field or action they explain?",
+          "Would a fixed header or bottom button cover any content? Mark the reserved space if you use one.",
+        ],
+      },
+      {
+        heading: "Include the states after the click",
+        paragraphs: [
+          "A wireframe of the default page leaves important behavior undecided. Beside the request form, draw small panels for a missing required field, a failed submission, and a successful request. State what the visitor sees and what they can do next.",
+          "For our example, the form might ask for a name, contact method, bike type, and a brief problem description. For each field, explain why the shop needs it at this stage. Delay details that can be collected in the follow-up conversation.",
+          "The success panel should say Request received, explain that the shop will confirm availability, and give a realistic response expectation once the shop has approved it. A failure panel should explain that the request was not sent and provide a retry or another contact route. Add a build note to preserve entered information when a request fails.",
+          "A sketch cannot verify keyboard access, focus behavior, or screen-reader output. It can record requirements for the build: visible field labels, clear errors tied to their fields, and a logical focus order.",
+        ],
+      },
+      {
+        heading: "Review with a task, then revise",
+        paragraphs: [
+          "Show the sketch to someone who has not helped arrange it. Give them a realistic prompt: Your rear brake is rubbing and you want to know whether this shop can help. Show me what you would look for and what you would do next. Let them point and explain before you describe your intended layout.",
+          "Record specific uncertainty: Could not find the address is actionable; Did not like it needs a follow-up question. If they expect instant booking but the shop only accepts requests, revise the button and confirmation copy. If they search for prices before reading the service list, consider bringing a concise price cue higher.",
+          "One review can reveal problems, but it does not establish that every visitor will succeed. Keep the changes tied to what you observed and review again when a major decision changes.",
+        ],
+      },
+      {
+        heading: "A 30-minute wireframing exercise",
+        ordered: true,
+        list: [
+          "Minutes 1 to 4: write the visitor, their main question, and the primary action. Choose one page.",
+          "Minutes 5 to 8: list the content needed to answer that question. Flag missing facts.",
+          "Minutes 9 to 15: draw a desktop frame and arrange sections. Write a purpose beside each one.",
+          "Minutes 16 to 21: draw a mobile frame. Decide content order and navigation behavior.",
+          "Minutes 22 to 25: sketch the main interaction's success and failure states.",
+          "Minutes 26 to 29: walk through a visitor task, ideally with another person. Fix the clearest obstacle.",
+          "Minute 30: export a copy and record the next unresolved decision.",
+        ],
+      },
+      {
+        heading: "Use this checklist before handing it over",
+        paragraphs: [
+          "A useful handoff explains the decisions and the open questions. Add the page name, version date, and the goal beside the sketch. Export a PNG for a straightforward review image, or an SVG when the recipient needs a scalable file. Keep annotations within the drawing so they travel with the export.",
+          "Browser autosave helps you return to the drawing on the same browser and device; it is not a substitute for keeping an exported copy. Name the file for the page and revision, such as bike-repairs-wireframe-v1.png.",
+        ],
+        list: [
+          "The opening section identifies what the page offers and who it serves.",
+          "The primary action has a specific label and an explicit destination or result.",
+          "Every section answers a visitor question or supports the main task.",
+          "The mobile sketch has a deliberate content order and navigation plan.",
+          "Forms include required information, error behavior, and a confirmation state.",
+          "Unconfirmed facts and missing content are labelled as open questions.",
+          "The recipient can distinguish page content from implementation notes.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the difference between a wireframe and a mockup?",
+        answer: "A wireframe focuses on content, layout, and actions. A mockup adds visual decisions such as typography, colors, and imagery. Use the wireframe to review what belongs on the page before polishing its appearance.",
+      },
+      {
+        question: "Do I need drawing skills to create a website wireframe?",
+        answer: "No. Rectangles, readable labels, and a few annotations are enough. The important skill is explaining why content appears in a particular order and what the visitor can do next.",
+      },
+      {
+        question: "Should I wireframe every page of a website?",
+        answer: "Start with each distinct page type and important user task. Several service pages may share one layout, while a service page and a contact form need different decisions. Add extra wireframes when content or behavior differs substantially.",
+      },
+      {
+        question: "Can a sketchpad wireframe be clicked like a prototype?",
+        answer: "This workflow produces a static drawing. Show interactions with arrows, annotations, and separate state panels. If you need to test working navigation or form behavior, build a prototype after reviewing the layout.",
+      },
+    ],
+  },
+  {
     slug: "complete-guide-to-online-drawing",
     title: "The Complete Guide to Drawing Online: Tools, Technique, and Workflow",
     description:

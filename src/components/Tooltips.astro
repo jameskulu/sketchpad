@@ -1,0 +1,104 @@
+<div id="tool-tooltip" role="tooltip" popover="manual"><span></span><kbd hidden></kbd></div>
+
+<style>
+  #tool-tooltip {
+    position:fixed; inset:auto; margin:0; padding:8px 11px;
+    max-width:min(280px,calc(100vw - 16px)); width:max-content;
+    border:1px solid #ffffff18; border-radius:9px; background:#18283e;
+    color:white; box-shadow:0 5px 18px #10213926;
+    font:500 12px/1.5 var(--font-sans); text-align:left;
+    overflow-wrap:anywhere; cursor:default;
+  }
+  #tool-tooltip:popover-open { display:flex; align-items:center; gap:10px; animation:tooltip-in .1s ease-out; }
+  kbd { flex-shrink:0; border:1px solid #ffffff30; border-radius:4px; padding:0 5px; background:#ffffff10; color:#d4cafc; font:500 10px/1.8 var(--font-sans); }
+  kbd[hidden] { display:none; }
+  @keyframes tooltip-in { from { opacity:0; transform:translateY(3px); } to { opacity:1; transform:translateY(0); } }
+  @media (prefers-reduced-motion:reduce) { #tool-tooltip:popover-open { animation:none; } }
+</style>
+
+<script>
+  const tooltip = document.getElementById("tool-tooltip");
+  if (tooltip instanceof HTMLElement) {
+    const label = tooltip.querySelector("span")!;
+    const shortcut = tooltip.querySelector("kbd")!;
+    const controls = document.querySelectorAll<HTMLElement>("#app button[aria-label], #app label[title]");
+    let active: HTMLElement | null = null;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let originalDescription: string | null = null;
+    let hoveringTooltip = false;
+    let lastShown = 0;
+
+    const hide = () => {
+      clearTimeout(timer);
+      if (active) {
+        if (originalDescription === null) active.removeAttribute("aria-describedby");
+        else active.setAttribute("aria-describedby", originalDescription);
+      }
+      tooltip.hidePopover();
+      active = null;
+      hoveringTooltip = false;
+    };
+    const position = () => {
+      if (!active) return;
+      const rect = active.getBoundingClientRect();
+      const width = tooltip.offsetWidth;
+      const height = tooltip.offsetHeight;
+      let left = rect.left + (rect.width - width) / 2;
+      let top = rect.bottom + 8;
+      if (rect.left < 60 && rect.top > 90) {
+        left = rect.right + 8;
+        top = rect.top + (rect.height - height) / 2;
+      }
+      if (top + height > window.innerHeight - 8) top = rect.top - height - 8;
+      tooltip.style.left = `${Math.max(8, Math.min(left, window.innerWidth - width - 8))}px`;
+      tooltip.style.top = `${Math.max(8, top)}px`;
+    };
+    const show = (control: HTMLElement) => {
+      hide();
+      if (control.matches(":disabled") || document.querySelector("dialog[open]")) return;
+      const text = control.dataset.tooltip || control.getAttribute("aria-label");
+      if (!text) return;
+      active = control;
+      originalDescription = control.getAttribute("aria-describedby");
+      control.setAttribute("aria-describedby", [originalDescription, tooltip.id].filter(Boolean).join(" "));
+      const match = text.match(/^(.*?)\s+\(([^()]+)\)$/);
+      label.textContent = match ? match[1] : text;
+      shortcut.textContent = match?.[2] ?? "";
+      shortcut.hidden = !match;
+      tooltip.showPopover();
+      position();
+      lastShown = performance.now();
+    };
+    const deferHide = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (!hoveringTooltip && active !== document.activeElement) hide();
+      }, 100);
+    };
+    controls.forEach((control) => {
+      const title = control.getAttribute("title");
+      if (title) {
+        control.dataset.tooltip = title;
+        control.removeAttribute("title");
+      }
+      control.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "touch") return;
+        clearTimeout(timer);
+        timer = setTimeout(() => show(control), performance.now() - lastShown < 500 ? 0 : 100);
+      });
+      control.addEventListener("pointerleave", deferHide);
+      control.addEventListener("focus", () => {
+        if (control.matches(":focus-visible")) show(control);
+      });
+      control.addEventListener("blur", hide);
+      control.addEventListener("pointerdown", hide);
+      control.addEventListener("click", hide);
+    });
+    tooltip.addEventListener("pointerenter", () => { hoveringTooltip = true; clearTimeout(timer); });
+    tooltip.addEventListener("pointerleave", () => { hoveringTooltip = false; deferHide(); });
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") hide(); });
+    window.addEventListener("resize", hide);
+    document.addEventListener("scroll", hide, true);
+    document.addEventListener("fullscreenchange", hide);
+  }
+</script>

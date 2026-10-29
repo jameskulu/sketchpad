@@ -1,0 +1,82 @@
+---
+import Icon from "./Icon.astro";
+import { uiFor } from "../i18n/ui";
+import { toolUiFor } from "../i18n/tool-ui";
+import type { Locale } from "../i18n/locales";
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const ui = uiFor(locale);
+const toolUi = toolUiFor(locale);
+---
+<div class="download-control">
+  <button id="download-menu-trigger" type="button" aria-label={toolUi.kids.download} aria-haspopup="menu" aria-controls="download-menu" aria-expanded="false" popovertarget="download-menu">
+    <Icon name="download" /><span>{toolUi.kids.download}</span>
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+  </button>
+  <div id="download-menu" popover="auto" role="menu" aria-label={toolUi.kids.download}>
+    <button id="download-btn" type="button" role="menuitem" aria-label={ui.canvas.downloadPng}>
+      <span class="format-icon">PNG</span><span class="format-label">{ui.canvas.downloadPngShort}<small>.png</small></span><kbd>Ctrl+D</kbd>
+    </button>
+    <button id="download-svg-btn" type="button" role="menuitem" aria-label={toolUi.exportSvg}>
+      <span class="format-icon vector">SVG</span><span class="format-label">{toolUi.exportSvg}<small>.svg</small></span>
+    </button>
+  </div>
+</div>
+<style>
+  .download-control { flex-shrink:0; margin-left:4px; }
+  #download-menu-trigger { display:flex; align-items:center; gap:7px; height:32px; padding:0 13px; border-radius:999px; background:var(--color-primary); color:white; font-size:13px; font-weight:500; cursor:pointer; transition:background .15s; }
+  #download-menu-trigger:hover,#download-menu-trigger[aria-expanded="true"] { background:var(--color-primary-deep); }
+  #download-menu-trigger :global(svg:first-child) { width:16px; height:16px; }
+  #download-menu { position:fixed; inset:auto; margin:0; width:min(290px,calc(100vw - 16px)); padding:6px; border:1px solid var(--color-hairline); border-radius:14px; background:white; color:var(--color-ink); box-shadow:0 12px 40px #0d253d24; }
+  #download-menu:popover-open { animation:download-in .12s ease-out; }
+  #download-menu button { display:flex; align-items:center; gap:11px; width:100%; padding:10px; border-radius:9px; text-align:left; cursor:pointer; }
+  #download-menu button:hover,#download-menu button:focus-visible { background:#f3f0ff; }
+  .format-icon { display:grid; place-items:center; width:37px; height:40px; border:1px solid #dce7fa; border-radius:8px; background:#edf5ff; color:#3478bd; font-size:10px; font-weight:700; }
+  .format-icon.vector { border-color:#e2daf9; background:#f1edff; color:#6746df; }
+  .format-label { flex:1; min-width:0; font-size:12px; font-weight:600; }
+  small { display:block; margin-top:2px; color:var(--color-ink-mute); font-size:10px; font-weight:400; }
+  kbd { color:var(--color-ink-mute); font:10px var(--font-sans); white-space:nowrap; }
+  @keyframes download-in { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+  @media(max-width:640px) { #download-menu-trigger { height:28px; padding:0 9px; font-size:11px; gap:5px; } }
+  @media(prefers-reduced-motion:reduce) { #download-menu:popover-open { animation:none; } }
+</style>
+<script>
+  const trigger = document.getElementById("download-menu-trigger");
+  const menu = document.getElementById("download-menu");
+  if (trigger instanceof HTMLButtonElement && menu) {
+    const options = Array.from(menu.querySelectorAll<HTMLButtonElement>('[role="menuitem"]'));
+    const position = () => {
+      const rect = trigger.getBoundingClientRect();
+      menu.style.left = `${Math.max(8, Math.min(rect.right - menu.offsetWidth, window.innerWidth - menu.offsetWidth - 8))}px`;
+      menu.style.top = `${Math.max(8, Math.min(rect.bottom + 8, window.innerHeight - menu.offsetHeight - 8))}px`;
+    };
+    menu.addEventListener("toggle", () => {
+      const open = menu.matches(":popover-open");
+      trigger.setAttribute("aria-expanded", String(open));
+      if (open) { position(); options[0]?.focus(); }
+    });
+    const close = (restoreFocus = false) => {
+      menu.hidePopover();
+      if (restoreFocus) trigger.focus();
+    };
+    options.forEach((option) => option.addEventListener("click", () => close(true)));
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault(); event.stopPropagation(); menu.showPopover(); position();
+        options[event.key === "ArrowUp" ? options.length - 1 : 0]?.focus();
+      }
+    });
+    menu.addEventListener("keydown", (event) => {
+      event.stopPropagation();
+      const current = options.indexOf(document.activeElement as HTMLButtonElement);
+      if (["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+        event.preventDefault();
+        const next = event.key === "Home" ? 0 : event.key === "End" ? options.length - 1 : (current + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length;
+        options[next]?.focus();
+      } else if (event.key === "Escape") { event.preventDefault(); close(true); }
+      else if (event.key === "Tab") close();
+    });
+    window.addEventListener("resize", () => close());
+    document.addEventListener("scroll", () => close(), true);
+  }
+</script>

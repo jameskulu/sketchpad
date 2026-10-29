@@ -1,4 +1,5 @@
 import type { ToolContent } from "./tool-content-types";
+import { indonesianTools } from "./indonesian";
 
 const en = {
   "drawing-board": {
@@ -2836,6 +2837,7 @@ const zh = {
 };
 
 export const TOOL_CONTENT: ToolContent = {
+  id: indonesianTools,
   en,
   es,
   ja,

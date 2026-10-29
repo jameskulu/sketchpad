@@ -1,4 +1,4 @@
-export type Locale = "en" | "es" | "ja" | "fr" | "de" | "pt" | "ko" | "it" | "zh";
+export type Locale = "en" | "es" | "ja" | "fr" | "de" | "pt" | "ko" | "it" | "zh" | "id";
 
 export interface LocaleMeta {
   code: Locale;
@@ -19,6 +19,7 @@ export const LOCALES: LocaleMeta[] = [
   { code: "ko", label: "한국어", lang: "ko", native: "한국어" },
   { code: "it", label: "Italiano", lang: "it", native: "Italiano" },
   { code: "zh", label: "中文", lang: "zh-CN", native: "中文" },
+  { code: "id", label: "Indonesian", lang: "id", native: "Bahasa Indonesia" },
 ];
 
 export const DEFAULT_LOCALE: Locale = "en";

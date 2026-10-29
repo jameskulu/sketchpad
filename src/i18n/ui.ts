@@ -1,4 +1,5 @@
 import type { Locale } from "./locales";
+import { indonesianUI } from "./indonesian";
 
 // Shared UI strings (shell + sketchpad chrome). These mirror the markup in
 // the components/pages. Add keys as new chrome text appears.
@@ -126,6 +127,7 @@ const en: UIStrings = {
 };
 
 export const UI: UI = {
+  id: indonesianUI,
   en,
   es: {
     siteName: "Sketchpad",
