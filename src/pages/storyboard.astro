@@ -46,7 +46,10 @@ const faqData = { "@context": "https://schema.org", "@type": "FAQPage", mainEnti
         <p>Export the visible frames as one PNG with the title and captions included, or use the print option to create a PDF through your browser. Reducing the frame count keeps later scenes in your local draft. Browser autosave is useful between visits, but it does not provide cloud storage or shared editing. Keep an exported copy of important work.</p>
         <h2>Frequently asked questions</h2>
         <div class="story-faq">{faqs.map(faq => <details><summary>{faq.q}</summary><p>{faq.a}</p></details>)}</div>
-        <a href="/blog/how-to-wireframe-a-website/">Planning a website instead? Read the wireframing guide →</a>
+        <div class="mt-4 flex flex-col gap-2 sm:flex-row sm:gap-6">
+          <a href="/blog/how-to-make-a-storyboard-online/">Read the complete step-by-step storyboarding guide →</a>
+          <a href="/blog/how-to-wireframe-a-website/">Planning a website instead? Read the wireframing guide →</a>
+        </div>
       </section>
     </main>
     <dialog id="story-clear-dialog" aria-labelledby="story-clear-title"><h2 id="story-clear-title">Clear this scene?</h2><p>The drawing in the selected frame will be cleared. Its caption stays, and you can undo this change.</p><div><button id="story-clear-cancel" autofocus>Keep drawing</button><button id="story-clear-confirm" class="primary">Clear scene</button></div></dialog>

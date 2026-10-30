@@ -31,6 +31,222 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "how-to-make-a-storyboard-online",
+    title: "How to Make a Storyboard Online: A Practical Guide for Video, Animation, and UX",
+    description:
+      "Learn how to create a clear storyboard online: plan your shot sequence, choose shot types, write action and audio captions, avoid continuity mistakes, and export a print-ready board.",
+    excerpt:
+      "A storyboard is a visual blueprint that reveals pacing, continuity, and production mistakes before you spend hours filming or animating. Here is how to plan, sketch, and caption scenes that work.",
+    category: "Guides",
+    date: "2026-10-30",
+    readingTime: 14,
+    related: ["/storyboard", "/drawing-board", "/whiteboard"],
+    relatedPosts: [
+      "how-to-wireframe-a-website",
+      "sketchpad-for-planning-and-diagrams",
+      "how-to-draw-a-flowchart-online",
+    ],
+    keywords: [
+      "how to make a storyboard online",
+      "storyboard maker online free",
+      "how to storyboard a video",
+      "storyboard tutorial",
+      "storyboard shot types",
+      "ux storyboard",
+      "storyboard template",
+      "online storyboard creator",
+      "storyboard for beginners",
+      "video production planning",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "A storyboard is a sequence of illustrated panels paired with directional notes that map out a visual story before production begins. Originally popularized by Walt Disney Studios in the 1930s to plan animated shorts, storyboarding has become an essential practice for filmmakers, commercial directors, YouTubers, motion designers, and product teams.",
+          "The greatest advantage of a storyboard is speed of iteration. Finding out that scene 3 does not logically connect to scene 4 takes thirty seconds with stick figures on a canvas, but finding that out on a video shoot costs thousands of dollars, and discovering it during animation wastes days of rendering. A rough sketch forces you to answer the hard questions early: What is the camera looking at? Who is speaking? How does the audience know where they are?",
+          "You do not need expensive illustration suites to plan a compelling sequence. Open the free [online storyboard maker](/storyboard/) in your browser: you get numbered 16:9 frames, integrated sketching pens, dedicated caption fields for action and audio, and one-click export to PNG or PDF. This guide walks through the entire storyboarding process, from defining narrative beats to formatting production-ready panels.",
+        ],
+      },
+      {
+        heading: "The short answer: 6 steps to a working storyboard",
+        paragraphs: [
+          "Before drawing your first frame, establish a structured workflow. The biggest mistake beginners make is jumping straight into detailed drawing before deciding what each beat must accomplish.",
+        ],
+        ordered: true,
+        list: [
+          "Write a one-sentence core objective and list the key narrative beats (setup, conflict, turning point, resolution).",
+          "Set your aspect ratio and panel count: 16:9 widescreen is standard for video, monitors, and presentations; start with 4 to 8 panels for short clips or up to 24 for complex scenes.",
+          "Block in the main subjects using simple geometric shapes, contour lines, and stick figures. Establish the horizon line and eye level.",
+          "Vary camera framing across panels: alternate between wide establishing shots, medium interactions, and tight close-ups to control pacing.",
+          "Write concise three-part captions under every frame: Action (what moves), Dialogue/Audio (what is heard), and Camera/Timing (lens movement and duration).",
+          "Test the sequence at playback speed: read the captions aloud, check directional continuity, and cut redundant frames before starting production.",
+        ],
+      },
+      {
+        heading: "Why storyboarding saves hours of wasted work",
+        paragraphs: [
+          "In film, animation, and video marketing, the cost of making changes rises exponentially with every production phase. Changing a pencil sketch takes five seconds. Re-shooting a live-action setup takes an entire crew back on location. Re-rendering a 3D sequence can take days of compute time.",
+          "A storyboard bridges the gap between the written script and the physical camera. Scripts describe emotions and lines of dialogue, but they cannot show whether two characters are standing in confusing positions or whether a cut between two angles will disorient the audience. When every stakeholder can see the sequence on one sheet, alignment happens in minutes rather than endless email threads.",
+          "If you are planning an interactive digital interface rather than a temporal video sequence, read our guide on [how to wireframe a website](/blog/how-to-wireframe-a-website/). For non-linear ideation and structural branches, try [making a mind map online](/blog/how-to-make-a-mind-map-online/). When you need to communicate a chronological sequence of events, a storyboard is the right tool.",
+        ],
+      },
+      {
+        heading: "The visual grammar: 6 essential camera shot types",
+        paragraphs: [
+          "A storyboard is not an art exhibition; it is visual communication. Professional storyboard artists rely on a standard vocabulary of camera framings to convey emotional distance, spatial orientation, and narrative focus.",
+        ],
+        list: [
+          "Extreme Wide Shot (EWS) / Establishing Shot: The subject is tiny or distant within a large landscape or city setting. Use this at the beginning of a sequence or scene transition to tell the viewer where and when the story takes place.",
+          "Wide Shot (WS) / Full Shot: The character is visible from head to toe, with room above the head and below the feet. Shows the character's relationship to their immediate environment, other people in the room, and physical obstacles.",
+          "Medium Shot (MS): Frames the subject from the waist up. The universal standard for dialogue scenes, interviews, and product demonstrations because it captures facial expressions and hand gestures simultaneously.",
+          "Close-Up (CU): Frames the face from the shoulders or collarbone to the top of the head. Directs total viewer empathy to the character's emotional reaction, or spotlights a critical physical object (like a ringing phone or a signed contract).",
+          "Extreme Close-Up (ECU): Isolates a single detail: eyes widening in shock, a key entering a lock, or a cursor hovering over a delete button. Generates immediate tension and forces focus.",
+          "Over-The-Shoulder (OTS) & Point-of-View (POV): An OTS shot looks past one character's shoulder toward another, creating spatial continuity during conversations. A POV shot places the camera directly at the character's eye level, letting the audience experience the scene through their eyes.",
+        ],
+      },
+      {
+        heading: "How to draw camera movement and directional arrows",
+        paragraphs: [
+          "A static frame only shows a snapshot in time. To indicate how the camera or subject moves during the shot, use clear arrow conventions that anyone on your team can interpret at a glance.",
+          "For camera pans (horizontal pivoting) and tilts (vertical pivoting), draw a long arrow across the frame pointing in the direction of the camera movement, and label it Pan Left, Pan Right, Tilt Up, or Tilt Down.",
+          "To show a Zoom In or Push In, sketch a smaller rectangle inside the frame around the target subject, then draw diagonal arrows pointing from the corners of the main frame inward toward the corners of the smaller box. For a Zoom Out or Pull Back, reverse the arrow directions pointing outward.",
+          "Keep character motion arrows visually distinct from camera movement. A reliable practice is to use solid arrows for character movement (such as an actor walking across the room) and double-lined or labeled arrows for camera motion (such as [CAM TRACKS RIGHT]).",
+          "Always respect the 180-Degree Rule: imagine an invisible axis line connecting your two main subjects. Keep the camera on one side of this line across adjacent cuts. If character A looks from left to right in frame 1, and character B looks from right to left in frame 2, cutting between them feels natural. If you cross the axis line, their sightlines suddenly face the same direction, making them appear to talk to someone off-screen.",
+        ],
+      },
+      {
+        heading: "The anatomy of a production-ready caption",
+        paragraphs: [
+          "A storyboard frame without a caption is ambiguous, and a script without visual frames lacks spatial clarity. A production-ready caption sits directly beneath the frame and provides three specific pieces of information.",
+        ],
+        ordered: true,
+        list: [
+          "Visual Action: A direct, active-voice summary of what happens inside the frame. Example: 'Maya opens the apartment door, sees the letter on the floor, and freezes.'",
+          "Audio & Dialogue: Spoken dialogue in quotation marks, Voiceover (VO), ambient sound effects (SFX), and musical changes. Example: 'SFX: Door creaks. Music: Low cello note enters. Maya: \"You said you lost it.\"'",
+          "Camera & Timing: Technical instructions including shot type, camera motion, transition type (Cut, Dissolve, Wipe, Fade), and estimated running time in seconds. Example: '[CU / Push In / Cut to Scene 05 / 3.0 sec]'.",
+        ],
+      },
+      {
+        heading: "A worked example: 6-frame product explainer video",
+        paragraphs: [
+          "Here is a complete, real-world example of how to storyboard a 30-second product launch video for a modern software tool. Notice how the shot types alternate to keep the pacing dynamic and the narrative clear.",
+        ],
+        ordered: true,
+        list: [
+          "Scene 01 [Wide Establishing Shot — 4 sec]: A tired designer sits in a dim office surrounded by crumpled paper and multiple glowing browser tabs. Caption: Action: Alex stares at conflicting task spreadsheets, rubbing temples. Audio: Loud office murmur and relentless alert dings. Camera: Wide shot, slow push-in. Transition: Hard cut.",
+          "Scene 02 [Extreme Close-Up Insert — 2.5 sec]: Alex's hand aggressively crosses out a convoluted flowchart item on paper with a red pen that runs out of ink. Caption: Action: Pen scratches violently and snaps. Alex groans. Audio: SFX: Sharp pen scratch. VO: 'Traditional planning tools turn creative ideas into administrative overhead.' Camera: ECU, static angle. Transition: Quick whip pan.",
+          "Scene 03 [Medium Shot — 3.5 sec]: Alex opens a browser window and navigates to Simple Sketchpad. The screen brightness illuminates Alex's face; shoulders visibly drop from tension to relief. Caption: Action: Alex sits back in office chair, taking a deep breath. Audio: Alert sounds cut abruptly. Gentle acoustic rhythm begins. VO: 'What if planning felt as effortless as sketching on paper?' Camera: MS, eye-level. Transition: Cut.",
+          "Scene 04 [Over-The-Shoulder / POV — 5 sec]: Looking over Alex's shoulder directly at the digital canvas. A pen tool draws three clean rectangular frames, connects them with directional arrows, and labels them in seconds. Caption: Action: Clean diagram appears fluidly without lag or sign-in prompts. Audio: Satisfying digital pen stroke SFX. VO: 'No logins, no setup barriers. Just open, sketch, and think clearly.' Camera: OTS, subtle slow track right. Transition: Cut.",
+          "Scene 05 [Medium-Wide Shot — 3 sec]: Alex clicks Download PNG, spins chair around, and holds up laptop screen to an approaching team lead, who smiles and gives an enthusiastic thumbs-up. Caption: Action: Team lead nods with approval. Alex smiles. Audio: Team lead: 'Perfect, that solves the sprint dependency!' Upbeat musical swell. Camera: MWS, stationary. Transition: Dissolve.",
+          "Scene 06 [Close-Up End Card — 4 sec]: Clean white screen featuring the Simple Sketchpad logo, one-sentence tagline ('Think clearly. Build faster.'), and a prominent website URL. Caption: Action: Tagline animates in smoothly beneath logo. Audio: Warm acoustic resolve chord. VO: 'Simple Sketchpad. Free online drawing for real work.' Camera: Static title card. Transition: Fade to black.",
+        ],
+      },
+      {
+        heading: "Storyboarding across disciplines: Video, UX, and Education",
+        paragraphs: [
+          "While storyboarding originated in cinema, the underlying technique of mapping experiences over time applies across many professions.",
+          "Video and Commercial Filmmaking: Directors and cinematographers use boards to build shot lists, calculate equipment needs (lenses, jibs, dollies), and prevent on-set disagreements between creative leads and clients.",
+          "UX and Product Design: UX storyboards focus on the customer journey rather than camera lenses. They depict the user's emotional state, environmental triggers (such as using an app on a crowded train), and real-world friction before code is written. If you are building wireframes for product screens, combining them with user storyboards gives your team critical context.",
+          "Education and Instruction: Teachers and instructional designers use sequential frames to illustrate scientific processes (cell division, water cycles), safety procedures (laboratory protocols), or historical timelines in a format students absorb quickly.",
+        ],
+      },
+      {
+        heading: "Six common storyboarding mistakes and their fixes",
+        paragraphs: [
+          "Most confusing or ineffective storyboards suffer from the same half-dozen missteps. Check your board against these practical rules:",
+        ],
+        list: [
+          "Talking Head Syndrome: Drawing five medium shots of characters speaking in a row. Fix: Break visual monotony by interspersing close-up reaction shots, wide environment frames, and inserts of objects they are discussing.",
+          "Over-polishing individual panels: Spending an hour shading muscles or rendering hair on a single frame. Fix: Storyboards are communication tools, not finished art. Use stick figures, silhouette shapes, and 2-minute time limits per frame.",
+          "Breaking the 180-degree rule: Switching camera sides during a dialogue exchange, making characters appear to look away from each other. Fix: Draw an overhead floor plan sketch on the side of your board to verify camera placements before drawing panels.",
+          "Unrealistic pacing and dialogue length: Writing four sentences of dialogue for a 2-second shot. Fix: Read every caption aloud at normal conversational speed while timing yourself with a stopwatch.",
+          "Vague action captions: Writing 'They discuss the problem' instead of describing physical staging. Fix: Be concrete: 'Liam leans over desk, pointing at document; Sara crosses arms and looks out window.'",
+          "Ignoring the aspect ratio: Drawing square panels for a 16:9 YouTube video or 9:16 vertical TikTok/Reel. Fix: Always use bounded frames that match the final distribution medium, like the 16:9 canvas on the [storyboard maker](/storyboard/).",
+        ],
+      },
+      {
+        heading: "A 20-minute rapid storyboarding exercise",
+        paragraphs: [
+          "The best way to build storyboarding intuition is through a timed, low-stakes exercise. Pick a simple everyday scenario (making coffee, returning an online package, or troubleshooting Wi-Fi) and follow this timeline:",
+        ],
+        ordered: true,
+        list: [
+          "Minutes 1–3: Write a 3-sentence script with a clear beginning, turning point, and end.",
+          "Minutes 4–8: Open the storyboard tool and block in 4 frames using basic shapes (circles for heads, boxes for torsos, horizon lines for floors).",
+          "Minutes 9–12: Check your framing variety: ensure you have at least one wide shot, one medium shot, and one close-up.",
+          "Minutes 13–16: Add camera and character movement arrows using contrasting colors.",
+          "Minutes 17–19: Write three-line captions under each frame specifying Action, Audio/Dialogue, and Estimated Duration.",
+          "Minute 20: Read the sequence aloud from start to finish, make one timing adjustment, and export your PNG.",
+        ],
+      },
+      {
+        heading: "How to use Simple Sketchpad's free storyboard maker",
+        paragraphs: [
+          "The [free online storyboard maker](/storyboard/) is built specifically for rapid visual sequencing without friction. Here is how to get the most from the tool:",
+          "Adjust Frame Count: Start with the default 3 scenes, or choose any number up to 24 frames from the dropdown. You can also click '+ Add frame' at any point as your narrative develops. Reducing the frame count temporarily hides later scenes without erasing your artwork.",
+          "Draw Directly in Each Scene: Select a frame card to activate its drawing canvas. Use the pen tool with 5 curated colors, a custom hex color picker, and an adjustable stroke size (from fine 1px detail lines to 30px bold blocking strokes).",
+          "Independent Undo and Eraser: Each frame maintains its own undo and redo history stack. Making an edit in Scene 04 will never overwrite your undo history in Scene 01. Use the 'Clear scene' button if you want to wipe the visual canvas while keeping your written caption intact.",
+          "Write What Happens: Under every frame is a dedicated 'WHAT HAPPENS?' text area for your action, dialogue, audio notes, and camera instructions. Text persists with your project automatically.",
+          "Export and Print: Click 'Download PNG' to generate a unified, high-resolution composite image containing every active frame, project title, and caption neatly arranged in a presentation grid. Click 'Print / Save as PDF' to format the storyboard for an A4 landscape document or client presentation.",
+          "Privacy and Local Storage: Your sketches and captions are autosaved directly in your browser's local storage. No drawing data is transmitted to an external server, no account creation is required, and no watermarks are added to your exported files.",
+        ],
+      },
+      {
+        heading: "The pre-production checklist before sharing",
+        paragraphs: [
+          "Before sending your storyboard to a client, director, crew member, or teammate, run through this final pre-flight verification:",
+        ],
+        ordered: true,
+        list: [
+          "Does the sequence have a descriptive project title and date at the top?",
+          "Can a stranger understand the core narrative arc without you explaining it aloud?",
+          "Is there a healthy variety of camera shots (wide, medium, close-up) rather than repetitive framing?",
+          "Are camera movements clearly distinguished from character actions?",
+          "Does every frame have an estimated running time that matches the dialogue length?",
+          "Have you respected the 180-degree rule across dialogue cuts?",
+          "Are critical sound effects, music changes, and voiceover lines explicitly noted?",
+          "Is your exported PNG or PDF readable on both mobile devices and printed paper?",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Do I need drawing skills to make a useful storyboard?",
+        answer:
+          "No. Professional film storyboards often start as rough 'thumbnail boards' made with stick figures, geometric shapes, and perspective lines. The goal of a storyboard is to communicate staging, composition, camera angle, and pacing, not to create fine art. Clear captions and deliberate framing matter far more than polished drawing technique.",
+      },
+      {
+        question: "What is the best aspect ratio for a storyboard?",
+        answer:
+          "Use the aspect ratio of your final production format. 16:9 widescreen (1.78:1) is the standard for YouTube, television, corporate videos, and slide presentations. For cinematic films, 2.39:1 anamorphic is common. For social mobile video (TikTok, Instagram Reels, YouTube Shorts), 9:16 vertical frames are standard. SimpleSketchpad uses 16:9 widescreen frames.",
+      },
+      {
+        question: "How many frames should be in a storyboard?",
+        answer:
+          "It depends on the complexity and duration of the project. A 30-second commercial or explainer video usually requires 6 to 12 frames (roughly one frame per major camera setup or scene beat). Fast-paced action scenes or complex animation may require 20 or more frames per minute. SimpleSketchpad supports up to 24 frames in a single project.",
+      },
+      {
+        question: "What is the difference between a storyboard and a comic strip?",
+        answer:
+          "A comic strip is a finished narrative product intended for an audience to read directly, where panels vary in shape and size for dramatic effect. A storyboard is a technical production blueprint for a moving visual medium; every panel shares the same camera aspect ratio, and captions focus on camera moves, audio cues, lighting, and timing.",
+      },
+      {
+        question: "How do UX designers use storyboarding?",
+        answer:
+          "UX storyboarding illustrates how a real person interacts with a product in their natural environment. Instead of cinematic camera angles, UX boards show user frustration, environmental context (such as using an app on a crowded train), triggers that lead them to open an app, and the emotional payoff upon solving their problem.",
+      },
+      {
+        question: "Can I download and print my online storyboard for free?",
+        answer:
+          "Yes. SimpleSketchpad lets you export your entire board as a single high-resolution PNG image with all scenes and captions included, or use 'Print / Save as PDF' for a clean A4 landscape document. There are no fees, subscriptions, or watermarks.",
+      },
+      {
+        question: "Is my storyboard saved privately?",
+        answer:
+          "Yes. All drawings, frame configurations, and caption text are stored locally in your browser's local storage on your device. Nothing is uploaded to external cloud servers, meaning your confidential video concepts and product ideas remain completely private.",
+      },
+    ],
+  },
+  {
     slug: "how-to-make-a-mind-map-online",
     title: "How to Make a Mind Map Online: A Worked Example and Simple Template",
     description:
