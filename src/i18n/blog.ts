@@ -257,7 +257,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-10-29",
     readingTime: 7,
     related: ["/whiteboard", "/drawing-board"],
-    relatedPosts: ["sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online", "how-to-wireframe-a-website"],
+    relatedPosts: ["how-to-make-a-storyboard-online", "sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online"],
     keywords: ["how to make a mind map online", "mind map example", "mind map template", "brainstorming mind map"],
     sections: [
       {
@@ -402,7 +402,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-10-28",
     readingTime: 8,
     related: ["/drawing-board", "/graph-paper", "/whiteboard"],
-    relatedPosts: ["sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online", "complete-guide-to-online-drawing"],
+    relatedPosts: ["how-to-make-a-storyboard-online", "sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online"],
     keywords: ["how to wireframe a website", "website wireframe", "low fidelity wireframe", "mobile wireframe", "website planning"],
     sections: [
       {
