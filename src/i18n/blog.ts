@@ -31,6 +31,133 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "how-to-draw-on-a-pdf-online",
+    title: "How to Draw on a PDF Online: Free Markup, Annotation, and Signing Guide",
+    description:
+      "A complete guide on how to draw, annotate, highlight, sketch diagrams, and sign PDF documents online for free without expensive software or creating an account.",
+    excerpt:
+      "Need to annotate a document, redline a design proof, sketch over a diagram, or sign an agreement? Here is how to draw directly on documents online without installing bloated software or paying monthly subscriptions.",
+    category: "Guides",
+    date: "2026-10-31",
+    readingTime: 11,
+    related: ["/", "/drawing-board", "/whiteboard"],
+    relatedPosts: [
+      "how-to-make-a-storyboard-online",
+      "how-to-draw-a-floor-plan-online",
+      "sketchpad-for-planning-and-diagrams",
+    ],
+    keywords: [
+      "how to draw on a pdf online",
+      "draw on pdf free",
+      "annotate pdf online free",
+      "free pdf drawing tool",
+      "sketch on pdf",
+      "mark up pdf online",
+      "sign pdf online free",
+      "draw notes on document",
+      "digital markup tool",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "Whether you are reviewing an architectural draft, giving visual feedback on a student submission, circling a layout bug on a website spec, or adding a signature to an agreement, drawing directly onto documents is one of the fastest ways to communicate changes. Text comments often lead to misinterpretations; a clear freehand circle with an arrow pointing to the exact issue solves ambiguity in seconds.",
+          "Yet standard desktop PDF software often locks basic drawing tools behind expensive enterprise paywalls or forces users to register accounts and install bulky applications just to make a quick sketch. Fortunately, modern browser-based sketchpads and HTML5 canvas engines give you complete freedom to mark up, draw, highlight, and annotate visual assets directly in your web browser with zero sign-up and total privacy.",
+          "In this guide, we cover the exact methods for drawing and sketching on PDF pages, best practices for color-coded visual feedback, how to combine freehand ink with shapes and callouts, and how to export crisp, production-ready annotated documents.",
+        ],
+      },
+      {
+        heading: "The 4 most common use cases for drawing on documents",
+        paragraphs: [
+          "Before marking up a page, identifying your core goal helps you choose the right stroke weights, contrast colors, and annotation tools:",
+        ],
+        list: [
+          "Design & Architecture Proofing: Circling misalignments, crossing out outdated fixtures, sketching revised door clearances, or illustrating structural flow over floor plan drawings.",
+          "Contract Signing & Form Completion: Placing handwritten signatures, checking off acknowledgement boxes, and dating form fields without needing a physical printer or scanner.",
+          "Educational & Academic Grading: Highlighting key passages, writing handwritten marginalia, circling grammatical corrections, and sketching explanatory diagrams for students.",
+          "Engineering & Code Review: Redlining technical schematic diagrams, sketching circuit adjustments, or drawing logic branches next to specification documentation.",
+        ],
+      },
+      {
+        heading: "How to draw and annotate documents online in 5 simple steps",
+        paragraphs: [
+          "You can mark up any document page easily using our free [online drawing board](/drawing-board/) or [whiteboard](/whiteboard/). Follow this reliable workflow:",
+        ],
+        ordered: true,
+        list: [
+          "Convert or capture the document page: Most PDF reviews focus on specific single pages, drawings, or forms. Take a quick screenshot of the PDF page (using Windows Snipping Tool 'Win + Shift + S' or Mac 'Cmd + Shift + 4') or export the PDF page to a PNG image.",
+          "Open the sketchpad: Navigate to [Simple Sketchpad](/) or [Drawing Board](/drawing-board/). The digital canvas is immediately ready—no login, credentials, or installation required.",
+          "Choose your annotation tools: Use the Brush or Pencil tool for natural handwritten notes and signatures, the Arrow tool for directing focus, and the Rectangle/Ellipse tools for bounding boxes.",
+          "Apply high-contrast review colors: Select bright red (#ea2261) or electric blue (#533afd) to ensure your feedback stands out cleanly against white document backgrounds and black typographic text.",
+          "Export your marked-up document: Click the top-right Download button to save a high-resolution PNG image (or vector SVG). You can paste it into email threads, Slack, Jira tickets, or print it directly to PDF.",
+        ],
+      },
+      {
+        heading: "Recommended visual hierarchy for document annotations",
+        paragraphs: [
+          "Professional reviewers use consistent visual conventions to prevent markups from turning into an unreadable mess. Establishing a clear visual hierarchy ensures clients and colleagues know what is critical versus what is purely informational:",
+        ],
+        list: [
+          "Red (#ea2261) for Critical Corrections: Use red exclusively for elements that must be removed, incorrect dimensions, legal dealbreakers, or typos that change the meaning of a clause.",
+          "Blue (#533afd) or Green (#0e9f6e) for Additions & Approvals: Use blue or green for approved sections, suggested alternate wording, and newly requested elements.",
+          "Orange (#e05a00) for Questions & Clarifications: Reserve warm amber tones for items requiring discussion, ambiguous phrasing, or missing asset confirmation.",
+          "Semi-Transparent Strokes for Highlights: Set stroke opacity to 30%-40% when emphasizing paragraphs or table cells so underlying text remains perfectly legible.",
+        ],
+      },
+      {
+        heading: "Freehand drawing vs. structured shapes: when to use each",
+        paragraphs: [
+          "A common mistake when marking up documents is relying solely on freehand brush strokes for every note. Combining freehand strokes with geometric vector shapes creates cleaner, more professional reviews:",
+        ],
+        list: [
+          "Use Freehand Brush for Personal Touch: Best for cursive signatures, quick checkmarks, underlining irregular phrases, or circling multiple scattered elements.",
+          "Use Vector Rectangles for Layout Sections: When reviewing paragraphs, forms, or photo placements, drawing crisp bounding boxes keeps alignment clear and avoids visual clutter.",
+          "Use Directed Arrows for Precise Callouts: Rather than writing long notes directly on top of small diagram components, place your text in the white margin and draw a clean arrow pointing to the target.",
+          "Use Sticky Notes for Detailed Feedback: In the [Drawing Board](/drawing-board/) tool, place sticky notes for lengthy explanatory comments without obscuring the underlying document layout.",
+        ],
+      },
+      {
+        heading: "Stylus, Apple Pencil, mouse, and touch: choosing your input device",
+        paragraphs: [
+          "Simple Sketchpad is engineered with unified pointer and touch support, allowing seamless drawing across all devices:",
+        ],
+        list: [
+          "Stylus & Apple Pencil (Tablets & iPads): Delivers pressure-sensitive precision, ideal for authentic legal signatures, handwritten mathematical formulas, and fine margin notes.",
+          "Touch Screens (Mobile & Foldable Phones): Enables rapid on-the-go checks, zoom-and-pan navigation with two fingers, and simple approval initials.",
+          "Mouse & Trackpad (Laptops & Desktops): Perfect for snapping straight arrows, dragging rectangular highlight boxes, and dropping structured text stamps onto spec documents.",
+        ],
+      },
+      {
+        heading: "Security and confidentiality: why client-side drawing matters",
+        paragraphs: [
+          "When handling financial statements, non-disclosure agreements, contracts, or proprietary engineering blueprints, uploading your files to random third-party cloud conversion servers poses significant data privacy risks. Many commercial PDF editors upload your sensitive documents to remote servers for processing, creating exposure to data leaks.",
+          "With Simple Sketchpad, all drawing and rendering happens 100% locally in your browser's memory using HTML5 canvas. Your documents and marks never leave your machine, no external analytics track your stroke content, and autosaved drafts remain securely in your local browser storage.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I draw on a PDF without installing Adobe Acrobat?",
+        answer:
+          "Yes. You do not need Adobe Acrobat or any paid desktop subscription. You can open Simple Sketchpad or Drawing Board in any standard browser (Chrome, Safari, Edge, Firefox), sketch or write notes, and export the annotated result instantly.",
+      },
+      {
+        question: "Can I sign documents and agreements using this sketchpad?",
+        answer:
+          "Yes. You can use your mouse, stylus, or fingertip to draw a smooth, natural signature, adjust the line width and ink color, and download a transparent or high-resolution image to place onto your document.",
+      },
+      {
+        question: "Does drawing on my document cost anything?",
+        answer:
+          "No. Simple Sketchpad is 100% free with no trial limits, no accounts, and no exported watermarks.",
+      },
+      {
+        question: "Are my confidential files stored on your servers?",
+        answer:
+          "No. All canvas operations execute entirely client-side on your own device. Nothing is sent to or stored on external cloud servers, keeping your documents confidential.",
+      },
+    ],
+  },
+  {
     slug: "how-to-make-a-storyboard-online",
     title: "How to Make a Storyboard Online: A Practical Guide for Video, Animation, and UX",
     description:
