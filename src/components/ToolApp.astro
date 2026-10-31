@@ -187,13 +187,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
     <main class="relative flex min-h-0 flex-1">
       <!-- Tool rail -->
       <nav
-        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-12 max-md:left-1/2 max-md:max-w-[calc(100vw-24px)] max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2 max-md:py-2 max-md:shadow-xl max-md:shadow-shadow-blue/10 max-[344px]:left-3 max-[344px]:translate-x-0 md:w-[54px] md:max-w-none md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
+        class="flex shrink-0 items-center gap-0.5 bg-white/95 py-1.5 backdrop-blur max-md:fixed max-md:bottom-11 max-md:left-1/2 max-md:max-w-[calc(100vw-16px)] max-md:-translate-x-1/2 max-md:z-30 max-md:flex-row max-md:overflow-x-auto max-md:no-scrollbar max-md:rounded-2xl max-md:border max-md:border-hairline max-md:px-2 max-md:py-1.5 max-md:shadow-xl max-md:shadow-shadow-blue/10 max-[344px]:left-2 max-[344px]:translate-x-0 md:w-[54px] md:max-w-none md:flex-col md:items-center md:gap-1 md:border-r md:border-hairline md:py-2"
         aria-label={ui.canvas.drawingTools}
       >
         {tools.map((t) => (
           <button
             id={`tool-${t.id}`}
-            class="btn-icon relative shrink-0 max-md:size-[30px]!"
+            class="btn-icon relative shrink-0 max-md:size-8!"
             aria-label={t.hint ? `${t.label} (${t.hint})` : t.label}
             title={t.hint ? `${t.label} (${t.hint})` : t.label}
             aria-pressed="false"
@@ -205,7 +205,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         <button
           id="fullscreen-btn-mobile"
           data-state="off"
-          class="btn-icon shrink-0 max-md:size-[30px]! md:hidden!"
+          class="btn-icon shrink-0 max-md:size-8! md:hidden!"
           aria-label={ui.canvas.toggleFullscreen}
           title={ui.canvas.toggleFullscreen}
         >

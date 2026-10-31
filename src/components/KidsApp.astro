@@ -171,6 +171,10 @@ const homeHref = deriveLocaleHref(locale, "/");
         </button>
 
         <div class="ml-auto flex items-center gap-2 sm:gap-3">
+          <button id="fullscreen-btn" class="kids-action square" data-state="off" aria-label={ui.canvas.toggleFullscreen} title={ui.canvas.toggleFullscreen}>
+            <Icon name="maximize" class="size-5" />
+            <Icon name="minimize" class="size-5" />
+          </button>
           <button id="clear-btn" class="kids-action border border-hairline bg-white text-ink hover:bg-canvas-soft">
             <Icon name="trash" class="size-5" />
             <span class="hidden sm:inline">{toolUi.kids.clear}</span>
@@ -187,7 +191,6 @@ const homeHref = deriveLocaleHref(locale, "/");
   <button id="zoom-in-btn" hidden></button>
   <button id="zoom-fit-btn" hidden></button>
   <button id="zoom-100-btn" hidden></button>
-  <button id="fullscreen-btn" hidden></button>
   <button id="fullscreen-btn-mobile" hidden></button>
   <input id="color-input" type="color" value="#ea2261" hidden />
   <div id="size-slider" hidden></div>

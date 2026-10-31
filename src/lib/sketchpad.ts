@@ -547,7 +547,8 @@ export class Sketchpad {
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", onKey, true);
     // In fullscreen only the fullscreen subtree is painted, so mount inside it.
-    (document.fullscreenElement ?? document.body).append(overlay);
+    const fsContainer = document.fullscreenElement ?? document.getElementById("app") ?? document.body;
+    fsContainer.append(overlay);
     cancelBtn.focus();
   }
 
@@ -2135,11 +2136,20 @@ export class Sketchpad {
       this.emit();
     });
 
-    document.addEventListener("fullscreenchange", () => {
-      const on = document.fullscreenElement ? "on" : "off";
+    const updateFullscreenUI = (): void => {
+      const doc = document as Document & { webkitFullscreenElement?: Element; msFullscreenElement?: Element };
+      const isNative = Boolean(doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement);
+      const app = document.getElementById("app") || this.stage;
+      const isPseudo = app.classList.contains("pseudo-fullscreen");
+      const on = isNative || isPseudo ? "on" : "off";
       ui.fullscreenBtn.dataset.state = on;
       ui.fullscreenBtnMobile.dataset.state = on;
-    });
+    };
+
+    document.addEventListener("fullscreenchange", updateFullscreenUI);
+    document.addEventListener("webkitfullscreenchange", updateFullscreenUI);
+    document.addEventListener("MSFullscreenChange", updateFullscreenUI);
+    window.addEventListener("sketchpad:pseudofullscreen", updateFullscreenUI);
   }
 
   setTool(tool: ToolId): void {
@@ -2189,10 +2199,46 @@ export class Sketchpad {
   }
 
   private toggleFullscreen(): void {
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => undefined);
+    const doc = document as Document & {
+      webkitFullscreenElement?: Element;
+      msFullscreenElement?: Element;
+      webkitExitFullscreen?: () => Promise<void>;
+      msExitFullscreen?: () => Promise<void>;
+    };
+    const isNativeFs = Boolean(doc.fullscreenElement || doc.webkitFullscreenElement || doc.msFullscreenElement);
+    const app = (document.getElementById("app") ?? this.stage) as HTMLElement & {
+      webkitRequestFullscreen?: () => Promise<void>;
+      msRequestFullscreen?: () => Promise<void>;
+    };
+    const isPseudo = app.classList.contains("pseudo-fullscreen");
+
+    if (isNativeFs) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => undefined);
+      } else if (doc.webkitExitFullscreen) {
+        doc.webkitExitFullscreen();
+      } else if (doc.msExitFullscreen) {
+        doc.msExitFullscreen();
+      }
+    } else if (isPseudo) {
+      app.classList.remove("pseudo-fullscreen");
+      window.dispatchEvent(new CustomEvent("sketchpad:pseudofullscreen"));
     } else {
-      this.stage.requestFullscreen().catch(() => undefined);
+      // Attempt native fullscreen on container (#app) so UI toolbar stays intact
+      const req = app.requestFullscreen ? app.requestFullscreen() :
+        app.webkitRequestFullscreen ? app.webkitRequestFullscreen() :
+        app.msRequestFullscreen ? app.msRequestFullscreen() : null;
+
+      if (req && typeof req.catch === "function") {
+        req.catch(() => {
+          // Fallback to pseudo-fullscreen on devices that reject/do not support native element fullscreen (e.g. mobile Safari/iOS)
+          app.classList.add("pseudo-fullscreen");
+          window.dispatchEvent(new CustomEvent("sketchpad:pseudofullscreen"));
+        });
+      } else if (!req) {
+        app.classList.add("pseudo-fullscreen");
+        window.dispatchEvent(new CustomEvent("sketchpad:pseudofullscreen"));
+      }
     }
   }
 
