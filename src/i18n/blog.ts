@@ -31,6 +31,247 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "how-to-draw-a-venn-diagram-online",
+    title: "How to Draw a Venn Diagram Online: Free Templates, Logic Sets, and Comparison Guide",
+    description:
+      "A complete guide on how to draw clean 2-set, 3-set, and 4-set Venn diagrams online for free. Learn visual set theory, comparison frameworks, styling tips, and export options.",
+    excerpt:
+      "Need to compare concepts, analyze overlapping data, or teach set theory? Here is how to create clear, balanced 2-circle and 3-circle Venn diagrams online without sign-up or complex software.",
+    category: "Guides",
+    date: "2026-11-02",
+    readingTime: 10,
+    related: ["/", "/drawing-board", "/whiteboard"],
+    relatedPosts: [
+      "how-to-make-a-mind-map-online",
+      "how-to-draw-a-flowchart-online",
+      "sketchpad-for-planning-and-diagrams",
+    ],
+    keywords: [
+      "how to draw a venn diagram online",
+      "venn diagram maker online free",
+      "venn diagram generator",
+      "3 circle venn diagram template",
+      "compare and contrast diagram",
+      "draw overlapping circles online",
+      "visual set theory diagram",
+      "free venn diagram creator",
+      "venn diagram for students",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "Invented by English logician John Venn in 1880, the Venn diagram remains one of the world's most intuitive and enduring visual models for comparing sets, organizing ideas, and illustrating logical relationships. By using overlapping geometric circles, a Venn diagram separates what is distinct from what is shared with instant visual clarity.",
+          "Venn diagrams are widely used across disciplines: business analysts use them for competitive product positioning and feature comparison; educators and students rely on them for compare-and-contrast essays; software engineers use them to teach SQL table joins (INNER, LEFT, and FULL OUTER joins); and product managers use them to find the sweet spot between user needs, business goals, and technical feasibility.",
+          "While specialized chart generators often impose rigid constraints, watermarked exports, and mandatory subscriptions, drawing a Venn diagram on a flexible digital canvas allows you to position text labels freely, shade specific intersections with custom transparency, add directional annotations, and export crisp, high-resolution vector or PNG images. In this guide, we break down how to construct balanced 2-circle and 3-circle Venn diagrams, standard visual notation, and practical comparison frameworks.",
+        ],
+      },
+      {
+        heading: "The anatomy of a Venn diagram: Key zones explained",
+        paragraphs: [
+          "Every Venn diagram organizes information into distinct spatial regions. Understanding these regions ensures your comparisons remain mathematically sound and easy to read:",
+        ],
+        list: [
+          "Set A (Exclusive): The non-overlapping crescent on the left. Contains characteristics, data points, or attributes unique solely to Entity A.",
+          "Set B (Exclusive): The non-overlapping crescent on the right. Contains attributes unique solely to Entity B.",
+          "Intersection (A ∩ B): The central overlapping football-shaped lens. Holds shared properties, common traits, mutual requirements, or common elements.",
+          "Universal Set (Background / Universe): The outer rectangular boundary enclosing the circles. Represents items or concepts within the broader topic that belong to neither Set A nor Set B.",
+        ],
+      },
+      {
+        heading: "Step-by-step: How to draw a balanced Venn diagram online",
+        paragraphs: [
+          "Using our free [online sketchpad](/) or [whiteboard](/whiteboard/), you can sketch a clean Venn diagram in just five steps:",
+        ],
+        ordered: true,
+        list: [
+          "Establish your bounding universe: Draw a clean rectangular border using the Rectangle tool with a neutral stroke (#0d253d or #64748d). This frames your comparison.",
+          "Draw symmetrical overlapping circles: Select the Ellipse tool. Hold Shift while dragging to create perfect circles. For a 2-circle diagram, position Circle B so that its center overlaps roughly 30% to 40% into Circle A.",
+          "Apply semi-transparent fills: To make the intersection clearly distinguishable, set the shape fill to 15%-25% opacity. When two tinted circles overlap (for example, blue #533afd and magenta #ea2261), their intersection naturally blends into a richer composite hue, highlighting the shared space.",
+          "Add titles and category headings: Place large bold headings directly above each circle so viewers immediately understand what is being evaluated.",
+          "Insert bullet points and labels: Use the Text tool to place concise bullet points inside each zone. Keep font sizes consistent across exclusive zones and slightly emphasize items in the central intersection.",
+        ],
+      },
+      {
+        heading: "2-Circle vs. 3-Circle Venn diagrams: Choosing the right model",
+        paragraphs: [
+          "The complexity of your comparison determines whether a classic 2-circle or a triangular 3-circle layout is appropriate:",
+        ],
+        list: [
+          "2-Circle Diagram (Direct Comparison): Best for side-by-side evaluations—such as comparing two competing software products, analyzing pros vs. cons, or contrasting opposing literary characters. Offers generous space for multiple lines of text.",
+          "3-Circle Diagram (Tripartite Analysis): Features three circles arranged in an equilateral triangle. Produces seven distinct zones: three exclusive crescents, three two-way intersections, and one central three-way intersection (A ∩ B ∩ C). Ideal for finding multi-disciplinary balance, such as 'Viable, Desirable, Feasible' product design.",
+          "4-Circle & Higher (Euler Diagrams): Standard circles cannot show all possible intersections for four or more sets without losing symmetry. For four sets, use overlapping ellipses or switch to an Euler diagram that only displays existing relationships.",
+        ],
+      },
+      {
+        heading: "Popular Venn diagram frameworks for business and product design",
+        paragraphs: [
+          "Here are three established three-circle Venn diagram archetypes you can replicate immediately on your sketchpad:",
+        ],
+        list: [
+          "The Design Thinking Sweet Spot: Circle 1 is Desirability (what people want), Circle 2 is Feasibility (what is technically possible), and Circle 3 is Viability (what is financially sustainable). The central intersection is Successful Innovation.",
+          "The Product-Market Fit Triangle: Circle 1 is Target Customer Problem, Circle 2 is Your Unique Solution, and Circle 3 is Competitor Alternative. The intersection of 1 & 2 without 3 represents your Unfair Advantage.",
+          "The Ikigai Purpose Model: Four overlapping circles—What You Love, What You Are Good At, What The World Needs, and What You Can Be Paid For. The center represents Purpose and Fulfillment.",
+        ],
+      },
+      {
+        heading: "Styling tips for professional presentation-ready diagrams",
+        paragraphs: [
+          "To ensure your diagram looks polished in slide decks, research papers, or client reports, follow these graphic design best practices:",
+        ],
+        list: [
+          "Prioritize text legibility over decorative clutter: Never squeeze long paragraphs into the central intersection. Use short phrases, keywords, or numerical values, and reference detailed explanations in a nearby note.",
+          "Maintain consistent stroke weights: Keep circle outline widths between 2px and 4px. A heavier stroke on the circles keeps them visually grounded against light interior text.",
+          "Use high-contrast text: Place dark slate text (#0d253d) over light, pastel-shaded fills. Avoid using white text over light pastel backgrounds.",
+          "Export in vector SVG or lossless PNG: Click the Download button to grab a high-resolution PNG for slides or SVG for infinitely scalable vector printing.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I draw a Venn diagram without signing up or creating an account?",
+        answer:
+          "Yes. Simple Sketchpad is completely free and requires no sign-up, email, or account creation. Open the tool, draw your circles and labels, and export the finished diagram instantly.",
+      },
+      {
+        question: "How do I make the intersection of two circles darker?",
+        answer:
+          "Enable shape fill and adjust the opacity slider to 20%-30%. When two semi-transparent circles overlap, browser canvas compositing automatically deepens the shared intersection area.",
+      },
+      {
+        question: "What is the difference between a Venn diagram and an Euler diagram?",
+        answer:
+          "A Venn diagram displays all possible theoretical relationships between sets, even if some intersections contain zero elements. An Euler diagram only displays relationships that actually exist in the given dataset, omitting empty intersections.",
+      },
+      {
+        question: "Can I export my Venn diagram with a transparent background?",
+        answer:
+          "Yes. You can export as vector SVG or high-resolution PNG, making it seamless to drop your diagram into presentations, pitch decks, Notion pages, or Figma files.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-draw-system-architecture-diagrams-online",
+    title: "How to Draw System Architecture Diagrams Online: A Practical Engineering Guide",
+    description:
+      "Learn how to sketch clear software architecture diagrams, microservices topographies, API data flows, and infrastructure maps online for free without sign-up.",
+    excerpt:
+      "A clear architecture diagram aligns engineering teams, clarifies system boundaries, and prevents costly architectural debt. Here is how to plan, sketch, and document robust technical diagrams directly in your browser.",
+    category: "Guides",
+    date: "2026-11-01",
+    readingTime: 12,
+    related: ["/whiteboard", "/drawing-board", "/graph-paper"],
+    relatedPosts: [
+      "how-to-draw-a-flowchart-online",
+      "how-to-wireframe-a-website",
+      "how-to-make-a-mind-map-online",
+    ],
+    keywords: [
+      "how to draw system architecture diagrams online",
+      "system architecture diagram online free",
+      "software architecture sketchpad",
+      "microservices diagram tool",
+      "cloud infrastructure diagram free",
+      "c4 model diagram online",
+      "api data flow diagram",
+      "technical whiteboard online",
+      "draw system design diagrams",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "Every modern software system—from simple monolithic web apps to distributed event-driven microservices—eventually outgrows what can be explained purely through verbal discussion or pull request descriptions. When explaining how client applications authenticate with API gateways, how cache invalidation propagates across database replicas, or where third-party webhooks enter a background queue, a visual architecture diagram is the single most effective tool an engineer or tech lead can produce.",
+          "Yet many engineering teams get bogged down in heavyweight enterprise modeling suites that require learning proprietary syntax, signing up for enterprise seats, or fighting rigid automated auto-layout algorithms that scramble component relationships every time an arrow moves. For system design interviews, architecture RFCs, sprint planning, and post-mortems, what engineers need most is speed: an open digital canvas where containers, services, databases, queues, and protocols can be sketched and connected in minutes.",
+          "Using our free [online whiteboard](/whiteboard/) or [graph paper tool](/graph-paper/), you can plan and document any technical architecture directly in your browser. This comprehensive guide walks through the principles of effective technical diagramming, visual notation standards, common architectural archetypes, and how to create clean, presentation-ready diagrams for team RFCs and documentation.",
+        ],
+      },
+      {
+        heading: "The C4 framework: Choosing the right level of abstraction",
+        paragraphs: [
+          "One of the biggest pitfalls when sketching architecture diagrams is mixing different levels of detail—such as showing a cloud region next to a specific database table column. To keep your diagrams readable, we recommend following the core concepts of Simon Brown's C4 model, which divides systems into four distinct zoom levels:",
+        ],
+        list: [
+          "Level 1: System Context: The bird's-eye view. Shows your software system as a single central box, surrounded by primary user personas (e.g., customers, internal operators) and external third-party systems (e.g., Stripe, SendGrid, Auth0).",
+          "Level 2: Container (Applications & Data Stores): Zooms inside your system. Shows high-level executable components and storage units: single-page web apps, mobile clients, API servers, message brokers, caching clusters, and databases.",
+          "Level 3: Component: Zooms inside an individual container (e.g., inside an API backend). Details the internal controllers, services, repositories, and domain modules.",
+          "Level 4: Code / Class: Rarely drawn except for complex algorithmic pipelines or domain design patterns. Focuses on interfaces, class hierarchies, and database schemas.",
+        ],
+      },
+      {
+        heading: "Standard visual vocabulary: Shapes, arrows, and styling",
+        paragraphs: [
+          "Clear visual communication relies on predictable conventions. When everyone on the team understands what each shape represents, diagrams can be read at a glance without confusion:",
+        ],
+        list: [
+          "Rectangles & Cards for Services: Standard rectangular blocks denote services, workers, serverless functions, or client applications. Group related internal services inside a dashed boundary box to illustrate VPCs or subnet boundaries.",
+          "Cylinders & Rounded Rectangles for Databases & Storage: Use distinct rounded shapes or tagged boxes for persistent relational databases (PostgreSQL), NoSQL stores (MongoDB), and in-memory caches (Redis).",
+          "Open Arrows with Labels for Network Protocols: Avoid bare lines without direction. Always draw directed arrows indicating traffic flow, and label the transport protocol (e.g., 'HTTPS / JSON', 'gRPC', 'WebSocket', 'AMQP').",
+          "Sticky Notes for Decisions & Tradeoffs: Use sticky notes in the [Whiteboard](/whiteboard/) tool to attach architectural notes, SLA targets, or open questions directly beside the relevant subsystem.",
+        ],
+      },
+      {
+        heading: "Step-by-step: How to sketch a scalable web architecture",
+        paragraphs: [
+          "Follow this structured procedure when diagramming a three-tier or microservice architecture from scratch:",
+        ],
+        ordered: true,
+        list: [
+          "Identify actors and entry points: Start on the far left. Place your client apps (Web SPA, iOS, Android) and external traffic sources.",
+          "Establish edge routing and security: Draw your DNS, CDN (Cloudflare/CloudFront), and reverse proxy or API gateway. This defines where SSL termination and request rate limiting take place.",
+          "Map core services: Place your application backend services in the center. Differentiate between synchronous REST/GraphQL backends and asynchronous background worker queues.",
+          "Add storage and caching: Position databases, distributed caches (Redis), and blob storage (S3) on the right side. Clearly distinguish primary write nodes from read replicas.",
+          "Label data protocols and synchronization: Add directional connectors with explicit notes: synchronous RPC vs. asynchronous event streams (Kafka/RabbitMQ).",
+        ],
+      },
+      {
+        heading: "Recommended color palette for technical diagrams",
+        paragraphs: [
+          "A thoughtful color scheme gives immediate visual meaning to different infrastructural layers while keeping the canvas professional:",
+        ],
+        list: [
+          "Primary Blue (#533afd): For public web applications, client devices, and incoming user requests.",
+          "Teal & Green (#0e9f6e / #187f72): For API services, microservices, and compute workers.",
+          "Amber & Orange (#e05a00 / #e3a33d): For relational databases, persistence layers, and disk storage.",
+          "Slate & Navy (#0d253d / #64748d): For boundary containers, subnets, VPCs, and firewalls.",
+          "Red (#ea2261): For external legacy systems, untrusted inputs, or failure-domain alerts.",
+        ],
+      },
+      {
+        heading: "Best practices for architecture RFCs and technical documentation",
+        paragraphs: [
+          "A great architecture diagram continues to serve as an authoritative reference long after it is drawn. Keep these documentation tips in mind:",
+        ],
+        list: [
+          "Always include a legend or title block: State the system name, version or date, author, and current status (e.g., 'Proposed RFC Draft' vs. 'Production Architecture').",
+          "Show data flow direction clearly: Arrows should consistently reflect the direction of data flow or client-to-server dependency, rather than arbitrary dual arrows.",
+          "Avoid the 'spiderweb' trap: If too many crossing lines make the diagram unreadable, break the diagram into separate views: one for authentication flow, one for checkout processing, and one for reporting.",
+          "Export in vector or high-resolution PNG: Use the export menu to download crisp images that scale perfectly when embedded in GitHub pull requests, Notion wikis, or Google Docs.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the best free tool to sketch system architecture online?",
+        answer:
+          "Simple Sketchpad and Drawing Board provide a zero-friction, browser-based canvas ideal for technical architecture sketches. You get fast shape creation, grid snapping, directional arrows, sticky notes, and instant high-res PNG and vector SVG export with no account required.",
+      },
+      {
+        question: "Can I use grid snapping for precise engineering diagrams?",
+        answer:
+          "Yes. Our Graph Paper tool includes customizable grid spacing (square, lines, or dots) and automatic snap-to-grid capabilities, ensuring clean alignment for server boxes, buses, and flow lines.",
+      },
+      {
+        question: "Should architecture diagrams show synchronous or asynchronous communication?",
+        answer:
+          "Yes, explicitly differentiating them is vital. Use solid arrows with protocol labels (e.g., HTTP/2, gRPC) for synchronous request-response calls, and dashed arrows or distinct queue symbols for asynchronous event-driven messaging.",
+      },
+      {
+        question: "Is technical data kept secure and private on this sketchpad?",
+        answer:
+          "Yes. All drawing calculations and data storage take place 100% locally in your web browser. Proprietary system architectures, internal IP addresses, and database topologies are never transmitted to external cloud servers.",
+      },
+    ],
+  },
+  {
     slug: "how-to-draw-on-a-pdf-online",
     title: "How to Draw on a PDF Online: Free Markup, Annotation, and Signing Guide",
     description:
