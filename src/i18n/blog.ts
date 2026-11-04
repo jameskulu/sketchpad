@@ -31,6 +31,179 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "how-to-draw-an-entity-relationship-diagram-online",
+    title: "How to Draw an Entity Relationship Diagram (ERD) Online: Crow's Foot Notation, Keys, and Schema Guide",
+    description:
+      "A complete guide on how to draw entity relationship diagrams (ERDs) online for free. Learn Crow's foot notation, primary and foreign keys, cardinality, normalization, and relational schema modeling.",
+    excerpt:
+      "Designing a database schema or preparing for a system design interview? Here is how to plan, sketch, and connect clean entity relationship diagrams (ERDs) online using Crow's foot notation—without sign-up, paywalls, or complex software.",
+    category: "Guides",
+    date: "2026-11-04",
+    readingTime: 13,
+    related: ["/graph-paper", "/whiteboard", "/drawing-board"],
+    relatedPosts: [
+      "how-to-draw-system-architecture-diagrams-online",
+      "how-to-draw-a-flowchart-online",
+      "how-to-draw-a-concept-map-online",
+    ],
+    keywords: [
+      "how to draw an entity relationship diagram online",
+      "erd online free",
+      "entity relationship diagram tool without sign up",
+      "crow's foot notation guide",
+      "database schema diagram maker",
+      "draw erd on graph paper",
+      "database design tutorial for beginners",
+      "relational data modeling online",
+      "primary key foreign key diagram",
+      "cardinality in erd",
+      "free erd generator",
+      "how to design database schema",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "Every relational database—whether powering a high-traffic SaaS platform, a mobile application, or an e-commerce storefront—relies on a well-structured data model. Before committing raw SQL CREATE TABLE migrations or defining ORM models in Prisma, TypeORM, or SQLAlchemy, visualizing how entities connect is vital. An Entity Relationship Diagram (ERD) is the universal visual blueprint for database design, illustrating tables, attributes, primary keys, foreign keys, and relationship cardinality.",
+          "A well-constructed ERD prevents the most costly architectural pitfalls before any backend code is written: redundant duplicate records, orphaned foreign key dependencies, unindexed table scans, and unmanageable many-to-many relationship traps. For software engineers, backend architects, database administrators, and computer science students preparing for system design interviews, drafting ERDs is a foundational engineering skill.",
+          "Yet traditional database modeling suites often introduce unnecessary friction. Heavy desktop CASE tools, enterprise diagramming tools with monthly paywalls, and aggressive auto-layout engines that scramble your table positions with every minor edit slow down design thinking. When modeling a schema, speed, spatial control, and clarity matter most. Using our free [graph paper canvas](/graph-paper/) or [online whiteboard](/whiteboard/), you can quickly layout tables, align fields to a clean grid, connect relationships using standard Crow's Foot notation, and export clean vector diagrams without sign-up or subscriptions. This comprehensive guide covers everything you need to design professional, production-ready ERDs from scratch.",
+        ],
+      },
+      {
+        heading: "The 3 levels of ERDs: Conceptual, logical, and physical",
+        paragraphs: [
+          "When designing a database, engineering teams often blur the lines between business-oriented summaries and low-level storage specifications. Following formal data modeling standards, an ERD can be drawn at three distinct levels of abstraction:",
+        ],
+        list: [
+          "Conceptual ERD (High-Level Domain Overview): Focuses strictly on business entities and their conceptual associations. No table columns, foreign keys, or vendor-specific data types are shown. For example: a [Customer] 'places' an [Order], and an [Order] 'contains' [Products]. Conceptual models help product managers, domain experts, and stakeholders align on core business requirements.",
+          "Logical ERD (Normalized Data Structure): Introduces detailed attributes, identifies primary keys (PK), resolves many-to-many relationships using junction tables, and specifies relationship cardinality and modality. The logical model is vendor-agnostic and applies equally to PostgreSQL, MySQL, SQLite, or Oracle.",
+          "Physical ERD (Production Implementation Blueprint): The exact technical blueprint used to write database migrations. Details concrete column names, database-specific data types (such as UUID, VARCHAR(120), DECIMAL(10,2), TIMESTAMPTZ), constraints (NOT NULL, UNIQUE, CHECK), composite indexes, and referential integrity rules (ON DELETE CASCADE, ON UPDATE RESTRICT).",
+        ],
+      },
+      {
+        heading: "Core anatomy of an ERD: Entities, attributes, and keys",
+        paragraphs: [
+          "To make your ERD instantly readable across engineering and analytics teams, follow these standard structural conventions:",
+        ],
+        list: [
+          "Entities (Tables): Represented as rectangular cards divided into distinct compartments. The header contains the entity name (typically singular or plural nouns in title case, such as 'User' or 'Orders'). The body contains the list of attributes.",
+          "Primary Key (PK): A column (or set of columns) that uniquely identifies each individual record in a table. In ERD diagrams, primary keys sit at the top of the entity card, designated with a bold 'PK' badge or icon.",
+          "Foreign Key (FK): A column in a child entity that references the primary key of a parent entity, establishing referential integrity between the two tables. Mark these clearly with an 'FK' indicator.",
+          "Candidate and Composite Keys: Candidate keys are alternative attributes that could uniquely identify records (such as an email or phone number). Composite keys are primary keys constructed from two or more columns combined (standard inside junction tables).",
+          "Non-Key Attributes: Ordinary descriptive fields capturing state, such as timestamps, status strings, numerical counts, or content payloads.",
+        ],
+      },
+      {
+        heading: "Mastering Crow's Foot notation: Cardinality and modality explained",
+        paragraphs: [
+          "While several historical conventions exist (such as Peter Chen's 1976 diamond-and-oval notation or UML class diagrams), Crow's Foot notation is the undisputed industry standard for relational database design. It combines clarity with high information density, placing concise visual symbols at the endpoints of connector lines to define two properties: modality (minimum occurrences: optional vs. mandatory) and cardinality (maximum occurrences: one vs. many).",
+          "The four primary Crow's Foot symbol combinations are:",
+        ],
+        list: [
+          "Exactly One (Mandatory One): Drawn as two perpendicular parallel tick marks (||). Indicates that every record in the related table must associate with exactly one record in this table. For example, an Order must belong to exactly one User.",
+          "Zero or One (Optional One): Drawn as an open circle and a perpendicular tick mark (O|). Indicates an optional connection that can occur at most once. For example, a User may have zero or one UserProfile.",
+          "One or Many (Mandatory Many): Drawn as a perpendicular tick mark followed by a three-pronged branch or fork (>|). Indicates that at least one associated record is required, but unlimited records are permitted. For example, an Invoice must contain at least one LineItem.",
+          "Zero or Many (Optional Many): Drawn as an open circle followed by a three-pronged branch (>O). Indicates that an instance can link to zero, one, or hundreds of child records. For example, a Category may contain zero, one, or thousands of Products.",
+        ],
+      },
+      {
+        heading: "Step-by-step: How to design a normalized ERD from scratch",
+        paragraphs: [
+          "Follow this systematic six-step methodology to transform unstructured project requirements into a robust, normalized entity relationship diagram:",
+        ],
+        ordered: true,
+        list: [
+          "Extract domain entities from user stories: Review your product roadmap or functional requirements and highlight domain nouns (e.g., 'Customer', 'Subscription', 'Invoice', 'Workspace', 'Member'). Each distinct domain noun represents a candidate entity table.",
+          "Define primary keys and core attributes: Assign an immutable unique identifier to every entity. In modern cloud architecture, surrogate keys such as UUIDv7 or auto-incrementing 64-bit integers (BIGINT) are standard over mutable natural keys like email addresses.",
+          "Determine relationships and cardinality: For every pair of related entities, ask two directional questions: 'Can one parent have multiple children?' and 'Can a child exist without a parent?'. For instance, can a comment exist without a post? If not, the post reference is mandatory.",
+          "Resolve Many-to-Many (M:N) relationships: Relational databases cannot store multi-valued arrays without compromising indexing and query performance. Split every Many-to-Many relationship into two One-to-Many relationships by creating an intermediate junction table (bridge table).",
+          "Apply database normalization rules: Ensure columns store single atomic values (1NF), eliminate partial functional dependencies where attributes depend on only part of a composite key (2NF), and remove transitive dependencies where non-key attributes depend on other non-key attributes (3NF).",
+          "Layout and connect on the canvas: Use the grid on [Graph Paper](/graph-paper/) to align entity cards horizontally and vertically. Route relationship connector lines with clean orthogonal angles to ensure clean visual flow.",
+        ],
+      },
+      {
+        heading: "Worked real-world example: E-commerce order system schema",
+        paragraphs: [
+          "To illustrate how these principles translate into a production-grade schema, consider an e-commerce platform modeled on our [drawing board](/drawing-board/) or [whiteboard](/whiteboard/):",
+        ],
+        list: [
+          "users table: Contains id (PK, UUID), email (VARCHAR, UNIQUE), password_hash (VARCHAR), created_at (TIMESTAMPTZ).",
+          "profiles table: Contains id (PK, UUID), user_id (FK, UNIQUE), full_name (VARCHAR), avatar_url (TEXT), phone (VARCHAR). Connects to users in an Exactly-One to Optional-One (1:1) relationship.",
+          "orders table: Contains id (PK, UUID), user_id (FK), order_number (VARCHAR, UNIQUE), total_amount (DECIMAL), status (VARCHAR), placed_at (TIMESTAMPTZ). Connects to users with a Mandatory-One to Optional-Many (1:N) relationship.",
+          "products table: Contains id (PK, UUID), category_id (FK), sku (VARCHAR, UNIQUE), title (VARCHAR), current_price (DECIMAL), stock_quantity (INTEGER).",
+          "order_items table (Junction Table): Resolves the Many-to-Many relationship between orders and products. Contains id (PK, UUID), order_id (FK), product_id (FK), quantity (INTEGER), unit_price_at_purchase (DECIMAL).",
+        ],
+      },
+      {
+        heading: "The junction table pattern: Preserving historical accuracy",
+        paragraphs: [
+          "Notice the deliberate design of the order_items junction table in the example above. Beginners often make the mistake of omitting the unit_price_at_purchase column, assuming that the backend can simply read products.current_price whenever an invoice is viewed.",
+          "However, if a merchant raises a product's price from $25 to $40 next month, any past order that dynamically referenced products.current_price would retroactively display an incorrect price, destroying accounting audits and legal receipts. By snapshotting the agreed price inside order_items at checkout time, your database preserves point-in-time financial truth. Identifying these subtle data dependencies is precisely why sketching an ERD before writing code is so valuable.",
+        ],
+      },
+      {
+        heading: "Why graph paper is the ideal canvas for database modeling",
+        paragraphs: [
+          "Freeform drawing canvases can easily become cluttered, with uneven table cards, slanted connector lines, and overlapping text labels that make schemas difficult to review during pull requests or team meetings.",
+          "Drafting your ERD on an online [graph paper canvas](/graph-paper/) provides four major workflow advantages:",
+        ],
+        list: [
+          "Uniform table card sizing: You can standardize entity boxes to a fixed grid width (e.g., 14 grid squares) and height, creating an organized, professional layout that mirrors real architectural documentation.",
+          "Orthogonal connector routing: The background grid acts as a natural guide for drawing 90-degree right-angled connectors, preventing diagonal line tangles that cross over unrelated entity cards.",
+          "Precise cardinality alignment: Drawing Crow's Foot forks, dashes, and circles is much simpler when aligning connector ends to sharp grid intersections.",
+          "Logical domain clustering: You can divide your canvas into distinct spatial zones—reserving the left zone for Authentication, the center for Core Business Workflows, and the right for Audit Logs and Notifications.",
+        ],
+      },
+      {
+        heading: "Common ERD design mistakes and how to avoid them",
+        paragraphs: [
+          "Even experienced backend developers encounter recurring schema design traps. Keep these checks in mind before finalizing your diagram:",
+        ],
+        list: [
+          "Omitting foreign key columns in child tables: Drawing a relationship line between two tables without specifying the actual referencing column (FK) in the child entity. Every connector line must correspond to a concrete foreign key attribute.",
+          "Leaving Many-to-Many relationships unresolved: Connecting two entities directly with a Many-to-Many line without defining the required junction table. Without a junction table, implementing relationships like Students and Classes in relational SQL is impossible.",
+          "Transitive attribute leaks: Placing customer address attributes directly on an orders table instead of referencing an addresses table. Updating an address then creates conflicting records across older orders.",
+          "Vague relationship labels: Using ambiguous terms like 'has' or 'links to'. Use active verbs that clarify business intent, such as 'places', 'fulfills', 'belongs to', or 'authorizes'.",
+          "Over-optimizing for physical storage prematurely: Worrying about database partitioning, sharding keys, or indexing strategies before establishing clean entity boundaries and referential integrity.",
+        ],
+      },
+      {
+        heading: "Exporting and sharing your ERD with development teams",
+        paragraphs: [
+          "A completed ERD serves as a living contract between frontend engineers, backend developers, product managers, and data analysts. It clarifies API payload shapes, database query boundaries, and user permission models.",
+          "Export your completed diagram as a high-resolution PNG or crisp vector SVG directly from the canvas toolbar. You can embed the graphic directly inside your project's GitHub repository README.md, attach it to Architectural Decision Records (ADRs) or technical RFC documents, and share it during sprint planning.",
+          "If your engineering team is distributed, open the [online whiteboard](/whiteboard/) to collaborate on schema changes live during system design reviews, dropping sticky notes to debate trade-offs like relational tables versus JSONB document storage.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I draw an entity relationship diagram online without signing up?",
+        answer:
+          "Yes. Simple Sketchpad and Graph Paper allow you to draw entity cards, list table columns, define primary keys, and sketch Crow's Foot connector lines directly in your browser with zero sign-up, subscriptions, or paywalls.",
+      },
+      {
+        question: "Why is Crow's Foot notation preferred over Chen notation?",
+        answer:
+          "Peter Chen's original 1976 notation represents entities as rectangles, attributes as individual ovals, and relationships as diamonds. While conceptually thorough, it consumes vast canvas space. Crow's Foot notation embeds attributes directly inside table cards and uses concise connector symbols, making it much easier to model real-world schemas containing dozens of tables.",
+      },
+      {
+        question: "How do I model Many-to-Many relationships in relational databases?",
+        answer:
+          "In relational databases like PostgreSQL or MySQL, Many-to-Many relationships are modeled using a junction table (also called an associative or bridge table). The junction table contains foreign keys referencing the primary keys of both parent entities, transforming one Many-to-Many relationship into two clean One-to-Many relationships.",
+      },
+      {
+        question: "What is the difference between a logical ERD and a physical ERD?",
+        answer:
+          "A logical ERD defines entities, attributes, primary/foreign keys, and relationship cardinality independently of any specific database engine. A physical ERD specifies exact database column types (e.g., UUID, VARCHAR, TIMESTAMPTZ), constraints (NOT NULL, UNIQUE), foreign key cascade behaviors, and indexes tailored to a specific database like PostgreSQL or MySQL.",
+      },
+      {
+        question: "Are my proprietary database schema sketches secure and private?",
+        answer:
+          "Yes. Simple Sketchpad processes all drawing operations 100% locally in your browser. No schema sketches, table names, or confidential architectural notes are ever transmitted to external cloud servers.",
+      },
+    ],
+  },
+  {
     slug: "how-to-draw-a-concept-map-online",
     title: "How to Draw a Concept Map Online: Visual Learning, Linking Words, and Hierarchy Guide",
     description:
@@ -280,9 +453,9 @@ export const BLOG_POSTS: BlogPost[] = [
     readingTime: 12,
     related: ["/whiteboard", "/drawing-board", "/graph-paper"],
     relatedPosts: [
+      "how-to-draw-an-entity-relationship-diagram-online",
       "how-to-draw-a-flowchart-online",
       "how-to-wireframe-a-website",
-      "how-to-make-a-mind-map-online",
     ],
     keywords: [
       "how to draw system architecture diagrams online",
