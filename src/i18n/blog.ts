@@ -31,6 +31,172 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: "how-to-draw-a-customer-journey-map-online",
+    title: "How to Draw a Customer Journey Map Online: UX Stages, Touchpoints, and Emotional Arc Guide",
+    description:
+      "A complete guide on how to draw a customer journey map online for free. Learn journey phases, touchpoints, emotion curves, pain points, and UX mapping workflows.",
+    excerpt:
+      "Want to empathize with your users and eliminate product friction? Here is how to map customer journeys, touchpoints, and emotional arcs online—without paywalls, sign-up, or rigid software.",
+    category: "Guides",
+    date: "2026-11-06",
+    readingTime: 13,
+    related: ["/whiteboard", "/storyboard", "/drawing-board"],
+    relatedPosts: [
+      "how-to-wireframe-a-website",
+      "how-to-make-a-storyboard-online",
+      "how-to-draw-a-flowchart-online",
+    ],
+    keywords: [
+      "how to draw a customer journey map online",
+      "customer journey map online free",
+      "user journey mapping tool",
+      "draw customer journey map on whiteboard",
+      "ux journey map template free",
+      "customer touchpoint map online",
+      "user experience journey mapping",
+      "emotion curve journey map",
+      "journey map vs user flow",
+      "free customer journey map maker",
+      "cx mapping software",
+      "b2b customer journey example",
+    ],
+    sections: [
+      {
+        paragraphs: [
+          "Modern digital products rarely succeed or fail based solely on the elegance of their backend code or visual design. Instead, success hinges on the holistic, end-to-end user experience—from the first moment a prospect discovers a brand on social media, through sign-up and onboarding, to daily usage, renewal, and customer support. When these touchpoints are designed in isolated departmental silos, users encounter jarring handoffs, confusing UI steps, and frustrating friction that quietly drives up churn.",
+          "A Customer Journey Map (CJM) is the ultimate visual framework to dismantle these silos. By weaving together chronological stages, user actions, touchpoints, emotional reactions, and systemic pain points onto a unified visual timeline, product managers, UX designers, and marketers can see their service through the eyes of real customers. It transforms fragmented analytics data into an actionable human narrative.",
+          "Yet many teams hesitate to create journey maps because specialized CX and UX software often requires expensive per-seat subscriptions, mandatory sign-ups, or rigid templates that restrict freeform collaboration. When running a journey mapping workshop, your team needs speed, visual flexibility, and room to think. Using our free [online whiteboard](/whiteboard/) or [storyboard maker](/storyboard/), you can lay out swimlanes, drag virtual sticky notes, draw emotional sentiment curves, and pinpoint opportunities directly in your browser with zero paywalls. This comprehensive guide breaks down the core anatomy, swimlane architecture, emotional graphing techniques, and practical workflows for building high-impact customer journey maps.",
+        ],
+      },
+      {
+        heading: "Journey map vs. user flow vs. service blueprint: What is the difference?",
+        paragraphs: [
+          "Design teams frequently confuse customer journey maps with other common UX artifacts. Understanding their unique roles ensures you build the right diagram for your specific objective:",
+        ],
+        list: [
+          "Customer Journey Map (CJM): A high-level, human-centered timeline chronicling a user's complete relationship with a brand across multiple channels and days, weeks, or months. Emphasizes user mindsets, expectations, emotions, and systemic gaps.",
+          "User Flow Diagram: A granular, screen-by-screen technical diagram showing the precise navigational paths, decision nodes, and interface states a user clicks through inside an application to accomplish a single task (such as resetting a password or checking out). See our [guide to drawing flowcharts](/blog/how-to-draw-a-flowchart-online/) for more on process mapping.",
+          "Service Blueprint: An operational, behind-the-scenes architectural diagram that pairs customer touchpoints with internal backstage processes, third-party vendor APIs, database operations, and employee responsibilities needed to deliver that experience.",
+          "UX Wireframe: A structural visual mockup of a specific digital screen or page layout. Once your journey map reveals where friction exists in a journey stage, use our [guide to wireframing a website](/blog/how-to-wireframe-a-website/) to sketch interface solutions.",
+        ],
+      },
+      {
+        heading: "The 6 core horizontal swimlanes of every journey map",
+        paragraphs: [
+          "An effective customer journey map uses a matrix layout: vertical columns represent chronological stages over time, while horizontal swimlanes capture distinct dimensions of the experience. To ensure thorough analysis, include these six essential swimlanes:",
+        ],
+        list: [
+          "1. Persona & Scenario Header: Anchors the top of the board. Identifies the specific user archetype (e.g., 'Enterprise Procurement Lead' or 'First-Time SaaS Buyer') and their primary goal, current constraints, and starting context.",
+          "2. Journey Stages (Timeline Columns): The overarching phases the customer moves through. Common progressions include Awareness, Consideration, Acquisition, Onboarding, Daily Engagement, and Renewal or Advocacy.",
+          "3. Customer Actions (What they do): Factual, step-by-step descriptions of the user's observable behavior at each phase (e.g., 'Searches Google for alternatives', 'Enters billing details', 'Imports CSV contacts').",
+          "4. Touchpoints & Channels (Where it happens): The exact medium, device, or surface where interaction takes place—such as marketing landing pages, mobile apps, email receipts, live chat widgets, or phone calls.",
+          "5. Thoughts, Feelings & Emotional Arc (How they feel): A continuous sentiment line undulating between positive delight (+), neutral indifference (0), and negative frustration (-), accompanied by verbatim user quotes and mindset descriptions.",
+          "6. Pain Points & Opportunities (What needs fixing): Highlights barriers, friction points, confusion, and drop-off risks, paired directly with actionable design ideas, feature requests, or process improvements.",
+        ],
+      },
+      {
+        heading: "Step-by-step: How to build a customer journey map from scratch",
+        paragraphs: [
+          "Follow this proven six-step methodology to transform qualitative user research into an authoritative, actionable journey map:",
+        ],
+        ordered: true,
+        list: [
+          "Synthesize real user research: Never map a customer journey based on internal assumptions or guesswork. Review customer interview transcripts, recorded user testing sessions, churn survey responses, and helpdesk support tickets to gather empirical insights.",
+          "Define a single focused persona and scenario: Avoid generic 'one-size-fits-all' maps. Focus on a specific persona attempting to achieve a concrete goal (e.g., 'A freelance designer evaluating a client invoicing platform for the first time').",
+          "Map 4 to 6 chronological journey phases: Draw vertical columns across your canvas representing the logical milestones from initial discovery through long-term retention. Keep phase names descriptive and user-centric.",
+          "Populate user actions and touchpoints onto sticky notes: In our [online whiteboard](/whiteboard/), drop virtual sticky notes into each column describing the precise actions users take and the channels they touch.",
+          "Plot the emotional arc and sentiment highs/lows: Connect the user's emotional state across each phase with a continuous curve. Label the highest peak (delight) and deepest valley (critical pain point) to identify moments of truth.",
+          "Brainstorm and prioritize high-leverage opportunities: Beneath each low point on the emotional curve, list concrete organizational and product solutions. Group and rank them by effort versus business impact.",
+        ],
+      },
+      {
+        heading: "Worked real-world example: B2B SaaS free trial to paid upgrade",
+        paragraphs: [
+          "To see how these swimlanes function in practice, consider a B2B SaaS product team mapping a self-serve software trial:",
+        ],
+        list: [
+          "Discovery Phase: Prospect reads an SEO tutorial on industry benchmarks -> clicks a CTA link. Touchpoint: Blog article. Sentiment: Curious (+1).",
+          "Evaluation Phase: Lands on pricing page -> signs up via Google OAuth -> hits an unexpected credit card paywall before accessing the trial. Touchpoint: Web modal. Sentiment: Frustrated and hesitant (-2). Customer quote: 'Why do they need my credit card before I even know if this works?'.",
+          "Onboarding Phase: Enters app -> encounters an empty blank dashboard with no sample data or guidance. Touchpoint: In-app dashboard. Sentiment: Confused (-1).",
+          "Value Realization ('Aha!' Moment): Clicks 'Load Sample Project' -> triggers automated calculation report in under 20 seconds -> shares interactive link with team lead. Touchpoint: Shared web report. Sentiment: Delighted (+3). Customer quote: 'This just saved me three hours of spreadsheet work!'.",
+          "Conversion Phase: 14-day trial notice arrives -> automated invoice sent to accounting -> manager approves team license upgrade. Touchpoint: Email and Stripe billing receipt. Sentiment: Satisfied (+2).",
+          "Key Insight & Opportunity: The deepest drop-off occurred between Evaluation and Onboarding due to the upfront credit card barrier and blank dashboard. Removing the credit card requirement and adding instant demo templates increased trial-to-paid conversion by 34%.",
+        ],
+      },
+      {
+        heading: "Graphing the emotional arc: The psychology of peaks and ends",
+        paragraphs: [
+          "The emotional arc is what separates a customer journey map from a clinical process diagram. Human memory does not recall an experience as a mathematical average of every second; instead, as Nobel laureate Daniel Kahneman's 'Peak-End Rule' demonstrates, humans judge an experience primarily by its emotional peak (highest high or lowest low) and its conclusion (the end).",
+          "When drawing the sentiment graph on your canvas, keep these visual design principles in mind:",
+        ],
+        list: [
+          "Draw a visible neutral baseline: Establish a horizontal centerline across your sentiment lane representing neutral satisfaction (0). Draw positive experiences above the line (+1 to +3) and negative experiences below (-1 to -3).",
+          "Connect points with a continuous smooth vector: Rather than isolated dots, connect sentiment levels with a flowing bezier curve or polyline to illustrate the emotional momentum of the user.",
+          "Emphasize emotional cliffs: Highlight abrupt drops where high expectations crash into technical bugs, hidden fees, or slow support. These emotional cliffs are your primary churn drivers.",
+          "Anchor with authentic quotes: Place callout bubbles with exact customer quotes directly beside the emotional peaks and valleys to keep team empathy grounded in reality.",
+        ],
+      },
+      {
+        heading: "Best practices for whiteboard and storyboard collaboration",
+        paragraphs: [
+          "A customer journey map should never be a solo document created in isolation and forgotten in a folder. It is a collaborative tool for aligning product management, engineering, sales, and executive leadership:",
+        ],
+        list: [
+          "Standardize sticky note color codes: On our [online whiteboard](/whiteboard/), assign consistent colors: yellow for user actions, blue for touchpoints, red/coral for pain points, and green for proposed opportunities.",
+          "Supplement with visual storyboards: For complex scenarios or mobile field workflows, sketch quick scene panels using our [storyboard maker](/storyboard/) to illustrate the physical environment and context in which the user interacts with your app.",
+          "Timebox collaborative workshops: When facilitating a team mapping session, spend 10 minutes silently brainstorming pain points on sticky notes, 15 minutes grouping themes, and 20 minutes dot-voting on top solutions.",
+          "Keep the map visible during sprint planning: Print or display your exported journey map in team workspaces and reference it during backlog grooming to ensure upcoming sprint tickets directly address verified user pain points.",
+        ],
+      },
+      {
+        heading: "Common journey mapping mistakes to avoid",
+        paragraphs: [
+          "Watch out for these frequent pitfalls when building your customer journey map:",
+        ],
+        list: [
+          "Mapping the 'ideal' journey instead of the real journey: Teams often draw how they wish users behaved, glossing over confusing navigation, failed logins, or delayed emails. A journey map must document the gritty truth.",
+          "Creating a 'Frankenstein' persona: Attempting to combine casual free users, enterprise buyers, and internal admins into a single map creates an incoherent mess. If goals and workflows differ significantly, create separate maps.",
+          "Neglecting the post-purchase phase: Stopping the journey map immediately after the user enters their credit card. For modern subscription businesses, onboarding, feature discovery, and ongoing support dictate lifetime value.",
+          "Treating the map as art instead of an actionable plan: Building an elaborate, colorful graphic that produces zero Jira tickets, design tasks, or operational changes. Always assign concrete owners to the identified opportunities.",
+        ],
+      },
+      {
+        heading: "Exporting and sharing your journey map with stakeholders",
+        paragraphs: [
+          "Once your journey map is complete, export it directly as a crisp vector SVG or high-resolution PNG from the canvas toolbar. You can embed the graphic into design systems, product requirement documents (PRDs), Notion wikis, or pitch decks.",
+          "Because our tools require no sign-up or proprietary software, you can also share your canvas screen directly during remote Zoom or Google Meet planning sessions, allowing stakeholders to view and discuss touchpoints in real time.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can I create a customer journey map online without signing up?",
+        answer:
+          "Yes. Simple Sketchpad and Whiteboard allow you to create swimlanes, add virtual sticky notes, draw emotional curves, and map customer touchpoints immediately in your browser with zero sign-up or paid subscriptions.",
+      },
+      {
+        question: "How many phases should a customer journey map have?",
+        answer:
+          "Most effective customer journey maps contain between 4 and 6 phases (such as Awareness, Consideration, Purchase, Onboarding, and Retention). Having fewer than 4 phases lacks detail, while having more than 7 makes the timeline unwieldy.",
+      },
+      {
+        question: "What is the difference between an empathy map and a customer journey map?",
+        answer:
+          "An empathy map captures a user's mindset at a single frozen moment in time (what they Think, Feel, Say, and Do). A customer journey map extends that empathy across a chronological timeline of interactions and touchpoints over time.",
+      },
+      {
+        question: "How often should a product team update their journey maps?",
+        answer:
+          "Teams should revisit and update customer journey maps at least quarterly, or whenever launching major product redesigns, releasing new pricing tiers, or observing significant changes in customer churn data.",
+      },
+      {
+        question: "Is my team's proprietary customer research and strategy private on Sketchpad?",
+        answer:
+          "Yes. Simple Sketchpad runs 100% locally in your browser. None of your customer interview notes, internal metrics, or journey maps are uploaded to external cloud servers, keeping your strategic research completely confidential.",
+      },
+    ],
+  },
+  {
     slug: "how-to-draw-a-fishbone-diagram-online",
     title: "How to Draw a Fishbone Diagram Online: Root Cause Analysis, 6Ms, and Ishikawa Guide",
     description:
@@ -867,8 +1033,8 @@ export const BLOG_POSTS: BlogPost[] = [
     readingTime: 14,
     related: ["/storyboard", "/drawing-board", "/whiteboard"],
     relatedPosts: [
+      "how-to-draw-a-customer-journey-map-online",
       "how-to-wireframe-a-website",
-      "sketchpad-for-planning-and-diagrams",
       "how-to-draw-a-flowchart-online",
     ],
     keywords: [
@@ -1082,7 +1248,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-10-29",
     readingTime: 7,
     related: ["/whiteboard", "/drawing-board"],
-    relatedPosts: ["how-to-make-a-storyboard-online", "sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online"],
+    relatedPosts: ["how-to-draw-a-customer-journey-map-online", "how-to-make-a-storyboard-online", "how-to-draw-a-flowchart-online"],
     keywords: ["how to make a mind map online", "mind map example", "mind map template", "brainstorming mind map"],
     sections: [
       {
@@ -1227,7 +1393,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "2026-10-28",
     readingTime: 8,
     related: ["/drawing-board", "/graph-paper", "/whiteboard"],
-    relatedPosts: ["how-to-make-a-storyboard-online", "sketchpad-for-planning-and-diagrams", "how-to-draw-a-flowchart-online"],
+    relatedPosts: ["how-to-draw-a-customer-journey-map-online", "how-to-make-a-storyboard-online", "how-to-draw-a-flowchart-online"],
     keywords: ["how to wireframe a website", "website wireframe", "low fidelity wireframe", "mobile wireframe", "website planning"],
     sections: [
       {
