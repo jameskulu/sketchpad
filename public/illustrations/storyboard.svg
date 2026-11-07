@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="400" height="240" rx="16" fill="#fdf2f8"/>
+
+  <!-- Storyboard Film Strip / Triple Frames -->
+  <!-- Frame 1: Establishing Landscape Shot -->
+  <g transform="translate(30, 45)">
+    <!-- Frame card -->
+    <rect width="100" height="135" rx="8" fill="#ffffff" stroke="#0d253d" stroke-width="2"/>
+    <!-- Scene thumbnail area -->
+    <rect x="6" y="6" width="88" height="66" rx="4" fill="#eff6ff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Sun and mountains -->
+    <circle cx="28" cy="28" r="8" fill="#f59e0b"/>
+    <path d="M10 65 L40 38 L65 65 Z" fill="#93c5fd" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M50 65 L75 44 L92 65 Z" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5" stroke-linejoin="round"/>
+
+    <!-- Scene metadata lines -->
+    <rect x="8" y="80" width="35" height="5" rx="2.5" fill="#533afd"/>
+    <rect x="8" y="92" width="84" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="8" y="100" width="65" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="8" y="112" width="40" height="4" rx="2" fill="#e2e8f0"/>
+
+    <!-- Scene number tag -->
+    <rect x="68" y="78" width="24" height="10" rx="3" fill="#f1f5f9"/>
+    <text x="73" y="86" font-family="system-ui, monospace, sans-serif" font-size="8" font-weight="700" fill="#0d253d">SC 1</text>
+  </g>
+
+  <!-- Flow arrow 1 -->
+  <path d="M136 100l8 0m-4-4l4 4-4 4" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Frame 2: Character Action Shot -->
+  <g transform="translate(150, 40)">
+    <!-- Frame card (slightly elevated) -->
+    <rect width="100" height="142" rx="8" fill="#ffffff" stroke="#533afd" stroke-width="2.5"/>
+    <!-- Scene thumbnail area -->
+    <rect x="6" y="6" width="88" height="72" rx="4" fill="#faf5ff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Character stick doodle waving -->
+    <circle cx="50" cy="26" r="8" fill="#ffffff" stroke="#0d253d" stroke-width="2"/>
+    <path d="M50 34v18m-10 14l10-14 10 14M50 40l-12-6m12 6l14-10" stroke="#0d253d" stroke-width="2" stroke-linecap="round"/>
+    <!-- Speech bubble -->
+    <path d="M68 16h18c2 0 4 2 4 4v8c0 2-2 4-4 4h-10l-4 4v-4h-4c-2 0-4-2-4-4v-8c0-2 2-4 4-4z" fill="#fef08a" stroke="#ca8a04" stroke-width="1"/>
+    <text x="74" y="25" font-family="system-ui, sans-serif" font-size="7" font-weight="700" fill="#854d0e">Aha!</text>
+
+    <!-- Scene metadata lines -->
+    <rect x="8" y="86" width="40" height="6" rx="3" fill="#db2777"/>
+    <rect x="8" y="100" width="84" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="8" y="108" width="70" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="8" y="118" width="50" height="4" rx="2" fill="#e2e8f0"/>
+
+    <!-- Scene number tag -->
+    <rect x="68" y="84" width="24" height="10" rx="3" fill="#fdf2f8"/>
+    <text x="73" y="92" font-family="system-ui, monospace, sans-serif" font-size="8" font-weight="700" fill="#db2777">SC 2</text>
+  </g>
+
+  <!-- Flow arrow 2 -->
+  <path d="M256 100l8 0m-4-4l4 4-4 4" stroke="#db2777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Frame 3: Product / Close-up Resolution Shot -->
+  <g transform="translate(270, 45)">
+    <!-- Frame card -->
+    <rect width="100" height="135" rx="8" fill="#ffffff" stroke="#0d253d" stroke-width="2"/>
+    <!-- Scene thumbnail area -->
+    <rect x="6" y="6" width="88" height="66" rx="4" fill="#f0fdf4" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Trophy / check celebration doodle -->
+    <circle cx="50" cy="38" r="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <path d="M42 38l6 6 12-12" stroke="#0e9f6e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Confetti dots -->
+    <circle cx="28" cy="24" r="2" fill="#ea2261"/>
+    <circle cx="72" cy="26" r="2" fill="#533afd"/>
+    <circle cx="75" cy="50" r="2" fill="#0e9f6e"/>
+
+    <!-- Scene metadata lines -->
+    <rect x="8" y="80" width="35" height="5" rx="2.5" fill="#0e9f6e"/>
+    <rect x="8" y="92" width="84" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="8" y="100" width="60" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="8" y="112" width="40" height="4" rx="2" fill="#e2e8f0"/>
+
+    <!-- Scene number tag -->
+    <rect x="68" y="78" width="24" height="10" rx="3" fill="#f1f5f9"/>
+    <text x="73" y="86" font-family="system-ui, monospace, sans-serif" font-size="8" font-weight="700" fill="#0d253d">SC 3</text>
+  </g>
+
+  <!-- Director Clapperboard in top right corner -->
+  <g transform="translate(325, 12) rotate(15)">
+    <rect width="36" height="24" rx="3" fill="#0d253d"/>
+    <path d="M0 0h36v8H0z" fill="#ffffff"/>
+    <path d="M4 0l6 8M14 0l6 8M24 0l6 8" stroke="#0d253d" stroke-width="2"/>
+  </g>
+</svg>
+

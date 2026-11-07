@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none" width="100%" height="100%">
+  <!-- Background with subtle grid dots -->
+  <rect width="400" height="240" rx="16" fill="#f8fafc"/>
+  <defs>
+    <pattern id="dot-grid-wireframe" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#e2e8f0"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="240" rx="16" fill="url(#dot-grid-wireframe)"/>
+
+  <!-- Desktop wireframe window -->
+  <g transform="translate(45, 30)">
+    <!-- Browser window card -->
+    <rect width="180" height="170" rx="10" fill="#ffffff" stroke="#0d253d" stroke-width="2.5"/>
+    <!-- Window header bar -->
+    <path d="M0 10C0 4.477 4.477 0 10 0h160c5.523 0 10 4.477 10 10v18H0V10z" fill="#f1f5f9" stroke="#0d253d" stroke-width="2.5"/>
+    <circle cx="14" cy="14" r="3.5" fill="#ea2261"/>
+    <circle cx="26" cy="14" r="3.5" fill="#e05a00"/>
+    <circle cx="38" cy="14" r="3.5" fill="#0e9f6e"/>
+    <rect x="54" y="9" width="80" height="10" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Wireframe content rows -->
+    <rect x="16" y="40" width="70" height="12" rx="4" fill="#533afd"/>
+    <rect x="16" y="60" width="148" height="42" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="3 3"/>
+    <path d="M40 76l14 16 10-10 16 18" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="42" cy="70" r="3" fill="#94a3b8"/>
+    <rect x="88" y="68" width="60" height="6" rx="3" fill="#cbd5e1"/>
+    <rect x="88" y="80" width="45" height="5" rx="2.5" fill="#e2e8f0"/>
+
+    <!-- Dual cards -->
+    <rect x="16" y="112" width="68" height="42" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="24" y="120" width="36" height="5" rx="2.5" fill="#0d253d"/>
+    <rect x="24" y="130" width="50" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="24" y="138" width="40" height="4" rx="2" fill="#cbd5e1"/>
+
+    <rect x="96" y="112" width="68" height="42" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+    <rect x="104" y="120" width="36" height="5" rx="2.5" fill="#0d253d"/>
+    <rect x="104" y="130" width="50" height="4" rx="2" fill="#cbd5e1"/>
+    <rect x="104" y="138" width="40" height="4" rx="2" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Mobile phone mockup wireframe -->
+  <g transform="translate(240, 45)">
+    <!-- Phone body -->
+    <rect width="105" height="160" rx="16" fill="#ffffff" stroke="#0d253d" stroke-width="2.5"/>
+    <!-- Speaker notch -->
+    <rect x="36" y="8" width="33" height="4" rx="2" fill="#0d253d"/>
+    <!-- App header -->
+    <rect x="12" y="22" width="45" height="7" rx="3.5" fill="#0d253d"/>
+    <circle cx="90" cy="25" r="4" fill="#533afd"/>
+
+    <!-- Avatar + banner -->
+    <rect x="12" y="38" width="81" height="38" rx="8" fill="#e0e7ff"/>
+    <rect x="20" y="46" width="30" height="6" rx="3" fill="#533afd"/>
+    <rect x="20" y="56" width="48" height="4" rx="2" fill="#818cf8"/>
+
+    <!-- Action button -->
+    <rect x="12" y="86" width="81" height="18" rx="9" fill="#533afd"/>
+    <rect x="34" y="93" width="37" height="4" rx="2" fill="#ffffff"/>
+
+    <!-- List item rows -->
+    <rect x="12" y="112" width="18" height="18" rx="5" fill="#f1f5f9"/>
+    <rect x="36" y="116" width="45" height="4" rx="2" fill="#0d253d"/>
+    <rect x="36" y="124" width="30" height="3" rx="1.5" fill="#cbd5e1"/>
+
+    <!-- Bottom home bar -->
+    <rect x="38" y="150" width="29" height="3" rx="1.5" fill="#94a3b8"/>
+  </g>
+
+  <!-- Cursor pointer with click ripple -->
+  <g transform="translate(230, 130)">
+    <circle cx="8" cy="8" r="14" fill="#533afd" fill-opacity="0.15"/>
+    <path d="M4 2l12 11-5 1 4 8-3 2-4-8-4 4V2z" fill="#0d253d" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Little spark doodle -->
+  <path d="M40 25l3 6 6 2-6 2-3 6-3-6-6-2 6-2 3-6z" fill="#ea2261"/>
+  <path d="M355 40l2 4 4 1-4 1-2 4-2-4-4-1 4-1 2-4z" fill="#0e9f6e"/>
+</svg>
+

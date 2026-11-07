@@ -13,6 +13,7 @@ export interface PageContent {
   // SEO
   seoTitle: string;
   seoDescription: string;
+  seoKeywords?: string;
 
   // Home app page (SeoContent equivalent)
   home: {

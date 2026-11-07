@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" fill="none" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="400" height="240" rx="16" fill="#faf5ff"/>
+
+  <!-- Connector branches -->
+  <path d="M190 110 C 130 90, 110 65, 85 65" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+  <path d="M210 110 C 270 90, 290 65, 315 65" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+  <path d="M190 135 C 130 155, 110 175, 80 175" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+  <path d="M210 135 C 270 155, 290 175, 315 175" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="4 4" stroke-linecap="round"/>
+
+  <!-- Satellite Node 1 (Top Left): "Goal / Rocket" -->
+  <g transform="translate(45, 42)">
+    <rect width="80" height="42" rx="10" fill="#ffffff" stroke="#8b5cf6" stroke-width="2"/>
+    <!-- Rocket doodle -->
+    <path d="M20 18l6-6c3-3 8-2 10 0l2 2c2 2 3 7 0 10l-6 6-5-1-6-6-1-5z" fill="#f43f5e"/>
+    <circle cx="32" cy="19" r="2.5" fill="#ffffff"/>
+    <path d="M17 26c-3 2-4 6-4 6s4-1 6-4" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+    <rect x="42" y="16" width="30" height="5" rx="2.5" fill="#0d253d"/>
+    <rect x="42" y="24" width="22" height="4" rx="2" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Satellite Node 2 (Top Right): "Sticky Note" -->
+  <g transform="translate(275, 40) rotate(4)">
+    <rect width="80" height="46" rx="4" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+    <!-- Tape strip -->
+    <rect x="25" y="-6" width="30" height="10" rx="2" fill="#ffffff" fill-opacity="0.75" stroke="#ca8a04" stroke-width="1"/>
+    <rect x="12" y="14" width="45" height="4" rx="2" fill="#854d0e"/>
+    <rect x="12" y="22" width="56" height="4" rx="2" fill="#ca8a04"/>
+    <rect x="12" y="30" width="35" height="4" rx="2" fill="#ca8a04"/>
+  </g>
+
+  <!-- Satellite Node 3 (Bottom Left): "User Feedback / Heart" -->
+  <g transform="translate(45, 150)">
+    <rect width="82" height="42" rx="10" fill="#ffffff" stroke="#10b981" stroke-width="2"/>
+    <path d="M24 23c-2.5-3-6-2-6 1 0 3 6 8 6 8s6-5 6-8c0-3-3.5-4-6-1z" fill="#10b981"/>
+    <rect x="36" y="16" width="34" height="5" rx="2.5" fill="#0d253d"/>
+    <rect x="36" y="24" width="24" height="4" rx="2" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Satellite Node 4 (Bottom Right): "Sprint Plan / Check" -->
+  <g transform="translate(275, 150)">
+    <rect width="82" height="42" rx="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+    <circle cx="23" cy="21" r="7" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+    <path d="M19 21l3 3 5-5" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="36" y="16" width="35" height="5" rx="2.5" fill="#0d253d"/>
+    <rect x="36" y="24" width="26" height="4" rx="2" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Central Node: Smiling Glowing Lightbulb Idea Hub -->
+  <g transform="translate(160, 80)">
+    <!-- Aura glow circle -->
+    <circle cx="40" cy="40" r="48" fill="#533afd" fill-opacity="0.08"/>
+    <circle cx="40" cy="40" r="38" fill="#ffffff" stroke="#533afd" stroke-width="3"/>
+
+    <!-- Lightbulb graphic -->
+    <path d="M40 18c-10 0-17 7-17 15 0 5 3 10 7 12v4h20v-4c4-2 7-7 7-12 0-8-7-15-17-15z" fill="#fef08a" stroke="#0d253d" stroke-width="2"/>
+    <path d="M33 49h14v3H33zM35 52h10v2H35z" fill="#cbd5e1" stroke="#0d253d" stroke-width="1.5"/>
+    <!-- Cute smile and eyes -->
+    <circle cx="36" cy="30" r="1.5" fill="#0d253d"/>
+    <circle cx="44" cy="30" r="1.5" fill="#0d253d"/>
+    <path d="M37 34c1.5 1.5 4.5 1.5 6 0" stroke="#0d253d" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- Radiance burst marks -->
+    <path d="M40 7v5M18 20l4 3M62 20l-4 3" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Doodle stars -->
+  <path d="M140 45l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z" fill="#fbbf24"/>
+  <path d="M250 195l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z" fill="#a855f7"/>
+</svg>
+

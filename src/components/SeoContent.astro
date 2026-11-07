@@ -14,17 +14,89 @@ interface Props {
 const { locale, home } = Astro.props;
 const extraSections = home.sections ?? [];
 
-const legacyHeadings = [home.toolsHeading, home.rankingHeading, home.kidsHeading];
+const isDefault = locale === DEFAULT_LOCALE;
+const useCasesHeading = "Sketchpad Use Cases: What Can You Create?";
+
+const legacyHeadings = isDefault
+  ? [home.toolsHeading, useCasesHeading, home.rankingHeading, home.kidsHeading]
+  : [home.toolsHeading, home.rankingHeading, home.kidsHeading];
+
 const allHeadings = [
   ...legacyHeadings,
   ...extraSections.map((section) => section.heading),
   home.faqHeading,
 ];
 const ids = headingIds(allHeadings);
-const [toolsId, rankingId, kidsId] = ids;
+const toolsId = ids[0];
+const useCasesId = isDefault ? ids[1] : undefined;
+const rankingId = isDefault ? ids[2] : ids[1];
+const kidsId = isDefault ? ids[3] : ids[2];
 const sectionIds = ids.slice(legacyHeadings.length, legacyHeadings.length + extraSections.length);
 const faqId = ids[ids.length - 1];
 const toc = allHeadings.map((heading, index) => ({ id: ids[index], heading }));
+
+const USE_CASES = [
+  {
+    image: "/illustrations/wireframe.svg",
+    alt: "Wireframe and mobile app UI mockup sketchpad use case illustration",
+    tag: "UI & Product",
+    title: "Quick Wireframes & App Mockups",
+    description:
+      "Sketch mobile screens, website landing pages, navigation flows, and dashboard cards in seconds. Iterate on user flows quickly without opening heavy design software.",
+    href: "/blog/how-to-wireframe-a-website/",
+    action: "Wireframe guide",
+  },
+  {
+    image: "/illustrations/mindmap.svg",
+    alt: "Mind map and creative brainstorming sketchpad use case illustration",
+    tag: "Brainstorming",
+    title: "Mind Maps & Visual Brainstorming",
+    description:
+      "Map non-linear ideas, organize team sprint goals, connect concept clusters with directional arrows, and drop colorful sticky notes onto a freeform canvas.",
+    href: "/whiteboard/",
+    action: "Open whiteboard",
+  },
+  {
+    image: "/illustrations/teaching.svg",
+    alt: "Classroom teaching, math diagrams and educational sketchpad use case illustration",
+    tag: "Education",
+    title: "Teaching & Classroom Explanations",
+    description:
+      "Illustrate geometry formulas, coordinate graphs, scientific cycles, or history timelines live during online tutoring sessions and classroom discussions.",
+    href: "/graph-paper/",
+    action: "Try graph paper",
+  },
+  {
+    image: "/illustrations/floorplan.svg",
+    alt: "Floor plan and spatial furniture layout sketchpad use case illustration",
+    tag: "Architecture",
+    title: "Floor Plans & Spatial Layouts",
+    description:
+      "Draft rooms to scale, measure walls with grid squares, plan furniture placement before moving, or sketch renovation ideas for contractors and family.",
+    href: "/blog/how-to-draw-a-floor-plan-online/",
+    action: "Floor plan guide",
+  },
+  {
+    image: "/illustrations/storyboard.svg",
+    alt: "Storyboard and video scene sequence sketchpad use case illustration",
+    tag: "Creative & Media",
+    title: "Storyboards & Scene Planning",
+    description:
+      "Sequence video camera angles, plan animation keyframes, sketch comic strips, or map customer journey narratives frame-by-frame with shot descriptions.",
+    href: "/storyboard/",
+    action: "Storyboard maker",
+  },
+  {
+    image: "/illustrations/kids.svg",
+    alt: "Kids drawing, rainbow and colorful doodles sketchpad use case illustration",
+    tag: "Kids & Family",
+    title: "Kids Drawing & Creative Fun",
+    description:
+      "A safe, ad-free canvas with bright colors and a reassuring undo button. Perfect for rainy afternoons, practicing letters and shapes, and pure imaginative doodling.",
+    href: "/kids-drawing/",
+    action: "Kids drawing pad",
+  },
+];
 
 const h2 = "mt-12 scroll-mt-24 text-xl font-semibold tracking-tight text-ink";
 const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
@@ -60,6 +132,52 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
 
     <h2 id={toolsId} class={h2}>{home.toolsHeading}</h2>
     {home.tools.map((para) => <p class={p}><Prose text={para} /></p>)}
+
+    {isDefault && (
+      <section aria-labelledby={useCasesId} class="mt-12">
+        <h2 id={useCasesId} class={h2}>{useCasesHeading}</h2>
+        <p class={p}>
+          From agile software wireframes and remote brainstorming to classroom explanations and cozy weekend doodles,
+          our free online sketchpad is built for every type of visual thinking. Here are six popular ways creators, students,
+          and teams put the canvas to work every day:
+        </p>
+
+        <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {USE_CASES.map((item) => (
+            <article class="group flex flex-col rounded-2xl border border-hairline bg-white p-4 transition-all duration-200 hover:border-primary/40 hover:shadow-md">
+              <div class="overflow-hidden rounded-xl border border-hairline/80 bg-canvas-soft">
+                <img
+                  src={item.image}
+                  alt={item.alt}
+                  class="h-auto w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                  width="400"
+                  height="240"
+                  loading="lazy"
+                />
+              </div>
+              <div class="mt-4 flex flex-1 flex-col">
+                <span class="self-start rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
+                  {item.tag}
+                </span>
+                <h3 class="mt-2 text-[17px] font-semibold tracking-tight text-ink">
+                  {item.title}
+                </h3>
+                <p class="mt-1.5 flex-1 text-[14px] leading-6 text-ink-secondary">
+                  {item.description}
+                </p>
+                <a
+                  href={item.href}
+                  class="mt-3 inline-flex items-center gap-1 text-[13px] font-medium text-primary transition-colors hover:text-primary-deep"
+                >
+                  <span>{item.action}</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
 
     <h2 id={rankingId} class={h2}>{home.rankingHeading}</h2>
     {home.ranking.map((para) => <p class={p}><Prose text={para} /></p>)}
