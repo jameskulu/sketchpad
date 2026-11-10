@@ -1,5 +1,5 @@
 type Point = { x: number; y: number };
-type Stroke = { points: Point[]; color: string; size: number; erase: boolean };
+type Stroke = { points: Point[]; color: string; size: number; erase: boolean; tool?: "pencil" | "brush" };
 type Scene = { strokes: Stroke[]; caption: string };
 type Draft = { version: 1; title: string; count: number; scenes: Scene[] };
 export const MAX_STORYBOARD_FRAMES = 24;
@@ -24,7 +24,68 @@ export function parseStoryboard(raw: string): Draft {
   return value;
 }
 
-function draw(canvas: HTMLCanvasElement, strokes: Stroke[]) {
+type CursorInfo = { x: number; y: number; size: number; tool: "pencil" | "brush"; erase: boolean };
+
+function renderStoryboardCursor(ctx: CanvasRenderingContext2D, cursor: CursorInfo) {
+  const { x, y, size, tool, erase } = cursor;
+  ctx.save();
+  ctx.globalCompositeOperation = "source-over";
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  const r = Math.max(erase ? 6 : tool === "pencil" ? 2.5 : 4, size / 2);
+
+  // Outer high-contrast white ring (clearly visible over dark ink or colorful sketches)
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Inner ring (clearly visible over clean white canvas)
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.strokeStyle = erase ? "rgba(224, 34, 97, 0.9)" : "rgba(37, 53, 77, 0.85)";
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  // Crosshair ticks at 12, 3, 6, 9 o'clock for pixel-precise alignment
+  const tickIn = r + 2;
+  const tickOut = r + 5;
+
+  ctx.beginPath();
+  ctx.moveTo(x, y - tickOut); ctx.lineTo(x, y - tickIn);
+  ctx.moveTo(x, y + tickIn); ctx.lineTo(x, y + tickOut);
+  ctx.moveTo(x - tickOut, y); ctx.lineTo(x - tickIn);
+  ctx.moveTo(x + tickIn, y); ctx.lineTo(x + tickOut);
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(x, y - tickOut); ctx.lineTo(x, y - tickIn);
+  ctx.moveTo(x, y + tickIn); ctx.lineTo(x, y + tickOut);
+  ctx.moveTo(x - tickOut, y); ctx.lineTo(x - tickIn);
+  ctx.moveTo(x + tickIn, y); ctx.lineTo(x + tickOut);
+  ctx.strokeStyle = erase ? "rgba(224, 34, 97, 0.9)" : "rgba(37, 53, 77, 0.85)";
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  // Center precision dot with white halo
+  ctx.beginPath();
+  ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+  ctx.fillStyle = erase ? "rgba(224, 34, 97, 1)" : "rgba(37, 53, 77, 1)";
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function draw(canvas: HTMLCanvasElement, strokes: Stroke[], cursor?: CursorInfo) {
   const ctx = canvas.getContext("2d")!;
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   for (const stroke of strokes) {
@@ -34,17 +95,53 @@ function draw(canvas: HTMLCanvasElement, strokes: Stroke[]) {
     ctx.lineWidth = stroke.size;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.beginPath();
-    if (stroke.points.length === 1) {
-      ctx.arc(stroke.points[0].x, stroke.points[0].y, stroke.size / 2, 0, Math.PI * 2);
-      ctx.fill();
-    } else {
-      ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
-      for (const point of stroke.points.slice(1)) ctx.lineTo(point.x, point.y);
-      ctx.stroke();
+
+    if (stroke.erase || stroke.tool === "brush" || !stroke.tool) {
+      ctx.beginPath();
+      if (stroke.points.length === 1) {
+        ctx.arc(stroke.points[0].x, stroke.points[0].y, stroke.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+        for (let i = 1; i < stroke.points.length - 1; i++) {
+          const mx = (stroke.points[i].x + stroke.points[i + 1].x) / 2;
+          const my = (stroke.points[i].y + stroke.points[i + 1].y) / 2;
+          ctx.quadraticCurveTo(stroke.points[i].x, stroke.points[i].y, mx, my);
+        }
+        ctx.lineTo(stroke.points[stroke.points.length - 1].x, stroke.points[stroke.points.length - 1].y);
+        ctx.stroke();
+      }
+    } else if (stroke.tool === "pencil") {
+      ctx.save();
+      const n = stroke.points.length;
+      if (n === 1) {
+        ctx.globalAlpha = 0.8;
+        ctx.beginPath();
+        ctx.arc(stroke.points[0].x, stroke.points[0].y, Math.max(0.75, stroke.size * 0.4), 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.globalAlpha = 0.38;
+        ctx.lineWidth = stroke.size * 1.3;
+        ctx.beginPath();
+        ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+        for (let i = 1; i < n; i++) ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+        ctx.stroke();
+
+        ctx.globalAlpha = 0.75;
+        ctx.lineWidth = Math.max(0.75, stroke.size * 0.8);
+        ctx.beginPath();
+        ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+        for (let i = 1; i < n; i++) ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+        ctx.stroke();
+      }
+      ctx.restore();
     }
   }
   ctx.globalCompositeOperation = "source-over";
+
+  if (cursor) {
+    renderStoryboardCursor(ctx, cursor);
+  }
 }
 
 export function initStoryboard() {
@@ -60,7 +157,9 @@ export function initStoryboard() {
   const undo = q<HTMLButtonElement>("story-undo");
   const redo = q<HTMLButtonElement>("story-redo");
   const clear = q<HTMLButtonElement>("story-clear");
-  const pen = q<HTMLButtonElement>("story-pen");
+  const pencil = document.getElementById("story-pencil") as HTMLButtonElement | null;
+  const brush = document.getElementById("story-brush") as HTMLButtonElement | null;
+  const pen = document.getElementById("story-pen") as HTMLButtonElement | null;
   const eraser = q<HTMLButtonElement>("story-eraser");
   const dialog = q<HTMLDialogElement>("story-clear-dialog");
   let draft: Draft = { version: 1, title: "", count: 3, scenes: Array.from({ length: MAX_STORYBOARD_FRAMES }, () => ({ strokes: [], caption: "" })) };
@@ -70,7 +169,9 @@ export function initStoryboard() {
   let color = "#25354d";
   let size = 4;
   let erase = false;
+  let tool: "pencil" | "brush" = "pencil";
   let drawing: { index: number; pointer: number; stroke: Stroke } | null = null;
+  let activeCursor: { index: number; x: number; y: number } | null = null;
   const histories = Array.from({ length: MAX_STORYBOARD_FRAMES }, () => ({ undo: [] as Stroke[][], redo: [] as Stroke[][] }));
   let saveTimer: ReturnType<typeof setTimeout> | undefined;
   const save = () => {
@@ -104,14 +205,14 @@ export function initStoryboard() {
     if (histories[index].undo.length > 60) histories[index].undo.shift();
     histories[index].redo = [];
   };
-  const finish = () => {
+  const finish = (lastPoint?: Point) => {
     if (!drawing) return;
     const { index, pointer, stroke } = drawing;
     remember(index);
     draft.scenes[index].strokes.push(stroke);
     drawing = null;
     if (canvases[index].hasPointerCapture(pointer)) canvases[index].releasePointerCapture(pointer);
-    draw(canvases[index], draft.scenes[index].strokes);
+    draw(canvases[index], draft.scenes[index].strokes, lastPoint ? { x: lastPoint.x, y: lastPoint.y, size, tool, erase } : undefined);
     update(); save();
   };
   const point = (canvas: HTMLCanvasElement, event: PointerEvent): Point => {
@@ -127,16 +228,32 @@ export function initStoryboard() {
     canvas.addEventListener("pointerdown", (event) => {
       if (event.button !== 0 || drawing) return;
       event.preventDefault(); canvas.focus(); select(index);
-      drawing = { index, pointer: event.pointerId, stroke: { points: [point(canvas, event)], color, size, erase } };
+      const pt = point(canvas, event);
+      drawing = { index, pointer: event.pointerId, stroke: { points: [pt], color, size, erase, tool } };
+      activeCursor = { index, x: pt.x, y: pt.y };
       canvas.setPointerCapture(event.pointerId);
-      draw(canvas, [...draft.scenes[index].strokes, drawing.stroke]); update();
+      draw(canvas, [...draft.scenes[index].strokes, drawing.stroke], { x: pt.x, y: pt.y, size, tool, erase }); update();
     });
     canvas.addEventListener("pointermove", (event) => {
-      if (!drawing || drawing.index !== index || drawing.pointer !== event.pointerId) return;
-      for (const sample of event.getCoalescedEvents?.().length ? event.getCoalescedEvents() : [event]) drawing.stroke.points.push(point(canvas, sample));
-      draw(canvas, [...draft.scenes[index].strokes, drawing.stroke]);
+      const pt = point(canvas, event);
+      if (drawing && drawing.index === index && drawing.pointer === event.pointerId) {
+        for (const sample of event.getCoalescedEvents?.().length ? event.getCoalescedEvents() : [event]) drawing.stroke.points.push(point(canvas, sample));
+        activeCursor = { index, x: pt.x, y: pt.y };
+        draw(canvas, [...draft.scenes[index].strokes, drawing.stroke], { x: pt.x, y: pt.y, size, tool, erase });
+      } else if (!drawing) {
+        activeCursor = { index, x: pt.x, y: pt.y };
+        draw(canvas, draft.scenes[index].strokes, { x: pt.x, y: pt.y, size, tool, erase });
+      }
     });
-    for (const name of ["pointerup", "pointercancel", "lostpointercapture"] as const) canvas.addEventListener(name, (event) => { if (drawing?.pointer === event.pointerId && drawing.index === index) finish(); });
+    canvas.addEventListener("pointerleave", () => {
+      if (!drawing) {
+        if (activeCursor?.index === index) activeCursor = null;
+        draw(canvas, draft.scenes[index].strokes);
+      }
+    });
+    for (const name of ["pointerup", "pointercancel", "lostpointercapture"] as const) canvas.addEventListener(name, (event) => {
+      if (drawing?.pointer === event.pointerId && drawing.index === index) finish(point(canvas, event));
+    });
     captions[index].addEventListener("focus", () => select(index));
     captions[index].addEventListener("input", () => { draft.scenes[index].caption = captions[index].value; scheduleSave(); });
   });
@@ -150,19 +267,38 @@ export function initStoryboard() {
     cards[active].scrollIntoView({ block: "nearest", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
     canvases[active].focus({ preventScroll: true });
   });
-  const setMode = (value: boolean) => {
-    erase = value;
-    pen.classList.toggle("active", !erase); eraser.classList.toggle("active", erase);
-    pen.setAttribute("aria-pressed", String(!erase)); eraser.setAttribute("aria-pressed", String(erase));
+  const setTool = (mode: "pencil" | "brush" | "eraser") => {
+    erase = mode === "eraser";
+    if (mode !== "eraser") tool = mode;
+    pencil?.classList.toggle("active", !erase && tool === "pencil");
+    pencil?.setAttribute("aria-pressed", String(!erase && tool === "pencil"));
+    brush?.classList.toggle("active", !erase && tool === "brush");
+    brush?.setAttribute("aria-pressed", String(!erase && tool === "brush"));
+    pen?.classList.toggle("active", !erase);
+    pen?.setAttribute("aria-pressed", String(!erase));
+    eraser.classList.toggle("active", erase);
+    eraser.setAttribute("aria-pressed", String(erase));
+    if (activeCursor && activeCursor.index === active) {
+      draw(canvases[active], draft.scenes[active].strokes, { x: activeCursor.x, y: activeCursor.y, size, tool, erase });
+    }
   };
-  pen.addEventListener("click", () => setMode(false)); eraser.addEventListener("click", () => setMode(true));
+  pencil?.addEventListener("click", () => setTool("pencil"));
+  brush?.addEventListener("click", () => setTool("brush"));
+  pen?.addEventListener("click", () => setTool(tool));
+  eraser.addEventListener("click", () => setTool("eraser"));
   const setColor = (value: string) => {
-    color = value; setMode(false); q<HTMLInputElement>("story-color").value = color;
+    color = value; setTool(tool); q<HTMLInputElement>("story-color").value = color;
     root.querySelectorAll<HTMLButtonElement>(".story-color").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.color === color)));
   };
   root.querySelectorAll<HTMLButtonElement>(".story-color").forEach(button => button.addEventListener("click", () => setColor(button.dataset.color!)));
   q<HTMLInputElement>("story-color").addEventListener("input", event => setColor((event.target as HTMLInputElement).value));
-  q<HTMLInputElement>("story-size").addEventListener("input", event => { size = Number((event.target as HTMLInputElement).value); q("story-size-value").textContent = String(size); });
+  q<HTMLInputElement>("story-size").addEventListener("input", event => {
+    size = Number((event.target as HTMLInputElement).value);
+    q("story-size-value").textContent = String(size);
+    if (activeCursor && activeCursor.index === active) {
+      draw(canvases[active], draft.scenes[active].strokes, { x: activeCursor.x, y: activeCursor.y, size, tool, erase });
+    }
+  });
   const step = (back: boolean) => {
     finish(); const history = histories[active]; const source = back ? history.undo : history.redo; const target = back ? history.redo : history.undo;
     if (!source.length) return;
@@ -178,6 +314,12 @@ export function initStoryboard() {
   document.addEventListener("keydown", event => {
     if (dialog.open || document.querySelector("#board-nav-menu[open]") || (event.target instanceof HTMLElement && event.target.matches("input,textarea,select"))) return;
     if ((event.ctrlKey || event.metaKey) && ["z", "y"].includes(event.key.toLowerCase())) { event.preventDefault(); step(event.key.toLowerCase() === "z" && !event.shiftKey); }
+    if (!event.ctrlKey && !event.metaKey && !event.altKey) {
+      const k = event.key.toLowerCase();
+      if (k === "p") { event.preventDefault(); setTool("pencil"); }
+      else if (k === "b") { event.preventDefault(); setTool("brush"); }
+      else if (k === "e") { event.preventDefault(); setTool("eraser"); }
+    }
   });
   const download = q<HTMLButtonElement>("download-btn");
   document.addEventListener("keydown", event => {
