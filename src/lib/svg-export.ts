@@ -157,11 +157,14 @@ export function elementsToSvg(elements: Element[], erasures: Erasure[]): string 
   parts.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`);
   parts.push(`<rect width="${w}" height="${h}" fill="#ffffff"/>`);
   parts.push(`<g transform="translate(${round(tx)} ${round(ty)})">`);
-  for (const el of elements) {
-    parts.push(rotateGroup(el, elementSvg(el)));
-  }
-  for (const er of erasures) {
-    parts.push(erasureSvg(er));
+  type SvgFrame = { z: number; el?: Element; er?: Erasure };
+  const frames: SvgFrame[] = [];
+  elements.forEach((el, i) => frames.push({ z: el.z ?? i, el }));
+  erasures.forEach((er, i) => frames.push({ z: er.z ?? elements.length + i, er }));
+  frames.sort((a, b) => a.z - b.z);
+  for (const f of frames) {
+    if (f.el) parts.push(rotateGroup(f.el, elementSvg(f.el)));
+    else if (f.er) parts.push(erasureSvg(f.er));
   }
   parts.push("</g></svg>");
   return parts.join("");

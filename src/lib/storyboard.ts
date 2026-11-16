@@ -137,6 +137,13 @@ function draw(canvas: HTMLCanvasElement, strokes: Stroke[], cursor?: CursorInfo)
       ctx.restore();
     }
   }
+
+  // Paint solid white behind strokes so the canvas is fully opaque:
+  // Erased areas show clean white canvas instead of acting as a "transparent pen"
+  // if the canvas is saved, copied, or exported.
+  ctx.globalCompositeOperation = "destination-over";
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, WIDTH, HEIGHT);
   ctx.globalCompositeOperation = "source-over";
 
   if (cursor) {

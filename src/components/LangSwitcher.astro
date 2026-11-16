@@ -37,7 +37,7 @@ const currentNative = LOCALES.find((l) => l.code === locale)?.native ?? "English
     <svg class="size-3 text-ink-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
   </button>
   <ul
-    class="lang-menu absolute right-0 z-50 mt-1 hidden min-w-[170px] rounded-lg border border-hairline bg-white p-1 shadow-lg shadow-shadow-blue/10"
+    class="lang-menu absolute right-0 z-50 mt-1 hidden min-w-[170px] max-w-[calc(100vw-24px)] rounded-lg border border-hairline bg-white p-1 shadow-lg shadow-shadow-blue/10"
     role="listbox"
     data-lang-menu
     aria-label="Choose language"
@@ -66,19 +66,32 @@ const currentNative = LOCALES.find((l) => l.code === locale)?.native ?? "English
 </style>
 
 <script>
-  const root = document.querySelector<HTMLElement>(".lang-switcher");
-  const toggle = root?.querySelector<HTMLButtonElement>("[data-lang-toggle]");
-  const menu = root?.querySelector<HTMLElement>("[data-lang-menu]");
-  if (root && toggle && menu) {
-    toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const open = menu.classList.toggle("hidden") === false;
-      toggle.setAttribute("aria-expanded", String(open));
+  document.querySelectorAll<HTMLElement>(".lang-switcher").forEach((root) => {
+    const toggle = root.querySelector<HTMLButtonElement>("[data-lang-toggle]");
+    const menu = root.querySelector<HTMLElement>("[data-lang-menu]");
+    if (toggle && menu) {
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        // Close other open language dropdowns
+        document.querySelectorAll<HTMLElement>(".lang-switcher [data-lang-menu]").forEach((m) => {
+          if (m !== menu) m.classList.add("hidden");
+        });
+        document.querySelectorAll<HTMLButtonElement>(".lang-switcher [data-lang-toggle]").forEach((t) => {
+          if (t !== toggle) t.setAttribute("aria-expanded", "false");
+        });
+        const open = menu.classList.toggle("hidden") === false;
+        toggle.setAttribute("aria-expanded", String(open));
+      });
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    const target = e.target as Node;
+    document.querySelectorAll<HTMLElement>(".lang-switcher").forEach((root) => {
+      if (!root.contains(target)) {
+        root.querySelector<HTMLElement>("[data-lang-menu]")?.classList.add("hidden");
+        root.querySelector<HTMLButtonElement>("[data-lang-toggle]")?.setAttribute("aria-expanded", "false");
+      }
     });
-    document.addEventListener("click", (e) => {
-      if (root.contains(e.target as Node)) return;
-      menu.classList.add("hidden");
-      toggle.setAttribute("aria-expanded", "false");
-    });
-  }
+  });
 </script>

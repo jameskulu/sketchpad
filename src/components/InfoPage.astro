@@ -1,6 +1,7 @@
 ---
 import SiteShell from "./SiteShell.astro";
 import { SITE } from "../lib/site";
+import { uiFor } from "../i18n/ui";
 import type { PageContent } from "../i18n/content-types";
 import type { Locale } from "../i18n/locales";
 import { deriveLocaleHref } from "../i18n/locales";
@@ -13,6 +14,7 @@ interface Props {
 
 const { section, locale, content } = Astro.props;
 const route = `/${section}`;
+const ui = uiFor(locale);
 
 const titleMap: Record<string, string> = {
   about: content.about.h1,
@@ -21,6 +23,13 @@ const titleMap: Record<string, string> = {
   terms: content.terms.h1,
 };
 const title = titleMap[section];
+
+const infoTabs = [
+  { id: "about", label: ui.nav.about, href: deriveLocaleHref(locale, "/about") },
+  { id: "contact", label: ui.nav.contact, href: deriveLocaleHref(locale, "/contact") },
+  { id: "privacy", label: ui.nav.privacyPolicy, href: deriveLocaleHref(locale, "/privacy") },
+  { id: "terms", label: ui.nav.terms, href: deriveLocaleHref(locale, "/terms") },
+];
 
 const privacyHref = deriveLocaleHref(locale, "/privacy");
 const contactHref = deriveLocaleHref(locale, "/contact");
@@ -32,6 +41,22 @@ const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
 ---
 
 <SiteShell title={title} locale={locale} route={route}>
+  <nav class="mb-8 flex items-center gap-1.5 overflow-x-auto rounded-xl border border-hairline bg-canvas-soft/80 p-1.5 text-xs font-medium no-scrollbar" aria-label="About section pages">
+    {infoTabs.map((tab) => (
+      <a
+        href={tab.href}
+        class:list={[
+          "shrink-0 rounded-lg px-3 py-1.5 transition-colors",
+          section === tab.id
+            ? "bg-white font-semibold text-primary shadow-xs"
+            : "text-ink-mute hover:bg-white/60 hover:text-ink",
+        ]}
+        aria-current={section === tab.id ? "page" : undefined}
+      >
+        {tab.label}
+      </a>
+    ))}
+  </nav>
   {section === "about" && (
     <>
       <h1 class={h1}>{content.about.h1}</h1>

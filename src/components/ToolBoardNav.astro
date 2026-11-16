@@ -1,4 +1,4 @@
-﻿---
+---
 import Icon from "./Icon.astro";
 import { TOOL_DISPLAY_ORDER, TOOL_ROUTES } from "../i18n/tool-content-types";
 import { TOOL_CONTENT } from "../i18n/tool-content";
@@ -86,7 +86,16 @@ const items = [
           </a>
         ))}
       </nav>
-      <footer class="picker-footer"><span class="footer-dots" aria-hidden="true"><i></i><i></i><i></i></span>{toolUi.boardNav.menuAria}<span class="escape-hint">Esc</span></footer>
+      <footer class="picker-footer">
+        <div class="footer-site-links" aria-label="Site links">
+          <a href={deriveLocaleHref(locale, "/about")}>{ui.nav.about}</a>
+          <span aria-hidden="true" class="link-dot">·</span>
+          <a href="/blog/">{ui.nav.blog}</a>
+          <span aria-hidden="true" class="link-dot">·</span>
+          <a href={deriveLocaleHref(locale, "/contact")}>{ui.nav.contact}</a>
+        </div>
+        <span class="escape-hint">Esc</span>
+      </footer>
     </div>
   </dialog>
 </div>
@@ -122,11 +131,14 @@ const items = [
   .space-card:hover h3 span { transform:translate(2px,-2px); }
   .space-info p { margin-top:7px; color:var(--color-ink-mute); font-size:12px; line-height:1.6; }
   .picker-footer { display:flex; align-items:center; gap:10px; padding:15px 36px; border-top:1px solid #e8ebf2; background:white; color:var(--color-ink-mute); font-size:11px; }
-  .footer-dots { display:flex; gap:3px; }.footer-dots i { width:6px; height:6px; border-radius:50%; background:#a99ae5; }.footer-dots i:nth-child(2) { background:#94cbb9; }.footer-dots i:nth-child(3) { background:#f0ca80; }
+  .footer-site-links { display:flex; align-items:center; gap:8px; font-size:12px; }
+  .footer-site-links a { color:var(--color-ink-mute); text-decoration:none; transition:color .15s; font-weight:500; }
+  .footer-site-links a:hover { color:var(--color-primary); }
+  .link-dot { color:#c4cad6; }
   .escape-hint { margin-left:auto; padding:2px 5px; border:1px solid #e5e8ef; border-radius:4px; font-size:10px; }
   @keyframes picker-in { from { opacity:0; transform:translateY(12px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
   @media (max-width:700px) { .picker-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding:0 22px 22px; }.picker-header { padding:26px 22px 22px; }.picker-footer { padding:14px 22px; }.space-preview { height:110px; } }
-  @media (max-width:440px) { dialog { width:calc(100vw - 24px); max-height:calc(100dvh - 24px); border-radius:20px; }.picker-grid { grid-template-columns:1fr; padding:0 16px 20px; }.space-card { display:grid; grid-template-columns:100px minmax(0,1fr); }.space-preview { height:100%; min-height:110px; }.preview-drawing { width:160px; max-width:none; margin-left:-30px; }.space-info { padding:14px 12px; }#board-nav-trigger { height:28px; padding:0 8px; }#board-nav-trigger span { display:none; } }
+  @media (max-width:440px) { dialog { width:calc(100vw - 24px); max-height:calc(100dvh - 24px); border-radius:20px; }.picker-grid { grid-template-columns:1fr; padding:0 16px 20px; }.space-card { display:grid; grid-template-columns:100px minmax(0,1fr); }.space-preview { height:100%; min-height:110px; }.preview-drawing { width:160px; max-width:none; margin-left:-30px; }.space-info { padding:14px 12px; }#board-nav-trigger { height:28px; padding:0 8px; }#board-nav-trigger span { display:none; }.picker-footer { padding:12px 16px; justify-content:space-between; }.footer-site-links { font-size:11px; gap:6px; } }
   @media (prefers-reduced-motion:reduce) { dialog[open] { animation:none; }.space-card,h3 span { transition:none; }.space-card:hover { transform:none; } }
 </style>
 <script>

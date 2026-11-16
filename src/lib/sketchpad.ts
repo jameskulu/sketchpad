@@ -2257,10 +2257,13 @@ export class Sketchpad {
     c.height = h;
     const ctx = c.getContext("2d");
     if (!ctx) return;
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, w, h);
     ctx.setTransform(es, 0, 0, es, pad - b.x * es, pad - b.y * es);
     drawScene(ctx, this.elements, this.erasures, null, null);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = "source-over";
     const name = `sketchpad-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}.png`;
     const a = document.createElement("a");
     a.download = name;
