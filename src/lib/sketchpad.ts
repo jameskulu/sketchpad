@@ -4,6 +4,7 @@ import {
   elementBounds,
   elementBoundsRotated,
   elementCenter,
+  estimateTextWidth,
   nextId,
   pointInElement,
   type Element,
@@ -214,6 +215,29 @@ export class Sketchpad {
   private filled = false;
   private gridOn = true;
   private stampChar = "⭐";
+  private rainbowHue = 0;
+  private canvasBgColor = "#ffffff";
+
+  setCanvasBgColor(color: string): void {
+    this.canvasBgColor = color;
+    this.stage.style.backgroundColor = color;
+    this.canvas.style.backgroundColor = color;
+    this.rim();
+  }
+
+  private getStampDimensions(char: string, size: number): { w: number; h: number } {
+    const ctx = this.canvas.getContext("2d");
+    if (ctx) {
+      ctx.save();
+      ctx.font = `500 ${size}px "Inter Variable", "Inter", system-ui, sans-serif`;
+      const m = ctx.measureText(char);
+      ctx.restore();
+      const w = m.width > 0 ? m.width : size;
+      const h = size * 1.25;
+      return { w, h };
+    }
+    return { w: size, h: size * 1.25 };
+  }
 
   private activePointers = new Map<number, ActivePointer>();
   private pinching: {
@@ -699,6 +723,37 @@ export class Sketchpad {
     ctx.restore();
   }
 
+  private renderStampCursor(ctx: CanvasRenderingContext2D): void {
+    const x = this.hover.x;
+    const y = this.hover.y;
+    const stampSize = this.sizes.stamp * this.scale;
+    const r = Math.max(12, (stampSize / 2) * 1.05);
+
+    ctx.save();
+    // Dashed placement ring
+    ctx.strokeStyle = "rgba(83,58,253,0.5)";
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Ghost emoji preview centered directly at cursor
+    ctx.font = `500 ${stampSize}px "Inter Variable", "Inter", system-ui, sans-serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.globalAlpha = 0.55;
+    ctx.fillText(this.stampChar, x, y);
+
+    // Center locator dot
+    ctx.beginPath();
+    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(83,58,253,0.9)";
+    ctx.fill();
+    ctx.restore();
+  }
+
   private renderPointer(ctx: CanvasRenderingContext2D): void {
     const x = this.hover.x;
     const y = this.hover.y;
@@ -707,6 +762,12 @@ export class Sketchpad {
     ctx.save();
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
+
+    if (this.tool === "stamp") {
+      this.renderStampCursor(ctx);
+      ctx.restore();
+      return;
+    }
 
     if (this.tool === "brush" || this.tool === "pencil" || this.tool === "highlighter") {
       const r = Math.max(7, (this.sizes[this.tool] / 2) * this.scale);
@@ -1661,14 +1722,21 @@ export class Sketchpad {
     }
 
     if (this.tool === "stamp") {
+      const stampSize = this.sizes.stamp;
+      const { w, h } = this.getStampDimensions(this.stampChar, stampSize);
+      let stampColor = this.color;
+      if (this.color === "rainbow") {
+        this.rainbowHue = (this.rainbowHue + 41) % 360;
+        stampColor = `hsl(${this.rainbowHue}, 90%, 55%)`;
+      }
       this.elements.push({
         id: nextId(),
         kind: "text",
-        x: pt.wx,
-        y: pt.wy,
+        x: pt.wx - w / 2,
+        y: pt.wy - h / 2,
         text: this.stampChar,
-        size: this.sizes.stamp,
-        color: this.color,
+        size: stampSize,
+        color: stampColor,
         opacity: this.opacity,
         z: ++this.zSeq,
       });
@@ -1683,6 +1751,11 @@ export class Sketchpad {
     }
 
     this.drawingId = e.pointerId;
+    let strokeColor = this.color;
+    if (this.color === "rainbow") {
+      this.rainbowHue = (this.rainbowHue + 37) % 360;
+      strokeColor = `hsl(${this.rainbowHue}, 90%, 55%)`;
+    }
     switch (this.tool) {
       case "brush":
       case "pencil":
@@ -1691,7 +1764,7 @@ export class Sketchpad {
           id: nextId(),
           kind: "stroke",
           points: [{ x: pt.wx, y: pt.wy, p: pt.pressure }],
-          color: this.color,
+          color: strokeColor,
           width: this.sizes[this.tool],
           opacity: this.opacity,
           rough: this.tool === "pencil",
@@ -2168,30 +2241,111 @@ export class Sketchpad {
       if (sw.dataset.color === c) sw.classList.add("is-active");
       else sw.classList.remove("is-active");
     });
+    if (this.selSet.size > 0) {
+      this.pushHistory();
+      for (const el of this.selSet) {
+        if ("color" in el) (el as any).color = c;
+      }
+      this.rim();
+    }
     this.emit();
+  }
+
+  private sizeRangeForTool(tool: ToolId): { min: number; max: number } {
+    if (tool === "stamp") return { min: 24, max: 180 };
+    if (tool === "text" || tool === "sticky") return { min: 12, max: 144 };
+    if (tool === "eraser") return { min: 6, max: 128 };
+    if (tool === "pencil") return { min: 1, max: 48 };
+    if (tool === "brush") return { min: 2, max: 96 };
+    return { min: 1, max: 96 };
   }
 
   private sizeFromSlider(): void {
     const ui = this.ui;
-    const isText = this.tool === "text" || this.tool === "sticky";
-    const isEraser = this.tool === "eraser";
-    const min = isText ? 12 : isEraser ? 4 : 1;
-    const max = isText ? 144 : isEraser ? 128 : 96;
-    this.sizes[this.tool] = clamp(Number(ui.sizeSlider.value), min, max);
-    ui.sizeLabel.textContent = `${this.sizes[this.tool]} ${ui.strings?.px ?? "px"}`;
+    const { min, max } = this.sizeRangeForTool(this.tool);
+    const newSize = clamp(Number(ui.sizeSlider.value), min, max);
+    this.sizes[this.tool] = newSize;
+    if (ui.sizeLabel) {
+      ui.sizeLabel.textContent = `${newSize} ${ui.strings?.px ?? "px"}`;
+    }
+    if (this.selSet.size > 0) {
+      this.updateSelectedElementsSize(newSize);
+    }
     this.emit();
+    this.rim();
   }
 
   private syncSizeUI(): void {
     const ui = this.ui;
-    const isText = this.tool === "text" || this.tool === "sticky";
-    const isEraser = this.tool === "eraser";
-    const min = isText ? 12 : isEraser ? 4 : 1;
-    const max = isText ? 144 : isEraser ? 128 : 96;
-    ui.sizeSlider.min = String(min);
-    ui.sizeSlider.max = String(max);
-    ui.sizeSlider.value = String(this.getStrokeWidth());
-    ui.sizeLabel.textContent = `${this.getStrokeWidth()} ${ui.strings?.px ?? "px"}`;
+    const { min, max } = this.sizeRangeForTool(this.tool);
+    if (ui.sizeSlider instanceof HTMLInputElement) {
+      ui.sizeSlider.min = String(min);
+      ui.sizeSlider.max = String(max);
+      ui.sizeSlider.value = String(this.getStrokeWidth());
+    }
+    if (ui.sizeLabel) {
+      ui.sizeLabel.textContent = `${this.getStrokeWidth()} ${ui.strings?.px ?? "px"}`;
+    }
+  }
+
+  setSize(size: number): void {
+    const { min, max } = this.sizeRangeForTool(this.tool);
+    const newSize = clamp(size, min, max);
+    this.sizes[this.tool] = newSize;
+    this.syncSizeUI();
+    if (this.selSet.size > 0) {
+      this.updateSelectedElementsSize(newSize);
+    }
+    this.emit();
+    this.rim();
+  }
+
+  private updateSelectedElementsSize(newSize: number): void {
+    let changed = false;
+    for (const el of this.selSet) {
+      if (el.kind === "stroke") {
+        el.width = newSize;
+        changed = true;
+      } else if (el.kind === "text") {
+        const oldW = estimateTextWidth(el.text, el.size);
+        const oldH = el.size * 1.25;
+        const cx = el.x + oldW / 2;
+        const cy = el.y + oldH / 2;
+        el.size = newSize;
+        const newW = estimateTextWidth(el.text, newSize);
+        const newH = newSize * 1.25;
+        el.x = cx - newW / 2;
+        el.y = cy - newH / 2;
+        changed = true;
+      } else if (
+        el.kind === "line" ||
+        el.kind === "arrow" ||
+        el.kind === "rect" ||
+        el.kind === "ellipse" ||
+        el.kind === "triangle"
+      ) {
+        (el as any).width = newSize;
+        changed = true;
+      }
+    }
+    if (changed) this.rim();
+  }
+
+  selectAll(): void {
+    this.selSet.clear();
+    for (const el of this.elements) {
+      if (!this.elementIsFullyErased(el)) {
+        this.selSet.add(el);
+      }
+    }
+    this.selEl = null;
+    for (const el of this.selSet) {
+      this.selEl = el;
+    }
+    this.setTool("select");
+    this.updateCursor();
+    this.rim();
+    this.emit();
   }
 
   getStrokeWidth(): number {
@@ -2261,7 +2415,7 @@ export class Sketchpad {
     drawScene(ctx, this.elements, this.erasures, null, null);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalCompositeOperation = "destination-over";
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = this.canvasBgColor || "#ffffff";
     ctx.fillRect(0, 0, w, h);
     ctx.globalCompositeOperation = "source-over";
     const name = `sketchpad-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}.png`;
@@ -2302,6 +2456,11 @@ export class Sketchpad {
       if (mod && e.key.toLowerCase() === "d") {
         e.preventDefault();
         this.exportPNG();
+        return;
+      }
+      if (mod && e.key.toLowerCase() === "a") {
+        e.preventDefault();
+        this.selectAll();
         return;
       }
       if (e.key === " ") {

@@ -173,8 +173,18 @@ export function contentBounds(elements: Element[]): { x: number; y: number; w: n
 export function estimateTextWidth(text: string, size: number): number {
   const lines = text.split("\n");
   let max = 0;
-  for (const line of lines) max = Math.max(max, line.length);
-  return max * size * 0.56;
+  for (const line of lines) {
+    let w = 0;
+    for (const ch of Array.from(line)) {
+      const code = ch.codePointAt(0) ?? 0;
+      // Ignore variation selectors and zero-width joiners
+      if ((code >= 0xfe00 && code <= 0xfe0f) || code === 0x200d) continue;
+      if (code >= 0x2000) w += 1.0;
+      else w += 0.56;
+    }
+    max = Math.max(max, w);
+  }
+  return max * size;
 }
 
 export function pointInElement(p: { x: number; y: number }, el: Element): boolean {
