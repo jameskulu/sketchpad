@@ -40,7 +40,11 @@ export const indonesianContent: PageContent = {
     h1: "Sketchpad Online Gratis",
     intro: ["Mulai menggambar langsung di browser. Pilih kuas atau pensil, tentukan warna, lalu buat sketsa, coretan, atau diagram. Tidak perlu akun maupun instalasi.", "Gunakan mouse, jari, atau stylus di komputer, tablet, dan ponsel. Kanvas disimpan secara lokal di browser; unduh PNG untuk menyimpan salinan di perangkatmu."],
     toolsHeading: "Alat sederhana untuk menuangkan ide",
-    tools: ["Kuas dan pensil untuk menggambar bebas, penghapus untuk memperbaiki detail, serta urungkan dan ulangi untuk mengoreksi perubahan.", "Tambahkan persegi panjang, elips, segitiga, garis, panah, dan teks. Atur warna, ketebalan, dan opasitas, lalu gunakan kisi untuk membantu menyusun gambar."],
+    tools: [
+      "Kuas dan pensil untuk menggambar bebas, penghapus untuk memperbaiki detail, serta urungkan dan ulangi untuk mengoreksi perubahan.",
+      "Tambahkan persegi panjang, elips, segitiga, garis, panah, dan teks. Atur warna, ketebalan, dan opasitas, lalu gunakan kisi untuk membantu menyusun gambar.",
+      "Dan jika sketsa Anda membutuhkan perhitungan jumlah — seperti mencatat inventaris pada denah ruangan, menghitung kehadiran pada denah tempat duduk, atau melacak adegan papan cerita —, [Simple Tally Counter](https://simpletallycounter.com/) menyediakan penghitung online yang praktis dan bebas gangguan di tab peramban Anda. Tanpa perlu mendaftar atau memasang aplikasi.",
+    ],
     rankingHeading: "Pilih kanvas sesuai kebutuhan",
     ranking: ["Gunakan sketchpad untuk coretan dan sketsa cepat. [Papan gambar](/id/drawing-board/) menambahkan catatan tempel dan penyorot, sedangkan [kertas berpetak](/id/graph-paper/) membantu menyelaraskan bentuk."],
     kidsHeading: "Ruang menggambar untuk anak",
