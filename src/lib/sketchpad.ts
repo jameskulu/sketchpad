@@ -17,6 +17,9 @@ import {
 } from "./elements";
 import { drawScene } from "./renderer";
 import { downloadSvg } from "./svg-export";
+import type { CollabManager, CollabUser } from "./collab";
+import { invertColorForTheme, invertElementsTheme } from "./color-theme";
+import { parseReadOnlyPayloadFromUrl, createReadOnlyShareUrl, type ReadOnlySketchpadPayload } from "./share-link";
 
 export interface SketchpadUI {
   toolButtons: Partial<Record<ToolId, HTMLButtonElement>>;
@@ -52,6 +55,8 @@ export interface SketchpadUI {
     clearConfirmBody: string;
     clearConfirmDelete: string;
     clearConfirmCancel: string;
+    readOnlyBannerBadge?: string;
+    duplicateToEdit?: string;
   };
 }
 
@@ -96,6 +101,8 @@ export interface SketchpadOptions {
   grid?: GridConfig;
   /** localStorage key for the draft (so each page keeps its own drawing) */
   autosaveKey?: string;
+  /** initial dark mode */
+  darkMode?: boolean;
 }
 
 const HISTORY_LIMIT = 120;
@@ -194,6 +201,10 @@ export class Sketchpad {
   private gridConfig: GridConfig | null = null;
   private autosaveKey = DEFAULT_AUTOSAVE_KEY;
 
+  private collabManager: CollabManager | null = null;
+  private remotePeers: CollabUser[] = [];
+  private followingPeerId: string | null = null;
+
   private tool: ToolId = "brush";
   private color = "#0d253d";
   private sizes: Record<ToolId, number> = {
@@ -217,12 +228,179 @@ export class Sketchpad {
   private stampChar = "⭐";
   private rainbowHue = 0;
   private canvasBgColor = "#ffffff";
+  private darkMode = false;
+  private isReadOnly = false;
+  private readOnlyBannerEl: HTMLElement | null = null;
 
   setCanvasBgColor(color: string): void {
     this.canvasBgColor = color;
     this.stage.style.backgroundColor = color;
     this.canvas.style.backgroundColor = color;
     this.rim();
+  }
+
+  getDarkMode(): boolean {
+    return this.darkMode;
+  }
+
+  setDarkMode(isDark: boolean, invertDrawing = true): void {
+    const prevDark = this.darkMode;
+    this.darkMode = isDark;
+    this.canvasBgColor = isDark ? "#121212" : "#ffffff";
+    this.stage.style.setProperty("background-color", this.canvasBgColor, "important");
+    this.canvas.style.setProperty("background-color", this.canvasBgColor, "important");
+
+    if (invertDrawing && prevDark !== isDark) {
+      // Invert all existing elements on canvas without deleting or clearing
+      invertElementsTheme(this.elements, isDark);
+      for (const snap of this.undoStack) {
+        invertElementsTheme(snap.elements, isDark);
+        snap.darkMode = isDark;
+      }
+      for (const snap of this.redoStack) {
+        invertElementsTheme(snap.elements, isDark);
+        snap.darkMode = isDark;
+      }
+
+      // Invert active drawing color
+      this.color = invertColorForTheme(this.color, isDark);
+      if (this.ui.colorInput) {
+        this.ui.colorInput.value = this.color;
+      }
+
+      // Adapt swatches palette buttons in UI
+      this.updateSwatchesTheme(isDark);
+      this.highlightActiveSwatch();
+
+      // If collaborating in real-time, broadcast updated elements to peers
+      if (this.collabManager?.isActive()) {
+        this.collabManager.broadcastElementsUpdate(this.elements, this.erasures);
+      }
+    }
+
+    this.markDirty();
+    this.scheduleSave();
+    this.render();
+    this.rim();
+    this.emit();
+  }
+
+  private updateSwatchesTheme(isDark: boolean): void {
+    if (!this.ui.swatches) return;
+    this.ui.swatches.forEach((sw) => {
+      const baseColor = sw.dataset.baseColor || sw.dataset.color || "";
+      if (!sw.dataset.baseColor) sw.dataset.baseColor = baseColor;
+      const targetColor = isDark ? invertColorForTheme(baseColor, true) : baseColor;
+      sw.dataset.color = targetColor;
+      sw.style.backgroundColor = targetColor;
+    });
+  }
+
+  private highlightActiveSwatch(): void {
+    if (!this.ui.swatches) return;
+    this.ui.swatches.forEach((sw) => {
+      if (sw.dataset.color === this.color) sw.classList.add("is-active");
+      else sw.classList.remove("is-active");
+    });
+  }
+
+  getReadOnly(): boolean {
+    return this.isReadOnly;
+  }
+
+  setReadOnly(ro: boolean): void {
+    this.isReadOnly = ro;
+    if (ro) {
+      this.deselect();
+      this.setFloatDeleteHidden(this.ui.deleteBtn, true);
+      this.mountReadOnlyBanner();
+    } else {
+      this.unmountReadOnlyBanner();
+    }
+    this.updateCursor();
+    this.rim();
+    this.emit();
+  }
+
+  private mountReadOnlyBanner(): void {
+    if (this.readOnlyBannerEl) return;
+    const badgeText = this.ui.strings?.readOnlyBannerBadge ?? "Read-only view";
+    const dupText = this.ui.strings?.duplicateToEdit ?? "Duplicate to edit";
+    const banner = document.createElement("div");
+    banner.className = "readonly-banner";
+    banner.setAttribute("role", "status");
+    banner.innerHTML = `
+      <div class="readonly-badge">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span>${badgeText}</span>
+      </div>
+      <button type="button" class="readonly-duplicate-btn">${dupText}</button>
+    `;
+    const btn = banner.querySelector<HTMLButtonElement>(".readonly-duplicate-btn");
+    btn?.addEventListener("click", () => {
+      this.duplicateToEdit();
+    });
+    this.stage.appendChild(banner);
+    this.readOnlyBannerEl = banner;
+  }
+
+  private unmountReadOnlyBanner(): void {
+    if (this.readOnlyBannerEl) {
+      this.readOnlyBannerEl.remove();
+      this.readOnlyBannerEl = null;
+    }
+  }
+
+  duplicateToEdit(): void {
+    this.setReadOnly(false);
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash.includes("read=")) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+    }
+    this.markDirty();
+  }
+
+  async createShareableLink(): Promise<string> {
+    const payload: ReadOnlySketchpadPayload = {
+      type: "sketchpad",
+      version: 1,
+      elements: this.elements,
+      erasures: this.erasures,
+      darkMode: this.darkMode,
+      canvasBgColor: this.canvasBgColor,
+    };
+    return createReadOnlyShareUrl(payload);
+  }
+
+  private async loadReadOnlyFromUrl(): Promise<boolean> {
+    try {
+      const payload = await parseReadOnlyPayloadFromUrl();
+      if (payload && payload.type === "sketchpad") {
+        this.elements = payload.elements;
+        this.erasures = payload.erasures;
+        if (payload.darkMode !== undefined && payload.darkMode !== this.darkMode) {
+          this.setDarkMode(payload.darkMode, false);
+        }
+        if (payload.canvasBgColor) {
+          this.setCanvasBgColor(payload.canvasBgColor);
+        }
+        this.normalizeZ();
+        this.syncZSeq();
+        this.setReadOnly(true);
+        this.fitToView();
+        this.rim();
+        this.emit();
+        return true;
+      }
+    } catch (err) {
+      console.warn("Could not load read-only drawing from URL:", err);
+    }
+    return false;
   }
 
   private getStampDimensions(char: string, size: number): { w: number; h: number } {
@@ -283,6 +461,10 @@ export class Sketchpad {
     }
     this.gridConfig = opts.grid ?? null;
     if (opts.autosaveKey) this.autosaveKey = opts.autosaveKey;
+    if (opts.darkMode !== undefined) {
+      this.darkMode = opts.darkMode;
+      this.canvasBgColor = this.darkMode ? "#121212" : "#ffffff";
+    }
     const ctx = this.canvas.getContext("2d", { alpha: true });
     if (!ctx) throw new Error("Canvas 2D not supported");
     this.ctx = ctx;
@@ -293,7 +475,31 @@ export class Sketchpad {
   }
 
   init(): void {
-    this.load();
+    if (typeof window !== "undefined") {
+      (window as any).__sketchpad = this;
+      window.addEventListener("sketchpad:themechange", (e: any) => {
+        const nextDark = Boolean(e.detail?.darkMode);
+        this.setDarkMode(nextDark, true);
+      });
+    }
+
+    if (this.darkMode) {
+      this.canvasBgColor = "#121212";
+      this.stage.style.setProperty("background-color", this.canvasBgColor, "important");
+      this.canvas.style.setProperty("background-color", this.canvasBgColor, "important");
+      this.updateSwatchesTheme(true);
+      if (this.color === "#0d253d" || this.color === "#000000") {
+        this.color = "#ffffff";
+      }
+    }
+    const hasReadOnlyHash = typeof window !== "undefined" && Boolean(window.location.hash.match(/[#&?]read(?:only)?=/));
+    if (hasReadOnlyHash) {
+      this.loadReadOnlyFromUrl().then((loaded) => {
+        if (!loaded) this.load();
+      });
+    } else {
+      this.load();
+    }
     this.setColor(this.color);
     this.bindUI();
     this.bindCanvas();
@@ -301,6 +507,7 @@ export class Sketchpad {
     this.setupResize();
     this.fitToView();
     this.emit();
+    this.render();
     this.rim();
   }
 
@@ -379,6 +586,129 @@ export class Sketchpad {
     this.emit();
   }
 
+  scrollToPoint(wx: number, wy: number, smooth = true): void {
+    const w = this.canvas.clientWidth;
+    const h = this.canvas.clientHeight;
+    const targetPanX = w / 2 - wx * this.scale;
+    const targetPanY = h / 2 - wy * this.scale;
+    if (!smooth) {
+      this.pan.x = targetPanX;
+      this.pan.y = targetPanY;
+      this.rim();
+      this.emit();
+      return;
+    }
+    const startX = this.pan.x;
+    const startY = this.pan.y;
+    const startTime = performance.now();
+    const duration = 220;
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const t = Math.min(1, elapsed / duration);
+      const ease = 1 - Math.pow(1 - t, 3);
+      this.pan.x = startX + (targetPanX - startX) * ease;
+      this.pan.y = startY + (targetPanY - startY) * ease;
+      this.rim();
+      this.emit();
+      if (t < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }
+
+  followPeer(peerId: string | null): void {
+    if (!peerId || this.followingPeerId === peerId) {
+      this.followingPeerId = null;
+      window.dispatchEvent(
+        new CustomEvent("sketchpad:followchange", {
+          detail: { followingPeerId: null, peerName: null },
+        }),
+      );
+      this.rim();
+      return;
+    }
+
+    this.followingPeerId = peerId;
+    const peer = this.remotePeers.find((p) => p.id === peerId);
+    if (peer?.pointer) {
+      this.scrollToPoint(peer.pointer.wx, peer.pointer.wy, true);
+    }
+    window.dispatchEvent(
+      new CustomEvent("sketchpad:followchange", {
+        detail: { followingPeerId: peerId, peerName: peer?.name || "Peer", peerColor: peer?.color },
+      }),
+    );
+    this.rim();
+  }
+
+  getFollowingPeerId(): string | null {
+    return this.followingPeerId;
+  }
+
+  setCollabManager(collab: CollabManager): void {
+    this.collabManager = collab;
+    this.remotePeers = collab.getPeers();
+
+    // Check if URL already has room parameter (#room=... or ?room=...)
+    if (typeof window !== "undefined") {
+      const hash = window.location.hash || window.location.search;
+      const match = hash.match(/[#&?]room=([^&]+)/);
+      if (match && match[1]) {
+        collab.joinRoom(match[1]);
+      }
+    }
+  }
+
+  updateCollabPeers(peers: CollabUser[]): void {
+    this.remotePeers = peers;
+    if (this.followingPeerId) {
+      const peer = peers.find((p) => p.id === this.followingPeerId);
+      if (peer?.pointer) {
+        this.scrollToPoint(peer.pointer.wx, peer.pointer.wy, false);
+      } else if (!peer) {
+        this.followPeer(null);
+      }
+    }
+    this.rim();
+  }
+
+  applyRemoteElementAdd(el?: Element, er?: Erasure): void {
+    if (el) {
+      el.z = ++this.zSeq;
+      this.elements.push(el);
+    }
+    if (er) {
+      er.z = ++this.zSeq;
+      this.erasures.push(er);
+    }
+    this.syncZSeq();
+    this.markDirty();
+    this.rim();
+    this.emit();
+  }
+
+  applyRemoteElementsUpdate(elements: Element[], erasures: Erasure[]): void {
+    this.elements = elements;
+    this.erasures = erasures;
+    this.syncZSeq();
+    this.markDirty();
+    this.rim();
+    this.emit();
+  }
+
+  applyRemoteClear(): void {
+    this.elements = [];
+    this.erasures = [];
+    this.syncZSeq();
+    this.deselect();
+    this.markDirty();
+    this.rim();
+    this.emit();
+  }
+
+  getSnapshot(): Snapshot {
+    return cloneSnapshot(this.snapshotData());
+  }
+
   // ---------- history ----------
 
   private syncZSeq(): void {
@@ -412,7 +742,7 @@ export class Sketchpad {
   }
 
   private snapshotData(): Snapshot {
-    return { elements: this.elements, erasures: this.erasures };
+    return { elements: this.elements, erasures: this.erasures, darkMode: this.darkMode };
   }
 
   private pushHistory(prev?: Snapshot): void {
@@ -423,9 +753,13 @@ export class Sketchpad {
     this.syncZSeq();
     this.markDirty();
     this.emit();
+    if (this.collabManager) {
+      this.collabManager.broadcastElementsUpdate(this.elements, this.erasures);
+    }
   }
 
   undo(): void {
+    if (this.isReadOnly) return;
     if (this.editingText) this.commitText();
     if (this.undoStack.length === 0) return;
     this.redoStack.push(cloneSnapshot(this.snapshotData()));
@@ -440,6 +774,7 @@ export class Sketchpad {
   }
 
   redo(): void {
+    if (this.isReadOnly) return;
     if (this.editingText) this.commitText();
     if (this.redoStack.length === 0) return;
     this.undoStack.push(cloneSnapshot(this.snapshotData()));
@@ -454,6 +789,7 @@ export class Sketchpad {
   }
 
   clear(): void {
+    if (this.isReadOnly) return;
     if (this.elements.length === 0 && this.erasures.length === 0) return;
     if (this.clearDialogOpen) return;
     this.confirmClear();
@@ -467,6 +803,9 @@ export class Sketchpad {
     this.deselect();
     this.rim();
     this.emit();
+    if (this.collabManager) {
+      this.collabManager.broadcastClear();
+    }
   }
 
   /**
@@ -599,6 +938,7 @@ export class Sketchpad {
   }
 
   private markDirty(): void {
+    if (this.isReadOnly) return;
     this.saved = "dirty";
     this.scheduleSave();
     this.onState(this.buildState());
@@ -630,6 +970,10 @@ export class Sketchpad {
       if (parsed && Array.isArray(parsed.elements) && Array.isArray(parsed.erasures)) {
         this.elements = parsed.elements;
         this.erasures = parsed.erasures;
+        const draftDark = Boolean(parsed.darkMode);
+        if (draftDark !== this.darkMode) {
+          invertElementsTheme(this.elements, this.darkMode);
+        }
         this.normalizeZ();
         this.syncZSeq();
       }
@@ -670,12 +1014,26 @@ export class Sketchpad {
     scene.save();
     scene.translate(this.pan.x, this.pan.y);
     scene.scale(this.scale, this.scale);
-    drawScene(scene, this.elements, this.erasures, this.pendingEl, this.pendingEr);
+    const remoteInProgEls = this.remotePeers
+      .map((p) => p.pendingEl)
+      .filter((el): el is Element => Boolean(el));
+    const remoteInProgErs = this.remotePeers
+      .map((p) => p.pendingEr)
+      .filter((er): er is Erasure => Boolean(er));
+    drawScene(
+      scene,
+      this.elements,
+      this.erasures,
+      this.pendingEl,
+      this.pendingEr,
+      remoteInProgEls,
+      remoteInProgErs,
+    );
     scene.restore();
 
     const ctx = this.ctx;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = this.canvasBgColor || (this.darkMode ? "#121212" : "#ffffff");
     ctx.fillRect(0, 0, w, h);
     ctx.drawImage(this.sceneCanvas, 0, 0, w, h);
 
@@ -684,7 +1042,7 @@ export class Sketchpad {
       else this.renderGrid(ctx, w, h);
     }
 
-    if (this.hover.over && !this.editingText && !this.pinching && !this.spaceKeyDown && this.panningId === null) {
+    if (this.hover.over && !this.editingText && !this.pinching && !this.spaceKeyDown && this.panningId === null && !this.isReadOnly) {
       if (this.tool === "eraser") {
         this.renderEraserCursor(ctx);
       } else if (this.tool === "select") {
@@ -703,9 +1061,96 @@ export class Sketchpad {
 
     this.renderMarquee(ctx);
     this.renderSelection(ctx);
+    this.renderRemoteCursors(ctx);
     this.updateFloatingDelete();
     this.updateCursor();
     this.ui.zoomLabel.textContent = `${Math.round(this.scale * 100)}%`;
+  }
+
+  private renderRemoteCursors(ctx: CanvasRenderingContext2D): void {
+    if (this.remotePeers.length === 0) return;
+    const w = this.canvas.clientWidth;
+    const h = this.canvas.clientHeight;
+
+    for (const peer of this.remotePeers) {
+      if (peer.isSelf || !peer.pointer) continue;
+      const sx = peer.pointer.wx * this.scale + this.pan.x;
+      const sy = peer.pointer.wy * this.scale + this.pan.y;
+
+      if (sx < -200 || sx > w + 200 || sy < -200 || sy > h + 200) continue;
+
+      ctx.save();
+      ctx.translate(sx, sy);
+
+      // Follow indicator animated/dashed ring
+      if (this.followingPeerId === peer.id) {
+        ctx.strokeStyle = peer.color;
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 18, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // 1. Excalidraw-like pointer cursor
+      ctx.fillStyle = peer.color;
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 1.5;
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, 16);
+      ctx.lineTo(4.5, 12);
+      ctx.lineTo(9.5, 20);
+      ctx.lineTo(12, 18.5);
+      ctx.lineTo(7, 10.5);
+      ctx.lineTo(12.5, 10.5);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // If peer is actively drawing, add a bright indicator dot at tip
+      if (peer.pointer.isDrawing) {
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = peer.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // 2. Name tag pill
+      const name = peer.name;
+      ctx.font = '600 11px "Inter Variable", "Inter", -apple-system, system-ui, sans-serif';
+      const textWidth = ctx.measureText(name).width;
+      const tagHeight = 20;
+      const tagWidth = textWidth + 14;
+      const tagX = 11;
+      const tagY = 12;
+
+      ctx.shadowColor = "rgba(13,37,61,0.25)";
+      ctx.shadowBlur = 6;
+      ctx.shadowOffsetY = 2;
+
+      ctx.fillStyle = peer.color;
+      ctx.beginPath();
+      if (typeof ctx.roundRect === "function") {
+        ctx.roundRect(tagX, tagY, tagWidth, tagHeight, 5);
+      } else {
+        ctx.rect(tagX, tagY, tagWidth, tagHeight);
+      }
+      ctx.fill();
+
+      ctx.shadowColor = "transparent";
+      ctx.fillStyle = "#ffffff";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.fillText(name, tagX + 7, tagY + tagHeight / 2);
+
+      ctx.restore();
+    }
   }
 
   private renderMarquee(ctx: CanvasRenderingContext2D): void {
@@ -928,12 +1373,14 @@ export class Sketchpad {
 
     ctx.save();
     ctx.lineWidth = 1;
+    const gridColor = this.darkMode ? "255,255,255" : "100,116,141";
+    const factor = this.darkMode ? 0.22 : 0.4;
     for (let wx = startX; wx <= maxWX + step; wx += step) {
       const sx = wx * this.scale + this.pan.x;
       const isMajor = Math.round(wx / major) * major === wx || Math.round(wx / step) % 5 === 0;
       void isMajor;
       const alpha = Math.round(wx / step) % 5 === 0 ? 0.55 : 0.32;
-      ctx.strokeStyle = `rgba(100,116,141,${alpha * 0.4})`;
+      ctx.strokeStyle = `rgba(${gridColor},${alpha * factor})`;
       ctx.beginPath();
       ctx.moveTo(sx, 0);
       ctx.lineTo(sx, h);
@@ -942,7 +1389,7 @@ export class Sketchpad {
     for (let wy = startY; wy <= maxWY + step; wy += step) {
       const sy = wy * this.scale + this.pan.y;
       const alpha = Math.round(wy / step) % 5 === 0 ? 0.55 : 0.32;
-      ctx.strokeStyle = `rgba(100,116,141,${alpha * 0.4})`;
+      ctx.strokeStyle = `rgba(${gridColor},${alpha * factor})`;
       ctx.beginPath();
       ctx.moveTo(0, sy);
       ctx.lineTo(w, sy);
@@ -966,7 +1413,7 @@ export class Sketchpad {
     ctx.save();
 
     if (gc.style === "dot") {
-      ctx.fillStyle = "rgba(100,116,141,0.5)";
+      ctx.fillStyle = this.darkMode ? "rgba(255,255,255,0.25)" : "rgba(100,116,141,0.5)";
       const r = Math.max(1, 1.1 * this.scale);
       for (let wx = startX; wx <= maxWX + spacing; wx += spacing) {
         const sx = wx * this.scale + this.pan.x;
@@ -981,12 +1428,15 @@ export class Sketchpad {
       return;
     }
 
+    const gridColor = this.darkMode ? "255,255,255" : "100,116,141";
     const minorAlpha = gc.style === "square" ? 0.7 : 0.5;
     ctx.lineWidth = gc.style === "square" ? 0.7 : 1;
     for (let wx = startX; wx <= maxWX + spacing; wx += spacing) {
       const sx = wx * this.scale + this.pan.x;
       const isMajor = Math.round(wx / spacing) % majorEvery === 0;
-      ctx.strokeStyle = isMajor ? "rgba(100,116,141,0.85)" : `rgba(100,116,141,${minorAlpha * 0.45})`;
+      ctx.strokeStyle = isMajor
+        ? (this.darkMode ? "rgba(255,255,255,0.35)" : "rgba(100,116,141,0.85)")
+        : `rgba(${gridColor},${minorAlpha * (this.darkMode ? 0.2 : 0.45)})`;
       ctx.beginPath();
       ctx.moveTo(sx, 0);
       ctx.lineTo(sx, h);
@@ -995,14 +1445,16 @@ export class Sketchpad {
     for (let wy = startY; wy <= maxWY + spacing; wy += spacing) {
       const sy = wy * this.scale + this.pan.y;
       const isMajor = Math.round(wy / spacing) % majorEvery === 0;
-      ctx.strokeStyle = isMajor ? "rgba(100,116,141,0.85)" : `rgba(100,116,141,${minorAlpha * 0.45})`;
+      ctx.strokeStyle = isMajor
+        ? (this.darkMode ? "rgba(255,255,255,0.35)" : "rgba(100,116,141,0.85)")
+        : `rgba(${gridColor},${minorAlpha * (this.darkMode ? 0.2 : 0.45)})`;
       ctx.beginPath();
       ctx.moveTo(0, sy);
       ctx.lineTo(w, sy);
       ctx.stroke();
     }
     if (gc.style === "square") {
-      ctx.strokeStyle = "rgba(100,116,141,0.22)";
+      ctx.strokeStyle = this.darkMode ? "rgba(255,255,255,0.12)" : "rgba(100,116,141,0.22)";
       ctx.lineWidth = 0.5;
       ctx.beginPath();
       ctx.rect(0, 0, w, h);
@@ -1065,6 +1517,10 @@ export class Sketchpad {
   }
 
   private updateCursor(): void {
+    if (this.isReadOnly) {
+      this.canvas.style.cursor = this.panningId !== null ? "grabbing" : "grab";
+      return;
+    }
     if (this.panningId !== null) this.canvas.style.cursor = "grabbing";
     else if (this.spaceKeyDown) this.canvas.style.cursor = "grab";
     else if (this.tool === "select") this.canvas.style.cursor = this.selectCursor();
@@ -1481,6 +1937,7 @@ export class Sketchpad {
   }
 
   deleteSelection(): void {
+    if (this.isReadOnly) return;
     const el = this.selEl;
     if (!el) return;
     let ids: Set<string>;
@@ -1683,8 +2140,8 @@ export class Sketchpad {
 
     if (this.editingText) this.commitText();
 
-    // Pan when holding space or using the middle / back mouse buttons
-    if (this.spaceKeyDown || e.button === 1) {
+    // Pan when in read-only mode, holding space or using the middle / back mouse buttons
+    if (this.isReadOnly || this.spaceKeyDown || e.button === 1) {
       this.panningId = e.pointerId;
       this.updateCursor();
       return;
@@ -1822,7 +2279,15 @@ export class Sketchpad {
     this.hover.y = pt.sy;
     this.rim();
 
+    if (this.collabManager) {
+      this.collabManager.broadcastPointer(pt.wx, pt.wy, Boolean(this.drawingId !== null));
+      if (this.drawingId !== null) {
+        this.collabManager.broadcastStreamDraw(this.pendingEl, this.pendingEr);
+      }
+    }
+
     if (this.panningId === e.pointerId && prev) {
+      if (this.followingPeerId) this.followPeer(null);
       this.pan.x += pt.sx - prev.sx;
       this.pan.y += pt.sy - prev.sy;
       prev.sx = pt.sx;
@@ -1924,9 +2389,14 @@ export class Sketchpad {
   private commitDrawing(): void {
     if (this.tool === "eraser" && this.pendingEr) {
       this.pendingEr.z = ++this.zSeq;
+      const createdEr = this.pendingEr;
       this.erasures.push(this.pendingEr);
       this.pendingEr = null;
       this.pushHistory();
+      if (this.collabManager) {
+        this.collabManager.broadcastElementAdd(undefined, createdEr);
+        this.collabManager.broadcastStreamDraw(null, null);
+      }
       return;
     }
     if (this.pendingEl) {
@@ -1934,11 +2404,15 @@ export class Sketchpad {
         this.pendingEl = null;
         return;
       }
-      const created: Element | null = this.pendingEl;
+      const created: Element = this.pendingEl;
       this.pendingEl.z = ++this.zSeq;
       this.elements.push(this.pendingEl);
       this.pendingEl = null;
       this.pushHistory();
+      if (this.collabManager) {
+        this.collabManager.broadcastElementAdd(created, undefined);
+        this.collabManager.broadcastStreamDraw(null, null);
+      }
       if (created.kind === "sticky") {
         this.startTextEdit(Math.min(created.x1, created.x2) + 4, Math.min(created.y1, created.y2) + 4, created);
       }
@@ -2058,6 +2532,7 @@ export class Sketchpad {
 
   private onWheel(e: WheelEvent): void {
     e.preventDefault();
+    if (this.followingPeerId) this.followPeer(null);
     const xy = this.stageXY(e as unknown as PointerEvent);
     if (e.ctrlKey || e.metaKey) {
       this.zoomAt(Math.exp(-e.deltaY * 0.01), xy.x, xy.y);
@@ -2237,10 +2712,7 @@ export class Sketchpad {
   setColor(c: string): void {
     this.color = c;
     this.ui.colorInput.value = c;
-    this.ui.swatches.forEach((sw) => {
-      if (sw.dataset.color === c) sw.classList.add("is-active");
-      else sw.classList.remove("is-active");
-    });
+    this.highlightActiveSwatch();
     if (this.selSet.size > 0) {
       this.pushHistory();
       for (const el of this.selSet) {
@@ -2332,6 +2804,7 @@ export class Sketchpad {
   }
 
   selectAll(): void {
+    if (this.isReadOnly) return;
     this.selSet.clear();
     for (const el of this.elements) {
       if (!this.elementIsFullyErased(el)) {
@@ -2415,7 +2888,7 @@ export class Sketchpad {
     drawScene(ctx, this.elements, this.erasures, null, null);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalCompositeOperation = "destination-over";
-    ctx.fillStyle = this.canvasBgColor || "#ffffff";
+    ctx.fillStyle = this.canvasBgColor || (this.darkMode ? "#121212" : "#ffffff");
     ctx.fillRect(0, 0, w, h);
     ctx.globalCompositeOperation = "source-over";
     const name = `sketchpad-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-")}.png`;
@@ -2426,11 +2899,34 @@ export class Sketchpad {
   }
 
   exportSVG(): void {
-    downloadSvg(this.elements, this.erasures);
+    downloadSvg(this.elements, this.erasures, this.canvasBgColor || (this.darkMode ? "#121212" : "#ffffff"));
   }
 
   private bindKeys(): void {
     window.addEventListener("keydown", (e) => {
+      if (this.isReadOnly) {
+        const mod = e.ctrlKey || e.metaKey;
+        if (e.key === " ") {
+          this.spaceKeyDown = true;
+          this.updateCursor();
+          e.preventDefault();
+        } else if (mod && (e.key === "+" || e.key === "=")) {
+          e.preventDefault();
+          this.zoomBy(1.25);
+        } else if (mod && e.key === "-") {
+          e.preventDefault();
+          this.zoomBy(1 / 1.25);
+        } else if (mod && e.key === "0") {
+          e.preventDefault();
+          this.zoom100();
+        } else if (e.key === "f") {
+          this.toggleFullscreen();
+        } else if (mod && e.key.toLowerCase() === "d") {
+          e.preventDefault();
+          this.exportPNG();
+        }
+        return;
+      }
       if (this.editingText) {
         if (e.key === "Escape") {
           e.preventDefault();

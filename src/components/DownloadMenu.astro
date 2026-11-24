@@ -21,6 +21,15 @@ const toolUi = toolUiFor(locale);
       <span class="format-icon vector">SVG</span><span class="format-label">{toolUi.exportSvg}<small>.svg</small></span>
     </button>}
     {print && <button id="download-print-btn" type="button" role="menuitem" aria-label="Print or save as PDF"><span class="format-icon vector">PDF</span><span class="format-label">Print / Save as PDF<small>Browser print dialog</small></span></button>}
+    <button id="download-share-link-btn" type="button" role="menuitem" aria-label={ui.collab.shareLinkMenuDesc}>
+      <span class="format-icon link">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>
+      </span>
+      <span class="format-label">{ui.collab.shareLinkMenu}<small>{ui.collab.shareLinkMenuDesc}</small></span>
+    </button>
   </div>
 </div>
 <style>
@@ -34,6 +43,7 @@ const toolUi = toolUiFor(locale);
   #download-menu button:hover,#download-menu button:focus-visible { background:#f3f0ff; }
   .format-icon { display:grid; place-items:center; width:37px; height:40px; border:1px solid #dce7fa; border-radius:8px; background:#edf5ff; color:#3478bd; font-size:10px; font-weight:700; }
   .format-icon.vector { border-color:#e2daf9; background:#f1edff; color:#6746df; }
+  .format-icon.link { border-color:#d1fae5; background:#ecfdf5; color:#059669; }
   .format-label { flex:1; min-width:0; font-size:12px; font-weight:600; }
   small { display:block; margin-top:2px; color:var(--color-ink-mute); font-size:10px; font-weight:400; }
   kbd { color:var(--color-ink-mute); font:10px var(--font-sans); white-space:nowrap; }
@@ -62,6 +72,12 @@ const toolUi = toolUiFor(locale);
       if (restoreFocus) trigger.focus();
     };
     options.forEach((option) => option.addEventListener("click", () => close(true)));
+    const shareLinkBtn = document.getElementById("download-share-link-btn");
+    shareLinkBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      close(false);
+      window.dispatchEvent(new CustomEvent("sketchpad:opensharelink"));
+    });
     trigger.addEventListener("keydown", (event) => {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
         event.preventDefault(); event.stopPropagation(); menu.showPopover(); position();

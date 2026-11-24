@@ -124,7 +124,7 @@ function approxPath(points: Point[]): string {
   return parts.join(" ");
 }
 
-function erasureSvg(erasure: Erasure): string {
+function erasureSvg(erasure: Erasure, bgColor = "#ffffff"): string {
   if (erasure.points.length === 0) return "";
   const pts = erasure.points;
   let d = "";
@@ -142,10 +142,10 @@ function erasureSvg(erasure: Erasure): string {
     const last = pts[pts.length - 1];
     d += ` L${round(last.x)} ${round(last.y)}`;
   }
-  return `<path d="${d}" fill="none" stroke="#ffffff" stroke-width="${round(erasure.width)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  return `<path d="${d}" fill="none" stroke="${esc(bgColor)}" stroke-width="${round(erasure.width)}" stroke-linecap="round" stroke-linejoin="round"/>`;
 }
 
-export function elementsToSvg(elements: Element[], erasures: Erasure[]): string {
+export function elementsToSvg(elements: Element[], erasures: Erasure[], bgColor = "#ffffff"): string {
   const b = contentBounds(elements) ?? { x: -150, y: -150, w: 300, h: 300 };
   const pad = 32;
   const w = Math.max(1, Math.round(b.w + pad * 2));
@@ -155,7 +155,7 @@ export function elementsToSvg(elements: Element[], erasures: Erasure[]): string 
 
   const parts: string[] = [];
   parts.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`);
-  parts.push(`<rect width="${w}" height="${h}" fill="#ffffff"/>`);
+  parts.push(`<rect width="${w}" height="${h}" fill="${esc(bgColor)}"/>`);
   parts.push(`<g transform="translate(${round(tx)} ${round(ty)})">`);
   type SvgFrame = { z: number; el?: Element; er?: Erasure };
   const frames: SvgFrame[] = [];
@@ -164,14 +164,14 @@ export function elementsToSvg(elements: Element[], erasures: Erasure[]): string 
   frames.sort((a, b) => a.z - b.z);
   for (const f of frames) {
     if (f.el) parts.push(rotateGroup(f.el, elementSvg(f.el)));
-    else if (f.er) parts.push(erasureSvg(f.er));
+    else if (f.er) parts.push(erasureSvg(f.er, bgColor));
   }
   parts.push("</g></svg>");
   return parts.join("");
 }
 
-export function downloadSvg(elements: Element[], erasures: Erasure[]): void {
-  const svg = elementsToSvg(elements, erasures);
+export function downloadSvg(elements: Element[], erasures: Erasure[], bgColor = "#ffffff"): void {
+  const svg = elementsToSvg(elements, erasures, bgColor);
   const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");

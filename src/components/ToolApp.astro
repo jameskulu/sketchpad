@@ -226,6 +226,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         >
           <Icon name="trash" class="size-4" />
         </button>
+
+        <!-- Floating Follow Pill -->
+        <div id="follow-pill" class="follow-pill" hidden role="status" aria-live="polite">
+          <span id="follow-pill-dot" class="follow-pill-dot"></span>
+          <span id="follow-pill-text">{ui.collab.following}</span>
+          <button id="follow-stop-btn" type="button" class="follow-stop-btn" aria-label={ui.collab.stopFollowing}>✕ {ui.collab.stopFollowing}</button>
+        </div>
       </section>
 
       <!-- Options panel -->
@@ -305,7 +312,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
               <p class="eyebrow">{toolUi.graph.gridSize}</p>
               <select
                 id="grid-size"
-                class="h-7 rounded-md border border-hairline bg-white px-1.5 text-[12px] font-medium text-ink-secondary outline-none transition-colors hover:bg-canvas-soft"
+                class="h-7 rounded-md border border-hairline bg-white dark:bg-[#262626] dark:border-[#383838] px-1.5 text-[12px] font-medium text-ink-secondary dark:text-ink outline-none transition-colors hover:bg-canvas-soft dark:hover:bg-[#303030]"
                 aria-label={toolUi.graph.gridSizeAria}
               >
                 {gridSizing.map((o) => (
@@ -317,7 +324,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
               <p class="eyebrow">{toolUi.graph.styleHeading}</p>
               <select
                 id="grid-style"
-                class="h-7 rounded-md border border-hairline bg-white px-1.5 text-[12px] font-medium text-ink-secondary outline-none transition-colors hover:bg-canvas-soft"
+                class="h-7 rounded-md border border-hairline bg-white dark:bg-[#262626] dark:border-[#383838] px-1.5 text-[12px] font-medium text-ink-secondary dark:text-ink outline-none transition-colors hover:bg-canvas-soft dark:hover:bg-[#303030]"
                 aria-label={toolUi.graph.styleHeading}
               >
                 <option value="line" selected>{toolUi.graph.lines}</option>
@@ -328,7 +335,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
             <button
               id="grid-snap"
               type="button"
-              class="mt-2 flex h-8 w-full items-center justify-between rounded-lg border border-hairline px-3 text-[13px] font-medium text-ink-secondary transition-colors hover:bg-canvas-soft"
+              class="mt-2 flex h-8 w-full items-center justify-between rounded-lg border border-hairline bg-white dark:bg-[#262626] dark:border-[#383838] px-3 text-[13px] font-medium text-ink-secondary dark:text-ink transition-colors hover:bg-canvas-soft dark:hover:bg-[#303030]"
               aria-pressed="true"
               aria-label={toolUi.graph.snapToGridAria}
             >
@@ -428,6 +435,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   import { uiFor } from "../i18n/ui";
   import type { GridConfig, GridStyle } from "../lib/sketchpad";
   import type { ToolId } from "../lib/elements";
+  import { initCollabUI } from "../lib/collab-ui";
+  import { initThemeToggle } from "../lib/color-theme";
   import type { Locale } from "../i18n/locales";
 
   const rootEl = document.querySelector<HTMLElement>('[id="app"]');
@@ -510,6 +519,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   const pad = new Sketchpad({
     stage,
     canvas,
+    darkMode: document.documentElement.classList.contains("dark"),
     ui: {
       toolButtons,
       undoBtn: q<HTMLButtonElement>("undo-btn"),
@@ -544,6 +554,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         clearConfirmBody: ui.canvas.clearConfirmBody,
         clearConfirmDelete: ui.canvas.clearConfirmDelete,
         clearConfirmCancel: ui.canvas.clearConfirmCancel,
+        readOnlyBannerBadge: ui.collab.readOnlyBannerBadge,
+        duplicateToEdit: ui.collab.duplicateToEdit,
       },
     },
     defaultTool: cfg.defaultTool as ToolId,
@@ -566,6 +578,9 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   });
 
   pad.init();
+  const currentLocale = ((rootEl?.dataset.lang as Locale) ?? "en");
+  initCollabUI(pad, currentLocale);
+  initThemeToggle(pad);
 
   if (mode === "graph") {
     const sizeEl = q<HTMLSelectElement>("grid-size");

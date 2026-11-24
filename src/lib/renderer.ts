@@ -349,6 +349,8 @@ export function drawScene(
   erasures: Erasure[],
   inProgress: Element | null,
   inProgressErasure: Erasure | null,
+  remoteInProgress?: (Element | null)[],
+  remoteInProgressErasures?: (Erasure | null)[],
 ): void {
   type Frame = { z: number; el?: Element; er?: Erasure };
   const frames: Frame[] = [];
@@ -363,4 +365,14 @@ export function drawScene(
   }
   if (inProgress) drawElement(ctx, inProgress);
   if (inProgressErasure) drawErasure(ctx, inProgressErasure);
+  if (remoteInProgress) {
+    for (const el of remoteInProgress) {
+      if (el) drawElement(ctx, el);
+    }
+  }
+  if (remoteInProgressErasures) {
+    for (const er of remoteInProgressErasures) {
+      if (er) drawErasure(ctx, er);
+    }
+  }
 }

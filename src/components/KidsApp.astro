@@ -73,21 +73,28 @@ const faqData = {
     <ToolHeader locale={locale} route="/kids-drawing" />
 
     <!-- Canvas -->
-    <main id="stage" class="relative min-h-0 flex-1 touch-none select-none overflow-hidden bg-white">
+    <main id="stage" class="relative min-h-0 flex-1 touch-none select-none overflow-hidden bg-canvas">
       <canvas id="sketchpad-canvas" class="block h-full w-full cursor-crosshair" aria-label={ui.canvas.drawingTools}></canvas>
       <button
         id="delete-btn"
-        class="float-del absolute z-10 grid size-10 place-items-center rounded-xl border border-hairline bg-white text-ink-mute shadow-lg transition-transform hover:scale-110 active:scale-95"
+        class="float-del absolute z-10 grid size-10 place-items-center rounded-xl border border-hairline bg-white dark:bg-[#262626] text-ink-mute shadow-lg transition-transform hover:scale-110 active:scale-95"
         aria-label={ui.canvas.deleteSelection}
         title={ui.canvas.deleteSelection}
         hidden
       >
         <Icon name="trash" class="size-5 text-red-500" />
       </button>
+
+      <!-- Floating Follow Pill -->
+      <div id="follow-pill" class="follow-pill" hidden role="status" aria-live="polite">
+        <span id="follow-pill-dot" class="follow-pill-dot"></span>
+        <span id="follow-pill-text">{ui.collab.following}</span>
+        <button id="follow-stop-btn" type="button" class="follow-stop-btn" aria-label={ui.collab.stopFollowing}>✕ {ui.collab.stopFollowing}</button>
+      </div>
     </main>
 
     <!-- Control shelf -->
-    <section class="z-20 shrink-0 border-t border-hairline bg-white/95 px-3 py-2.5 backdrop-blur sm:px-5">
+    <section id="kids-shelf" class="kids-control-shelf z-20 shrink-0 border-t border-hairline bg-white/95 dark:bg-[#161616]/95 px-3 py-2.5 backdrop-blur sm:px-5">
       <div class="grid grid-cols-1 gap-2.5 lg:grid-cols-12 lg:items-center">
         <!-- Palette & Rainbow Swatches (lg: 5 cols) -->
         <div class="lg:col-span-5 min-w-0">
@@ -134,17 +141,17 @@ const faqData = {
           <div class="mt-1 flex items-center gap-2">
             <!-- Quick Size Presets (S, M, L, XL) -->
             <div class="flex items-center gap-1 shrink-0" id="size-presets">
-              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white transition-all hover:bg-canvas-soft" data-preset="small" aria-label="Small size" title="Small">
-                <span class="size-dot size-1.5 rounded-full bg-ink"></span>
+              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] transition-all hover:bg-canvas-soft dark:hover:bg-[#303030]" data-preset="small" aria-label="Small size" title="Small">
+                <span class="size-dot size-1.5 rounded-full bg-ink dark:bg-[#f8fafc]"></span>
               </button>
-              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white transition-all hover:bg-canvas-soft" data-preset="medium" aria-label="Medium size" title="Medium">
-                <span class="size-dot size-3 rounded-full bg-ink"></span>
+              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] transition-all hover:bg-canvas-soft dark:hover:bg-[#303030]" data-preset="medium" aria-label="Medium size" title="Medium">
+                <span class="size-dot size-3 rounded-full bg-ink dark:bg-[#f8fafc]"></span>
               </button>
-              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white transition-all hover:bg-canvas-soft is-active" data-preset="large" aria-label="Large size" title="Large">
-                <span class="size-dot size-4.5 rounded-full bg-ink"></span>
+              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] transition-all hover:bg-canvas-soft dark:hover:bg-[#303030] is-active" data-preset="large" aria-label="Large size" title="Large">
+                <span class="size-dot size-4.5 rounded-full bg-ink dark:bg-[#f8fafc]"></span>
               </button>
-              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white transition-all hover:bg-canvas-soft" data-preset="xlarge" aria-label="Extra Large size" title="Extra Large">
-                <span class="size-dot size-6 rounded-full bg-ink"></span>
+              <button type="button" class="size-preset-btn flex size-8 items-center justify-center rounded-xl border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] transition-all hover:bg-canvas-soft dark:hover:bg-[#303030]" data-preset="xlarge" aria-label="Extra Large size" title="Extra Large">
+                <span class="size-dot size-6 rounded-full bg-ink dark:bg-[#f8fafc]"></span>
               </button>
             </div>
             <!-- Range Slider (home-page sketchpad behavior) -->
@@ -164,15 +171,15 @@ const faqData = {
         <div class="lg:col-span-3 min-w-0 border-t border-hairline pt-2 lg:border-t-0 lg:border-l lg:pl-4 lg:pt-0">
           <p class="kids-label">Paper</p>
           <div class="mt-1 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5" id="paper-themes">
-            <button type="button" class="paper-btn flex h-8 shrink-0 items-center gap-1 rounded-xl border border-hairline bg-white px-2 text-xs font-semibold text-ink transition-all hover:border-primary is-active" data-paper-bg="#ffffff" title="White Paper">
-              <span class="size-3.5 rounded-full border border-hairline bg-white"></span>
+            <button type="button" class="paper-btn flex h-8 shrink-0 items-center gap-1 rounded-xl border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] px-2 text-xs font-semibold text-ink dark:text-[#f8fafc] transition-all hover:border-primary is-active" data-paper-bg="#ffffff" title="White Paper">
+              <span class="size-3.5 rounded-full border border-hairline dark:border-white/20 bg-white"></span>
               <span>White</span>
             </button>
-            <button type="button" class="paper-btn flex h-8 shrink-0 items-center gap-1 rounded-xl border border-hairline bg-[#fef9e7] px-2 text-xs font-semibold text-ink transition-all hover:border-primary" data-paper-bg="#fef9e7" title="Butter Paper">
+            <button type="button" class="paper-btn flex h-8 shrink-0 items-center gap-1 rounded-xl border border-hairline bg-[#fef9e7] dark:bg-[#2d281c] dark:border-[#4d4430] px-2 text-xs font-semibold text-ink dark:text-amber-100 transition-all hover:border-primary" data-paper-bg="#fef9e7" title="Butter Paper">
               <span class="size-3.5 rounded-full border border-hairline bg-[#fef9e7]"></span>
               <span>Butter</span>
             </button>
-            <button type="button" class="paper-btn flex h-8 shrink-0 items-center gap-1 rounded-xl border border-hairline bg-[#f0f7ff] px-2 text-xs font-semibold text-ink transition-all hover:border-primary" data-paper-bg="#f0f7ff" title="Sky Paper">
+            <button type="button" class="paper-btn flex h-8 shrink-0 items-center gap-1 rounded-xl border border-hairline bg-[#f0f7ff] dark:bg-[#182635] dark:border-[#2a3c50] px-2 text-xs font-semibold text-ink dark:text-sky-100 transition-all hover:border-primary" data-paper-bg="#f0f7ff" title="Sky Paper">
               <span class="size-3.5 rounded-full border border-hairline bg-[#f0f7ff]"></span>
               <span>Sky</span>
             </button>
@@ -194,7 +201,7 @@ const faqData = {
           {stamps.map((s) => (
             <button
               type="button"
-              class="stamp-btn flex size-10 shrink-0 items-center justify-center rounded-2xl border border-hairline bg-canvas-soft/80 text-2xl leading-none transition-transform hover:scale-115 active:scale-95"
+              class="stamp-btn flex size-10 shrink-0 items-center justify-center rounded-2xl border border-hairline bg-canvas-soft/80 dark:bg-[#242424] dark:border-[#383838] text-2xl leading-none transition-transform hover:scale-115 active:scale-95"
               data-char={s}
               aria-pressed="false"
               aria-label={`${toolUi.kids.stampsHeading} ${s}`}
@@ -207,7 +214,7 @@ const faqData = {
     </section>
 
     <!-- Dock -->
-    <footer class="z-20 shrink-0 border-t border-hairline bg-white/95 px-3 py-2.5 backdrop-blur sm:px-5">
+    <footer id="kids-dock" class="kids-dock z-20 shrink-0 border-t border-hairline bg-white/95 dark:bg-[#161616]/95 px-3 py-2.5 backdrop-blur sm:px-5">
       <div class="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
         <!-- Tools group -->
         <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -322,7 +329,7 @@ const faqData = {
     @apply flex h-11 items-center gap-2 rounded-2xl px-3 sm:px-4 text-[14px] font-semibold transition-all active:scale-95 cursor-pointer;
   }
   .kids-action.square {
-    @apply size-11 justify-center rounded-2xl border border-hairline bg-white px-0 text-ink hover:bg-canvas-soft;
+    @apply size-11 justify-center rounded-2xl border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] px-0 text-ink dark:text-[#f8fafc] hover:bg-canvas-soft dark:hover:bg-[#303030];
   }
   .kids-action:disabled {
     @apply pointer-events-none opacity-35;
@@ -331,7 +338,7 @@ const faqData = {
     @apply bg-primary text-white shadow-md ring-2 ring-primary/40 hover:bg-primary-deep;
   }
   .kids-action:not(.is-active) {
-    @apply border border-hairline bg-white text-ink hover:bg-canvas-soft;
+    @apply border border-hairline bg-white dark:bg-[#242424] dark:border-[#383838] text-ink dark:text-[#f8fafc] hover:bg-canvas-soft dark:hover:bg-[#303030];
   }
   .stamp-btn.is-active {
     @apply border-primary bg-primary/15 ring-2 ring-primary/40 shadow-xs scale-105;
@@ -347,6 +354,49 @@ const faqData = {
   }
   .paper-btn.is-active {
     @apply ring-2 ring-primary border-primary shadow-xs;
+  }
+
+  :global(html.dark) .kids-action.square,
+  :global(html.dark) .kids-action:not(.is-active) {
+    background-color: #242424;
+    border-color: #383838;
+    color: #f8fafc;
+  }
+  :global(html.dark) .kids-action.square:hover,
+  :global(html.dark) .kids-action:not(.is-active):hover {
+    background-color: #303030;
+    color: #ffffff;
+  }
+  :global(html.dark) .size-preset-btn {
+    background-color: #242424;
+    border-color: #383838;
+    color: #f8fafc;
+  }
+  :global(html.dark) .size-preset-btn .size-dot {
+    background-color: #f8fafc;
+  }
+  :global(html.dark) .size-preset-btn.is-active {
+    background-color: #312e81;
+    border-color: #818cf8;
+  }
+  :global(html.dark) .size-preset-btn.is-active .size-dot {
+    background-color: #818cf8;
+  }
+  :global(html.dark) .stamp-btn {
+    background-color: #242424;
+    border-color: #383838;
+    color: #f8fafc;
+  }
+  :global(html.dark) .stamp-btn:hover {
+    background-color: #303030;
+  }
+  :global(html.dark) .stamp-btn.is-active {
+    background-color: #312e81;
+    border-color: #818cf8;
+  }
+  :global(html.dark) .paper-btn {
+    border-color: #383838;
+    color: #f8fafc;
   }
 </style>
 
@@ -366,6 +416,8 @@ const faqData = {
   import { toolUiFor } from "../i18n/tool-ui";
   import type { ToolId } from "../lib/elements";
   import type { Locale } from "../i18n/locales";
+  import { initThemeToggle } from "../lib/color-theme";
+  import { initCollabUI } from "../lib/collab-ui";
 
   const rootEl = document.querySelector<HTMLElement>('[id="app"]');
   const canvas = document.getElementById("sketchpad-canvas");
@@ -428,6 +480,7 @@ const faqData = {
   const pad = new Sketchpad({
     stage,
     canvas,
+    darkMode: document.documentElement.classList.contains("dark"),
     ui: {
       toolButtons,
       undoBtn: q<HTMLButtonElement>("undo-btn"),
@@ -462,6 +515,8 @@ const faqData = {
         clearConfirmBody: ui.canvas.clearConfirmBody,
         clearConfirmDelete: ui.canvas.clearConfirmDelete,
         clearConfirmCancel: ui.canvas.clearConfirmCancel,
+        readOnlyBannerBadge: ui.collab.readOnlyBannerBadge,
+        duplicateToEdit: ui.collab.duplicateToEdit,
       },
     },
     defaultTool: "brush",
@@ -562,4 +617,7 @@ const faqData = {
       paperBtns.forEach((b) => b.classList.toggle("is-active", b === btn));
     });
   });
+
+  initCollabUI(pad, currentLocale);
+  initThemeToggle(pad);
 </script>

@@ -80,6 +80,19 @@ const scripts = structuredData
 		<meta name="robots" content={robots} />
 		<link rel="canonical" href={canonical} />
 		<meta name="theme-color" content="#f6f9fc" />
+		<script is:inline>
+			(function() {
+				try {
+					var t = localStorage.getItem("sketchpad_theme");
+					var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+					if (t === "dark" || (!t && prefersDark)) {
+						document.documentElement.classList.add("dark");
+					} else {
+						document.documentElement.classList.remove("dark");
+					}
+				} catch (e) {}
+			})();
+		</script>
 		{emitAlternates && alternates.map((a) => (
 			<link rel="alternate" hreflang={a.code === DEFAULT_LOCALE ? "x-default" : a.lang} href={a.href} />
 		))}

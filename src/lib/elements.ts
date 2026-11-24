@@ -73,6 +73,7 @@ export interface Erasure {
 export interface Snapshot {
   elements: Element[];
   erasures: Erasure[];
+  darkMode?: boolean;
 }
 
 export function cloneSnapshot(s: Snapshot): Snapshot {
@@ -81,6 +82,7 @@ export function cloneSnapshot(s: Snapshot): Snapshot {
       el.kind === "stroke" ? { ...el, points: el.points.map((p) => ({ ...p })) } : { ...el },
     ),
     erasures: s.erasures.map((e) => ({ ...e, points: e.points.map((p) => ({ ...p })) })),
+    darkMode: s.darkMode,
   };
 }
 

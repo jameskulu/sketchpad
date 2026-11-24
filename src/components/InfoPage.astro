@@ -48,8 +48,8 @@ const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
         class:list={[
           "shrink-0 rounded-lg px-3 py-1.5 transition-colors",
           section === tab.id
-            ? "bg-white font-semibold text-primary shadow-xs"
-            : "text-ink-mute hover:bg-white/60 hover:text-ink",
+            ? "bg-white dark:bg-[#262626] font-semibold text-primary dark:text-primary-soft shadow-xs"
+            : "text-ink-mute hover:bg-white/60 dark:hover:bg-[#222222] hover:text-ink",
         ]}
         aria-current={section === tab.id ? "page" : undefined}
       >
@@ -91,7 +91,7 @@ const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
       {content.contact.intro.map((para) => <p class:list={["mt-4", p]}>{para}</p>)}
 
       <div class="mt-8 max-w-md">
-        <a href={`mailto:${SITE.email}`} class="group block rounded-xl border border-hairline bg-white p-5 transition-colors hover:border-primary/40 hover:shadow-md">
+        <a href={`mailto:${SITE.email}`} class="group block rounded-xl border border-hairline bg-white dark:bg-[#1a1a1a] p-5 transition-colors hover:border-primary/40 hover:shadow-md">
           <span class="flex size-10 items-center justify-center rounded-lg bg-canvas-soft text-primary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="3" y="5" width="18" height="14" rx="2" />

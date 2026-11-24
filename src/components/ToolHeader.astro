@@ -23,13 +23,214 @@ const ui = uiFor(locale);
       <span>{ui.siteName}</span>
     </a>
     <div class="save-status"><span id="autosave-dot" class="save-dot bg-emerald-500"></span><span id={statusId} data-state="saved" role="status" aria-live="polite">{statusText ?? ui.canvas.autosaveSaved}</span></div>
+
+    <!-- Active Collaborators in Top Bar -->
+    <div id="collab-active-users" class="collab-users-bar" hidden aria-label="Active collaborators">
+      <!-- Peer Avatars -->
+    </div>
+
     <nav class="header-navigation" aria-label={ui.canvas.drawingTools}>
+      <button
+        id="collab-btn"
+        type="button"
+        class="collab-btn bg-white dark:bg-[#1e1e1e] border-hairline dark:border-[#333333] text-ink dark:text-[#f8fafc]"
+        aria-label={ui.collab.title}
+        title={ui.collab.title}
+        aria-haspopup="dialog"
+      >
+        <span id="collab-pulse-dot" class="collab-pulse" hidden></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span class="collab-label">{ui.collab.live}</span>
+        <span id="collab-badge" class="collab-badge" hidden>1</span>
+      </button>
+
+      <button
+        id="theme-toggle-btn"
+        type="button"
+        class="theme-toggle-btn"
+        aria-label="Toggle dark mode"
+        title="Toggle dark mode"
+      >
+        <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+
       <ToolBoardNav locale={locale} route={route} />
       <div class="header-language"><LangSwitcher locale={locale} route={languageRoute} compact={true} /></div>
       <DownloadMenu locale={locale} svg={svg} print={print} />
     </nav>
   </div>
   {Astro.slots.has("actions") && <div class="header-editing"><slot name="actions" /></div>}
+
+  <!-- Live Collaboration Dialog Modal -->
+  <dialog id="collab-dialog" class="collab-dialog" aria-labelledby="collab-title">
+    <div class="collab-panel">
+      <div class="collab-dialog-header">
+        <div class="collab-dialog-title-wrap">
+          <span class="collab-dialog-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </span>
+          <h2 id="collab-title" class="collab-dialog-title">{ui.collab.title}</h2>
+        </div>
+        <button id="collab-dialog-close" type="button" class="collab-dialog-close" aria-label="Close dialog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <!-- Tabs: Live Session vs Shareable Link -->
+      <div class="collab-tabs" role="tablist">
+        <button id="tab-collab-live" type="button" class="collab-tab is-active" role="tab" aria-selected="true" aria-controls="pane-collab-live">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>{ui.collab.tabLive}</span>
+        </button>
+        <button id="tab-collab-readonly" type="button" class="collab-tab" role="tab" aria-selected="false" aria-controls="pane-collab-readonly">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          <span>{ui.collab.tabShareableLink}</span>
+        </button>
+      </div>
+
+      <!-- Tab Pane 1: Live Collaboration -->
+      <div id="pane-collab-live" class="collab-tab-pane" role="tabpanel">
+        <!-- View: Inactive -->
+        <div id="collab-view-inactive" class="collab-view">
+          <p class="collab-desc">
+            {ui.collab.inactiveDesc}
+          </p>
+
+          <div class="collab-form-group">
+            <label for="collab-user-name-input" class="collab-label-text">{ui.collab.yourName}</label>
+            <div class="collab-input-row">
+              <span id="collab-self-color-dot" class="collab-color-dot"></span>
+              <input
+                id="collab-user-name-input"
+                type="text"
+                maxlength="28"
+                class="collab-input"
+                placeholder={ui.collab.namePlaceholder}
+              />
+            </div>
+          </div>
+
+          <button id="collab-start-btn" type="button" class="collab-btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>
+            {ui.collab.startLiveSession}
+          </button>
+        </div>
+
+        <!-- View: Active -->
+        <div id="collab-view-active" class="collab-view" hidden>
+          <div class="collab-active-status">
+            <span class="collab-live-pulse-active"></span>
+            <span class="collab-active-status-text">{ui.collab.sessionActive}</span>
+          </div>
+
+          <div class="collab-form-group">
+            <label for="collab-share-link" class="collab-label-text">{ui.collab.shareLinkWithPeers}</label>
+            <div class="collab-input-row">
+              <input
+                id="collab-share-link"
+                type="text"
+                readonly
+                class="collab-input collab-input-readonly"
+              />
+              <button id="collab-copy-btn" type="button" class="collab-btn-secondary">
+                {ui.collab.copyLink}
+              </button>
+            </div>
+            <p id="collab-copy-notice" class="collab-copy-notice" hidden>{ui.collab.linkCopiedNotice}</p>
+          </div>
+
+          <div class="collab-form-group">
+            <label for="collab-name-edit-input" class="collab-label-text">{ui.collab.yourName}</label>
+            <div class="collab-input-row">
+              <span id="collab-self-color-dot-active" class="collab-color-dot"></span>
+              <input
+                id="collab-name-edit-input"
+                type="text"
+                maxlength="28"
+                class="collab-input"
+              />
+              <button id="collab-save-name-btn" type="button" class="collab-btn-secondary">{ui.collab.saveName}</button>
+            </div>
+          </div>
+
+          <div class="collab-users-section">
+            <div class="collab-users-section-header">
+              <span class="collab-label-text">{ui.collab.activeCollaborators}</span>
+              <span id="collab-users-count" class="collab-users-count-tag">{ui.collab.onlineCount(1)}</span>
+            </div>
+            <div id="collab-users-list" class="collab-users-list">
+              <!-- Populated with peers -->
+            </div>
+          </div>
+
+          <div class="collab-footer">
+            <button id="collab-stop-btn" type="button" class="collab-btn-danger">
+              {ui.collab.stopSession}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Pane 2: Shareable Link (Read-Only) -->
+      <div id="pane-collab-readonly" class="collab-tab-pane" hidden role="tabpanel">
+        <p class="collab-desc">
+          {ui.collab.readOnlyTabDesc}
+        </p>
+
+        <div class="collab-form-group">
+          <label for="collab-readonly-link-input" class="collab-label-text">{ui.collab.readOnlyLinkLabel}</label>
+          <div class="collab-input-row">
+            <input
+              id="collab-readonly-link-input"
+              type="text"
+              readonly
+              class="collab-input collab-input-readonly"
+              placeholder={ui.collab.readOnlyGenerating}
+            />
+            <button id="collab-readonly-copy-btn" type="button" class="collab-btn-secondary">
+              {ui.collab.copyLink}
+            </button>
+          </div>
+          <p id="collab-readonly-copy-notice" class="collab-copy-notice" hidden>{ui.collab.readOnlyCopiedNotice}</p>
+        </div>
+
+        <div class="collab-preview-row">
+          <a id="collab-readonly-preview-btn" href="#" target="_blank" rel="noopener noreferrer" class="collab-preview-link">
+            {ui.collab.openPreview}
+          </a>
+        </div>
+
+        <div class="collab-note-box">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="collab-note-icon"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span>{ui.collab.readOnlyNote}</span>
+        </div>
+      </div>
+    </div>
+  </dialog>
 </header>
 <style>
   .tool-header { position:relative; z-index:40; flex-shrink:0; border-bottom:1px solid var(--color-hairline); background:#ffffffF2; backdrop-filter:blur(12px); }
@@ -38,12 +239,199 @@ const ui = uiFor(locale);
   .tool-brand svg { flex-shrink:0; }
   .save-status { display:flex; align-items:center; gap:6px; margin-left:4px; padding:2px 10px; border:1px solid var(--color-hairline); border-radius:999px; color:var(--color-ink-mute); font-size:11px; font-weight:500; white-space:nowrap; }
   .save-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
-  .header-navigation { display:flex; align-items:center; justify-content:flex-end; gap:4px; margin-left:auto; min-width:0; }
+
+  /* Active Users Bar */
+  .collab-users-bar { display:flex; align-items:center; gap:5px; margin-left:6px; }
+  :global(.collab-user-avatar) {
+    position:relative; width:28px; height:28px; border-radius:50%; border:2px solid #ffffff;
+    color:#ffffff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 1px 4px rgba(0,0,0,0.15); cursor:pointer; transition:transform 0.15s ease, box-shadow 0.15s ease;
+    padding:0;
+  }
+  :global(.collab-user-avatar:hover) { transform:scale(1.12); z-index:2; }
+  :global(.collab-user-avatar.is-following) {
+    outline:2.5px solid #533afd; outline-offset:2px; animation:followPulse 1.8s infinite;
+  }
+  :global(.collab-eye-indicator) {
+    position:absolute; bottom:-3px; right:-3px; width:14px; height:14px; border-radius:50%;
+    background:#533afd; color:#fff; display:flex; align-items:center; justify-content:center;
+    border:1.5px solid #fff;
+  }
+  @keyframes followPulse {
+    0%, 100% { outline-color:#533afd; }
+    50% { outline-color:rgba(83,58,253,0.3); }
+  }
+
+  /* Collaborate Button */
+  .collab-btn {
+    display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 10px;
+    border:1px solid var(--color-hairline); border-radius:8px; background:var(--color-canvas, #ffffff);
+    color:var(--color-ink); font-size:13px; font-weight:500; cursor:pointer;
+    transition:background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  }
+  .collab-btn:hover { background:var(--color-canvas-soft); border-color:var(--color-primary); color:var(--color-primary); }
+  :global(html.dark) .collab-btn {
+    background:#1c1c1c; border-color:#333333; color:#f8fafc;
+  }
+  :global(html.dark) .collab-btn:hover {
+    background:#292929; border-color:var(--color-primary); color:var(--color-primary);
+  }
+  .collab-pulse {
+    width:7px; height:7px; border-radius:50%; background:#10b981;
+    box-shadow:0 0 0 0 rgba(16,185,129,0.7); animation:collabPulseAnim 1.6s infinite;
+  }
+  @keyframes collabPulseAnim {
+    0% { transform:scale(0.95); box-shadow:0 0 0 0 rgba(16,185,129,0.7); }
+    70% { transform:scale(1); box-shadow:0 0 0 6px rgba(16,185,129,0); }
+    100% { transform:scale(0.95); box-shadow:0 0 0 0 rgba(16,185,129,0); }
+  }
+  .collab-badge {
+    padding:1px 6px; font-size:11px; font-weight:600; border-radius:999px;
+    background:rgba(83,58,253,0.1); color:var(--color-primary);
+  }
+
+  .header-navigation { display:flex; align-items:center; justify-content:flex-end; gap:6px; margin-left:auto; min-width:0; }
+  .theme-toggle-btn {
+    display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px;
+    border-radius:8px; border:1px solid var(--color-hairline); background:transparent;
+    color:var(--color-ink-secondary); cursor:pointer; flex-shrink:0;
+    transition:background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .theme-toggle-btn:hover {
+    background:var(--color-canvas-soft); color:var(--color-ink); border-color:var(--color-hairline-input);
+  }
+  :global(html:not(.dark)) .theme-toggle-btn .sun-icon { display:none; }
+  :global(html:not(.dark)) .theme-toggle-btn .moon-icon { display:block; }
+  :global(html.dark) .theme-toggle-btn .sun-icon { display:block; }
+  :global(html.dark) .theme-toggle-btn .moon-icon { display:none; }
   .header-editing { display:flex; align-items:center; justify-content:center; gap:4px; height:39px; padding:2px 12px; border-top:1px solid #edf0f5; overflow-x:auto; scrollbar-width:none; }
   .header-editing::-webkit-scrollbar { display:none; }
   .header-editing :global(> *) { flex-shrink:0; }
-  @media(max-width:640px) { .header-main { padding:0 12px; }.save-status { display:none; } }
+
+  /* Collab Dialog */
+  .collab-dialog {
+    border:1px solid var(--color-hairline); border-radius:16px; background:#ffffff;
+    color:var(--color-ink); max-width:400px; width:calc(100vw - 32px); padding:0;
+    box-shadow:0 24px 60px rgba(13,37,61,0.24); margin:auto;
+  }
+  .collab-dialog::backdrop {
+    background:rgba(13,37,61,0.45); backdrop-filter:blur(3px);
+  }
+  .collab-panel { padding:20px; font-family:inherit; }
+  .collab-dialog-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .collab-dialog-title-wrap { display:flex; align-items:center; gap:8px; }
+  .collab-dialog-icon {
+    width:32px; height:32px; border-radius:8px; background:rgba(83,58,253,0.08);
+    color:var(--color-primary); display:flex; align-items:center; justify-content:center;
+  }
+  .collab-dialog-title { font-size:17px; font-weight:600; margin:0; }
+  .collab-dialog-close {
+    background:none; border:none; padding:4px; cursor:pointer; color:var(--color-ink-mute);
+    border-radius:6px; transition:color 0.12s ease;
+  }
+  .collab-dialog-close:hover { color:var(--color-ink); }
+  .collab-desc { font-size:13px; line-height:1.5; color:var(--color-ink-mute); margin:0 0 16px; }
+  .collab-form-group { margin-bottom:14px; }
+  .collab-label-text { display:block; font-size:12px; font-weight:600; color:var(--color-ink); margin-bottom:6px; }
+  .collab-input-row { display:flex; align-items:center; gap:8px; }
+  .collab-color-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+  .collab-input {
+    flex:1; height:36px; padding:0 12px; border:1px solid var(--color-hairline);
+    border-radius:8px; font-size:13px; color:var(--color-ink); background:#ffffff; outline:none;
+    transition:border-color 0.12s ease;
+  }
+  .collab-input:focus { border-color:var(--color-primary); }
+  .collab-input-readonly { background:var(--color-canvas-soft); color:var(--color-ink-mute); font-family:monospace; font-size:12px; }
+  .collab-btn-primary {
+    width:100%; height:40px; border:none; border-radius:8px; background:var(--color-primary);
+    color:#ffffff; font-size:14px; font-weight:600; display:flex; align-items:center; justify-content:center;
+    gap:8px; cursor:pointer; transition:opacity 0.12s ease; margin-top:16px;
+  }
+  .collab-btn-primary:hover { opacity:0.92; }
+  .collab-btn-secondary {
+    height:36px; padding:0 14px; border:1px solid var(--color-hairline); border-radius:8px;
+    background:var(--color-canvas-soft); color:var(--color-ink); font-size:13px; font-weight:500;
+    cursor:pointer; white-space:nowrap; transition:background-color 0.12s ease;
+  }
+  .collab-btn-secondary:hover { background:#e2e8f0; }
+  .collab-btn-danger {
+    width:100%; height:36px; border:1px solid rgba(234,34,97,0.3); border-radius:8px;
+    background:#ffffff; color:#ea2261; font-size:13px; font-weight:600; cursor:pointer;
+    transition:background-color 0.12s ease;
+  }
+  .collab-btn-danger:hover { background:rgba(234,34,97,0.06); }
+  .collab-copy-notice { font-size:12px; font-weight:500; color:#10b981; margin:4px 0 0; }
+  .collab-active-status {
+    display:flex; align-items:center; gap:8px; padding:8px 12px; background:rgba(16,185,129,0.08);
+    border:1px solid rgba(16,185,129,0.25); border-radius:8px; margin-bottom:16px;
+  }
+  .collab-live-pulse-active { width:8px; height:8px; border-radius:50%; background:#10b981; animation:collabPulseAnim 1.6s infinite; }
+  .collab-active-status-text { font-size:12px; font-weight:600; color:#047857; }
+  .collab-users-section { margin-top:16px; border-top:1px solid var(--color-hairline); padding-top:14px; }
+  .collab-users-section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .collab-users-count-tag { font-size:11px; font-weight:600; color:var(--color-ink-mute); }
+  .collab-users-list { display:flex; flex-direction:column; gap:8px; max-height:160px; overflow-y:auto; }
+  :global(.collab-user-row) {
+    display:flex; align-items:center; justify-content:space-between; padding:6px 10px;
+    background:var(--color-canvas-soft); border-radius:8px; font-size:13px;
+  }
+  :global(.collab-user-info) { display:flex; align-items:center; gap:8px; }
+  :global(.collab-user-row-avatar) {
+    width:22px; height:22px; border-radius:50%; color:#fff; font-size:10px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  :global(.collab-user-name) { font-weight:500; color:var(--color-ink); }
+  :global(.collab-follow-btn) {
+    border:1px solid var(--color-hairline); background:#fff; border-radius:6px;
+    padding:3px 8px; font-size:11px; font-weight:600; color:var(--color-ink); cursor:pointer;
+  }
+  :global(.collab-follow-btn:hover) { border-color:var(--color-primary); color:var(--color-primary); }
+  :global(.collab-follow-btn.is-following) { background:var(--color-primary); color:#fff; border-color:var(--color-primary); }
+  .collab-footer { margin-top:18px; }
+
+  @media(max-width:640px) {
+    .header-main { padding:0 12px; }
+    .save-status { display:none; }
+    .collab-label { display:none; }
+  }
   @media(max-width:440px) { .tool-brand span { display:none; } }
   @media(max-width:360px) { .header-main { padding:0 8px; }.header-language { display:none; } }
   @media print { .tool-header { display:none; } }
 </style>
+
+<script>
+  function setupThemeToggle() {
+    const btn = document.getElementById("theme-toggle-btn");
+    if (!btn) return;
+    const isDarkInitial = document.documentElement.classList.contains("dark");
+    btn.setAttribute("aria-pressed", String(isDarkInitial));
+    btn.setAttribute("title", isDarkInitial ? "Switch to light mode" : "Switch to dark mode");
+
+    if ((btn as any).__bound) return;
+    (btn as any).__bound = true;
+
+    btn.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      const nextDark = !isDark;
+      document.documentElement.classList.toggle("dark", nextDark);
+      btn.setAttribute("aria-pressed", String(nextDark));
+      btn.setAttribute("title", nextDark ? "Switch to light mode" : "Switch to dark mode");
+      try {
+        localStorage.setItem("sketchpad_theme", nextDark ? "dark" : "light");
+      } catch {}
+
+      // Dispatch global event for sketchpad instances to respond immediately
+      window.dispatchEvent(new CustomEvent("sketchpad:themechange", { detail: { darkMode: nextDark } }));
+
+      // Also call direct instance if bound
+      const win = window as any;
+      if (win.__sketchpad?.setDarkMode) {
+        win.__sketchpad.setDarkMode(nextDark, true);
+      }
+    });
+  }
+
+  setupThemeToggle();
+  document.addEventListener("astro:page-load", setupThemeToggle);
+  document.addEventListener("DOMContentLoaded", setupThemeToggle);
+</script>

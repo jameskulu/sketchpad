@@ -1,7 +1,12 @@
+import { invertColorForTheme, invertElementsTheme } from "./color-theme.ts";
+import { parseReadOnlyPayloadFromUrl, createReadOnlyShareUrl, type ReadOnlyStoryboardPayload } from "./share-link.ts";
+import { uiFor } from "../i18n/ui.ts";
+import type { Locale } from "../i18n/locales.ts";
+
 type Point = { x: number; y: number };
 type Stroke = { points: Point[]; color: string; size: number; erase: boolean; tool?: "pencil" | "brush" };
 type Scene = { strokes: Stroke[]; caption: string };
-type Draft = { version: 1; title: string; count: number; scenes: Scene[] };
+export type Draft = { version: 1; title: string; count: number; scenes: Scene[]; darkMode?: boolean };
 export const MAX_STORYBOARD_FRAMES = 24;
 const KEY = "simplesketchpad.storyboard.v1";
 const WIDTH = 640;
@@ -21,12 +26,19 @@ export function parseStoryboard(raw: string): Draft {
     }
   }
   while (value.scenes.length < MAX_STORYBOARD_FRAMES) value.scenes.push({ strokes: [], caption: "" });
+  if (typeof value.darkMode === "boolean") {
+    value.darkMode = value.darkMode;
+  }
   return value;
+}
+
+export function isDarkModeActive(): boolean {
+  return typeof document !== "undefined" && document.documentElement.classList.contains("dark");
 }
 
 type CursorInfo = { x: number; y: number; size: number; tool: "pencil" | "brush"; erase: boolean };
 
-function renderStoryboardCursor(ctx: CanvasRenderingContext2D, cursor: CursorInfo) {
+function renderStoryboardCursor(ctx: CanvasRenderingContext2D, cursor: CursorInfo, isDark: boolean = isDarkModeActive()) {
   const { x, y, size, tool, erase } = cursor;
   ctx.save();
   ctx.globalCompositeOperation = "source-over";
@@ -79,13 +91,13 @@ function renderStoryboardCursor(ctx: CanvasRenderingContext2D, cursor: CursorInf
 
   ctx.beginPath();
   ctx.arc(x, y, 1.2, 0, Math.PI * 2);
-  ctx.fillStyle = erase ? "rgba(224, 34, 97, 1)" : "rgba(37, 53, 77, 1)";
+  ctx.fillStyle = erase ? "rgba(224, 34, 97, 1)" : (isDark ? "#ffffff" : "rgba(37, 53, 77, 1)");
   ctx.fill();
 
   ctx.restore();
 }
 
-function draw(canvas: HTMLCanvasElement, strokes: Stroke[], cursor?: CursorInfo) {
+export function draw(canvas: HTMLCanvasElement, strokes: Stroke[], cursor?: CursorInfo, isDark: boolean = isDarkModeActive()) {
   const ctx = canvas.getContext("2d")!;
   ctx.clearRect(0, 0, WIDTH, HEIGHT);
   for (const stroke of strokes) {
@@ -138,16 +150,16 @@ function draw(canvas: HTMLCanvasElement, strokes: Stroke[], cursor?: CursorInfo)
     }
   }
 
-  // Paint solid white behind strokes so the canvas is fully opaque:
-  // Erased areas show clean white canvas instead of acting as a "transparent pen"
+  // Paint solid background behind strokes so the canvas is fully opaque:
+  // Erased areas show clean canvas background instead of acting as a "transparent pen"
   // if the canvas is saved, copied, or exported.
   ctx.globalCompositeOperation = "destination-over";
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = isDark ? "#121212" : "#ffffff";
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
   ctx.globalCompositeOperation = "source-over";
 
   if (cursor) {
-    renderStoryboardCursor(ctx, cursor);
+    renderStoryboardCursor(ctx, cursor, isDark);
   }
 }
 
@@ -169,11 +181,77 @@ export function initStoryboard() {
   const pen = document.getElementById("story-pen") as HTMLButtonElement | null;
   const eraser = q<HTMLButtonElement>("story-eraser");
   const dialog = q<HTMLDialogElement>("story-clear-dialog");
-  let draft: Draft = { version: 1, title: "", count: 3, scenes: Array.from({ length: MAX_STORYBOARD_FRAMES }, () => ({ strokes: [], caption: "" })) };
+  let isDarkCurrent = isDarkModeActive();
+  let isReadOnly = false;
+  let readOnlyBannerEl: HTMLElement | null = null;
+
+  const mountReadOnlyBanner = () => {
+    if (readOnlyBannerEl) return;
+    const lang = (typeof document !== "undefined" && (document.documentElement.lang as Locale)) || "en";
+    const ui = uiFor(lang);
+    const badgeText = ui.collab?.readOnlyBannerBadge ?? "Read-only view";
+    const duplicateText = ui.collab?.duplicateToEdit ?? "Duplicate to edit";
+    const banner = document.createElement("div");
+    banner.className = "readonly-banner";
+    banner.setAttribute("role", "status");
+    banner.innerHTML = `
+      <div class="readonly-badge">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span>${badgeText}</span>
+      </div>
+      <button type="button" class="readonly-duplicate-btn">${duplicateText}</button>
+    `;
+    const btn = banner.querySelector<HTMLButtonElement>(".readonly-duplicate-btn");
+    btn?.addEventListener("click", () => {
+      unlockForEditing();
+    });
+    root.prepend(banner);
+    readOnlyBannerEl = banner;
+  };
+
+  const unlockForEditing = () => {
+    isReadOnly = false;
+    if (readOnlyBannerEl) {
+      readOnlyBannerEl.remove();
+      readOnlyBannerEl = null;
+    }
+    if (typeof window !== "undefined" && window.location.hash.includes("read=")) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    title.readOnly = false;
+    captions.forEach((c) => (c.readOnly = false));
+    layout.disabled = false;
+    save();
+    update();
+  };
+
+  const applyReadOnlyLock = () => {
+    isReadOnly = true;
+    title.readOnly = true;
+    captions.forEach((c) => (c.readOnly = true));
+    layout.disabled = true;
+    mountReadOnlyBanner();
+    update();
+  };
+
+  let draft: Draft = { version: 1, title: "", count: 3, scenes: Array.from({ length: MAX_STORYBOARD_FRAMES }, () => ({ strokes: [], caption: "" })), darkMode: isDarkCurrent };
   try { const raw = localStorage.getItem(KEY); if (raw) draft = parseStoryboard(raw); }
   catch { status.textContent = "Could not restore draft. Download important work."; }
+
+  // Synchronize draft strokes with current dark mode state
+  const draftDarkMode = draft.darkMode ?? false;
+  if (isDarkCurrent !== draftDarkMode) {
+    for (const scene of draft.scenes) {
+      invertElementsTheme(scene.strokes, isDarkCurrent);
+    }
+    draft.darkMode = isDarkCurrent;
+  }
+
   let active = 0;
-  let color = "#25354d";
+  let color = isDarkCurrent ? "#ffffff" : "#25354d";
   let size = 4;
   let erase = false;
   let tool: "pencil" | "brush" = "pencil";
@@ -182,8 +260,13 @@ export function initStoryboard() {
   const histories = Array.from({ length: MAX_STORYBOARD_FRAMES }, () => ({ undo: [] as Stroke[][], redo: [] as Stroke[][] }));
   let saveTimer: ReturnType<typeof setTimeout> | undefined;
   const save = () => {
+    if (isReadOnly) return;
     clearTimeout(saveTimer);
-    try { localStorage.setItem(KEY, JSON.stringify(draft)); status.textContent = "Saved on this device"; }
+    try {
+      draft.darkMode = isDarkCurrent;
+      localStorage.setItem(KEY, JSON.stringify(draft));
+      status.textContent = "Saved on this device";
+    }
     catch { status.textContent = "Not saved — download a copy"; }
   };
   const scheduleSave = () => {
@@ -198,10 +281,10 @@ export function initStoryboard() {
       const placeholder = card.querySelector<HTMLElement>(".scene-placeholder")!;
       placeholder.hidden = draft.scenes[index].strokes.length > 0 || drawing?.index === index;
     });
-    undo.disabled = !histories[active].undo.length;
-    redo.disabled = !histories[active].redo.length;
-    clear.disabled = !draft.scenes[active].strokes.length;
-    q<HTMLButtonElement>("story-add").disabled = draft.count >= MAX_STORYBOARD_FRAMES;
+    undo.disabled = isReadOnly || !histories[active].undo.length;
+    redo.disabled = isReadOnly || !histories[active].redo.length;
+    clear.disabled = isReadOnly || !draft.scenes[active].strokes.length;
+    q<HTMLButtonElement>("story-add").disabled = isReadOnly || draft.count >= MAX_STORYBOARD_FRAMES;
     q("story-frame-count").textContent = `${draft.count} of ${MAX_STORYBOARD_FRAMES} frames`;
     layout.value = String(draft.count);
     q("story-active").textContent = `Scene ${String(active + 1).padStart(2, "0")} selected`;
@@ -219,7 +302,7 @@ export function initStoryboard() {
     draft.scenes[index].strokes.push(stroke);
     drawing = null;
     if (canvases[index].hasPointerCapture(pointer)) canvases[index].releasePointerCapture(pointer);
-    draw(canvases[index], draft.scenes[index].strokes, lastPoint ? { x: lastPoint.x, y: lastPoint.y, size, tool, erase } : undefined);
+    draw(canvases[index], draft.scenes[index].strokes, lastPoint ? { x: lastPoint.x, y: lastPoint.y, size, tool, erase } : undefined, isDarkCurrent);
     update(); save();
   };
   const point = (canvas: HTMLCanvasElement, event: PointerEvent): Point => {
@@ -229,11 +312,11 @@ export function initStoryboard() {
   title.value = draft.title;
   layout.value = String(draft.count);
   canvases.forEach((canvas, index) => {
-    if (draft.scenes[index].strokes.length) draw(canvas, draft.scenes[index].strokes);
+    draw(canvas, draft.scenes[index].strokes, undefined, isDarkCurrent);
     captions[index].value = draft.scenes[index].caption;
     canvas.addEventListener("focus", () => select(index));
     canvas.addEventListener("pointerdown", (event) => {
-      if (event.button !== 0 || drawing) return;
+      if (event.button !== 0 || drawing || isReadOnly) return;
       event.preventDefault(); canvas.focus(); select(index);
       const pt = point(canvas, event);
       drawing = { index, pointer: event.pointerId, stroke: { points: [pt], color, size, erase, tool } };
@@ -242,6 +325,7 @@ export function initStoryboard() {
       draw(canvas, [...draft.scenes[index].strokes, drawing.stroke], { x: pt.x, y: pt.y, size, tool, erase }); update();
     });
     canvas.addEventListener("pointermove", (event) => {
+      if (isReadOnly) return;
       const pt = point(canvas, event);
       if (drawing && drawing.index === index && drawing.pointer === event.pointerId) {
         for (const sample of event.getCoalescedEvents?.().length ? event.getCoalescedEvents() : [event]) drawing.stroke.points.push(point(canvas, sample));
@@ -253,6 +337,7 @@ export function initStoryboard() {
       }
     });
     canvas.addEventListener("pointerleave", () => {
+      if (isReadOnly) return;
       if (!drawing) {
         if (activeCursor?.index === index) activeCursor = null;
         draw(canvas, draft.scenes[index].strokes);
@@ -262,11 +347,12 @@ export function initStoryboard() {
       if (drawing?.pointer === event.pointerId && drawing.index === index) finish(point(canvas, event));
     });
     captions[index].addEventListener("focus", () => select(index));
-    captions[index].addEventListener("input", () => { draft.scenes[index].caption = captions[index].value; scheduleSave(); });
+    captions[index].addEventListener("input", () => { if (isReadOnly) return; draft.scenes[index].caption = captions[index].value; scheduleSave(); });
   });
-  title.addEventListener("input", () => { draft.title = title.value; scheduleSave(); });
-  layout.addEventListener("change", () => { finish(); draft.count = Number(layout.value); if (active >= draft.count) active = draft.count - 1; update(); save(); });
+  title.addEventListener("input", () => { if (isReadOnly) return; draft.title = title.value; scheduleSave(); });
+  layout.addEventListener("change", () => { if (isReadOnly) return; finish(); draft.count = Number(layout.value); if (active >= draft.count) active = draft.count - 1; update(); save(); });
   q("story-add").addEventListener("click", () => {
+    if (isReadOnly) return;
     finish();
     if (draft.count >= MAX_STORYBOARD_FRAMES) return;
     draft.count += 1;
@@ -312,13 +398,20 @@ export function initStoryboard() {
     target.push(draft.scenes[active].strokes.slice()); draft.scenes[active].strokes = source.pop()!;
     draw(canvases[active], draft.scenes[active].strokes); update(); save();
   };
-  undo.addEventListener("click", () => step(true)); redo.addEventListener("click", () => step(false));
-  clear.addEventListener("click", () => dialog.showModal());
+  undo.addEventListener("click", () => { if (!isReadOnly) step(true); });
+  redo.addEventListener("click", () => { if (!isReadOnly) step(false); });
+  clear.addEventListener("click", () => { if (!isReadOnly) dialog.showModal(); });
   q("story-clear-cancel").addEventListener("click", () => dialog.close());
   q("story-clear-confirm").addEventListener("click", () => {
     remember(active); draft.scenes[active].strokes = []; draw(canvases[active], []); dialog.close(); update(); save();
   });
   document.addEventListener("keydown", event => {
+    if (isReadOnly) {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "d") {
+        event.preventDefault(); download.click();
+      }
+      return;
+    }
     if (dialog.open || document.querySelector("#board-nav-menu[open]") || (event.target instanceof HTMLElement && event.target.matches("input,textarea,select"))) return;
     if ((event.ctrlKey || event.metaKey) && ["z", "y"].includes(event.key.toLowerCase())) { event.preventDefault(); step(event.key.toLowerCase() === "z" && !event.shiftKey); }
     if (!event.ctrlKey && !event.metaKey && !event.altKey) {
@@ -345,23 +438,25 @@ export function initStoryboard() {
       measure.font = "16px sans-serif";
       const lines = draft.scenes.slice(0, draft.count).map(scene => wrapText(measure, scene.caption, cardWidth - 32));
       const heights = Array.from({ length: rows }, (_, row) => 40 + HEIGHT + 24 + Math.max(2, ...lines.slice(row * 3, row * 3 + 3).map(text => text.length)) * 24);
+      const isDark = typeof document !== "undefined" && document.documentElement.classList.contains("dark");
       output.width = margin * 2 + cardWidth * 3 + gap * 2;
       output.height = 130 + heights.reduce((a, b) => a + b, 0) + gap * (rows - 1) + margin;
       const ctx = output.getContext("2d")!;
-      ctx.fillStyle = "#f7f8fc"; ctx.fillRect(0, 0, output.width, output.height);
-      ctx.fillStyle = "#25354d"; ctx.font = "600 30px sans-serif";
+      ctx.fillStyle = isDark ? "#121212" : "#f7f8fc"; ctx.fillRect(0, 0, output.width, output.height);
+      ctx.fillStyle = isDark ? "#f8fafc" : "#25354d"; ctx.font = "600 30px sans-serif";
       wrapText(ctx, draft.title || "Untitled storyboard", output.width - 2 * margin).forEach((line, i) => ctx.fillText(line, margin, 50 + i * 34));
-      ctx.font = "14px sans-serif"; ctx.fillStyle = "#788299"; ctx.fillText(`${draft.count} scenes · Simple Sketchpad`, margin, 100);
+      ctx.font = "14px sans-serif"; ctx.fillStyle = isDark ? "#94a3b8" : "#788299"; ctx.fillText(`${draft.count} scenes · Simple Sketchpad`, margin, 100);
       let y = 130;
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < 3; col++) {
           const index = row * 3 + col; const x = margin + col * (cardWidth + gap);
           if (index >= draft.count) break;
-          ctx.fillStyle = "white"; ctx.fillRect(x, y, cardWidth, heights[row]);
-          ctx.strokeStyle = "#e1e5ee"; ctx.strokeRect(x, y, cardWidth, heights[row]);
-          ctx.fillStyle = "#7254df"; ctx.font = "600 14px sans-serif"; ctx.fillText(`SCENE ${String(index + 1).padStart(2, "0")}`, x + 16, y + 26);
+          ctx.fillStyle = isDark ? "#1a1a1a" : "white"; ctx.fillRect(x, y, cardWidth, heights[row]);
+          ctx.strokeStyle = isDark ? "#2e2e2e" : "#e1e5ee"; ctx.strokeRect(x, y, cardWidth, heights[row]);
+          ctx.fillStyle = isDark ? "#818cf8" : "#7254df"; ctx.font = "600 14px sans-serif"; ctx.fillText(`SCENE ${String(index + 1).padStart(2, "0")}`, x + 16, y + 26);
+          ctx.fillStyle = isDark ? "#121212" : "white"; ctx.fillRect(x, y + 40, WIDTH, HEIGHT);
           ctx.drawImage(canvases[index], x, y + 40, WIDTH, HEIGHT);
-          ctx.fillStyle = "#536078"; ctx.font = "16px sans-serif";
+          ctx.fillStyle = isDark ? "#cbd5e1" : "#536078"; ctx.font = "16px sans-serif";
           lines[index].forEach((line, lineIndex) => ctx.fillText(line, x + 16, y + 40 + HEIGHT + 28 + lineIndex * 24));
         }
         y += heights[row] + gap;
@@ -379,6 +474,88 @@ export function initStoryboard() {
   q("download-print-btn").addEventListener("click", printStoryboard);
   window.addEventListener("pagehide", () => { finish(); save(); });
   document.addEventListener("visibilitychange", () => { if (document.hidden) { finish(); save(); } });
+  // Dark mode synchronization
+  const isDarkInitial = typeof document !== "undefined" && document.documentElement.classList.contains("dark");
+  if (isDarkInitial) {
+    if (color === "#25354d") color = "#ffffff";
+    root.querySelectorAll<HTMLButtonElement>(".story-color").forEach(btn => {
+      const baseColor = btn.dataset.baseColor || btn.dataset.color || "";
+      if (!btn.dataset.baseColor) btn.dataset.baseColor = baseColor;
+      const targetColor = invertColorForTheme(baseColor, true);
+      btn.dataset.color = targetColor;
+      btn.style.setProperty("--swatch", targetColor);
+    });
+  }
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("sketchpad:themechange", (e: any) => {
+      const nextDark = Boolean(e.detail?.darkMode);
+      isDarkCurrent = nextDark;
+      draft.darkMode = nextDark;
+      color = invertColorForTheme(color, nextDark);
+      const colorInput = document.getElementById("story-color") as HTMLInputElement | null;
+      if (colorInput) colorInput.value = color;
+      for (const scene of draft.scenes) {
+        invertElementsTheme(scene.strokes, nextDark);
+      }
+      for (const h of histories) {
+        for (const strokeList of h.undo) {
+          invertElementsTheme(strokeList, nextDark);
+        }
+        for (const strokeList of h.redo) {
+          invertElementsTheme(strokeList, nextDark);
+        }
+      }
+      root.querySelectorAll<HTMLButtonElement>(".story-color").forEach(btn => {
+        const baseColor = btn.dataset.baseColor || btn.dataset.color || "";
+        if (!btn.dataset.baseColor) btn.dataset.baseColor = baseColor;
+        const targetColor = nextDark ? invertColorForTheme(baseColor, true) : baseColor;
+        btn.dataset.color = targetColor;
+        btn.style.setProperty("--swatch", targetColor);
+        btn.setAttribute("aria-pressed", String(targetColor === color));
+      });
+      canvases.forEach((c, i) => draw(c, draft.scenes[i].strokes, undefined, nextDark));
+      update();
+      save();
+    });
+
+    (window as any).__storyboard = {
+      createShareableLink: async () => {
+        const payload: ReadOnlyStoryboardPayload = {
+          type: "storyboard",
+          version: 1,
+          draft,
+          darkMode: isDarkCurrent,
+        };
+        return createReadOnlyShareUrl(payload);
+      },
+    };
+  }
+
+  const hasReadOnlyHash = typeof window !== "undefined" && Boolean(window.location.hash.match(/[#&?]read(?:only)?=/));
+  if (hasReadOnlyHash) {
+    parseReadOnlyPayloadFromUrl().then((payload) => {
+      if (payload && payload.type === "storyboard" && payload.draft) {
+        draft = payload.draft;
+        const draftDark = draft.darkMode ?? false;
+        if (isDarkCurrent !== draftDark) {
+          for (const scene of draft.scenes) {
+            invertElementsTheme(scene.strokes, isDarkCurrent);
+          }
+          draft.darkMode = isDarkCurrent;
+        }
+        applyReadOnlyLock();
+        canvases.forEach((canvas, index) => {
+          draw(canvas, draft.scenes[index].strokes, undefined, isDarkCurrent);
+          captions[index].value = draft.scenes[index].caption;
+        });
+        title.value = draft.title;
+        layout.value = String(draft.count);
+        update();
+      }
+    });
+  }
+
   update();
 }
 

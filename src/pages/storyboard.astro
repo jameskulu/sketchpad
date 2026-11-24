@@ -81,6 +81,145 @@ const faqData = { "@context": "https://schema.org", "@type": "FAQPage", mainEnti
   @media(max-width:950px) { .scene-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.story-toolbar { gap:10px; }.frame-control { margin-left:0; } }
   @media(max-width:600px) { .story-header { padding:12px 16px; }.story-main { padding:26px 16px; }.scene-grid,.guide-grid { grid-template-columns:1fr; }.project-row { align-items:flex-start; flex-direction:column; gap:6px; }.project-label { width:100%; }.board-heading { align-items:flex-start; flex-direction:column; }.header-actions { gap:6px; }.primary { padding:9px 11px; font-size:11px; }.brand { font-size:12px; }.story-toolbar { gap:10px 6px; }.board-footer { align-items:flex-start; } }
   @media print { @page { size:A4 landscape; margin:12mm; }.story-header,.intro,.story-toolbar,.board-heading,.board-footer,.story-guide,#story-save,.scene-placeholder { display:none!important; }#storyboard-app { background:white; }.story-main { padding:0; max-width:none; }.project-row { margin:0 0 15px; }.project-label { color:#25354d; }.scene-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }.scene-card { break-inside:avoid; box-shadow:none; }.scene-card.selected { border-color:#e1e5ee; box-shadow:none; }.caption-label textarea { max-height:none; resize:none; }.project-label input::placeholder { color:transparent; } }
+
+  :global(html.dark) #storyboard-app {
+    background: #121212;
+    color: #f8fafc;
+  }
+  :global(html.dark) .intro .hero-title,
+  :global(html.dark) .story-guide h1,
+  :global(html.dark) .story-guide h2,
+  :global(html.dark) .story-faq summary {
+    color: #f8fafc;
+  }
+  :global(html.dark) .intro p:not(.eyebrow):not(.hero-title),
+  :global(html.dark) .story-guide p,
+  :global(html.dark) .story-faq p,
+  :global(html.dark) .storage-note,
+  :global(html.dark) .guide-grid p {
+    color: #94a3b8;
+  }
+  :global(html.dark) .project-label {
+    color: #94a3b8;
+  }
+  :global(html.dark) .project-label input {
+    color: #f8fafc;
+    border-bottom-color: #383838;
+  }
+  :global(html.dark) .project-label input::placeholder {
+    color: #64748d;
+  }
+  :global(html.dark) .story-toolbar {
+    background: #1a1a1a;
+    border-color: #2e2e2e;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  }
+  :global(html.dark) .tool {
+    color: #cbd5e1;
+  }
+  :global(html.dark) .tool:hover {
+    background: #2a2a2a;
+    color: #f8fafc;
+  }
+  :global(html.dark) .tool.active {
+    background: #312e81;
+    color: #c7d2fe;
+  }
+  :global(html.dark) .colors {
+    border-left-color: #333333;
+  }
+  :global(html.dark) .size-control {
+    color: #cbd5e1;
+  }
+  :global(html.dark) .frame-control {
+    color: #cbd5e1;
+  }
+  :global(html.dark) .frame-control select {
+    background: #262626;
+    border: 1px solid #383838;
+    color: #f8fafc;
+  }
+  :global(html.dark) .scene-card {
+    background: #1a1a1a;
+    border-color: #2e2e2e;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+  :global(html.dark) .scene-card.selected {
+    border-color: #818cf8;
+    box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.3);
+  }
+  :global(html.dark) .scene-top {
+    color: #94a3b8;
+    border-bottom-color: #262626;
+  }
+  :global(html.dark) .scene-number {
+    background: #262626;
+    color: #a5b4fc;
+  }
+  :global(html.dark) .scene-stage {
+    background: #121212;
+    border-color: #262626;
+  }
+  :global(html.dark) .scene-stage canvas {
+    background: #121212;
+  }
+  :global(html.dark) .scene-placeholder {
+    color: #475569;
+  }
+  :global(html.dark) .caption-label {
+    color: #94a3b8;
+  }
+  :global(html.dark) .caption-label textarea {
+    color: #f8fafc;
+    background: #141414;
+    border: 1px solid #282828;
+    border-radius: 8px;
+    padding: 6px 8px;
+  }
+  :global(html.dark) .caption-label textarea::placeholder {
+    color: #64748d;
+  }
+  :global(html.dark) #story-add {
+    background: #202020;
+    border-color: #404040;
+    color: #a5b4fc;
+  }
+  :global(html.dark) #story-add:hover:not(:disabled) {
+    background: #282828;
+    border-color: #818cf8;
+  }
+  :global(html.dark) .board-footer {
+    color: #94a3b8;
+  }
+  :global(html.dark) .print-button {
+    color: #818cf8;
+  }
+  :global(html.dark) .story-guide {
+    border-top-color: #2a2a2a;
+  }
+  :global(html.dark) .story-faq details {
+    border-bottom-color: #2a2a2a;
+  }
+  :global(html.dark) dialog {
+    background: #1c1c1c;
+    border-color: #383838;
+    color: #f8fafc;
+  }
+  :global(html.dark) dialog p {
+    color: #94a3b8;
+  }
+  :global(html.dark) dialog button {
+    background: #2a2a2a;
+    border: 1px solid #383838;
+    color: #f8fafc;
+    padding: 8px 14px;
+    border-radius: 8px;
+  }
+  :global(html.dark) dialog button.primary {
+    background: #4f46e5;
+    border-color: #6366f1;
+    color: #ffffff;
+  }
 </style>
 <style>
   .story-header { height:48px; padding:0 16px; gap:6px; }

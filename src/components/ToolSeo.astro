@@ -46,7 +46,7 @@ const faqQ = "text-[16px] font-semibold text-ink";
 const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
 ---
 
-<section class="border-t border-hairline bg-white" aria-label={content.h1}>
+<section class="seo-content border-t border-hairline bg-canvas text-ink" aria-label={content.h1}>
   <div class="mx-auto w-full max-w-3xl px-4 py-14 sm:px-6 sm:py-20">
     <h1 class="text-3xl font-bold tracking-tight text-ink sm:text-4xl">{content.h1}</h1>
 
@@ -55,7 +55,7 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
     ))}
 
     {locale === DEFAULT_LOCALE && toc.length >= 5 && (
-      <nav class="mt-10 rounded-xl border border-hairline bg-canvas-soft p-5" aria-label="On this page">
+      <nav class="mt-10 rounded-xl border border-hairline bg-canvas-soft p-5 dark:bg-canvas-soft dark:border-hairline" aria-label="On this page">
         <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-mute">On this page</p>
         <ol class="mt-3 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
           {toc.map((item) => (
@@ -98,7 +98,7 @@ const faqA = "mt-2 text-[15px] leading-7 text-ink-secondary";
         <a
           href={r.href}
           class:list={[
-            "group block rounded-xl border bg-white p-4 transition-colors hover:shadow-md",
+            "group block rounded-xl border bg-canvas-soft/40 dark:bg-canvas-soft p-4 transition-colors hover:shadow-md dark:border-hairline dark:hover:border-primary/50 dark:hover:shadow-black/40",
             r.current ? "border-primary/40 hover:border-primary/60" : "border-hairline hover:border-primary/40",
           ]}
         >

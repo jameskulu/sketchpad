@@ -37,3 +37,13 @@ test("export captions retain newlines and wrap long unbroken words", () => {
   assert.deepEqual(lines, ["Hello", "world", "abcdef", "ghijkl", "mnop"]);
   assert.ok(lines.every(line => measure.measureText(line).width <= 60));
 });
+
+test("parseStoryboard preserves darkMode flag and defaults properly", () => {
+  const darkDraft = { ...draft(), darkMode: true };
+  const restored = parseStoryboard(JSON.stringify(darkDraft));
+  assert.equal(restored.darkMode, true);
+
+  const lightDraft = { ...draft(), darkMode: false };
+  const restoredLight = parseStoryboard(JSON.stringify(lightDraft));
+  assert.equal(restoredLight.darkMode, false);
+});

@@ -178,6 +178,13 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         >
           <Icon name="trash" class="size-4" />
         </button>
+
+        <!-- Floating Follow Pill -->
+        <div id="follow-pill" class="follow-pill" hidden role="status" aria-live="polite">
+          <span id="follow-pill-dot" class="follow-pill-dot"></span>
+          <span id="follow-pill-text">{ui.collab.following}</span>
+          <button id="follow-stop-btn" type="button" class="follow-stop-btn" aria-label={ui.collab.stopFollowing}>✕ {ui.collab.stopFollowing}</button>
+        </div>
       </section>
 
       <!-- Options panel -->
@@ -345,6 +352,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   import { Sketchpad } from "../lib/sketchpad";
   import { uiFor } from "../i18n/ui";
   import type { Locale } from "../i18n/locales";
+  import { initCollabUI } from "../lib/collab-ui";
+  import { initThemeToggle } from "../lib/color-theme";
 
   const rootEl = document.querySelector<HTMLElement>('[id="app"]');
   const stage = document.getElementById("stage");
@@ -412,6 +421,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   const pad = new Sketchpad({
     stage,
     canvas,
+    darkMode: document.documentElement.classList.contains("dark"),
     ui: {
       toolButtons: {
         select: q<HTMLButtonElement>("tool-select"),
@@ -457,6 +467,8 @@ const contactHref = deriveLocaleHref(locale, "/contact");
         clearConfirmBody: ui.canvas.clearConfirmBody,
         clearConfirmDelete: ui.canvas.clearConfirmDelete,
         clearConfirmCancel: ui.canvas.clearConfirmCancel,
+        readOnlyBannerBadge: ui.collab.readOnlyBannerBadge,
+        duplicateToEdit: ui.collab.duplicateToEdit,
       },
     },
     onState: (s) => {
@@ -475,4 +487,7 @@ const contactHref = deriveLocaleHref(locale, "/contact");
   });
 
   pad.init();
+  const currentLocale = ((rootEl?.dataset.lang as Locale) ?? "en");
+  initCollabUI(pad, currentLocale);
+  initThemeToggle(pad);
 </script>

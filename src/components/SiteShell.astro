@@ -86,7 +86,7 @@ const isCurrent = (rawPath: string) => {
   ogType={ogType}
 >
   <div class="flex min-h-full flex-col">
-    <header class="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-hairline bg-white/95 px-4 backdrop-blur-md sm:px-6">
+    <header class="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-hairline bg-white/95 dark:bg-[#121212]/95 px-4 backdrop-blur-md sm:px-6">
       <a href={homeHref} class="flex items-center gap-2 rounded-md px-1.5 py-1 transition-opacity hover:opacity-85" aria-label="Simple Sketchpad home">
         <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true" class="shrink-0">
           <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
@@ -114,6 +114,21 @@ const isCurrent = (rawPath: string) => {
           );
         })}
         {showLangSwitcher && <LangSwitcher locale={locale} route={route} compact={true} />}
+        <button
+          id="theme-toggle-btn"
+          type="button"
+          class="theme-toggle-btn"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </button>
         <a
           href={openHref}
           class="ml-1.5 inline-flex items-center gap-1.5 rounded-full bg-primary px-3.5 py-1.5 text-[13px] font-medium text-white shadow-xs transition-colors hover:bg-primary-deep"
@@ -127,9 +142,24 @@ const isCurrent = (rawPath: string) => {
       <div class="flex items-center gap-1.5 md:hidden">
         {showLangSwitcher && <LangSwitcher locale={locale} route={route} compact={true} />}
         <button
+          id="theme-toggle-btn-mobile"
+          type="button"
+          class="theme-toggle-btn"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+          </svg>
+          <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+          </svg>
+        </button>
+        <button
           id="mobile-nav-toggle"
           type="button"
-          class="flex size-9 items-center justify-center rounded-lg border border-hairline bg-white text-ink transition-colors hover:bg-canvas-soft focus-visible:outline-2 focus-visible:outline-primary"
+          class="flex size-9 items-center justify-center rounded-lg border border-hairline bg-white dark:bg-[#222222] text-ink transition-colors hover:bg-canvas-soft dark:hover:bg-[#2a2a2a] focus-visible:outline-2 focus-visible:outline-primary"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
           aria-controls="mobile-nav-drawer"
@@ -157,7 +187,7 @@ const isCurrent = (rawPath: string) => {
     <!-- Mobile Navigation Drawer -->
     <div
       id="mobile-nav-drawer"
-      class="fixed inset-x-0 top-14 z-40 max-h-[calc(100dvh-56px)] hidden flex-col overflow-y-auto overscroll-contain border-b border-hairline bg-white px-4 py-5 shadow-2xl md:hidden"
+      class="fixed inset-x-0 top-14 z-40 max-h-[calc(100dvh-56px)] hidden flex-col overflow-y-auto overscroll-contain border-b border-hairline bg-white dark:bg-[#181818] px-4 py-5 shadow-2xl md:hidden"
       role="dialog"
       aria-modal="true"
       aria-label="Site navigation"
@@ -206,7 +236,7 @@ const isCurrent = (rawPath: string) => {
           {creativeSpaces.map((tool) => (
             <a
               href={tool.href}
-              class="flex items-center gap-2 rounded-lg border border-hairline bg-canvas-soft/60 px-3 py-2 text-[13px] font-medium text-ink transition-colors hover:border-primary/40 hover:bg-white"
+              class="flex items-center gap-2 rounded-lg border border-hairline bg-canvas-soft/60 dark:bg-[#222222] px-3 py-2 text-[13px] font-medium text-ink transition-colors hover:border-primary/40 hover:bg-white dark:hover:bg-[#2a2a2a]"
             >
               <span class="size-2 shrink-0 rounded-full" style={`background-color:${tool.dotColor}`}></span>
               <span class="truncate">{tool.label}</span>
@@ -270,5 +300,36 @@ const isCurrent = (rawPath: string) => {
 
   drawer?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => setOpen(false));
+  });
+
+  function setupThemeToggle(btnId: string) {
+    const btn = document.getElementById(btnId);
+    if (!btn) return;
+    const isDarkInitial = document.documentElement.classList.contains("dark");
+    btn.setAttribute("aria-pressed", String(isDarkInitial));
+    btn.setAttribute("title", isDarkInitial ? "Switch to light mode" : "Switch to dark mode");
+
+    if ((btn as any).__bound) return;
+    (btn as any).__bound = true;
+
+    btn.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      const nextDark = !isDark;
+      document.documentElement.classList.toggle("dark", nextDark);
+      btn.setAttribute("aria-pressed", String(nextDark));
+      btn.setAttribute("title", nextDark ? "Switch to light mode" : "Switch to dark mode");
+      try {
+        localStorage.setItem("sketchpad_theme", nextDark ? "dark" : "light");
+      } catch {}
+
+      window.dispatchEvent(new CustomEvent("sketchpad:themechange", { detail: { darkMode: nextDark } }));
+    });
+  }
+
+  setupThemeToggle("theme-toggle-btn");
+  setupThemeToggle("theme-toggle-btn-mobile");
+  document.addEventListener("astro:page-load", () => {
+    setupThemeToggle("theme-toggle-btn");
+    setupThemeToggle("theme-toggle-btn-mobile");
   });
 </script>
