@@ -84,8 +84,8 @@ const scripts = structuredData
 			(function() {
 				try {
 					var t = localStorage.getItem("sketchpad_theme");
-					var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-					if (t === "dark" || (!t && prefersDark)) {
+					// Default to light mode for new users; activate dark mode only if explicitly chosen
+					if (t === "dark") {
 						document.documentElement.classList.add("dark");
 					} else {
 						document.documentElement.classList.remove("dark");

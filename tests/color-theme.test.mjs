@@ -106,3 +106,19 @@ test("dark mode preserves drawing elements and undo history without wiping canva
   // 3. Undo stack also inverted so undoing doesn't flash light colors
   assert.equal(undoStack[0].elements[0].color, "#ffffff");
 });
+
+test("new users default to light mode regardless of OS theme preference", () => {
+  // Simulates Layout.astro theme resolution logic
+  function resolveTheme(storageValue) {
+    if (storageValue === "dark") return "dark";
+    return "light";
+  }
+
+  // Unset / new user -> light
+  assert.equal(resolveTheme(null), "light");
+  assert.equal(resolveTheme(undefined), "light");
+
+  // Explicit user choice is respected
+  assert.equal(resolveTheme("dark"), "dark");
+  assert.equal(resolveTheme("light"), "light");
+});

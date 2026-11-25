@@ -90,9 +90,9 @@ const DARK_TO_LIGHT_MAP: Record<string, string> = {
 
   // Storyboard inverse map
   "#a58af9": "#7254df",
-  "#f472b6": "#df6384",
-  "#34d399": "#2f9884",
-  "#fbbf24": "#e3a33d",
+  "#ff7597": "#df6384",
+  "#2dd4bf": "#2f9884",
+  "#fcd34d": "#e3a33d",
 
   "#713f12": "#fef08a",
   "#14532d": "#bbf7d0",
