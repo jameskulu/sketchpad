@@ -377,6 +377,26 @@ html.dark .scene-stage canvas {
   border-color: #262626 !important;
 }
 
+.kids-action:not(.is-active) {
+  background-color: #ffffff;
+  border-color: var(--color-hairline, #e3e8ee);
+  color: var(--color-ink, #0d253d);
+}
+
+.kids-action:not(.is-active) svg {
+  color: var(--color-ink, #0d253d);
+}
+
+.kids-action.square {
+  background-color: #ffffff;
+  border-color: var(--color-hairline, #e3e8ee);
+  color: var(--color-ink, #0d253d);
+}
+
+.kids-action.square svg {
+  color: var(--color-ink, #0d253d);
+}
+
 html.dark .kids-action.square,
 html.dark .kids-action:not(.is-active) {
   background-color: #242424 !important;
@@ -393,6 +413,15 @@ html.dark .kids-action.square:hover,
 html.dark .kids-action:not(.is-active):hover {
   background-color: #303030 !important;
   color: #ffffff !important;
+}
+
+html.dark .kids-action:disabled {
+  opacity: 0.35 !important;
+  color: #64748b !important;
+}
+
+html.dark .kids-action:disabled svg {
+  color: #64748b !important;
 }
 
 html.dark .paper-btn {

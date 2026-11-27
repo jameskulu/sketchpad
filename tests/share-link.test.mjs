@@ -5,6 +5,7 @@ import {
   decompressFromUrlSafe,
   createReadOnlyShareUrl,
   parseReadOnlyPayloadFromUrl,
+  isReadOnlyUrl,
 } from "../src/lib/share-link.ts";
 
 test("compressToUrlSafe and decompressFromUrlSafe roundtrip cleanly", async () => {
@@ -50,6 +51,45 @@ test("createReadOnlyShareUrl generates valid URL with hash fragment", async () =
   assert.equal(parsed.elements[0].text, "Read-only test");
 });
 
+test("createReadOnlyShareUrl generates real-time room URL when roomId is provided", async () => {
+  const payload = {
+    type: "sketchpad",
+    version: 1,
+    elements: [
+      { id: "e1", kind: "text", x: 50, y: 50, text: "Live sync read-only", size: 18, color: "#533afd" },
+    ],
+    erasures: [],
+    darkMode: false,
+  };
+
+  const url = await createReadOnlyShareUrl(payload, "https://simplesketchpad.com", "/", "room-live-1234");
+  assert.ok(url.includes("#room=room-live-1234&readonly=1&read="));
+
+  // isReadOnlyUrl should identify it
+  assert.equal(isReadOnlyUrl(url), true);
+
+  // parseReadOnlyPayloadFromUrl should extract the snapshot payload cleanly without choking on readonly=1
+  const hash = url.slice(url.indexOf("#"));
+  const parsed = await parseReadOnlyPayloadFromUrl(hash);
+  assert.ok(parsed);
+  assert.equal(parsed.type, "sketchpad");
+  assert.equal(parsed.elements[0].text, "Live sync read-only");
+});
+
+test("isReadOnlyUrl correctly detects read-only query and hash flags", () => {
+  assert.equal(isReadOnlyUrl("#room=room-abc&readonly=1"), true);
+  assert.equal(isReadOnlyUrl("#room=room-abc&read=1"), true);
+  assert.equal(isReadOnlyUrl("#readonly=true"), true);
+  assert.equal(isReadOnlyUrl("#readonly"), true);
+  assert.equal(isReadOnlyUrl("https://simplesketchpad.com/?readonly=1#room=test"), true);
+  assert.equal(isReadOnlyUrl("#read=eJw1jEEKgDAQA"), true);
+
+  // Regular edit collaborator URL should NOT be read-only
+  assert.equal(isReadOnlyUrl("#room=room-abc"), false);
+  assert.equal(isReadOnlyUrl("#"), false);
+  assert.equal(isReadOnlyUrl(""), false);
+});
+
 test("parseReadOnlyPayloadFromUrl handles storyboard drafts", async () => {
   const storyboardPayload = {
     type: "storyboard",
@@ -82,4 +122,5 @@ test("parseReadOnlyPayloadFromUrl gracefully ignores invalid or corrupt hash", a
   assert.equal(await parseReadOnlyPayloadFromUrl("#something-else"), null);
   assert.equal(await parseReadOnlyPayloadFromUrl("#read=not-valid-base64!!!"), null);
   assert.equal(await parseReadOnlyPayloadFromUrl("#read=e30"), null); // empty object without version
+  assert.equal(await parseReadOnlyPayloadFromUrl("#room=test&readonly=1"), null); // no snapshot payload
 });

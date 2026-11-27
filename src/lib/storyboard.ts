@@ -1,5 +1,5 @@
 import { invertColorForTheme, invertElementsTheme } from "./color-theme.ts";
-import { parseReadOnlyPayloadFromUrl, createReadOnlyShareUrl, type ReadOnlyStoryboardPayload } from "./share-link.ts";
+import { parseReadOnlyPayloadFromUrl, createReadOnlyShareUrl, isReadOnlyUrl, type ReadOnlyStoryboardPayload } from "./share-link.ts";
 import { uiFor } from "../i18n/ui.ts";
 import type { Locale } from "../i18n/locales.ts";
 
@@ -532,7 +532,7 @@ export function initStoryboard() {
     };
   }
 
-  const hasReadOnlyHash = typeof window !== "undefined" && Boolean(window.location.hash.match(/[#&?]read(?:only)?=/));
+  const hasReadOnlyHash = typeof window !== "undefined" && isReadOnlyUrl(window.location.hash);
   if (hasReadOnlyHash) {
     parseReadOnlyPayloadFromUrl().then((payload) => {
       if (payload && payload.type === "storyboard" && payload.draft) {

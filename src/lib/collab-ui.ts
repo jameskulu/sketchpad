@@ -2,6 +2,7 @@ import { CollabManager, getLocalUserProfile, saveLocalUserProfile, type CollabUs
 import type { Sketchpad } from "./sketchpad";
 import { uiFor } from "../i18n/ui";
 import type { Locale } from "../i18n/locales";
+import { isReadOnlyUrl } from "./share-link";
 
 export function initCollabUI(pad: Sketchpad, locale: Locale = "en"): CollabManager {
   const ui = uiFor(locale);
@@ -52,6 +53,9 @@ export function initCollabUI(pad: Sketchpad, locale: Locale = "en"): CollabManag
     }
     let url = "";
     try {
+      if (collab && collab.getStatus() === "disconnected") {
+        await collab.startRoom();
+      }
       if (typeof (pad as any).createShareableLink === "function") {
         url = await (pad as any).createShareableLink();
       } else if (typeof (window as any).__storyboard?.createShareableLink === "function") {
@@ -148,13 +152,23 @@ export function initCollabUI(pad: Sketchpad, locale: Locale = "en"): CollabManag
       if (viewInactive) viewInactive.hidden = isConnected;
       if (viewActive) viewActive.hidden = !isConnected;
 
+      const isReadOnlyMode = (typeof (pad as any).getReadOnly === "function" && (pad as any).getReadOnly()) ||
+        isReadOnlyUrl(window.location.hash || window.location.search);
+
       if (isConnected && roomId) {
         const url = new URL(window.location.href);
         url.hash = `room=${roomId}`;
         const roomUrl = url.href;
         if (shareLinkInput) shareLinkInput.value = roomUrl;
-        if (window.location.hash !== `#room=${roomId}`) {
-          history.replaceState(null, "", `#room=${roomId}`);
+
+        if (isReadOnlyMode) {
+          if (!window.location.hash.includes("readonly") && !window.location.hash.includes("read=")) {
+            history.replaceState(null, "", `#room=${roomId}&readonly=1`);
+          }
+        } else {
+          if (window.location.hash !== `#room=${roomId}`) {
+            history.replaceState(null, "", `#room=${roomId}`);
+          }
         }
       } else {
         if (window.location.hash.includes("room=")) {
@@ -379,6 +393,10 @@ export function initCollabUI(pad: Sketchpad, locale: Locale = "en"): CollabManag
     const hashOrQuery = window.location.hash || window.location.search;
     const match = hashOrQuery.match(/[#&?]room=([^&]+)/);
     if (match && match[1]) {
+      const isReadOnly = isReadOnlyUrl(hashOrQuery);
+      if (isReadOnly && typeof (pad as any).setReadOnly === "function") {
+        (pad as any).setReadOnly(true);
+      }
       collab.joinRoom(match[1]);
     }
   }

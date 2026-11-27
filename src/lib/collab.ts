@@ -539,12 +539,12 @@ export class CollabManager {
       case "SYNC_REQ": {
         if (this.events.onRequestSync) {
           const snapshot = this.events.onRequestSync();
-          if (snapshot && (snapshot.elements.length > 0 || snapshot.erasures.length > 0)) {
+          if (snapshot) {
             this.broadcast({
               type: "SYNC_RES",
               targetId: packet.senderId,
-              elements: snapshot.elements,
-              erasures: snapshot.erasures,
+              elements: snapshot.elements || [],
+              erasures: snapshot.erasures || [],
             });
           }
         }

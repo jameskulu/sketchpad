@@ -83,27 +83,50 @@ export async function decompressFromUrlSafe(encoded: string): Promise<string> {
 
 /**
  * Generate a full shareable read-only link URL.
+ * When roomId is provided, links the recipient to the real-time collaboration room in read-only mode.
  */
 export async function createReadOnlyShareUrl(
   payload: ReadOnlyPayload,
   origin?: string,
   pathname?: string,
+  roomId?: string | null,
 ): Promise<string> {
   const json = JSON.stringify(payload);
   const compressed = await compressToUrlSafe(json);
   const resolvedOrigin = origin || (typeof window !== "undefined" ? window.location.origin : "");
   const resolvedPath = pathname || (typeof window !== "undefined" ? window.location.pathname : "/");
+  if (roomId) {
+    return `${resolvedOrigin}${resolvedPath}#room=${roomId}&readonly=1&read=${compressed}`;
+  }
   return `${resolvedOrigin}${resolvedPath}#read=${compressed}`;
 }
 
 /**
+ * Detect whether a given URL, hash, or query string contains a read-only flag or payload.
+ */
+export function isReadOnlyUrl(urlOrHash?: string): boolean {
+  const str = urlOrHash !== undefined ? urlOrHash : (typeof window !== "undefined" ? (window.location.hash + window.location.search) : "");
+  if (!str) return false;
+  return Boolean(
+    str.match(/[#&?](?:readonly|read)=(?:1|true|yes)\b/i) ||
+    str.match(/[#&?]readonly(?=[&#]|$)/i) ||
+    str.match(/[#&?]read=([A-Za-z0-9_-]{10,})/i)
+  );
+}
+
+/**
  * Extract and parse read-only payload from a URL hash (or current window.location.hash).
+ * Accurately extracts the compressed payload even when accompanied by room= and readonly= parameters.
  */
 export async function parseReadOnlyPayloadFromUrl(customHash?: string): Promise<ReadOnlyPayload | null> {
   const hash = customHash !== undefined ? customHash : (typeof window !== "undefined" ? window.location.hash : "");
   if (!hash) return null;
 
-  const match = hash.match(/[#&?]read(?:only)?=([A-Za-z0-9_-]+)/);
+  // Match the actual compressed payload (at least 10 url-safe chars), ignoring flags like readonly=1 or read=1
+  const match = hash.match(/[#&?]read=([A-Za-z0-9_-]{10,})/i) ||
+                hash.match(/[#&?]snapshot=([A-Za-z0-9_-]{10,})/i) ||
+                hash.match(/[#&?]payload=([A-Za-z0-9_-]{10,})/i) ||
+                hash.match(/[#&?]read(?:only)?=([A-Za-z0-9_-]{10,})/i);
   if (!match || !match[1]) return null;
 
   try {

@@ -19,7 +19,7 @@ import { drawScene } from "./renderer";
 import { downloadSvg } from "./svg-export";
 import type { CollabManager, CollabUser } from "./collab";
 import { invertColorForTheme, invertElementsTheme } from "./color-theme";
-import { parseReadOnlyPayloadFromUrl, createReadOnlyShareUrl, type ReadOnlySketchpadPayload } from "./share-link";
+import { parseReadOnlyPayloadFromUrl, createReadOnlyShareUrl, isReadOnlyUrl, type ReadOnlySketchpadPayload } from "./share-link";
 
 export interface SketchpadUI {
   toolButtons: Partial<Record<ToolId, HTMLButtonElement>>;
@@ -356,9 +356,12 @@ export class Sketchpad {
 
   duplicateToEdit(): void {
     this.setReadOnly(false);
+    if (this.collabManager) {
+      this.collabManager.leaveRoom();
+    }
     if (typeof window !== "undefined") {
       const hash = window.location.hash;
-      if (hash.includes("read=")) {
+      if (hash.includes("read=") || hash.includes("room=") || hash.includes("readonly=")) {
         history.replaceState(null, "", window.location.pathname + window.location.search);
       }
     }
@@ -374,7 +377,17 @@ export class Sketchpad {
       darkMode: this.darkMode,
       canvasBgColor: this.canvasBgColor,
     };
-    return createReadOnlyShareUrl(payload);
+    let roomId: string | null = null;
+    if (this.collabManager) {
+      if (this.collabManager.getStatus() === "disconnected") {
+        roomId = await this.collabManager.startRoom();
+      } else {
+        roomId = this.collabManager.getRoomId();
+      }
+    }
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const pathname = typeof window !== "undefined" ? window.location.pathname : "/";
+    return createReadOnlyShareUrl(payload, origin, pathname, roomId);
   }
 
   private async loadReadOnlyFromUrl(): Promise<boolean> {
@@ -492,8 +505,10 @@ export class Sketchpad {
         this.color = "#ffffff";
       }
     }
-    const hasReadOnlyHash = typeof window !== "undefined" && Boolean(window.location.hash.match(/[#&?]read(?:only)?=/));
-    if (hasReadOnlyHash) {
+    const hashOrQuery = typeof window !== "undefined" ? (window.location.hash || window.location.search) : "";
+    const hasReadOnly = isReadOnlyUrl(hashOrQuery);
+    if (hasReadOnly) {
+      this.setReadOnly(true);
       this.loadReadOnlyFromUrl().then((loaded) => {
         if (!loaded) this.load();
       });
@@ -650,9 +665,13 @@ export class Sketchpad {
 
     // Check if URL already has room parameter (#room=... or ?room=...)
     if (typeof window !== "undefined") {
-      const hash = window.location.hash || window.location.search;
-      const match = hash.match(/[#&?]room=([^&]+)/);
+      const hashOrQuery = window.location.hash || window.location.search;
+      const match = hashOrQuery.match(/[#&?]room=([^&]+)/);
       if (match && match[1]) {
+        const isReadOnly = isReadOnlyUrl(hashOrQuery);
+        if (isReadOnly) {
+          this.setReadOnly(true);
+        }
         collab.joinRoom(match[1]);
       }
     }
