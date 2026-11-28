@@ -253,7 +253,7 @@ export const indonesianTools: ToolPageContentMap = {
     faq: [{ q: "Apa fungsi tempel ke kisi?", a: "Fitur ini menyelaraskan posisi elemen yang didukung ke titik kisi agar susunannya lebih rapi." }, { q: "Apakah kisi ikut diunduh?", a: "Tidak. Hasil PNG dan SVG berisi gambar, sedangkan kisi hanya menjadi panduan di layar." }], closing: ["Atur kisi, pilih pensil atau bentuk, lalu mulai menyusun gambar."],
   },
   "kids-drawing": {
-    seoTitle: "Menggambar Online untuk Anak — Gratis dan Mudah", seoDescription: "Kanvas menggambar untuk anak dengan tombol besar, warna cerah, penghapus, dan stempel emoji. Unduh hasil sebagai PNG tanpa akun.",
+    seoTitle: "Menggambar Online untuk Anak — Gratis dan Mudah", seoDescription: "Kanvas gambar online untuk anak: tombol besar, warna cerah, penghapus, dan stempel lucu. Aman tanpa akun, lancar di tablet dan HP, unduh hasil sebagai file PNG.",
     h1: "Menggambar Online untuk Anak",
     intro: ["Ruang menggambar sederhana dengan warna cerah, kuas, penghapus, dan stempel emoji. Anak bisa menggambar menggunakan jari, stylus, atau mouse tanpa membuat akun."],
     sections: [

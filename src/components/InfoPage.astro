@@ -2,6 +2,7 @@
 import SiteShell from "./SiteShell.astro";
 import { SITE } from "../lib/site";
 import { uiFor } from "../i18n/ui";
+import { getInfoMetaDescription } from "../i18n/info-seo";
 import type { PageContent } from "../i18n/content-types";
 import type { Locale } from "../i18n/locales";
 import { deriveLocaleHref } from "../i18n/locales";
@@ -23,6 +24,7 @@ const titleMap: Record<string, string> = {
   terms: content.terms.h1,
 };
 const title = titleMap[section];
+const description = getInfoMetaDescription(section, locale);
 
 const infoTabs = [
   { id: "about", label: ui.nav.about, href: deriveLocaleHref(locale, "/about") },
@@ -40,7 +42,7 @@ const p = "mt-3 text-[15px] leading-7 text-ink-secondary";
 const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
 ---
 
-<SiteShell title={title} locale={locale} route={route}>
+<SiteShell title={title} description={description} locale={locale} route={route}>
   <nav class="mb-8 flex items-center gap-1.5 overflow-x-auto rounded-xl border border-hairline bg-canvas-soft/80 p-1.5 text-xs font-medium no-scrollbar" aria-label="About section pages">
     {infoTabs.map((tab) => (
       <a

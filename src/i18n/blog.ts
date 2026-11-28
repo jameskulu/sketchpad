@@ -3080,7 +3080,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "sketchpad-tips-for-beginners",
     title: "10 Sketchpad Tips Every Beginner Should Know",
     description:
-      "Get cleaner lines, better colors, and faster results with ten practical tips for drawing on a free online sketchpad.",
+      "Get cleaner lines, better colors, and faster results with ten practical tips for drawing on a free online sketchpad, from quick brush control to export tricks.",
     excerpt:
       "A browser sketchpad is simple on purpose, but a handful of small habits make the difference between a rough doodle and a drawing you are happy to share. Start with these ten.",
     category: "Tips & tutorials",
@@ -3166,7 +3166,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "draw-on-a-laptop-without-a-graphics-tablet",
     title: "How to Draw on a Laptop Without a Graphics Tablet",
     description:
-      "No drawing tablet? You can still sketch, diagram, and annotate on a laptop using a mouse and a browser-based sketchpad.",
+      "No drawing tablet? You can still sketch, diagram, and annotate on a laptop using a standard mouse, trackpad, and this browser-based online sketchpad tool.",
     excerpt:
       "You do not need expensive hardware to get an idea out of your head. A trackpad, a mouse, and a well-designed canvas are enough for most everyday drawing tasks.",
     category: "Guides",
@@ -3227,7 +3227,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "digital-drawing-for-kids",
     title: "Digital Drawing for Kids: A Simple, Safe Starting Guide",
     description:
-      "A practical guide for parents and teachers introducing children to drawing on a browser-based sketchpad, with five starter activities.",
+      "A practical step-by-step guide for parents and teachers introducing children to digital drawing on a browser sketchpad, featuring five fun starter activities.",
     excerpt:
       "Children take to digital drawing quickly when the tool is simple and the stakes are low. Here is how to set up a calm first session and what to draw together.",
     category: "For parents & teachers",
@@ -3289,7 +3289,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "sketchpad-for-planning-and-diagrams",
     title: "From Doodle to Diagram: Using a Sketchpad to Plan Your Next Project",
     description:
-      "Turn a messy sketch into a clear diagram with shapes, text, arrows, and a simple workflow you can repeat for any project.",
+      "Turn a messy brainstorm into a crystal-clear visual diagram with shapes, text labels, connective arrows, and a repeatable workflow designed for any project.",
     excerpt:
       "The fastest way to align a team is often a rough drawing. Here is a lightweight process for moving from a loose doodle to a diagram that explains itself.",
     category: "Productivity",
@@ -3350,7 +3350,7 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "sketchpad-features-explained",
     title: "Autosave, PNG Export, and Grid: Sketchpad Features Explained",
     description:
-      "A plain-language guide to the Sketchpad features that matter most: autosave, PNG download, grid, zoom, undo, and keyboard shortcuts.",
+      "A clear, plain-language walkthrough of the essential Sketchpad features: instant autosave, high-res PNG export, adjustable grids, zoom, undo, and hotkeys.",
     excerpt:
       "The toolbar looks simple, but each control solves a specific problem. Here is what the main features do, when to use them, and how they work together.",
     category: "Product",
