@@ -66,6 +66,14 @@ const ui = uiFor(locale);
       </button>
 
       <ToolBoardNav locale={locale} route={route} />
+      <a href="/blog/" class="header-blog-btn" aria-label={ui.nav.blog} title={ui.nav.blog}>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+          <path d="M6 6h10"/>
+          <path d="M6 10h10"/>
+        </svg>
+        <span>{ui.nav.blog}</span>
+      </a>
       <div class="header-language"><LangSwitcher locale={locale} route={languageRoute} compact={true} /></div>
       <DownloadMenu locale={locale} svg={svg} print={print} />
     </nav>
@@ -304,6 +312,27 @@ const ui = uiFor(locale);
   :global(html:not(.dark)) .theme-toggle-btn .moon-icon { display:block; }
   :global(html.dark) .theme-toggle-btn .sun-icon { display:block; }
   :global(html.dark) .theme-toggle-btn .moon-icon { display:none; }
+
+  .header-blog-btn {
+    display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 10px;
+    border:1px solid var(--color-hairline); border-radius:999px; background:transparent;
+    color:var(--color-ink-secondary); font-size:12px; font-weight:500; text-decoration:none;
+    flex-shrink:0; transition:background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .header-blog-btn:hover {
+    background:#f1edff; border-color:var(--color-primary); color:var(--color-primary);
+  }
+  :global(html.dark) .header-blog-btn {
+    border-color:#383838; color:#f8fafc;
+  }
+  :global(html.dark) .header-blog-btn:hover {
+    background:#28243d; border-color:var(--color-primary); color:var(--color-primary-soft);
+  }
+  @media (max-width: 640px) {
+    .header-blog-btn span { display:none; }
+    .header-blog-btn { padding:0 8px; }
+  }
+
   .header-editing { display:flex; align-items:center; justify-content:center; gap:4px; height:39px; padding:2px 12px; border-top:1px solid #edf0f5; overflow-x:auto; scrollbar-width:none; }
   .header-editing::-webkit-scrollbar { display:none; }
   .header-editing :global(> *) { flex-shrink:0; }

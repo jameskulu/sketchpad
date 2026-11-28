@@ -62,6 +62,27 @@ const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
       <h1 class={h1}>{content.about.h1}</h1>
       {content.about.intro.map((para) => <p class:list={["mt-4", p]}>{para}</p>)}
 
+      {content.about.missionHeading && (
+        <>
+          <h2 class={h2}>{content.about.missionHeading}</h2>
+          {content.about.mission?.map((para) => <p class={p}>{para}</p>)}
+        </>
+      )}
+
+      {content.about.teamHeading && (
+        <>
+          <h2 class={h2}>{content.about.teamHeading}</h2>
+          {content.about.team?.map((para) => <p class={p}>{para}</p>)}
+        </>
+      )}
+
+      {content.about.techHeading && (
+        <>
+          <h2 class={h2}>{content.about.techHeading}</h2>
+          {content.about.tech?.map((para) => <p class={p}>{para}</p>)}
+        </>
+      )}
+
       <h2 class={h2}>{content.about.whatHeading}</h2>
       <ul class="mt-3 space-y-2 text-[15px] leading-7 text-ink-secondary">
         {content.about.what.map((li) => <li>{li}</li>)}
@@ -103,6 +124,22 @@ const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
           <span class="mt-3 block text-[13px] font-medium text-primary">{SITE.email}</span>
         </a>
       </div>
+
+      {content.contact.responseHeading && (
+        <div class="mt-8">
+          <h2 class={h2}>{content.contact.responseHeading}</h2>
+          <p class={p}>{content.contact.responseDesc}</p>
+        </div>
+      )}
+
+      {content.contact.supportHeading && (
+        <div class="mt-8">
+          <h2 class={h2}>{content.contact.supportHeading}</h2>
+          <ul class="mt-3 list-disc space-y-2 pl-5 text-[15px] leading-7 text-ink-secondary">
+            {content.contact.supportList?.map((li) => <li>{li}</li>)}
+          </ul>
+        </div>
+      )}
     </>
   )}
 
@@ -127,6 +164,20 @@ const h1 = "text-2xl font-bold tracking-tight text-ink sm:text-3xl";
 
       <h2 class={h2}>{content.privacy.cookiesHeading}</h2>
       {content.privacy.cookies.map((para) => <p class={p}>{para}</p>)}
+
+      {content.privacy.ccpaHeading && (
+        <>
+          <h2 class={h2}>{content.privacy.ccpaHeading}</h2>
+          {content.privacy.ccpa?.map((para) => <p class={p}>{para}</p>)}
+        </>
+      )}
+
+      {content.privacy.gdprHeading && (
+        <>
+          <h2 class={h2}>{content.privacy.gdprHeading}</h2>
+          {content.privacy.gdpr?.map((para) => <p class={p}>{para}</p>)}
+        </>
+      )}
 
       <h2 class={h2}>{content.privacy.changesHeading}</h2>
       {content.privacy.changes.map((para) => <p class={p}>{para}</p>)}

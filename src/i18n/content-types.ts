@@ -37,6 +37,12 @@ export interface PageContent {
   about: {
     h1: string;
     intro: string[];
+    missionHeading?: string;
+    mission?: string[];
+    teamHeading?: string;
+    team?: string[];
+    techHeading?: string;
+    tech?: string[];
     whatHeading: string;
     what: string[];
     privacyHeading: string;
@@ -51,6 +57,10 @@ export interface PageContent {
     intro: string[];
     emailTitle: string;
     emailDesc: string;
+    responseHeading?: string;
+    responseDesc?: string;
+    supportHeading?: string;
+    supportList?: string[];
   };
 
   // Privacy
@@ -66,6 +76,10 @@ export interface PageContent {
     notList: string[];
     cookiesHeading: string;
     cookies: string[];
+    ccpaHeading?: string;
+    ccpa?: string[];
+    gdprHeading?: string;
+    gdpr?: string[];
     changesHeading: string;
     changes: string[];
     contactHeading: string;

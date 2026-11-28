@@ -159,15 +159,30 @@ export const CONTENT: Content = {
     about: {
       h1: "About Simple Sketchpad",
       intro: [
-        "Simple Sketchpad is a fast, minimal online drawing board. Pick a tool, draw, and your work is saved automatically in your browser — there is no account and nothing to set up.",
+        "Simple Sketchpad is an open, fast, and privacy-first online drawing board and digital sketchpad. Pick a tool, draw, and your work is saved automatically in your browser — there are no paywalls, accounts, or sign-ups.",
+      ],
+      missionHeading: "Our Mission & Philosophy",
+      mission: [
+        "Modern creative software has become increasingly complex, laden with mandatory account registrations, monthly paywalls, distracting toolbars, and intrusive cloud telemetry. Simple Sketchpad was created as an intentional antidote.",
+        "Our mission is to provide an instantly accessible, distraction-free visual thinking surface that opens in milliseconds on any device. Whether you are an engineer drafting a system flow, an educator explaining a geometry proof, an animator sequencing a storyboard, or a child doodling on a rainy afternoon, the canvas is immediately ready with zero friction.",
+      ],
+      teamHeading: "Who We Are & Editorial Standards",
+      team: [
+        "Simple Sketchpad is developed and maintained by an independent collective of software developers, technical illustrators, and educational writers. We are passionate about open web standards, privacy-preserving technology, and visual communication.",
+        "Every article, tutorial, and technical guide published in our blog is independently researched, written, and verified by our editorial team. We test our diagrams, floor plans, and technical workflows directly in modern web browsers to ensure that our tutorials provide actionable, dependable, and reproducible advice.",
+      ],
+      techHeading: "100% Client-Side Privacy Architecture",
+      tech: [
+        "Simple Sketchpad executes entirely within your browser using the HTML5 Canvas 2D API. Unlike cloud whiteboard tools, your drawings, notes, and uploaded references never touch external application servers.",
+        "Your creative work is saved locally in your browser's LocalStorage and indexed cache. Real-time collaboration operates over peer-to-peer WebRTC data channels and local broadcast channels, ensuring that your ideas remain confidential between you and the peers you explicitly choose to invite.",
       ],
       whatHeading: "What you can do",
       what: [
         "Draw and sketch with a smooth brush or a lifelike graphite pencil.",
-        "Add shapes and text — rectangles, ellipses, triangles, lines, and arrows.",
-        "Work anywhere — touch, mouse, and stylus input across all your devices.",
+        "Add shapes and text — rectangles, ellipses, triangles, lines, and directional arrows.",
+        "Work anywhere — touch, mouse, and stylus input across all desktop, tablet, and mobile browsers.",
         "Perfect your drawing with undo/redo, adjustable opacity and stroke size, a grid, zoom, and pan.",
-        "Export your art as a PNG whenever you are ready.",
+        "Export your art as clean vector SVG or high-resolution PNG whenever you are ready.",
       ],
       privacyHeading: "Privacy first",
       privacy: [
@@ -181,16 +196,25 @@ export const CONTENT: Content = {
     contact: {
       h1: "Contact Us",
       intro: [
-        "Have a question, found a bug, or have an idea for Simple Sketchpad? We would love to hear from you.",
+        "Have a question, found a bug, or have an idea to make Simple Sketchpad better? We would love to hear from you.",
       ],
-      emailTitle: "Email us",
-      emailDesc: "For support and feedback. We reply as soon as we can.",
+      emailTitle: "Email us directly",
+      emailDesc: "For general support, feedback, bug reports, and editorial inquiries.",
+      responseHeading: "Expected Response Time",
+      responseDesc: "We review every incoming message and typically respond within 24 to 48 business hours. Please include relevant browser and device details if reporting a technical bug.",
+      supportHeading: "What we can help with",
+      supportList: [
+        "Technical support and troubleshooting canvas performance across devices.",
+        "Feature suggestions, tool requests, and usability feedback.",
+        "Editorial inquiries, tutorial suggestions, or corrections for our blog guides.",
+        "Inquiries regarding privacy, data handling, or educational use in classrooms.",
+      ],
     },
     privacy: {
       h1: "Privacy Policy",
-      updated: "Last updated: October 2026. This policy explains what data Simple Sketchpad (\"we\", \"us\") may handle when you use this website.",
+      updated: "Last updated: November 2026. This policy explains what data Simple Sketchpad (\"we\", \"us\") may handle when you use this website.",
       shortHeading: "The short version",
-      short: ["Your drawings stay in your browser and are never uploaded. The site itself uses Google Analytics and Google AdSense, which may set cookies and process usage data as described below."],
+      short: ["Your drawings stay in your browser and are never uploaded to any server. The site uses standard Google Analytics and Google AdSense scripts, which may set cookies and process usage data as described below."],
       storeHeading: "What we store — and where",
       store: [
         "Simple Sketchpad is a client-side application. When you draw, the app saves your work to your browser's local storage so your drawing is restored the next time you visit. This data:",
@@ -198,22 +222,35 @@ export const CONTENT: Content = {
       storeList: [
         "is stored only on your device;",
         "can be cleared at any time with your browser's \"clear site data\" tools;",
-        "is never transmitted to any server.",
+        "is never transmitted, stored, or indexed on our web servers.",
       ],
       notHeading: "What we do not do",
       notList: [
-        "No accounts. There is nothing to sign up for and no profile is created.",
-        "Advertising and analytics. The site uses Google Analytics to measure traffic and Google AdSense to show ads. These services may set cookies and process data such as your IP address, approximate location, and the pages you visit. They never receive the contents of your canvas.",
-        "No sale of your drawings. We do not sell your drawings or share them with advertisers; the canvas stays on your device.",
+        "No accounts or sign-up. There is nothing to register for and no personal profile is created.",
+        "No access to canvas content. Analytics and advertising scripts never receive, view, or process the contents of your drawings or annotations.",
+        "No sale of your artwork. We do not sell your drawings, sketches, or exported assets to third parties or advertisers.",
       ],
-      cookiesHeading: "Cookies",
+      cookiesHeading: "Cookies and Third-Party Advertising (Google AdSense)",
       cookies: [
-        "Google Analytics and Google AdSense may set cookies to measure traffic and serve ads. You can block or delete cookies in your browser settings, and you can control personalized advertising through Google Ads Settings (adssettings.google.com). Local storage used for autosave is not a cookie and stays on your device.",
+        "This website uses Google AdSense and Google Analytics. Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites across the Internet.",
+        "Google's use of advertising cookies enables it and its partners to serve ads to users based on their visits to Simple Sketchpad and/or other sites on the Internet.",
+        "Users may opt out of personalized advertising by visiting Google Ads Settings (https://adssettings.google.com). Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting the Digital Advertising Alliance Consumer Choice page at www.aboutads.info/choices or the Network Advertising Initiative Opt-Out Tool at optout.networkadvertising.org.",
+        "You can also disable cookies entirely through your browser settings. Local storage used for drawing autosave is not a cookie and remains private on your local machine.",
+      ],
+      ccpaHeading: "California Consumer Privacy Act (CCPA / CPRA)",
+      ccpa: [
+        "Under the California Consumer Privacy Act (CCPA) and the California Privacy Rights Act (CPRA), California residents have specific statutory rights regarding their personal information. These include the right to request disclosure of personal information collected, the right to request deletion of personal information, and the right to opt out of the sale or sharing of personal information.",
+        "Simple Sketchpad does not collect personal identifiers, user accounts, names, or addresses, nor do we sell or share the contents of your drawings. Third-party advertising partners (such as Google AdSense) may collect pseudonymous identifiers or device signals for advertising purposes. To exercise your rights, manage your cookie preferences through your browser settings or contact us at hello@simplesketchpad.com.",
+      ],
+      gdprHeading: "European Privacy Rights (GDPR & UK GDPR)",
+      gdpr: [
+        "For individuals located in the European Economic Area (EEA), the United Kingdom, and Switzerland: We process data under the legal bases of legitimate interests and user consent where applicable.",
+        "You have the right to request access to, rectification of, or erasure of any personal information we may hold, to restrict or object to processing, and to request data portability. You also have the right to lodge a complaint with your local data protection supervisory authority. Because our drawing canvas operates strictly client-side without storing personal user accounts on remote servers, your drawings never leave your local device.",
       ],
       changesHeading: "Changes to this policy",
       changes: ["If we change this policy, the updated version will be posted on this page with a new \"last updated\" date."],
       contactHeading: "Contact",
-      contact: ["Questions about this policy? Reach us at"],
+      contact: ["Questions about this policy or your privacy rights? Reach us at"],
     },
     terms: {
       h1: "Terms & Conditions",

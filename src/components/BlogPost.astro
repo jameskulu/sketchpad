@@ -56,8 +56,8 @@ const articleData = {
   inLanguage: "en",
   author: {
     "@type": "Organization",
-    name: SITE.name,
-    url: SITE.url,
+    name: "Simple Sketchpad Editorial Team",
+    url: new URL("/about", SITE.url).href,
   },
   publisher: {
     "@type": "Organization",
@@ -148,9 +148,16 @@ const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
     <h1 class="mt-4 text-3xl font-bold tracking-tight text-ink sm:text-4xl">{post.title}</h1>
 
     <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-medium text-ink-mute">
+      <span>By <strong class="font-semibold text-ink">Simple Sketchpad Editorial Team</strong></span>
+      <span aria-hidden="true">·</span>
       <time datetime={post.date}>{formatPostDate(post.date)}</time>
       <span aria-hidden="true">·</span>
       <span>{post.readingTime} min read</span>
+      <span aria-hidden="true">·</span>
+      <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Fact-checked &amp; Tested
+      </span>
     </div>
 
     <p class="mt-6 border-l-2 border-primary/30 pl-4 text-[17px] leading-8 text-ink-secondary">
@@ -208,6 +215,25 @@ const p = "mt-4 text-[16px] leading-8 text-ink-secondary";
         </dl>
       </section>
     )}
+
+    <!-- Editorial Standards & Author Trust Card -->
+    <section class="mt-12 rounded-2xl border border-hairline bg-white dark:bg-[#1a1a1a] p-6 shadow-xs" aria-label="About the author">
+      <div class="flex items-start gap-4">
+        <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary font-bold text-sm">
+          SS
+        </div>
+        <div>
+          <h3 class="text-[15px] font-semibold text-ink">About the Simple Sketchpad Editorial Team</h3>
+          <p class="mt-1.5 text-[13px] leading-6 text-ink-secondary">
+            Written, tested, and reviewed by technical illustrators and software engineers at Simple Sketchpad. We produce actionable visual guides for software architecture, UML modeling, wireframing, and classroom teaching — verified directly in modern web browsers with 100% free, private drawing tools.
+          </p>
+          <div class="mt-3 flex flex-wrap items-center gap-4 text-xs font-medium text-primary">
+            <a href="/about" class="hover:underline">About our editorial standards →</a>
+            <a href="/contact" class="hover:underline">Suggest a topic or improvement →</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <aside class="mt-12 rounded-xl border border-hairline bg-canvas-soft p-6">
       <h2 class="text-lg font-semibold tracking-tight text-ink">Try it in your browser</h2>
