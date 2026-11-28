@@ -87,11 +87,11 @@ const isCurrent = (rawPath: string) => {
 >
   <div class="flex min-h-full flex-col">
     <header class="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-hairline bg-white/95 dark:bg-[#121212]/95 px-4 backdrop-blur-md sm:px-6">
-      <a href={homeHref} class="flex items-center gap-2 rounded-md px-1.5 py-1 transition-opacity hover:opacity-85" aria-label="Simple Sketchpad home">
+      <a href={homeHref} class="flex items-center gap-2 rounded-md px-1.5 py-1 transition-opacity hover:opacity-85" aria-label={`${ui.siteName} home`}>
         <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true" class="shrink-0">
           <path d="M14 40c6-22 12-22 18-2s12 20 18-2" fill="none" stroke="#533afd" stroke-width="5" stroke-linecap="round" />
         </svg>
-        <span class="text-sm font-semibold tracking-tight text-ink">{SITE.name}</span>
+        <span class="text-sm font-semibold tracking-tight text-ink">{ui.siteName}</span>
       </a>
 
       <!-- Desktop Navigation Links -->
