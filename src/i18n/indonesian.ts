@@ -70,8 +70,8 @@ export const indonesianToolUI: ToolUIStrings = {
 
 export const indonesianContent: PageContent = {
   htmlLang: "id",
-  seoTitle: "Sketchpad — Menggambar Online Gratis Tanpa Daftar",
-  seoDescription: "Menggambar online gratis dengan kuas, pensil, bentuk, panah, dan teks. Simpan gambar sebagai PNG tanpa membuat akun atau memasang aplikasi.",
+  seoTitle: "Sketchpad — Papan Gambar Online Gratis | Gambar & Sketsa",
+  seoDescription: "Gunakan sketchpad online gratis kami untuk menggambar dan membuat sketsa langsung di browser. Berkarya dengan alat gambar sederhana — tanpa akun atau unduhan.",
   home: {
     h1: "Sketchpad Online Gratis",
     intro: ["Mulai menggambar langsung di browser. Pilih kuas atau pensil, tentukan warna, lalu buat sketsa, coretan, atau diagram. Tidak perlu akun maupun instalasi.", "Gunakan mouse, jari, atau stylus di komputer, tablet, dan ponsel. Kanvas disimpan secara lokal di browser; unduh PNG untuk menyimpan salinan di perangkatmu."],

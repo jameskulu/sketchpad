@@ -5,9 +5,9 @@ export const CONTENT: Content = {
   id: indonesianContent,
   en: {
     htmlLang: "en",
-    seoTitle: "Sketchpad — Free Online Sketchpad & Digital Drawing Board",
+    seoTitle: "Sketchpad — Free Online Drawing Pad | Draw & Sketch",
     seoDescription:
-      "Draw online for free with this fast digital sketchpad — a drawing pad online for sketching, shapes, text, and diagrams. Free online sketchpad with no sign-up.",
+      "Use our free online sketchpad to draw, doodle and sketch directly in your browser. Create with simple drawing tools, colors and shapes — no signup or downloads.",
     seoKeywords:
       "Sketchpad, online sketchpad, free online sketchpad, online sketchpad free, drawing online sketchpad, best online sketchpad tools 2026, draw online sketchpad, best online sketchpad, best online sketchpad tools 2025, sketchpad app, digital sketchpad, drawing board, drawing board online, online drawing board, drawing board for kids, drawpad, online drawing sketchpad, drawing pad, digital drawing pad, drawing pad for kids, drawing pad online, drawing pad for laptop, simple drawing pad, simple sketchpad",
     home: {
@@ -271,8 +271,8 @@ export const CONTENT: Content = {
   },
   es: {
     htmlLang: "es",
-    seoTitle: "Sketchpad — Dibuja en Línea Gratis con una Pizarra Digital",
-    seoDescription: "Dibuja en línea gratis con este sketchpad rápido — una pizarra digital para bocetos, formas, texto y más. Sin registro, funciona en cualquier dispositivo y exporta a PNG.",
+    seoTitle: "Sketchpad — Bloc de Dibujo Online Gratis | Dibuja y Esboza",
+    seoDescription: "Usa nuestro sketchpad online gratis para dibujar y garabatear en el navegador. Crea con herramientas simples, formas y colores — sin registro ni descargas.",
     home: {
       h1: "Sketchpad — Tu Sketchpad en Línea Gratis y Pizarra Digital",
       intro: [
@@ -414,8 +414,8 @@ export const CONTENT: Content = {
   },
   ja: {
     htmlLang: "ja",
-    seoTitle: "スケッチパッド｜無料オンラインお絵かき・デジタル画板",
-    seoDescription: "登録不要ですぐに使える無料オンラインスケッチパッド＆デジタル画板。鉛筆、ブラシ、幾何学図形、直線、矢印、文字入力、グリッド表示など多彩な描画ツールを搭載。PC、タブレット、スマホのブラウザで快適に動作し、描いた図面やイラストは高解像度PNG画像やSVGベクター形式で端末に安全に保存・書き出しできます。",
+    seoTitle: "スケッチパッド — 無料オンラインお絵かき帳｜手軽に描く＆スケッチ",
+    seoDescription: "無料オンラインスケッチパッドを使って、ブラウザ上で手軽にお絵かきや落書き、アイデアスケッチを始めましょう。使いやすい描画ツール、多彩なカラーパレット、便利な図形機能を完備。面倒な会員登録やアプリのダウンロードは一切不要で、誰でも今すぐブラウザを開いてすぐに自由な創作活動を楽しめます。",
     home: {
       h1: "スケッチパッド｜無料オンラインスケッチパッド＆デジタル画板",
       intro: [
@@ -561,8 +561,8 @@ export const CONTENT: Content = {
   },
   fr: {
     htmlLang: "fr",
-    seoTitle: "Sketchpad — Tableau de dessin en ligne gratuit et sketchpad numérique",
-    seoDescription: "Dessinez en ligne gratuitement avec ce sketchpad rapide — un tableau de dessin numérique pour esquisser, formes, texte et plus. Sans inscription, fonctionne sur tous les appareils, export PNG.",
+    seoTitle: "Sketchpad — Bloc de Dessin en Ligne | Dessiner & Esquisser",
+    seoDescription: "Notre sketchpad en ligne gratuit permet de dessiner et esquisser dans le navigateur. Outils simples, formes et couleurs — sans inscription ni téléchargement.",
     home: {
       h1: "Sketchpad — Votre sketchpad en ligne gratuit et tableau de dessin numérique",
       intro: [
@@ -708,8 +708,8 @@ export const CONTENT: Content = {
   },
   de: {
     htmlLang: "de",
-    seoTitle: "Sketchpad — Kostenlos online zeichnen auf dem digitalen Zeichenbrett",
-    seoDescription: "Zeichne kostenlos online mit diesem schnellen Sketchpad — ein digitales Zeichenbrett für Skizzen, Formen, Text und mehr. Ohne Anmeldung, überall einsetzbar, mit PNG-Export.",
+    seoTitle: "Sketchpad — Online-Zeichenblock | Zeichnen & Skizzieren",
+    seoDescription: "Nutze unser kostenloses Online-Sketchpad zum Zeichnen und Skizzieren im Browser. Gestalte mit einfachen Werkzeugen und Formen — ohne Anmeldung oder Download.",
     home: {
       h1: "Sketchpad — Dein kostenloses Online-Sketchpad und digitales Zeichenbrett",
       intro: [
@@ -855,8 +855,8 @@ export const CONTENT: Content = {
   },
   pt: {
     htmlLang: "pt",
-    seoTitle: "Sketchpad — Desenhe Online Grátis numa Quadro de Desenho Digital",
-    seoDescription: "Desenhe online grátis com este sketchpad rápido — uma prancha de desenho digital para esboços, formas, texto e mais. Sem cadastro, funciona em qualquer dispositivo, com exportação PNG.",
+    seoTitle: "Sketchpad — Bloco de Desenho Online | Desenhe e Esboce",
+    seoDescription: "Use nosso sketchpad online grátis para desenhar, rabiscar e esboçar no navegador. Crie com ferramentas simples, cores e formas — sem cadastro nem downloads.",
     home: {
       h1: "Sketchpad — Seu Sketchpad Online Grátis e Quadro de Desenho Digital",
       intro: [
@@ -1002,8 +1002,8 @@ export const CONTENT: Content = {
   },
   ko: {
     htmlLang: "ko",
-    seoTitle: "스케치패드 — 무료 온라인 그림판 및 디지털 드로잉 보드",
-    seoDescription: "회원가입 없이 브라우저에서 바로 쓰는 무료 온라인 스케치패드입니다. 부드러운 브러시, 연필, 도형, 화살표, 텍스트 라벨, 보조 격자 등을 제공하여 아이디어 스케치와 다이어그램에 적합합니다. 모든 기기에서 원활하게 구동되며 고해상도 PNG 및 SVG 파일로 간편하게 내보낼 수 있습니다.",
+    seoTitle: "스케치패드 — 무료 온라인 그림판 | 자유롭게 그리기 & 스케치",
+    seoDescription: "무료 온라인 스케치패드를 활용해 브라우저에서 바로 자유롭게 낙서하고 그림과 스케치를 그려보세요. 직관적이고 다채로운 그리기 도구, 풍부한 색상, 실용적인 도형을 지원하며 복잡한 회원가입이나 별도의 프로그램 다운로드 없이 누구나 즉시 간편하게 이용할 수 있습니다.",
     home: {
       h1: "스케치패드 — 무료 온라인 스케치패드 겸 디지털 드로잉 보드",
       intro: [
@@ -1149,8 +1149,8 @@ export const CONTENT: Content = {
   },
   it: {
     htmlLang: "it",
-    seoTitle: "Sketchpad — Disegna Online Gratis su una Lavagna Digitale",
-    seoDescription: "Disegna online gratis con questo sketchpad veloce — una lavagna digitale per schizzi, forme, testo e altro. Senza registrazione, funziona su qualsiasi dispositivo, con esportazione PNG.",
+    seoTitle: "Sketchpad — Blocco da Disegno Online | Disegna & Schizza",
+    seoDescription: "Usa il nostro sketchpad online gratis per disegnare e fare schizzi nel browser. Crea con strumenti semplici, colori e forme — senza registrazione o download.",
     home: {
       h1: "Sketchpad — Il Tuo Sketchpad Online Gratis e Lavagna Digitale",
       intro: [
@@ -1296,8 +1296,8 @@ export const CONTENT: Content = {
   },
   zh: {
     htmlLang: "zh-CN",
-    seoTitle: "Sketchpad — 免费在线画板与数字绘图工具",
-    seoDescription: "免费在线画板与数字绘图工具平台，打开浏览器即可随时畅快构思与素描。平台提供灵敏笔刷、铅笔、常用几何图形、文字标注、箭头与参考网格等丰富实用功能，适合构思原型、思维导图、教学演示与日常涂鸦。无需注册登录，数据完全保留在本地设备，随时一键导出高清 PNG 图片或 SVG 矢量图格式。",
+    seoTitle: "Sketchpad — 免费在线画板 | 随时自由画画与草图设计",
+    seoDescription: "使用我们完全免费的在线画板工具，直接在网页浏览器中随时畅快涂鸦、自由画画与构思设计数字草图。平台配备直观好用的绘图工具、丰富活泼的色彩调色板以及常用几何图形与文字标注等实用功能，全程无需繁琐注册登录或下载安装任何软件插件，随时随地打开网页即可在纯净画布上自由挥洒属于你的创意灵感。",
     home: {
       h1: "Sketchpad — 您的免费在线画板与数字绘图工具",
       intro: [
